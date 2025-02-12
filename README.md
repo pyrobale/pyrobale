@@ -28,7 +28,7 @@ A Python wrapper for the Bale Bot API that makes it easy to build Bale bots.
 ## Installation
 
 
-pip install git+https://github.com/yourusername/bale-bot-python.git
+pip install pyrobale
 
 
 ## Quick Start
@@ -113,23 +113,24 @@ def handle_leave(message, chat, user):
 
 
 # Access database
+```py
 with bot.database as db:
-    # Store data
     db.write_key("user_123", {"points": 100})
     
-    # Read data
     data = db.read_key("user_123")
+```
 
 
 ## Running Multiple Bots
 
 
+```py
 from bale import run_multiple_clients
 
 bot1 = Client("TOKEN1")
 bot2 = Client("TOKEN2")
 
-run_multiple_clients(bot1, bot2)
+run_multiple_clients(bot1, bot2)```
 
 
 ## License
