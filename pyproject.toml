@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel","sqbooster","requests"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyrobale"
+version = "0.1.0"
+description = "A short description of your module"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [
+  { name = "Ali Safamanesh", email = "darg.q.a.a@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version"]
