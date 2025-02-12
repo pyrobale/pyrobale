@@ -69,7 +69,7 @@ Represents a Bale user with their properties and methods.
 Represents a chat conversation with methods for sending messages and managing chat settings.
 
 ### Keyboards
-- `MenuKeyboardMarkup`: For creating custom keyboards
+- `MenuKeyboardMarkup`: For creating text keyboards
 - `InlineKeyboardMarkup`: For creating inline keyboards
 
 ### Database
