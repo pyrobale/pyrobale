@@ -1,4 +1,4 @@
-<center>![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)</center>
+![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
 
 # Bale Bot API Python Library
 
