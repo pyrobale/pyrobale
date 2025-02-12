@@ -28,12 +28,12 @@ A Python wrapper for the Bale Bot API that makes it easy to build Bale bots.
 ## Installation
 
 
-pip install pyrobale
+```pip install pyrobale```
 
 
 ## Quick Start
 
-
+```py
 from bale import Client, MenuKeyboardMarkup, MenuKeyboardButton
 
 # Initialize bot with token
@@ -52,7 +52,7 @@ def handle_message(message):
 
 # Start the bot
 bot.run()
-
+```
 
 ## Key Components
 
