@@ -1,20 +1,23 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel","sqbooster","requests"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "pyrobale"
-version = "0.1.0"
-description = "A short description of your module"
-readme = "README.md"
-requires-python = ">=3.9"
-license = {file = "LICENSE"}
+version = "0.2.2"
 authors = [
-  { name = "Ali Safamanesh", email = "darg.q.a.a@gmail.com" },
+    { name = "Ali Safamanesh", email = "darg.q.a.a@gmail.com" },
 ]
+description = "A python wrapper for bale api"
+readme = "README.md"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dynamic = ["version"]
+license = { file = "LICENSE" }
+
+[project.urls]
+github = "https://github.com/pyrobale/pyrobale"
+website = "https://pyrobale.github.io"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
