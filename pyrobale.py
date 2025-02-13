@@ -352,11 +352,18 @@ class CallbackQuery:
         self.client = client
         result = data.get('result', {})
         self.id = result.get('id')
-        self.from_user = User(client, {'ok': True, 'result': result.get('from', {})})
+        self.from_user = self.user = self.author = User(client, {'ok': True, 'result': result.get('from', {})})
         self.message = Message(client, {'ok': True, 'result': result.get('message', {})})
         self.inline_message_id = result.get('inline_message_id')
         self.chat_instance = result.get('chat_instance')
-        self.data = result.get('data')    
+        self.data = result.get('data')
+    
+    def answer(self, text: str, reply_markup: Optional[Union[MenuKeyboardMarkup, InlineKeyboardMarkup]] = None) -> 'Message':
+        return self.client.send_message(chat_id=self.message.chat.id, text=text, reply_markup=reply_markup)
+    
+    def reply(self, text: str, reply_markup: Optional[Union[MenuKeyboardMarkup, InlineKeyboardMarkup]] = None) -> 'Message':
+        return self.client.send_message(chat_id=self.message.chat.id, text=text, reply_markup=reply_markup, reply_to_message=self.message.id)
+
 
 class Chat:
     """Represents a chat conversation"""
@@ -651,7 +658,7 @@ class User:
     def del_state(self) -> None:
         """Delete the state for a chat or user"""
         self.client.states.pop(str(self.id), None)
-        
+    
 
     def send_message(self, text: str, parse_mode: Optional[str] = None, 
                     reply_markup: Union[MenuKeyboardMarkup,InlineKeyboardMarkup] = None) -> 'Message':
@@ -736,16 +743,16 @@ class Message:
         self.ok = data.get('ok')
         result = data.get('result', {})
         
-        self.message_id = result.get('message_id')
-        self.from_user = User(client,{'ok': True, 'result': result.get('from', {})})
+        self.message_id = self.id = result.get('message_id')
+        self.from_user = self.author = User(client,{'ok': True, 'result': result.get('from', {})})
         self.date = result.get('date')
         self.chat = Chat(client, {'ok': True, 'result': result.get('chat', {})})
         self.text = result.get('text')
         self.caption = result.get('caption')
         self.document = Document(result.get('document'))
-        self.photo = result.get('photo')
-        self.video = result.get('video')
-        self.audio = result.get('audio')
+        self.photo = Document(result.get('photo'))
+        self.video = Document(result.get('video'))
+        self.audio = Document(result.get('audio'))
         self.voice = Voice(result.get('voice'))
         self.animation = result.get('animation')
         self.contact = Contact(result.get('contact'))
@@ -753,6 +760,9 @@ class Message:
         self.forward_from = User(client, {'ok': True, 'result': result.get('forward_from', {})})
         self.forward_from_message_id = result.get('forward_from_message_id')
         self.invoice = Invoice(result.get('invoice'))
+        self.reply = self.reply_message
+        self.send = lambda text, parse_mode=None, reply_markup=None: self.client.send_message(self.chat.id, text, parse_mode, reply_markup, reply_to_message=self)
+
         
 
     def edit(self, text: str, parse_mode: Optional[str] = None, 
@@ -768,7 +778,6 @@ class Message:
                     reply_markup: Union[MenuKeyboardMarkup,InlineKeyboardMarkup] = None) -> 'Message':
         """Send a message to this user"""
         return self.client.send_message(self.chat.id, text, parse_mode, reply_markup,reply_to_message=self)
-        
     def reply_photo(self, photo: Union[str, bytes, InputFile],
                   caption: Optional[str] = None,
                   parse_mode: Optional[str] = None,
