@@ -5,7 +5,7 @@ import sqlite3
 import inspect
 import asyncio
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 class DataBase:
     def __init__(self, name):
