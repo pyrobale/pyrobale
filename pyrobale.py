@@ -863,7 +863,8 @@ class Client:
     @property
     def database(self) -> DataBase:
         """Get the database name"""
-        return DataBase(self.database_name)
+        db = DataBase(self.database_name)
+        return db
     
     
     def get_chat(self, chat_id: int) -> Optional[Dict]:
@@ -1286,36 +1287,39 @@ class Client:
     
     def _create_thread(self, handler, *args):
         """Helper method to create and start a thread"""
-        thread = threading.Thread(target=handler, args=args)
+        thread = threading.Thread(target=handler, args=args, daemon=True)
         thread.start()
         self._threads.append(thread)
         
     def _handle_message(self, message, update):
         """Handle different types of messages"""
-        if 'message' in update and 'new_chat_members' in update['message'] and hasattr(self, '_member_join_handler'):
-            chat = update['message']['chat']
-            user = update['message']['new_chat_members'][0]
-            self._create_thread(self._member_join_handler, message, Chat(self,{"ok":True,"result":chat}), User(self,{"ok":True,"result":user}))
-        elif 'message' in update and 'left_chat_member' in update['message'] and hasattr(self, '_member_leave_handler'):
-            chat = update['message']['chat']
-            user = update['message']['left_chat_member']
-            self._create_thread(self._member_leave_handler, message, Chat(self,{"ok":True,"result":chat}), User(self,{"ok":True,"result":user}))
-        elif self._message_handler:
-            args = (message, update) if len(inspect.signature(self._message_handler).parameters) > 1 else (message,)
-            self._create_thread(self._message_handler, *args)
+        if 'message' in update:
+            msg_data = update['message']
+            if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+                chat = msg_data['chat']
+                user = msg_data['new_chat_members'][0]
+                self._create_thread(self._member_join_handler, message, Chat(self,{"ok":True,"result":chat}), User(self,{"ok":True,"result":user}))
+            elif 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
+                chat = msg_data['chat']
+                user = msg_data['left_chat_member']
+                self._create_thread(self._member_leave_handler, message, Chat(self,{"ok":True,"result":chat}), User(self,{"ok":True,"result":user}))
+            elif self._message_handler:
+                args = (message, update) if len(inspect.signature(self._message_handler).parameters) > 1 else (message,)
+                self._create_thread(self._message_handler, *args)
     
     def _handle_update(self, update):
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
             
-        if 'message' in update:
+        update_type = next((key for key in ('message', 'edited_message', 'callback_query') if key in update), None)
+        if update_type == 'message':
             message = Message(self, {'ok': True, 'result': update['message']})
             self._handle_message(message, update)
-        elif 'edited_message' in update and hasattr(self, '_message_edit_handler'):
+        elif update_type == 'edited_message' and hasattr(self, '_message_edit_handler'):
             edited_message = Message(self, {'ok': True, 'result': update['edited_message']})
             args = (edited_message, update) if len(inspect.signature(self._message_edit_handler).parameters) > 1 else (edited_message,)
             self._create_thread(self._message_edit_handler, *args)
-        elif 'callback_query' in update and self._callback_handler:
+        elif update_type == 'callback_query' and self._callback_handler:
             callback_query = CallbackQuery(self, {'ok': True, 'result': update['callback_query']})
             args = (callback_query, update) if len(inspect.signature(self._callback_handler).parameters) > 1 else (callback_query,)
             self._create_thread(self._callback_handler, *args)
@@ -1332,26 +1336,28 @@ class Client:
         """Start polling for new messages"""
         self._polling = True
         offset = 0
-        past_updates = []
+        past_updates = set()  # Using set for faster lookups
         
         if hasattr(self, '_ready_handler'):
             self._ready_handler()
             
         while self._polling:
             try:
-                updates = self.get_updates(offset=offset)
+                updates = self.get_updates(offset=offset, timeout=30)  # Longer polling timeout
                 for update in updates:
                     update_id = update['update_id']
-                    if update_id not in [u['update_id'] for u in past_updates]:
+                    if update_id not in past_updates:
                         self._handle_update(update)
                         offset = update_id + 1
-                        past_updates.append(update)
-                        if len(past_updates) > 30:
-                            past_updates.pop(0)
+                        past_updates.add(update_id)
+                        if len(past_updates) > 100:  # Increased cache size
+                            past_updates.clear()
+                            past_updates = set(sorted(list(past_updates))[-50:])
                 
-                self._handle_tick_events(time.time())
+                current_time = time.time()
+                self._handle_tick_events(current_time)
                 self._threads = [t for t in self._threads if t.is_alive()]
-                time.sleep(0.5)
+                time.sleep(0.1)  # Reduced sleep time
             except Exception as e:
                 print(f"Error in polling: {traceback.format_exc()}")
                 time.sleep(1)
@@ -1361,11 +1367,11 @@ class Client:
                    limit: Optional[int] = None,
                    timeout: Optional[int] = None) -> List[Dict[str, Any]]:
         """Get latest updates/messages"""
-        params = {
+        params = {k: v for k, v in {
             'offset': offset,
             'limit': limit,
             'timeout': timeout
-        }
+        }.items() if v is not None}
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
@@ -1373,50 +1379,7 @@ class Client:
         """Close the client and stop polling"""
         self._polling = False
         for thread in self._threads:
-            try:
-                thread.join()
-            except:
-                pass
+            thread.join(timeout=1.0)  # Added timeout to prevent hanging
         self._threads.clear()
         if hasattr(self, '_close_handler'):
             self._close_handler()
-
-def run_multiple_clients(*clients):
-    """Run multiple clients concurrently using asyncio"""
-    async def run_client(client):
-        if hasattr(client, '_ready_handler'):
-            client._ready_handler()
-            
-        offset = None
-        past_updates = []
-        
-        while client._polling:
-            try:
-                updates = await client.get_updates(offset=offset)
-                for update in updates:
-                    update_id = update['update_id']
-                    if update_id not in [u['update_id'] for u in past_updates]:
-                        await client._handle_update(update)
-                        offset = update_id + 1
-                        past_updates.append(update)
-                        if len(past_updates) > 30:
-                            past_updates.pop(0)
-                
-                await client._handle_tick_events(time.time())
-                await asyncio.sleep(0.5)
-            except Exception as e:
-                print(f"Error in polling: {traceback.format_exc()}")
-                await asyncio.sleep(1)
-                continue
-
-    loop = asyncio.get_event_loop()
-    tasks = [loop.create_task(run_client(client)) for client in clients]
-    
-    try:
-        loop.run_until_complete(asyncio.gather(*tasks))
-    except KeyboardInterrupt:
-        for client in clients:
-            client.safe_close()
-        loop.run_until_complete(asyncio.gather(*[task.cancel() for task in tasks]))
-    finally:
-        loop.close()
