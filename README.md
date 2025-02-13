@@ -27,9 +27,7 @@ A Python wrapper for the Bale Bot API that makes it easy to build Bale bots.
 
 ## Installation
 
-
-```pip install pyrobale```
-
+``pip install pyrobale``
 
 ## Quick Start
 
@@ -46,7 +44,7 @@ def handle_message(message):
         # Create keyboard
         keyboard = MenuKeyboardMarkup()
         keyboard.add(MenuKeyboardButton("Hello!"))
-        
+  
         # Send welcome message
         message.reply_message("Welcome!", reply_markup=keyboard)
 
@@ -57,82 +55,87 @@ bot.run()
 ## Key Components
 
 ### Client
+
 The main class for interacting with Bale API. Handles all API requests and provides event decorators.
 
 ### Message
+
 Represents a message in Bale with methods for replying, editing, and deleting messages.
 
 ### User
+
 Represents a Bale user with their properties and methods.
 
 ### Chat
+
 Represents a chat conversation with methods for sending messages and managing chat settings.
 
 ### Keyboards
+
 - `MenuKeyboardMarkup`: For creating text keyboards
 - `InlineKeyboardMarkup`: For creating inline keyboards
 
 ### Database
+
 Built-in SQLite database support for storing persistent data.
 
 ## Event Handlers
 
-
 # Message handler
+
+```python
 @bot.on_message
 def handle_message(message):
     pass
+```
 
 # Callback query handler
+
+```python
 @bot.on_callback_query
 def handle_callback(callback):
     pass
+```
 
 # Periodic task handler
+
+```python
 @bot.on_tick(60)  # Runs every 60 seconds
 def handle_tick():
     pass
+```
 
 # Ready event handler
+
+```python
 @bot.on_ready
 def handle_ready():
     pass
+```
 
 # Member join handler
+
+```python
 @bot.on_member_chat_join
 def handle_join(message, chat, user):
     pass
+```
 
 # Member leave handler
+
+```python
 @bot.on_member_chat_leave
 def handle_leave(message, chat, user):
     pass
-
+```
 
 ## Database Usage
 
-
 # Access database
+
 ```py
 with bot.database as db:
     db.write_key("user_123", {"points": 100})
-    
+  
     data = db.read_key("user_123")
 ```
-
-
-## Running Multiple Bots
-
-
-```py
-from bale import run_multiple_clients
-
-bot1 = Client("TOKEN1")
-bot2 = Client("TOKEN2")
-
-run_multiple_clients(bot1, bot2)```
-
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
