@@ -1336,21 +1336,21 @@ class Client:
         """Start polling for new messages"""
         self._polling = True
         offset = 0
-        past_updates = set()  # Using set for faster lookups
+        past_updates = set()
         
         if hasattr(self, '_ready_handler'):
             self._ready_handler()
             
         while self._polling:
             try:
-                updates = self.get_updates(offset=offset, timeout=30)  # Longer polling timeout
+                updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
                     update_id = update['update_id']
                     if update_id not in past_updates:
                         self._handle_update(update)
                         offset = update_id + 1
                         past_updates.add(update_id)
-                        if len(past_updates) > 100:  # Increased cache size
+                        if len(past_updates) > 100:
                             past_updates.clear()
                             past_updates = set(sorted(list(past_updates))[-50:])
                 
@@ -1379,7 +1379,7 @@ class Client:
         """Close the client and stop polling"""
         self._polling = False
         for thread in self._threads:
-            thread.join(timeout=1.0)  # Added timeout to prevent hanging
+            thread.join(timeout=1.0)
         self._threads.clear()
         if hasattr(self, '_close_handler'):
             self._close_handler()
