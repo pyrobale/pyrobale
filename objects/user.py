@@ -6,22 +6,22 @@ import traceback
 import sqlite3
 import inspect
 import requests
-from pyrobale.exceptions.base import (BaleException)
-from pyrobale.objects.keyboards import (InlineKeyboardButton,InlineKeyboardMarkup,MenuKeyboardButton,MenuKeyboardMarkup)
-from pyrobale.objects.callbackquery import (CallbackQuery)
-from pyrobale.objects.chat import (Chat)
-from pyrobale.objects.voice import (Voice)
-from pyrobale.objects.document import (Document)
-from pyrobale.objects.photo import (Photo)
-from pyrobale.objects.message import (Message)
-from pyrobale.objects.location import (Location)
-from pyrobale.objects.contact import (Contact)
-from pyrobale.objects.database import (DataBase)
-from pyrobale.objects.inputfile import(InputFile)
-from pyrobale.objects.labeledprice import (LabeledPrice)
-from pyrobale.objects.invoice import (Invoice)
-from pyrobale.objects.client import (Client)
-from pyrobale.objects.chatmember import (ChatMember)
+from ..exceptions.base import (BaleException)
+from ..objects.keyboards import (InlineKeyboardButton,InlineKeyboardMarkup,MenuKeyboardButton,MenuKeyboardMarkup)
+from ..objects.callbackquery import (CallbackQuery)
+from ..objects.chat import (Chat)
+from ..objects.voice import (Voice)
+from ..objects.document import (Document)
+from ..objects.photo import (Photo)
+from ..objects.message import (Message)
+from ..objects.location import (Location)
+from ..objects.contact import (Contact)
+from ..objects.database import (DataBase)
+from ..objects.inputfile import(InputFile)
+from ..objects.labeledprice import (LabeledPrice)
+from ..objects.invoice import (Invoice)
+from ..objects.client import (Client)
+from ..objects.chatmember import (ChatMember)
 
 class User:
     """Represents a Bale user"""
