@@ -1,12 +1,12 @@
 [project]
 name = "pyrobale"
-version = "0.2.4"
+version = "0.2.5"
 authors = [
     { name = "Ali Safamanesh", email = "darg.q.a.a@gmail.com" },
 ]
 description = "A python wrapper for bale api"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -19,5 +19,5 @@ github = "https://github.com/pyrobale/pyrobale"
 website = "https://pyrobale.github.io"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "requests"]
 build-backend = "hatchling.build"
