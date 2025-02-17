@@ -16,14 +16,113 @@ import traceback
 import sqlite3
 import inspect
 import requests
+import re
+from urllib.parse import urlparse, unquote
 
 __version__ = '0.2.5'
+
+
+
+class conditions:
+    """
+    A class for defining conditions for message handling.
+    """
+
+    def __init__(
+            self,
+            client: 'Client' = None,
+            user: 'User' = None,
+            message: 'Message' = None,
+            callback: 'CallbackQuery' = None,
+            chat: 'Chat' = None):
+        self.client = client
+        self.user = user
+        self.message = message
+        self.callback = callback
+        self.chat = chat
+
+    def is_joined(self, *chats) -> bool:
+        """Check if user is member of all specified chats"""
+        return all(self.client.is_joined(chat_id, self.user.id)
+                   for chat_id in chats)
+
+    def is_admin(self, chat: 'Chat') -> bool:
+        """Check if user is an admin"""
+        member = self.client.get_chat_member(chat.id, self.user.id)
+        return member.status in ['administrator', 'owner']
+
+    def is_owner(self, chat: 'Chat') -> bool:
+        """Check if user is the owner"""
+        member = self.client.get_chat_member(chat.id, self.user.id)
+        return member.is_creator
+
+    def is_private_chat(self) -> bool:
+        """Check if message is in private chat"""
+        return self.chat.type == 'private'
+
+    def is_group_chat(self) -> bool:
+        """Check if message is in group chat"""
+        return self.chat.type in ['group', 'supergroup']
+
+    def is_channel(self) -> bool:
+        """Check if message is in channel"""
+        return self.chat.type == 'channel'
+
+    def has_text(self) -> bool:
+        """Check if message contains text"""
+        return bool(self.message.text)
+
+    def has_photo(self) -> bool:
+        """Check if message contains photo"""
+        return bool(self.message.photo)
+
+    def has_document(self) -> bool:
+        """Check if message contains document"""
+        return bool(self.message.document)
+
+    def is_reply(self) -> bool:
+        """Check if message is a reply"""
+        return bool(self.message.reply_to_message)
+
+    def is_forwarded(self) -> bool:
+        """Check if message is forwarded"""
+        return bool(self.message.forward_from)
+    
+    def at_state(self, state: str) -> bool:
+        """Check if user is in the specified state"""
+        return self.client.get_state(self.chat.id) == state
+    
+    def is_bot(self) -> bool:
+        """Check if user is a bot"""
+        return self.user.is_bot
+    
+    def is_user(self) -> bool:
+        """Check if user is a user"""
+        return not self.user.is_bot
+    
+    def is_admin_or_owner(self, chat: 'Chat') -> bool:
+        """Check if user is an admin or owner"""
+        return self.is_admin(chat) or self.is_owner(chat)
+    
+    def matches_regex(self, pattern: str) -> bool:
+        """Check if message text matches regex pattern"""
+        if not self.message.text:
+            return False
+        return bool(re.match(pattern, self.message.text))
+    
+    def contains_url(self) -> bool:
+        """Check if message contains url"""
+        if not self.message.text:
+            return False
+        return bool(re.search(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.message.text))
+    
 
 
 class DataBase:
     """
     Database class for managing key-value pairs in a SQLite database.
     """
+
     def __init__(self, name):
         self.name = name
         self.conn = None
@@ -162,8 +261,6 @@ class ChatMember:
             self.is_creator = data.get('status') == 'creator'
 
 
-
-
 class BaleException(Exception):
     """Base exception for Bale API errors"""
 
@@ -171,56 +268,68 @@ class BaleException(Exception):
         self.message = message
         self.error_code = error_code
         self.response = response
-        
+
         error_text = f"Error {error_code}: {message}" if error_code else message
         super().__init__(error_text)
-        
+
     def __str__(self):
         return f"{self.__class__.__name__}: {self.message}"
+
 
 class BaleAPIError(BaleException):
     """Exception for API-specific errors"""
     pass
 
+
 class BaleNetworkError(BaleException):
     """Exception for network-related errors"""
     pass
+
 
 class BaleAuthError(BaleException):
     """Exception for authentication errors"""
     pass
 
+
 class BaleValidationError(BaleException):
     """Exception for data validation errors"""
     pass
+
 
 class BaleTimeoutError(BaleException):
     """Exception for timeout errors"""
     pass
 
+
 class BaleNotFoundError(BaleException):
     """Exception for when a resource is not found"""
     pass
+
 
 class BaleForbiddenError(BaleException):
     """Exception for forbidden access errors"""
     pass
 
+
 class BaleServerError(BaleException):
     """Exception for server-side errors"""
     pass
+
 
 class BaleRateLimitError(BaleException):
     """Exception for rate limit errors"""
     pass
 
+
 class BaleTokenNotFoundError(BaleException):
     """Exception for when a token is not found"""
     pass
 
+
 class BaleUnknownError(BaleException):
     """Exception for unknown errors"""
     pass
+
 
 class LabeledPrice:
     def __init__(self, label: str, amount: int):
@@ -1149,6 +1258,7 @@ class Message:
         self.client = client
         self.ok = data.get('ok')
         result = data.get('result', {})
+        self.json_result = result
 
         self.message_id = self.id = result.get('message_id')
         self.from_user = self.author = User(
@@ -1168,12 +1278,12 @@ class Message:
         self.animation = result.get('animation')
         self.contact = Contact(result.get('contact'))
         self.location = Location(result.get('location'))
-        self.forward_from = User(
-            client, {
-                'ok': True, 'result': result.get(
-                    'forward_from', {})})
+        self.forward_from = User(client, {'ok': True, 'result': result.get(
+            'forward_from', {})}) if result.get('forward_from') else None
         self.forward_from_message_id = result.get('forward_from_message_id')
         self.invoice = Invoice(result.get('invoice'))
+        self.reply_to_message = Message(client, {'ok': True, 'result': result.get(
+            'reply_to_message', {})}) if result.get('reply_to_message') else None
         self.reply = self.reply_message
         self.send = lambda text, parse_mode=None, reply_markup=None: self.client.send_message(
             self.chat.id, text, parse_mode, reply_markup, reply_to_message=self)
@@ -1380,7 +1490,7 @@ class Client:
             session: str = 'https://tapi.bale.ai',
             database_name='database.db',
             auto_log_start_message: bool = True,
-            ):
+    ):
         self.token = token
         self.session = session
         self.states = {}
@@ -1389,6 +1499,10 @@ class Client:
         self._base_url = f"{session}/bot{token}"
         self._session = requests.Session()
         self._message_handler = None
+        self._message_edit_handler = None
+        self._callback_handler = None
+        self._member_leave_handler =  None
+        self._member_join_handler = None
         self._threads = []
 
     def set_state(self,
@@ -1461,7 +1575,6 @@ class Client:
         data = self._make_request('GET', 'getMe')
         return User(self, data)
 
-
     def set_webhook(self, url: str, certificate: Optional[str] = None,
                     max_connections: Optional[int] = None) -> bool:
         """Set webhook for getting updates"""
@@ -1487,7 +1600,7 @@ class Client:
                                              int,
                                              str] = None) -> Message:
         """Send a message to a chat"""
-        # Convert text to string if it isn't already
+
         text = str(text)
 
         data = {
@@ -1955,6 +2068,16 @@ class Client:
         self._message_edit_handler = func
         return func
 
+    def on_command(self, command: str = None):
+        """Decorator for handling specific text commands"""
+        def decorator(func):
+            if not hasattr(self, '_text_handlers'):
+                self._text_handlers = {}
+            cmd = command if command is not None else f"/{func.__name__}"
+            self._text_handlers[cmd] = func
+            return func
+        return decorator
+
     def _create_thread(self, handler, *args):
         """Helper method to create and start a thread"""
         thread = threading.Thread(target=handler, args=args, daemon=True)
@@ -1963,72 +2086,67 @@ class Client:
 
     def _handle_message(self, message, update):
         """Handle different types of messages"""
-        if 'message' in update:
-            msg_data = update['message']
-            if 'new_chat_members' in msg_data and hasattr(
-                    self, '_member_join_handler'):
-                chat = msg_data['chat']
-                user = msg_data['new_chat_members'][0]
-                self._create_thread(
-                    self._member_join_handler, message, Chat(
-                        self, {
-                            "ok": True, "result": chat}), User(
-                        self, {
-                            "ok": True, "result": user}))
-            elif 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
-                chat = msg_data['chat']
-                user = msg_data['left_chat_member']
-                self._create_thread(
-                    self._member_leave_handler, message, Chat(
-                        self, {
-                            "ok": True, "result": chat}), User(
-                        self, {
-                            "ok": True, "result": user}))
-            elif self._message_handler:
-                args = (
-                    message,
-                    update) if len(
-                    inspect.signature(
-                        self._message_handler).parameters) > 1 else (
-                    message,
-                )
-                self._create_thread(self._message_handler, *args)
+        msg_data = update.get('message', {})
+        
+
+        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+            chat = msg_data['chat']
+            user = msg_data['new_chat_members'][0]
+            self._create_thread(
+                self._member_join_handler,
+                message,
+                Chat(self, {"ok": True, "result": chat}),
+                User(self, {"ok": True, "result": user})
+            )
+            
+
+        elif 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
+            chat = msg_data['chat']
+            user = msg_data['left_chat_member']
+            self._create_thread(
+                self._member_leave_handler,
+                message,
+                Chat(self, {"ok": True, "result": chat}),
+                User(self, {"ok": True, "result": user})
+            )
+            
+
+        elif 'text' in msg_data and hasattr(self, '_text_handlers'):
+            text = msg_data['text']
+            for command, handler in self._text_handlers.items():
+                if text == command:
+                    self._create_thread(handler, message)
+                    return
+                    
+
+        elif self._message_handler:
+            params = inspect.signature(self._message_handler).parameters
+            args = (message, update) if len(params) > 1 else (message,)
+            self._create_thread(self._message_handler, *args)
 
     def _handle_update(self, update):
+
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
 
-        update_type = next(
-            (key for key in (
-                'message',
-                'edited_message',
-                'callback_query') if key in update),
-            None)
-        if update_type == 'message':
-            message = Message(self, {'ok': True, 'result': update['message']})
-            self._handle_message(message, update)
-        elif update_type == 'edited_message' and hasattr(self, '_message_edit_handler'):
-            edited_message = Message(
-                self, {'ok': True, 'result': update['edited_message']})
-            args = (
-                edited_message,
-                update) if len(
-                inspect.signature(
-                    self._message_edit_handler).parameters) > 1 else (
-                edited_message,
-            )
-            self._create_thread(self._message_edit_handler, *args)
-        elif update_type == 'callback_query' and self._callback_handler:
-            callback_query = CallbackQuery(
-                self, {'ok': True, 'result': update['callback_query']})
-            args = (
-                callback_query,
-                update) if len(
-                inspect.signature(
-                    self._callback_handler).parameters) > 1 else (
-                callback_query,
-            )
-            self._create_thread(self._callback_handler, *args)
+
+        update_types = {
+            'message': (Message, self._handle_message),
+            'edited_message': (Message, self._message_edit_handler),
+            'callback_query': (CallbackQuery, self._callback_handler)
+        }
+
+        for update_type, (cls, handler) in update_types.items():
+            if update_type in update:
+                if update_type == 'message':
+                    message = cls(self, {'ok': True, 'result': update[update_type]})
+                    handler(message, update)
+                elif handler:
+                    obj = cls(self, {'ok': True, 'result': update[update_type]})
+                    params = inspect.signature(handler).parameters
+                    args = (obj, update) if len(params) > 1 else (obj,)
+                    self._create_thread(handler, *args)
+                break
 
     def _handle_tick_events(self, current_time):
         """Handle periodic tick events"""
@@ -2040,17 +2158,17 @@ class Client:
 
     def run(self):
         """Start polling for new messages"""
-        
         try:
             self.get_me()
-        except:
-            raise BaleTokenNotFoundError("token not found")        
+        except BaseException:
+            raise BaleTokenNotFoundError("token not found")
+
         self._polling = True
         offset = 0
         past_updates = set()
-        
+
         if self.auto_log_start_message:
-            print(f"-+-+-+ [logged in as @{self.get_me().username}] +-+-+-")        
+            print(f"-+-+-+ [logged in as @{self.get_me().username}] +-+-+-")
         if hasattr(self, '_ready_handler'):
             self._ready_handler()
 
@@ -2064,14 +2182,12 @@ class Client:
                         offset = update_id + 1
                         past_updates.add(update_id)
                         if len(past_updates) > 100:
-                            past_updates.clear()
-                            past_updates = set(
-                                sorted(list(past_updates))[-50:])
+                            past_updates = set(sorted(list(past_updates))[-50:])
 
                 current_time = time.time()
                 self._handle_tick_events(current_time)
                 self._threads = [t for t in self._threads if t.is_alive()]
-                time.sleep(0.1)  # Reduced sleep time
+                time.sleep(0.1)
             except Exception:
                 print(f"Error in polling: {traceback.format_exc()}")
                 time.sleep(1)
