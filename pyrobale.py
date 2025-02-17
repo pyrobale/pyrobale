@@ -22,7 +22,6 @@ from urllib.parse import urlparse, unquote
 __version__ = '0.2.5'
 
 
-
 class conditions:
     """
     A class for defining conditions for message handling.
@@ -87,35 +86,37 @@ class conditions:
     def is_forwarded(self) -> bool:
         """Check if message is forwarded"""
         return bool(self.message.forward_from)
-    
+
     def at_state(self, state: str) -> bool:
         """Check if user is in the specified state"""
         return self.client.get_state(self.chat.id) == state
-    
+
     def is_bot(self) -> bool:
         """Check if user is a bot"""
         return self.user.is_bot
-    
+
     def is_user(self) -> bool:
         """Check if user is a user"""
         return not self.user.is_bot
-    
+
     def is_admin_or_owner(self, chat: 'Chat') -> bool:
         """Check if user is an admin or owner"""
         return self.is_admin(chat) or self.is_owner(chat)
-    
+
     def matches_regex(self, pattern: str) -> bool:
         """Check if message text matches regex pattern"""
         if not self.message.text:
             return False
         return bool(re.match(pattern, self.message.text))
-    
+
     def contains_url(self) -> bool:
         """Check if message contains url"""
         if not self.message.text:
             return False
-        return bool(re.search(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.message.text))
-    
+        return bool(
+            re.search(
+                r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+                self.message.text))
 
 
 class DataBase:
@@ -1501,7 +1502,7 @@ class Client:
         self._message_handler = None
         self._message_edit_handler = None
         self._callback_handler = None
-        self._member_leave_handler =  None
+        self._member_leave_handler = None
         self._member_join_handler = None
         self._threads = []
 
@@ -2087,9 +2088,9 @@ class Client:
     def _handle_message(self, message, update):
         """Handle different types of messages"""
         msg_data = update.get('message', {})
-        
 
-        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+        if 'new_chat_members' in msg_data and hasattr(
+                self, '_member_join_handler'):
             chat = msg_data['chat']
             user = msg_data['new_chat_members'][0]
             self._create_thread(
@@ -2098,7 +2099,6 @@ class Client:
                 Chat(self, {"ok": True, "result": chat}),
                 User(self, {"ok": True, "result": user})
             )
-            
 
         elif 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
             chat = msg_data['chat']
@@ -2109,7 +2109,6 @@ class Client:
                 Chat(self, {"ok": True, "result": chat}),
                 User(self, {"ok": True, "result": user})
             )
-            
 
         elif 'text' in msg_data and hasattr(self, '_text_handlers'):
             text = msg_data['text']
@@ -2117,7 +2116,6 @@ class Client:
                 if text == command:
                     self._create_thread(handler, message)
                     return
-                    
 
         elif self._message_handler:
             params = inspect.signature(self._message_handler).parameters
@@ -2129,7 +2127,6 @@ class Client:
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
 
-
         update_types = {
             'message': (Message, self._handle_message),
             'edited_message': (Message, self._message_edit_handler),
@@ -2139,10 +2136,14 @@ class Client:
         for update_type, (cls, handler) in update_types.items():
             if update_type in update:
                 if update_type == 'message':
-                    message = cls(self, {'ok': True, 'result': update[update_type]})
+                    message = cls(
+                        self, {
+                            'ok': True, 'result': update[update_type]})
                     handler(message, update)
                 elif handler:
-                    obj = cls(self, {'ok': True, 'result': update[update_type]})
+                    obj = cls(
+                        self, {
+                            'ok': True, 'result': update[update_type]})
                     params = inspect.signature(handler).parameters
                     args = (obj, update) if len(params) > 1 else (obj,)
                     self._create_thread(handler, *args)
@@ -2182,7 +2183,8 @@ class Client:
                         offset = update_id + 1
                         past_updates.add(update_id)
                         if len(past_updates) > 100:
-                            past_updates = set(sorted(list(past_updates))[-50:])
+                            past_updates = set(
+                                sorted(list(past_updates))[-50:])
 
                 current_time = time.time()
                 self._handle_tick_events(current_time)
