@@ -19,5 +19,5 @@ github = "https://github.com/pyrobale/pyrobale"
 website = "https://pyrobale.github.io"
 
 [build-system]
-requires = ["hatchling", "requests"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
