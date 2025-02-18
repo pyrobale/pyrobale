@@ -17,6 +17,8 @@ import sqlite3
 import inspect
 import requests
 import re
+import sys
+import os
 from urllib.parse import urlparse, unquote
 
 __version__ = '0.2.5'
@@ -2114,12 +2116,16 @@ class Client:
             text = msg_data['text']
             for command, handler in self._text_handlers.items():
                 if text == command:
-                    self._create_thread(handler, message)
+                    conds = conditions(self, message.author, message, None, message.chat)
+                    params = inspect.signature(handler).parameters
+                    args = (message, conds) if len(params) > 1 else (message,)
+                    self._create_thread(handler, *args)
                     return
 
         elif self._message_handler:
+            conds = conditions(self, message.author, message, None, message.chat)
             params = inspect.signature(self._message_handler).parameters
-            args = (message, update) if len(params) > 1 else (message,)
+            args = (message, update, conds) if len(params) > 2 else (message, update)
             self._create_thread(self._message_handler, *args)
 
     def _handle_update(self, update):
@@ -2127,28 +2133,30 @@ class Client:
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
 
-        update_types = {
+        # Handle message and edited message
+        message_types = {
             'message': (Message, self._handle_message),
-            'edited_message': (Message, self._message_edit_handler),
-            'callback_query': (CallbackQuery, self._callback_handler)
+            'edited_message': (Message, self._message_edit_handler)
         }
 
-        for update_type, (cls, handler) in update_types.items():
+        for update_type, (cls, handler) in message_types.items():
             if update_type in update:
-                if update_type == 'message':
-                    message = cls(
-                        self, {
-                            'ok': True, 'result': update[update_type]})
-                    handler(message, update)
-                elif handler:
-                    obj = cls(
-                        self, {
-                            'ok': True, 'result': update[update_type]})
-                    params = inspect.signature(handler).parameters
-                    args = (obj, update) if len(params) > 1 else (obj,)
-                    self._create_thread(handler, *args)
+                message = cls(
+                    self, {
+                        'ok': True, 'result': update[update_type]})
+                handler(message, update)
                 break
 
+        # Handle callback query separately
+        if 'callback_query' in update and self._callback_handler:
+            obj = CallbackQuery(
+                self, {
+                    'ok': True, 'result': update['callback_query']})
+            params = inspect.signature(self._callback_handler).parameters
+            conds = conditions(self, obj.author, None, obj, obj.chat)
+            args = (obj, update, conds) if len(params) > 2 else (obj, update)
+            self._create_thread(self._callback_handler, *args)
+            
     def _handle_tick_events(self, current_time):
         """Handle periodic tick events"""
         if hasattr(self, '_tick_handlers'):
@@ -2157,7 +2165,8 @@ class Client:
                     self._create_thread(handler)
                     info['last_run'] = current_time
 
-    def run(self):
+
+    def run(self, debug=False):
         """Start polling for new messages"""
         try:
             self.get_me()
@@ -2167,6 +2176,8 @@ class Client:
         self._polling = True
         offset = 0
         past_updates = set()
+        source_file = inspect.getfile(self.__class__)
+        last_modified = os.path.getmtime(source_file)
 
         if self.auto_log_start_message:
             print(f"-+-+-+ [logged in as @{self.get_me().username}] +-+-+-")
@@ -2175,6 +2186,19 @@ class Client:
 
         while self._polling:
             try:
+                if debug:
+                    try:
+                        current_modified = os.path.getmtime(source_file)
+                        if current_modified > last_modified:
+                            print("Source file changed, restarting...")
+                            last_modified = current_modified
+                            python = sys.executable
+                            os.execl(python, python, *sys.argv)
+                    except FileNotFoundError:
+                        print("Source file not found")
+                    except OSError as e:
+                        print(f"Error checking file modification time: {e}")
+                    
                 updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
                     update_id = update['update_id']
