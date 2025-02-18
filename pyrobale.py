@@ -21,7 +21,7 @@ import sys
 import os
 from urllib.parse import urlparse, unquote
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 
 
 class conditions:
@@ -2035,8 +2035,7 @@ class Client:
     def on_tick(self, seconds: int):
         """Decorator for handling periodic events"""
         def decorator(func):
-            if not hasattr(self, '_tick_handlers'):
-                self._tick_handlers = {}
+            self._tick_handlers = getattr(self, '_tick_handlers', {})
             self._tick_handlers[func] = {'interval': seconds, 'last_run': 0}
             return func
         return decorator
@@ -2074,9 +2073,8 @@ class Client:
     def on_command(self, command: str = None):
         """Decorator for handling specific text commands"""
         def decorator(func):
-            if not hasattr(self, '_text_handlers'):
-                self._text_handlers = {}
-            cmd = command if command is not None else f"/{func.__name__}"
+            self._text_handlers = getattr(self, '_text_handlers', {})
+            cmd = f"/{func.__name__}" if command is None else f"/{command.lstrip('/')}"
             self._text_handlers[cmd] = func
             return func
         return decorator
@@ -2091,45 +2089,44 @@ class Client:
         """Handle different types of messages"""
         msg_data = update.get('message', {})
 
-        if 'new_chat_members' in msg_data and hasattr(
-                self, '_member_join_handler'):
-            chat = msg_data['chat']
-            user = msg_data['new_chat_members'][0]
+        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+            chat, user = msg_data['chat'], msg_data['new_chat_members'][0]
             self._create_thread(
                 self._member_join_handler,
                 message,
                 Chat(self, {"ok": True, "result": chat}),
                 User(self, {"ok": True, "result": user})
             )
+            return
 
-        elif 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
-            chat = msg_data['chat']
-            user = msg_data['left_chat_member']
+        if 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
+            chat, user = msg_data['chat'], msg_data['left_chat_member']
             self._create_thread(
                 self._member_leave_handler,
                 message,
                 Chat(self, {"ok": True, "result": chat}),
                 User(self, {"ok": True, "result": user})
             )
+            return
 
-        elif 'text' in msg_data and hasattr(self, '_text_handlers'):
+        if 'text' in msg_data and hasattr(self, '_text_handlers'):
             text = msg_data['text']
             for command, handler in self._text_handlers.items():
-                if text == command:
+                if text.startswith(command):
                     conds = conditions(self, message.author, message, None, message.chat)
                     params = inspect.signature(handler).parameters
                     args = (message, conds) if len(params) > 1 else (message,)
                     self._create_thread(handler, *args)
                     return
 
-        elif self._message_handler:
+        if self._message_handler:
             conds = conditions(self, message.author, message, None, message.chat)
             params = inspect.signature(self._message_handler).parameters
-            args = (message, update, conds) if len(params) > 2 else (message, update)
+            args = ((message, update, conds) if len(params) > 2 else 
+                   (message, update) if len(params) > 1 else (message,))
             self._create_thread(self._message_handler, *args)
 
     def _handle_update(self, update):
-
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
 
@@ -2141,17 +2138,12 @@ class Client:
 
         for update_type, (cls, handler) in message_types.items():
             if update_type in update:
-                message = cls(
-                    self, {
-                        'ok': True, 'result': update[update_type]})
+                message = cls(self, {'ok': True, 'result': update[update_type]})
                 handler(message, update)
-                break
+                return
 
-        # Handle callback query separately
         if 'callback_query' in update and self._callback_handler:
-            obj = CallbackQuery(
-                self, {
-                    'ok': True, 'result': update['callback_query']})
+            obj = CallbackQuery(self, {'ok': True, 'result': update['callback_query']})
             params = inspect.signature(self._callback_handler).parameters
             conds = conditions(self, obj.author, None, obj, obj.chat)
             args = (obj, update, conds) if len(params) > 2 else (obj, update)
@@ -2165,9 +2157,8 @@ class Client:
                     self._create_thread(handler)
                     info['last_run'] = current_time
 
-
     def run(self, debug=False):
-        """Start polling for new messages"""
+        """Start p-olling for new messages"""
         try:
             self.get_me()
         except BaseException:
@@ -2187,17 +2178,12 @@ class Client:
         while self._polling:
             try:
                 if debug:
-                    try:
-                        current_modified = os.path.getmtime(source_file)
-                        if current_modified > last_modified:
-                            print("Source file changed, restarting...")
-                            last_modified = current_modified
-                            python = sys.executable
-                            os.execl(python, python, *sys.argv)
-                    except FileNotFoundError:
-                        print("Source file not found")
-                    except OSError as e:
-                        print(f"Error checking file modification time: {e}")
+                    current_modified = os.path.getmtime(source_file)
+                    if current_modified > last_modified:
+                        last_modified = current_modified
+                        print("Source file changed, restarting...")
+                        python = sys.executable
+                        os.execl(python, python, *sys.argv)
                     
                 updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
@@ -2207,8 +2193,7 @@ class Client:
                         offset = update_id + 1
                         past_updates.add(update_id)
                         if len(past_updates) > 100:
-                            past_updates = set(
-                                sorted(list(past_updates))[-50:])
+                            past_updates = set(sorted(list(past_updates))[-50:])
 
                 current_time = time.time()
                 self._handle_tick_events(current_time)
@@ -2217,17 +2202,19 @@ class Client:
             except Exception:
                 print(f"Error in polling: {traceback.format_exc()}")
                 time.sleep(1)
-                continue
+
+    def _check_source_file_changed(self, source_file, last_modified):
+        try:
+            current_mtime = os.path.getmtime(source_file)
+            return current_mtime != last_modified
+        except (FileNotFoundError, OSError) as e:
+            print(f"Error checking file modification time: {e}")
+            return False
 
     def get_updates(self, offset: Optional[int] = None,
-                    limit: Optional[int] = None,
-                    timeout: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Get latest updates/messages"""
-        params = {k: v for k, v in {
-            'offset': offset,
-            'limit': limit,
-            'timeout': timeout
-        }.items() if v is not None}
+                   limit: Optional[int] = None, 
+                   timeout: Optional[int] = None) -> List[Dict[str, Any]]:
+        params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
