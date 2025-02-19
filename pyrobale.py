@@ -23,8 +23,14 @@ from urllib.parse import urlparse, unquote
 
 __version__ = '0.2.6'
 
-
+class ChatActions:
+    """Represents different chat action states that can be sent to Bale"""
+    TYPING: str = 'typing'
+    PHOTO: str = 'upload_photo'
+    VIDEO: str = 'record_video'
+    CHOOSE_STICKER: str = 'choose_sticker'
 class conditions:
+    
     """
     A class for defining conditions for message handling.
     """
@@ -851,6 +857,10 @@ class Chat:
             photo_url,
             reply_to_message,
             reply_markup)
+    
+    def send_action(self, action: str, how_many_times = 1) -> bool:
+        """Send a chat action"""
+        return self.client.send_chat_action(self.id, action, how_many_times)
 
     def banChatMember(
             self,
@@ -1249,6 +1259,9 @@ class User:
             photo_url,
             reply_to_message,
             reply_markup)
+    def send_action(self, action: str, how_many_times: int = 1):
+        """Send a chat action to this user"""
+        return self.client.send_chat_action(self.id, action, how_many_times)
 
 
 class Message:
@@ -1961,6 +1974,21 @@ class Client:
             'reply_markup': reply_markup.keyboard if reply_markup else None}
         response = self._make_request('POST', 'sendInvoice', json=data)
         return Message(self, response)
+    
+    def send_chat_action(self, chat: Union[int, str, 'Chat'], action: str, how_many_times: int = 1) -> bool:
+        """Send a chat action"""
+        if not chat:
+            raise ValueError("Chat ID cannot be empty")
+            
+        data = {
+            'chat_id': str(chat) if isinstance(chat, (int, str)) else str(chat.id),
+            'action': action
+        }
+        res = []
+        for _ in range(how_many_times):
+            response = self._make_request('POST', 'sendChatAction', json=data)
+            res.append(response.get('ok', False))
+        return all(res)
 
     def copy_message(self,
                      chat_id: Union[int,
