@@ -743,6 +743,9 @@ class Chat:
         self.description = result.get('description')
         self.invite_link = result.get('invite_link')
         self.photo = result.get('photo')
+        self.is_channel_chat = self.CHANNEL = self.type == "channel"
+        self.is_group_chat = self.GROUP = self.type == "group"
+        self.is_private_chat = self.PRIVATE = self.type == "private"
 
     def send_photo(self,
                    photo: Union[str,
@@ -968,7 +971,7 @@ class Chat:
         """Send a chat action"""
         return self.client.send_chat_action(self.id, action, how_many_times)
 
-    def banChatMember(
+    def ban_chat_member(
             self,
             user_id: int,
             until_date: Optional[int] = None) -> bool:
@@ -982,7 +985,7 @@ class Chat:
             'POST', 'banChatMember', data=data)
         return response.get('ok', False)
 
-    def unbanChatMember(
+    def unban_chat_member(
             self,
             user_id: int,
             only_if_banned: bool = False) -> bool:
@@ -996,7 +999,7 @@ class Chat:
             'POST', 'unbanChatMember', data=data)
         return response.get('ok', False)
 
-    def promoteChatMember(
+    def promotee_chat_member(
             self,
             user_id: int,
             can_change_info: bool = None,
@@ -1022,7 +1025,7 @@ class Chat:
             'POST', 'promoteChatMember', data=data)
         return response.get('ok', False)
 
-    def setChatPhoto(self, photo: Union[str, bytes, InputFile]) -> bool:
+    def set_chat_photo(self, photo: Union[str, bytes, InputFile]) -> bool:
         """Set a new chat photo"""
         files = None
         data = {'chat_id': self.id}
@@ -1038,26 +1041,26 @@ class Chat:
             'POST', 'setChatPhoto', data=data, files=files)
         return response.get('ok', False)
 
-    def leaveChat(self) -> bool:
+    def leave_chat(self) -> bool:
         """Leave the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request('POST', 'leaveChat', data=data)
         return response.get('ok', False)
 
-    def getChat(self) -> 'Chat':
+    def get_chat(self) -> 'Chat':
         """Get up to date information about the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request('GET', 'getChat', data=data)
         return Chat(self.client, response)
 
-    def getChatMembersCount(self) -> int:
+    def get_members_count(self) -> int:
         """Get the number of members in the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request(
             'POST', 'getChatMembersCount', data=data)
         return response.get('result', 0)
 
-    def pinChatMessage(
+    def pin_message(
             self,
             message_id: int,
             disable_notification: bool = False) -> bool:
@@ -1071,7 +1074,7 @@ class Chat:
             'POST', 'pinChatMessage', data=data)
         return response.get('ok', False)
 
-    def unPinChatMessage(self, message_id: int) -> bool:
+    def unpin_message(self, message_id: int) -> bool:
         """Unpin a message in the chat"""
         data = {
             'chat_id': self.id,
@@ -1081,14 +1084,14 @@ class Chat:
             'POST', 'unpinChatMessage', data=data)
         return response.get('ok', False)
 
-    def unpinAllChatMessages(self) -> bool:
+    def unpin_all_messages(self) -> bool:
         """Unpin all messages in the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request(
             'POST', 'unpinAllChatMessages', data=data)
         return response.get('ok', False)
 
-    def setChatTitle(self, title: str) -> bool:
+    def set_chat_title(self, title: str) -> bool:
         """Change the title of the chat"""
         data = {
             'chat_id': self.id,
@@ -1097,7 +1100,7 @@ class Chat:
         response = self.client._make_request('POST', 'setChatTitle', data=data)
         return response.get('ok', False)
 
-    def setChatDescription(self, description: str) -> bool:
+    def set_chat_description(self, description: str) -> bool:
         """Change the description of the chat"""
         data = {
             'chat_id': self.id,
@@ -1107,21 +1110,21 @@ class Chat:
             'POST', 'setChatDescription', data=data)
         return response.get('ok', False)
 
-    def deleteChatPhoto(self) -> bool:
+    def delete_chat_photo(self) -> bool:
         """Delete the chat photo"""
         data = {'chat_id': self.id}
         response = self.client._make_request(
             'POST', 'deleteChatPhoto', data=data)
         return response.get('ok', False)
 
-    def createChatInviteLink(self) -> str:
+    def create_invite_link(self) -> str:
         """Create an invite link for the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request(
             'POST', 'createChatInviteLink', data=data)
         return response.get('result', {}).get('invite_link')
 
-    def revokeChatInviteLink(self, invite_link: str) -> bool:
+    def revoke_invite_link(self, invite_link: str) -> bool:
         """Revoke an invite link for the chat"""
         data = {
             'chat_id': self.id,
@@ -1131,7 +1134,7 @@ class Chat:
             'POST', 'revokeChatInviteLink', data=data)
         return response.get('ok', False)
 
-    def exportChatInviteLink(self) -> str:
+    def export_invite_link(self) -> str:
         """Generate a new invite link for the chat"""
         data = {'chat_id': self.id}
         response = self.client._make_request(
