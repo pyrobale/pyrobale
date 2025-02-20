@@ -1303,6 +1303,16 @@ class Message:
         self.reply = self.reply_message
         self.send = lambda text, parse_mode=None, reply_markup=None: self.client.send_message(
             self.chat.id, text, parse_mode, reply_markup, reply_to_message=self)
+        
+        self.command = None
+        self.args = None
+        txt = self.text.split(' ')
+        
+        self.command = txt[0]
+        self.has_slash_command = self.command.startswith('/')
+        self.args = txt[1:]
+        
+        self.start = self.command == '/start'
 
     def edit(self,
              text: str,
@@ -2254,3 +2264,6 @@ class Client:
         self._threads.clear()
         if hasattr(self, '_close_handler'):
             self._close_handler()
+    
+    def create_ref_link(self, data: str):
+        return f"https://ble.ir/{self.get_me().username}?start={data}"
