@@ -27,7 +27,7 @@ from pathlib import Path
 import uuid
 from typing import Iterator
 
-__version__ = '0.2.8.1'
+__version__ = '0.2.8.2'
 
 
 class ChatActions:
