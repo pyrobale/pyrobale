@@ -2366,7 +2366,7 @@ class Client:
     def run(self, debug=False):
         """Start p-olling for new messages"""
         try:
-            self.user = User(self, {"ok": True, "result": self.get_me()})
+            self.user = self.get_me()
         except BaseException:
             raise BaleTokenNotFoundError("token not found")
 
