@@ -29,14 +29,17 @@ from typing import Iterator
 
 __version__ = '0.2.8.1'
 
+
 class ChatActions:
     """Represents different chat action states that can be sent to Bale"""
     TYPING: str = 'typing'
     PHOTO: str = 'upload_photo'
     VIDEO: str = 'record_video'
     CHOOSE_STICKER: str = 'choose_sticker'
+
+
 class conditions:
-    
+
     """
     A class for defining conditions for message handling.
     """
@@ -376,6 +379,8 @@ class Document:
 
     def __bool__(self):
         return bool(self.file_id)
+
+
 class Invoice:
     def __init__(self, data: dict):
         if data:
@@ -554,8 +559,10 @@ class InlineKeyboardMarkup:
     def keyboard(self) -> dict:
         return {"inline_keyboard": self.inline_keyboard}
 
+
 class InputMedia:
     """Base class for input media types"""
+
     def __init__(self, media: str, caption: str = None):
         self.media = media
         self.caption = caption
@@ -621,18 +628,20 @@ class InputMediaAnimation(InputMedia):
             media_dict['duration'] = self.duration
         return media_dict
 
+
 class InputFile:
     """Represents a file to be sent"""
-    
+
     def __init__(self, file: Union[str, bytes] = None, file_id: str = None):
         if file and file_id:
-            raise ValueError("Either file or file_id should be provided, not both")
+            raise ValueError(
+                "Either file or file_id should be provided, not both")
         elif not file and not file_id:
             raise ValueError("Either file or file_id must be provided")
-            
+
         self.file = file
         self.file_id = file_id
-        
+
     @property
     def file_type(self) -> str:
         if self.file_id:
@@ -642,11 +651,12 @@ class InputFile:
         if self.file.startswith(('http://', 'https://')):
             return "url"
         return "path"
-        
+
     def __str__(self) -> str:
         if self.file_id:
             return self.file_id
         return str(self.file)
+
 
 class InputMediaAudio(InputMedia):
     """Represents an audio file to be sent"""
@@ -953,8 +963,8 @@ class Chat:
             photo_url,
             reply_to_message,
             reply_markup)
-    
-    def send_action(self, action: str, how_many_times = 1) -> bool:
+
+    def send_action(self, action: str, how_many_times=1) -> bool:
         """Send a chat action"""
         return self.client.send_chat_action(self.id, action, how_many_times)
 
@@ -1355,6 +1365,7 @@ class User:
             photo_url,
             reply_to_message,
             reply_markup)
+
     def send_action(self, action: str, how_many_times: int = 1):
         """Send a chat action to this user"""
         return self.client.send_chat_action(self.id, action, how_many_times)
@@ -1382,46 +1393,66 @@ class Message:
                     'chat', {})})
         self.text = result.get('text')
         self.caption = result.get('caption')
-            
+
         # Media handling
-        self.document = Document(result.get('document', {})) if result.get('document') else None            
+        self.document = Document(
+            result.get(
+                'document',
+                {})) if result.get('document') else None
         # Handle photo array properly
         photos = result.get('photo', [])
         self.photo = [Document(photo) for photo in photos] if photos else None
         self.largest_photo = Document(photos[-1]) if photos else None
-            
-        self.video = Document(result.get('video')) if result.get('video') else None
-        self.audio = Document(result.get('audio')) if result.get('audio') else None
-        self.voice = Voice(result.get('voice')) if result.get('voice') else None
-        self.animation = Document(result.get('animation')) if result.get('animation') else None
-        self.sticker = Document(result.get('sticker')) if result.get('sticker') else None
-        self.video_note = Document(result.get('video_note')) if result.get('video_note') else None
-            
+
+        self.video = Document(
+            result.get('video')) if result.get('video') else None
+        self.audio = Document(
+            result.get('audio')) if result.get('audio') else None
+        self.voice = Voice(
+            result.get('voice')) if result.get('voice') else None
+        self.animation = Document(
+            result.get('animation')) if result.get('animation') else None
+        self.sticker = Document(
+            result.get('sticker')) if result.get('sticker') else None
+        self.video_note = Document(
+            result.get('video_note')) if result.get('video_note') else None
+
         self.media_group_id = result.get('media_group_id')
-        self.has_media = any([self.document, self.photo, self.video, self.audio, 
-                            self.voice, self.animation, self.sticker, self.video_note])
-            
-        self.contact = Contact(result.get('contact')) if result.get('contact') else None
-        self.location = Location(result.get('location')) if result.get('location') else None
+        self.has_media = any([self.document,
+                              self.photo,
+                              self.video,
+                              self.audio,
+                              self.voice,
+                              self.animation,
+                              self.sticker,
+                              self.video_note])
+
+        self.contact = Contact(
+            result.get('contact')) if result.get('contact') else None
+        self.location = Location(
+            result.get('location')) if result.get('location') else None
         self.forward_from = User(client, {'ok': True, 'result': result.get(
             'forward_from', {})}) if result.get('forward_from') else None
         self.forward_from_message_id = result.get('forward_from_message_id')
-        self.invoice = Invoice(result.get('invoice')) if result.get('invoice') else None
+        self.invoice = Invoice(
+            result.get('invoice')) if result.get('invoice') else None
         self.reply_to_message = Message(client, {'ok': True, 'result': result.get(
             'reply_to_message', {})}) if result.get('reply_to_message') else None
         self.reply = self.reply_message
         self.send = lambda text, parse_mode=None, reply_markup=None: self.client.send_message(
             self.chat.id, text, parse_mode, reply_markup, reply_to_message=self)
-            
+
         self.command = None
         self.args = None
         txt = self.text.split(' ') if self.text else []
-            
+
         self.command = txt[0] if txt else None
-        self.has_slash_command = self.command.startswith('/') if self.text else None
+        self.has_slash_command = self.command.startswith(
+            '/') if self.text else None
         self.args = txt[1:] if self.text else None
-            
+
         self.start = self.command == '/start' if self.text else None
+
     def edit(self,
              text: str,
              parse_mode: Optional[str] = None,
@@ -1709,7 +1740,7 @@ class Client:
         """Get information about the bot"""
         data = self._make_request('GET', 'getMe')
         return User(self, data)
-    
+
     def get_file(self, file_id: str) -> bytes:
         """Get file information from Bale API"""
         data = {
@@ -1720,7 +1751,7 @@ class Client:
         url = f"{self._file_url}/{file_path}"
         file_response = self._session.get(url)
         return file_response.content
-    
+
     def set_webhook(self, url: str, certificate: Optional[str] = None,
                     max_connections: Optional[int] = None) -> bool:
         """Set webhook for getting updates"""
@@ -2104,16 +2135,21 @@ class Client:
             'reply_markup': reply_markup.keyboard if reply_markup else None}
         response = self._make_request('POST', 'sendInvoice', json=data)
         return Message(self, response)
-    
-    def send_chat_action(self, chat: Union[int, str, 'Chat'], action: str, how_many_times: int = 1) -> bool:
+
+    def send_chat_action(self,
+                         chat: Union[int,
+                                     str,
+                                     'Chat'],
+                         action: str,
+                         how_many_times: int = 1) -> bool:
         """Send a chat action"""
         if not chat:
             raise ValueError("Chat ID cannot be empty")
-            
+
         data = {
-            'chat_id': str(chat) if isinstance(chat, (int, str)) else str(chat.id),
-            'action': action
-        }
+            'chat_id': str(chat) if isinstance(
+                chat, (int, str)) else str(
+                chat.id), 'action': action}
         res = []
         for _ in range(how_many_times):
             response = self._make_request('POST', 'sendChatAction', json=data)
@@ -2247,7 +2283,8 @@ class Client:
         """Handle different types of messages"""
         msg_data = update.get('message', {})
 
-        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+        if 'new_chat_members' in msg_data and hasattr(
+                self, '_member_join_handler'):
             chat, user = msg_data['chat'], msg_data['new_chat_members'][0]
             self._create_thread(
                 self._member_join_handler,
@@ -2257,7 +2294,8 @@ class Client:
             )
             return
 
-        if 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
+        if 'left_chat_member' in msg_data and hasattr(
+                self, '_member_leave_handler'):
             chat, user = msg_data['chat'], msg_data['left_chat_member']
             self._create_thread(
                 self._member_leave_handler,
@@ -2271,17 +2309,23 @@ class Client:
             text = msg_data['text']
             for command, handler in self._text_handlers.items():
                 if text.startswith(command):
-                    conds = conditions(self, message.author, message, None, message.chat)
+                    conds = conditions(
+                        self, message.author, message, None, message.chat)
                     params = inspect.signature(handler).parameters
                     args = (message, conds) if len(params) > 1 else (message,)
                     self._create_thread(handler, *args)
                     return
 
         if self._message_handler:
-            conds = conditions(self, message.author, message, None, message.chat)
+            conds = conditions(
+                self,
+                message.author,
+                message,
+                None,
+                message.chat)
             params = inspect.signature(self._message_handler).parameters
-            args = ((message, update, conds) if len(params) > 2 else 
-                   (message, update) if len(params) > 1 else (message,))
+            args = ((message, update, conds) if len(params) > 2 else
+                    (message, update) if len(params) > 1 else (message,))
             self._create_thread(self._message_handler, *args)
 
     def _handle_update(self, update):
@@ -2296,17 +2340,21 @@ class Client:
 
         for update_type, (cls, handler) in message_types.items():
             if update_type in update:
-                message = cls(self, {'ok': True, 'result': update[update_type]})
+                message = cls(
+                    self, {
+                        'ok': True, 'result': update[update_type]})
                 handler(message, update)
                 return
 
         if 'callback_query' in update and self._callback_handler:
-            obj = CallbackQuery(self, {'ok': True, 'result': update['callback_query']})
+            obj = CallbackQuery(
+                self, {
+                    'ok': True, 'result': update['callback_query']})
             params = inspect.signature(self._callback_handler).parameters
             conds = conditions(self, obj.author, None, obj, obj.chat)
             args = (obj, update, conds) if len(params) > 2 else (obj, update)
             self._create_thread(self._callback_handler, *args)
-            
+
     def _handle_tick_events(self, current_time):
         """Handle periodic tick events"""
         if hasattr(self, '_tick_handlers'):
@@ -2318,7 +2366,7 @@ class Client:
     def run(self, debug=False):
         """Start p-olling for new messages"""
         try:
-            self.user = User(self,{"ok":True,"result":self.get_me()})
+            self.user = User(self, {"ok": True, "result": self.get_me()})
         except BaseException:
             raise BaleTokenNotFoundError("token not found")
 
@@ -2342,7 +2390,7 @@ class Client:
                         print("Source file changed, restarting...")
                         python = sys.executable
                         os.execl(python, python, *sys.argv)
-                    
+
                 updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
                     update_id = update['update_id']
@@ -2351,7 +2399,8 @@ class Client:
                         offset = update_id + 1
                         past_updates.add(update_id)
                         if len(past_updates) > 100:
-                            past_updates = set(sorted(list(past_updates))[-50:])
+                            past_updates = set(
+                                sorted(list(past_updates))[-50:])
 
                 current_time = time.time()
                 self._handle_tick_events(current_time)
@@ -2370,9 +2419,10 @@ class Client:
             return False
 
     def get_updates(self, offset: Optional[int] = None,
-                   limit: Optional[int] = None, 
-                   timeout: Optional[int] = None) -> List[Dict[str, Any]]:
-        params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
+                    limit: Optional[int] = None,
+                    timeout: Optional[int] = None) -> List[Dict[str, Any]]:
+        params = {k: v for k, v in locals().items() if k !=
+                  'self' and v is not None}
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
@@ -2384,6 +2434,6 @@ class Client:
         self._threads.clear()
         if hasattr(self, '_close_handler'):
             self._close_handler()
-    
+
     def create_ref_link(self, data: str):
         return f"https://ble.ir/{self.get_me().username}?start={data}"
