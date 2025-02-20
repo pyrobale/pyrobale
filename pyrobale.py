@@ -8,26 +8,19 @@ Features:
 - New and Up to date
 - Internal database management
 """
+from typing import Optional, Dict, Any, List, Union
+import os
 import json
 import time
-from typing import Optional, Dict, Any, List, Union
 import threading
 import traceback
 import sqlite3
 import inspect
-import requests
 import re
 import sys
-import os
-from urllib.parse import urlparse, unquote
-from io import BytesIO
-import mimetypes
-from os import PathLike
-from pathlib import Path
-import uuid
-from typing import Iterator
+import requests
 
-__version__ = '0.2.8.2'
+__version__ = '0.2.8.3'
 
 
 class ChatActions:
@@ -1673,6 +1666,8 @@ class Client:
         self._member_leave_handler = None
         self._member_join_handler = None
         self._threads = []
+        self._polling = False
+        self.user = User(self, {})
 
     def set_state(self,
                   chat_or_user_id: Union[Chat,
@@ -2421,9 +2416,7 @@ class Client:
             print(f"Error checking file modification time: {e}")
             return False
 
-    def get_updates(self, offset: Optional[int] = None,
-                    limit: Optional[int] = None,
-                    timeout: Optional[int] = None) -> List[Dict[str, Any]]:
+    def get_updates(self) -> List[Dict[str, Any]]:
         params = {k: v for k, v in locals().items() if k !=
                   'self' and v is not None}
         response = self._make_request('GET', 'getUpdates', params=params)
