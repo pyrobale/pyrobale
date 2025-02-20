@@ -20,8 +20,14 @@ import re
 import sys
 import os
 from urllib.parse import urlparse, unquote
+from io import BytesIO
+import mimetypes
+from os import PathLike
+from pathlib import Path
+import uuid
+from typing import Iterator
 
-__version__ = '0.2.8'
+__version__ = '0.2.8.1'
 
 class ChatActions:
     """Represents different chat action states that can be sent to Bale"""
@@ -352,20 +358,24 @@ class LabeledPrice:
 
 class Document:
     def __init__(self, data: dict):
+        print(data)
         if data:
             self.file_id = data.get('file_id')
             self.file_unique_id = data.get('file_unique_id')
             self.file_name = data.get('file_name')
             self.mime_type = data.get('mime_type')
             self.file_size = data.get('file_size')
+            self.input_file = InputFile(self.file_id)
         else:
             self.file_id = None
             self.file_unique_id = None
             self.file_name = None
             self.mime_type = None
             self.file_size = None
+            self.input_file = None
 
-
+    def __bool__(self):
+        return bool(self.file_id)
 class Invoice:
     def __init__(self, data: dict):
         if data:
@@ -544,40 +554,126 @@ class InlineKeyboardMarkup:
     def keyboard(self) -> dict:
         return {"inline_keyboard": self.inline_keyboard}
 
-
-class InputFile:
-    """Represents a file to be uploaded"""
-
-    def __init__(self,
-                 client: 'Client',
-                 file: Union[str,
-                             bytes],
-                 filename: Optional[str] = None):
-        self.client = client
-        self.filename = filename
-        if isinstance(file, str):
-            if file.startswith(('http://', 'https://')):
-                r = requests.get(file)
-                r.raise_for_status()
-                self.file = r.content
-            else:
-                try:
-                    self.file = open(file, 'rb')
-                except IOError:
-                    raise BaleException(
-                        f"Failed to open file: {traceback.format_exc()}")
-        else:
-            self.file = file
-
-    def __del__(self):
-        if hasattr(self, 'file') and hasattr(self.file, 'close'):
-            self.file.close()
+class InputMedia:
+    """Base class for input media types"""
+    def __init__(self, media: str, caption: str = None):
+        self.media = media
+        self.caption = caption
 
     @property
-    def to_bytes(self):
-        if hasattr(self.file, 'read'):
-            return self.file.read()
-        return self.file
+    def media_dict(self) -> dict:
+        media_dict = {
+            'media': self.media,
+            'type': self.type
+        }
+        if self.caption:
+            media_dict['caption'] = self.caption
+        return media_dict
+
+
+class InputMediaPhoto(InputMedia):
+    """Represents a photo to be sent"""
+    type = 'photo'
+
+
+class InputMediaVideo(InputMedia):
+    """Represents a video to be sent"""
+    type = 'video'
+
+    def __init__(self, media: str, caption: str = None, width: int = None,
+                 height: int = None, duration: int = None):
+        super().__init__(media, caption)
+        self.width = width
+        self.height = height
+        self.duration = duration
+
+    @property
+    def media_dict(self) -> dict:
+        media_dict = super().media_dict
+        if self.width:
+            media_dict['width'] = self.width
+        if self.height:
+            media_dict['height'] = self.height
+        if self.duration:
+            media_dict['duration'] = self.duration
+        return media_dict
+
+
+class InputMediaAnimation(InputMedia):
+    """Represents an animation to be sent"""
+    type = 'animation'
+
+    def __init__(self, media: str, caption: str = None, width: int = None,
+                 height: int = None, duration: int = None):
+        super().__init__(media, caption)
+        self.width = width
+        self.height = height
+        self.duration = duration
+
+    @property
+    def media_dict(self) -> dict:
+        media_dict = super().media_dict
+        if self.width:
+            media_dict['width'] = self.width
+        if self.height:
+            media_dict['height'] = self.height
+        if self.duration:
+            media_dict['duration'] = self.duration
+        return media_dict
+
+class InputFile:
+    """Represents a file to be sent"""
+    
+    def __init__(self, file: Union[str, bytes] = None, file_id: str = None):
+        if file and file_id:
+            raise ValueError("Either file or file_id should be provided, not both")
+        elif not file and not file_id:
+            raise ValueError("Either file or file_id must be provided")
+            
+        self.file = file
+        self.file_id = file_id
+        
+    @property
+    def file_type(self) -> str:
+        if self.file_id:
+            return "id"
+        if isinstance(self.file, bytes):
+            return "bytes"
+        if self.file.startswith(('http://', 'https://')):
+            return "url"
+        return "path"
+        
+    def __str__(self) -> str:
+        if self.file_id:
+            return self.file_id
+        return str(self.file)
+
+class InputMediaAudio(InputMedia):
+    """Represents an audio file to be sent"""
+    type = 'audio'
+
+    def __init__(self, media: str, caption: str = None, duration: int = None,
+                 performer: str = None, title: str = None):
+        super().__init__(media, caption)
+        self.duration = duration
+        self.performer = performer
+        self.title = title
+
+    @property
+    def media_dict(self) -> dict:
+        media_dict = super().media_dict
+        if self.duration:
+            media_dict['duration'] = self.duration
+        if self.performer:
+            media_dict['performer'] = self.performer
+        if self.title:
+            media_dict['title'] = self.title
+        return media_dict
+
+
+class InputMediaDocument(InputMedia):
+    """Represents a document to be sent"""
+    type = 'document'
 
 
 class CallbackQuery:
@@ -1286,34 +1382,46 @@ class Message:
                     'chat', {})})
         self.text = result.get('text')
         self.caption = result.get('caption')
-        self.document = Document(result.get('document'))
-        self.photo = Document(result.get('photo'))
-        self.video = Document(result.get('video'))
-        self.audio = Document(result.get('audio'))
-        self.voice = Voice(result.get('voice'))
-        self.animation = result.get('animation')
-        self.contact = Contact(result.get('contact'))
-        self.location = Location(result.get('location'))
+            
+        # Media handling
+        self.document = Document(result.get('document', {})) if result.get('document') else None            
+        # Handle photo array properly
+        photos = result.get('photo', [])
+        self.photo = [Document(photo) for photo in photos] if photos else None
+        self.largest_photo = Document(photos[-1]) if photos else None
+            
+        self.video = Document(result.get('video')) if result.get('video') else None
+        self.audio = Document(result.get('audio')) if result.get('audio') else None
+        self.voice = Voice(result.get('voice')) if result.get('voice') else None
+        self.animation = Document(result.get('animation')) if result.get('animation') else None
+        self.sticker = Document(result.get('sticker')) if result.get('sticker') else None
+        self.video_note = Document(result.get('video_note')) if result.get('video_note') else None
+            
+        self.media_group_id = result.get('media_group_id')
+        self.has_media = any([self.document, self.photo, self.video, self.audio, 
+                            self.voice, self.animation, self.sticker, self.video_note])
+            
+        self.contact = Contact(result.get('contact')) if result.get('contact') else None
+        self.location = Location(result.get('location')) if result.get('location') else None
         self.forward_from = User(client, {'ok': True, 'result': result.get(
             'forward_from', {})}) if result.get('forward_from') else None
         self.forward_from_message_id = result.get('forward_from_message_id')
-        self.invoice = Invoice(result.get('invoice'))
+        self.invoice = Invoice(result.get('invoice')) if result.get('invoice') else None
         self.reply_to_message = Message(client, {'ok': True, 'result': result.get(
             'reply_to_message', {})}) if result.get('reply_to_message') else None
         self.reply = self.reply_message
         self.send = lambda text, parse_mode=None, reply_markup=None: self.client.send_message(
             self.chat.id, text, parse_mode, reply_markup, reply_to_message=self)
-        
+            
         self.command = None
         self.args = None
-        txt = self.text.split(' ')
-        
-        self.command = txt[0]
-        self.has_slash_command = self.command.startswith('/')
-        self.args = txt[1:]
-        
-        self.start = self.command == '/start'
-
+        txt = self.text.split(' ') if self.text else []
+            
+        self.command = txt[0] if txt else None
+        self.has_slash_command = self.command.startswith('/') if self.text else None
+        self.args = txt[1:] if self.text else None
+            
+        self.start = self.command == '/start' if self.text else None
     def edit(self,
              text: str,
              parse_mode: Optional[str] = None,
@@ -1523,6 +1631,7 @@ class Client:
         self.database_name = database_name
         self.auto_log_start_message = auto_log_start_message
         self._base_url = f"{session}/bot{token}"
+        self._file_url = f"{session}/file/bot{token}"
         self._session = requests.Session()
         self._message_handler = None
         self._message_edit_handler = None
@@ -1600,7 +1709,18 @@ class Client:
         """Get information about the bot"""
         data = self._make_request('GET', 'getMe')
         return User(self, data)
-
+    
+    def get_file(self, file_id: str) -> bytes:
+        """Get file information from Bale API"""
+        data = {
+            'file_id': file_id
+        }
+        response = self._make_request('POST', 'getFile', json=data)
+        file_path = response['result']['file_path']
+        url = f"{self._file_url}/{file_path}"
+        file_response = self._session.get(url)
+        return file_response.content
+    
     def set_webhook(self, url: str, certificate: Optional[str] = None,
                     max_connections: Optional[int] = None) -> bool:
         """Set webhook for getting updates"""
@@ -2198,7 +2318,7 @@ class Client:
     def run(self, debug=False):
         """Start p-olling for new messages"""
         try:
-            self.get_me()
+            self.user = User(self,{"ok":True,"result":self.get_me()})
         except BaseException:
             raise BaleTokenNotFoundError("token not found")
 
