@@ -21,7 +21,7 @@ import sys
 import os
 from urllib.parse import urlparse, unquote
 
-__version__ = '0.2.7'
+__version__ = '0.2.8'
 
 class ChatActions:
     """Represents different chat action states that can be sent to Bale"""
