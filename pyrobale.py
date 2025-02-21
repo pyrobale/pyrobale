@@ -1667,7 +1667,7 @@ class Client:
         self._member_join_handler = None
         self._threads = []
         self._polling = False
-        self.user = User(self, {})
+        self.user = None
 
     def set_state(self,
                   chat_or_user_id: Union[Chat,
@@ -2273,9 +2273,10 @@ class Client:
 
     def _create_thread(self, handler, *args):
         """Helper method to create and start a thread"""
-        thread = threading.Thread(target=handler, args=args, daemon=True)
-        thread.start()
-        self._threads.append(thread)
+        if handler:
+            thread = threading.Thread(target=handler, args=args, daemon=True)
+            thread.start()
+            self._threads.append(thread)
 
     def _handle_message(self, message, update):
         """Handle different types of messages"""
@@ -2314,7 +2315,7 @@ class Client:
                     self._create_thread(handler, *args)
                     return
 
-        if self._message_handler:
+        if hasattr(self, '_message_handler'):
             conds = conditions(
                 self,
                 message.author,
@@ -2333,7 +2334,7 @@ class Client:
         # Handle message and edited message
         message_types = {
             'message': (Message, self._handle_message),
-            'edited_message': (Message, self._message_edit_handler)
+            'edited_message': (Message, lambda m, u: self._create_thread(self._message_edit_handler, m, u) if hasattr(self, '_message_edit_handler') else None)
         }
 
         for update_type, (cls, handler) in message_types.items():
@@ -2344,7 +2345,7 @@ class Client:
                 handler(message, update)
                 return
 
-        if 'callback_query' in update and self._callback_handler:
+        if 'callback_query' in update and hasattr(self, '_callback_handler'):
             obj = CallbackQuery(
                 self, {
                     'ok': True, 'result': update['callback_query']})
@@ -2362,13 +2363,14 @@ class Client:
                     info['last_run'] = current_time
 
     def run(self, debug=False):
-        """Start p-olling for new messages"""
+        """Start polling for new messages"""
         try:
             self.user = self.get_me()
         except BaseException:
             raise BaleTokenNotFoundError("token not found")
 
         self._polling = True
+        self._threads = []
         offset = 0
         past_updates = set()
         source_file = inspect.getfile(self.__class__)
@@ -2389,7 +2391,7 @@ class Client:
                         python = sys.executable
                         os.execl(python, python, *sys.argv)
 
-                updates = self.get_updates(offset=offset, timeout=30)
+                updates = self.get_updates(offset=offset)
                 for update in updates:
                     update_id = update['update_id']
                     if update_id not in past_updates:
@@ -2416,9 +2418,8 @@ class Client:
             print(f"Error checking file modification time: {e}")
             return False
 
-    def get_updates(self) -> List[Dict[str, Any]]:
-        params = {k: v for k, v in locals().items() if k !=
-                  'self' and v is not None}
+    def get_updates(self, offset=None) -> List[Dict[str, Any]]:
+        params = {'offset': offset} if offset is not None else {}
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
