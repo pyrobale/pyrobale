@@ -20,7 +20,7 @@ import re
 import sys
 import requests
 
-__version__ = '0.2.8.3'
+__version__ = '0.2.9'
 
 
 class ChatActions:
