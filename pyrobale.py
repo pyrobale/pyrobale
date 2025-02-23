@@ -2312,7 +2312,9 @@ class Client:
                         self, message.author, message, None, message.chat)
                     params = inspect.signature(handler).parameters
                     args = (message, conds) if len(params) > 1 else (message,)
-                    self._create_thread(handler, *args)
+                    result = handler(*args)
+                    if isinstance(result, str):
+                        message.chat.send_message(result)
                     return
 
         if hasattr(self, '_message_handler'):
@@ -2325,7 +2327,9 @@ class Client:
             params = inspect.signature(self._message_handler).parameters
             args = ((message, update, conds) if len(params) > 2 else
                     (message, update) if len(params) > 1 else (message,))
-            self._create_thread(self._message_handler, *args)
+            result = self._message_handler(*args)
+            if isinstance(result, str):
+                message.chat.send_message(result)
 
     def _handle_update(self, update):
         if hasattr(self, '_update_handler'):
@@ -2333,9 +2337,11 @@ class Client:
 
         # Handle message and edited message
         message_types = {
-            'message': (Message, self._handle_message),
-            'edited_message': (Message, lambda m, u: self._create_thread(self._message_edit_handler, m, u) if hasattr(self, '_message_edit_handler') else None)
-        }
+            'message': (
+                Message, self._handle_message), 'edited_message': (
+                Message, lambda m, u: self._create_thread(
+                    self._message_edit_handler, m, u) if hasattr(
+                    self, '_message_edit_handler') else None)}
 
         for update_type, (cls, handler) in message_types.items():
             if update_type in update:
