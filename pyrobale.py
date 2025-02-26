@@ -1160,10 +1160,17 @@ class User:
     def get_state(self) -> str | None:
         """Get the state for a chat or user"""
         return self.client.states.get(str(self.id))
+    
+    @property
+    def state(self):
+        return self.get_state()
 
     def del_state(self) -> None:
         """Delete the state for a chat or user"""
         self.client.states.pop(str(self.id), None)
+    
+    def __str__(self):
+        return self.first_name
 
     def send_message(self,
                      text: str,
