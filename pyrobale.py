@@ -20,7 +20,7 @@ import re
 import sys
 import requests
 
-__version__ = '0.2.9'
+__version__ = '0.2.9.1'
 
 
 class ChatActions:
@@ -698,6 +698,7 @@ class CallbackQuery:
         self.inline_message_id = result.get('inline_message_id')
         self.chat_instance = result.get('chat_instance')
         self.data = result.get('data')
+        self.chat = self.message.chat
 
     def answer(self,
                text: str,
@@ -1390,12 +1391,11 @@ class Message:
         self.text = result.get('text')
         self.caption = result.get('caption')
 
-        # Media handling
         self.document = Document(
             result.get(
                 'document',
                 {})) if result.get('document') else None
-        # Handle photo array properly
+
         photos = result.get('photo', [])
         self.photo = [Document(photo) for photo in photos] if photos else None
         self.largest_photo = Document(photos[-1]) if photos else None
@@ -2266,7 +2266,10 @@ class Client:
         """Decorator for handling specific text commands"""
         def decorator(func):
             self._text_handlers = getattr(self, '_text_handlers', {})
-            cmd = f"/{func.__name__}" if command is None else f"/{command.lstrip('/')}"
+            if command is None:
+                cmd = f"/{func.__name__}"
+            else:
+                cmd = f"/{command.lstrip('/')}"
             self._text_handlers[cmd] = func
             return func
         return decorator
@@ -2312,9 +2315,7 @@ class Client:
                         self, message.author, message, None, message.chat)
                     params = inspect.signature(handler).parameters
                     args = (message, conds) if len(params) > 1 else (message,)
-                    result = handler(*args)
-                    if isinstance(result, str):
-                        message.chat.send_message(result)
+                    self._create_thread(handler, *args)
                     return
 
         if hasattr(self, '_message_handler'):
@@ -2335,13 +2336,12 @@ class Client:
         if hasattr(self, '_update_handler'):
             self._create_thread(self._update_handler, update)
 
-        # Handle message and edited message
         message_types = {
-            'message': (
-                Message, self._handle_message), 'edited_message': (
-                Message, lambda m, u: self._create_thread(
-                    self._message_edit_handler, m, u) if hasattr(
-                    self, '_message_edit_handler') else None)}
+            'message': (Message, self._handle_message),
+            'edited_message': (Message, lambda m, u: self._create_thread(
+                self._message_edit_handler, m) if hasattr(
+                self, '_message_edit_handler') else None)
+        }
 
         for update_type, (cls, handler) in message_types.items():
             if update_type in update:
@@ -2349,15 +2349,21 @@ class Client:
                     self, {
                         'ok': True, 'result': update[update_type]})
                 handler(message, update)
-                return
 
         if 'callback_query' in update and hasattr(self, '_callback_handler'):
-            obj = CallbackQuery(
+            callback_data = update['callback_query']
+            obj = CallbackQuery(self, {'ok': True, 'result': callback_data})
+            message = Message(
                 self, {
-                    'ok': True, 'result': update['callback_query']})
+                    'ok': True, 'result': callback_data['message']}) if 'message' in callback_data else None
+            chat = Chat(
+                self, {
+                    'ok': True, 'result': callback_data['message']['chat']}) if message else None
+            user = User(self, {'ok': True, 'result': callback_data['from']})
+
+            conds = conditions(self, user, message, obj, chat)
             params = inspect.signature(self._callback_handler).parameters
-            conds = conditions(self, obj.author, None, obj, obj.chat)
-            args = (obj, update, conds) if len(params) > 2 else (obj, update)
+            args = (obj, conds) if len(params) > 1 else (obj,)
             self._create_thread(self._callback_handler, *args)
 
     def _handle_tick_events(self, current_time):
@@ -2397,13 +2403,13 @@ class Client:
                         python = sys.executable
                         os.execl(python, python, *sys.argv)
 
-                updates = self.get_updates(offset=offset)
+                updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
                     update_id = update['update_id']
                     if update_id not in past_updates:
+                        past_updates.add(update_id)
                         self._handle_update(update)
                         offset = update_id + 1
-                        past_updates.add(update_id)
                         if len(past_updates) > 100:
                             past_updates = set(
                                 sorted(list(past_updates))[-50:])
@@ -2424,8 +2430,11 @@ class Client:
             print(f"Error checking file modification time: {e}")
             return False
 
-    def get_updates(self, offset=None) -> List[Dict[str, Any]]:
-        params = {'offset': offset} if offset is not None else {}
+    def get_updates(self, offset=None, timeout=30) -> List[Dict[str, Any]]:
+        params = {
+            'offset': offset,
+            'timeout': timeout} if offset is not None else {
+            'timeout': timeout}
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
