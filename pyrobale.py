@@ -3,10 +3,11 @@ PyRobale - A Python library for developing bale bots.
 
 Features:
 - Simple and fast
-- Customizable and Customizes
-- Eazy to learn
+- Customizable and Customized
 - New and Up to date
 - Internal database management
+- Easy to use
+- Eazy to learn
 """
 from typing import Optional, Dict, Any, List, Union
 import os
@@ -30,6 +31,7 @@ class ChatActions:
     PHOTO: str = 'upload_photo'
     VIDEO: str = 'record_video'
     CHOOSE_STICKER: str = 'choose_sticker'
+
 
 class DataBase:
     """
@@ -182,7 +184,8 @@ class BaleException(Exception):
         self.error_code = error_code
         self.response = response
 
-        error_text = f"Error {error_code}: {message}" if error_code and message else message or str(error_code)
+        error_text = f"Error {error_code}: {message}" if error_code and message else message or str(
+            error_code)
         super().__init__(error_text)
 
     def __str__(self):
@@ -248,6 +251,7 @@ class BaleTokenNotFoundError(BaleException):
 class BaleUnknownError(BaleException):
     """Exception raised for unexpected or unknown errors"""
     pass
+
 
 class LabeledPrice:
     def __init__(self, label: str, amount: int):
@@ -401,6 +405,7 @@ class MenuKeyboardMarkup:
                         if not isinstance(button, str):
                             raise ValueError("Button must be string")
                         self.add(MenuKeyboardButton(button), row_idx)
+
     def add(self, button: MenuKeyboardButton,
             row: int = 0) -> 'MenuKeyboardMarkup':
         if row < 0:
@@ -441,10 +446,18 @@ class InlineKeyboardMarkup:
                     if not isinstance(button, (tuple, list)):
                         raise ValueError("Button must be a tuple or list")
                     if len(button) != 2:
-                        raise ValueError("Button must contain exactly text and callback_data/url/web_app")
-                    if not isinstance(button[0], str) or not isinstance(button[1], str):
-                        raise ValueError("Button text and data must be strings")
-                    self.add(InlineKeyboardButton(button[0], callback_data=button[1]), row_idx)
+                        raise ValueError(
+                            "Button must contain exactly text and callback_data/url/web_app")
+                    if not isinstance(button[0], str) or not isinstance(
+                            button[1], str):
+                        raise ValueError(
+                            "Button text and data must be strings")
+                    self.add(
+                        InlineKeyboardButton(
+                            button[0],
+                            callback_data=button[1]),
+                        row_idx)
+
     def add(self, button: InlineKeyboardButton,
             row: int = 0) -> 'InlineKeyboardMarkup':
         if row < 0:
@@ -1083,7 +1096,7 @@ class User:
     def get_state(self) -> str | None:
         """Get the state for a chat or user"""
         return self.client.states.get(str(self.id))
-    
+
     @property
     def state(self):
         return self.get_state()
@@ -1091,7 +1104,7 @@ class User:
     def del_state(self) -> None:
         """Delete the state for a chat or user"""
         self.client.states.pop(str(self.id), None)
-    
+
     def __str__(self):
         return self.first_name
 
@@ -2144,8 +2157,6 @@ class Client:
         response = self._make_request('GET', 'getChatMember', json=data)
         return response.get('status') not in ['left', 'kicked']
 
-
-
     def on_message(self, func):
         """Decorator for handling new messages"""
         self._message_handler = func
@@ -2161,7 +2172,8 @@ class Client:
         def decorator(func):
             if not hasattr(self, '_tick_handlers'):
                 self._tick_handlers = {}
-            self._tick_handlers[func] = {'interval': seconds, 'last_run': time.time()}
+            self._tick_handlers[func] = {
+                'interval': seconds, 'last_run': time.time()}
             return func
         return decorator
 
@@ -2201,14 +2213,16 @@ class Client:
             if not hasattr(self, '_text_handlers'):
                 self._text_handlers = {}
             cmd = f"/{command.lstrip('/')}" if command else f"/{func.__name__}"
-            self._text_handlers[cmd] = {'handler': func, 'case_sensitive': case_sensitive}
+            self._text_handlers[cmd] = {
+                'handler': func, 'case_sensitive': case_sensitive}
             return func
         return decorator
 
     def _create_thread(self, handler, *args, **kwargs):
         """Helper method to create and start a thread"""
         if handler:
-            thread = threading.Thread(target=handler, args=args, kwargs=kwargs, daemon=True)
+            thread = threading.Thread(
+                target=handler, args=args, kwargs=kwargs, daemon=True)
             thread.start()
             self._threads.append(thread)
             return thread
@@ -2218,7 +2232,8 @@ class Client:
         """Handle different types of messages"""
         msg_data = update.get('message', {})
 
-        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
+        if 'new_chat_members' in msg_data and hasattr(
+                self, '_member_join_handler'):
             chat, user = msg_data['chat'], msg_data['new_chat_members'][0]
             self._create_thread(
                 self._member_join_handler,
@@ -2228,7 +2243,8 @@ class Client:
             )
             return
 
-        if 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
+        if 'left_chat_member' in msg_data and hasattr(
+                self, '_member_leave_handler'):
             chat, user = msg_data['chat'], msg_data['left_chat_member']
             self._create_thread(
                 self._member_leave_handler,
@@ -2243,12 +2259,12 @@ class Client:
             for command, handler_info in self._text_handlers.items():
                 handler = handler_info['handler']
                 case_sensitive = handler_info['case_sensitive']
-                
+
                 if case_sensitive:
                     matches = text.startswith(command)
                 else:
                     matches = text.lower().startswith(command.lower())
-                
+
                 if matches:
                     params = inspect.signature(handler).parameters
                     args = [message]
@@ -2279,22 +2295,34 @@ class Client:
 
             for update_type, (cls, handler) in message_types.items():
                 if update_type in update:
-                    message = cls(self, {'ok': True, 'result': update[update_type]})
+                    message = cls(
+                        self, {
+                            'ok': True, 'result': update[update_type]})
                     handler(message, update)
 
-            if 'callback_query' in update and hasattr(self, '_callback_handler'):
+            if 'callback_query' in update and hasattr(
+                    self, '_callback_handler'):
                 callback_data = update['callback_query']
-                obj = CallbackQuery(self, {'ok': True, 'result': callback_data})
+                obj = CallbackQuery(
+                    self, {'ok': True, 'result': callback_data})
                 message = Message(
                     self, {
                         'ok': True, 'result': callback_data['message']}) if 'message' in callback_data else None
                 chat = Chat(
                     self, {
                         'ok': True, 'result': callback_data['message']['chat']}) if message else None
-                user = User(self, {'ok': True, 'result': callback_data['from']})
+                user = User(
+                    self, {
+                        'ok': True, 'result': callback_data['from']})
 
                 params = inspect.signature(self._callback_handler).parameters
-                args = (obj, message, chat, user) if len(params) > 1 else (obj,)
+                args = (
+                    obj,
+                    message,
+                    chat,
+                    user) if len(params) > 1 else (
+                    obj,
+                )
                 self._create_thread(self._callback_handler, *args)
         except Exception as e:
             print(f"Error handling update: {e}")
@@ -2329,7 +2357,8 @@ class Client:
 
         while self._polling:
             try:
-                if debug and self._check_source_file_changed(source_file, last_modified):
+                if debug and self._check_source_file_changed(
+                        source_file, last_modified):
                     last_modified = os.path.getmtime(source_file)
                     print("Source file changed, restarting...")
                     python = sys.executable
@@ -2387,6 +2416,7 @@ class Client:
         """Create a reference link for the bot"""
         return f"https://ble.ir/{self.get_me().username}?start={data}"
 
+
 def run_multiple_bots(bots: List[Client]):
     """Run multiple bots in separate threads"""
     threads = []
@@ -2396,8 +2426,9 @@ def run_multiple_bots(bots: List[Client]):
         threads.append(thread)
     for thread in threads:
         thread.join()
-    
+
     return bots
+
 
 def stop_bots(bots: List[Client]):
     """Stop multiple bots gracefully"""
