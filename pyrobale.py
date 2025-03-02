@@ -19,6 +19,7 @@ import inspect
 import re
 import sys
 import requests
+import collections
 
 __version__ = '0.2.9.1'
 
@@ -2235,8 +2236,9 @@ class Client:
     def on_tick(self, seconds: int):
         """Decorator for handling periodic events"""
         def decorator(func):
-            self._tick_handlers = getattr(self, '_tick_handlers', {})
-            self._tick_handlers[func] = {'interval': seconds, 'last_run': 0}
+            if not hasattr(self, '_tick_handlers'):
+                self._tick_handlers = {}
+            self._tick_handlers[func] = {'interval': seconds, 'last_run': time.time()}
             return func
         return decorator
 
@@ -2270,31 +2272,30 @@ class Client:
         self._message_edit_handler = func
         return func
 
-    def on_command(self, command: str = None):
+    def on_command(self, command: str = None, case_sensitive: bool = False):
         """Decorator for handling specific text commands"""
         def decorator(func):
-            self._text_handlers = getattr(self, '_text_handlers', {})
-            if command is None:
-                cmd = f"/{func.__name__}"
-            else:
-                cmd = f"/{command.lstrip('/')}"
-            self._text_handlers[cmd] = func
+            if not hasattr(self, '_text_handlers'):
+                self._text_handlers = {}
+            cmd = f"/{command.lstrip('/')}" if command else f"/{func.__name__}"
+            self._text_handlers[cmd] = {'handler': func, 'case_sensitive': case_sensitive}
             return func
         return decorator
 
-    def _create_thread(self, handler, *args):
+    def _create_thread(self, handler, *args, **kwargs):
         """Helper method to create and start a thread"""
         if handler:
-            thread = threading.Thread(target=handler, args=args, daemon=True)
+            thread = threading.Thread(target=handler, args=args, kwargs=kwargs, daemon=True)
             thread.start()
             self._threads.append(thread)
+            return thread
+        return None
 
     def _handle_message(self, message, update):
         """Handle different types of messages"""
         msg_data = update.get('message', {})
 
-        if 'new_chat_members' in msg_data and hasattr(
-                self, '_member_join_handler'):
+        if 'new_chat_members' in msg_data and hasattr(self, '_member_join_handler'):
             chat, user = msg_data['chat'], msg_data['new_chat_members'][0]
             self._create_thread(
                 self._member_join_handler,
@@ -2304,8 +2305,7 @@ class Client:
             )
             return
 
-        if 'left_chat_member' in msg_data and hasattr(
-                self, '_member_leave_handler'):
+        if 'left_chat_member' in msg_data and hasattr(self, '_member_leave_handler'):
             chat, user = msg_data['chat'], msg_data['left_chat_member']
             self._create_thread(
                 self._member_leave_handler,
@@ -2317,62 +2317,65 @@ class Client:
 
         if 'text' in msg_data and hasattr(self, '_text_handlers'):
             text = msg_data['text']
-            for command, handler in self._text_handlers.items():
-                if text.startswith(command):
-                    conds = conditions(
-                        self, message.author, message, None, message.chat)
+            for command, handler_info in self._text_handlers.items():
+                handler = handler_info['handler']
+                case_sensitive = handler_info['case_sensitive']
+                
+                if case_sensitive:
+                    matches = text.startswith(command)
+                else:
+                    matches = text.lower().startswith(command.lower())
+                
+                if matches:
                     params = inspect.signature(handler).parameters
-                    args = (message, conds) if len(params) > 1 else (message,)
+                    args = [message]
+                    if len(params) > 1:
+                        command_args = text[len(command):].strip().split()
+                        args.extend(command_args)
                     self._create_thread(handler, *args)
                     return
 
         if hasattr(self, '_message_handler'):
-            conds = conditions(
-                self,
-                message.author,
-                message,
-                None,
-                message.chat)
             params = inspect.signature(self._message_handler).parameters
-            args = ((message, update, conds) if len(params) > 2 else
-                    (message, update) if len(params) > 1 else (message,))
+            args = ((message, update) if len(params) > 1 else (message,))
             result = self._message_handler(*args)
             if isinstance(result, str):
                 message.chat.send_message(result)
 
     def _handle_update(self, update):
-        if hasattr(self, '_update_handler'):
-            self._create_thread(self._update_handler, update)
+        try:
+            if hasattr(self, '_update_handler'):
+                self._create_thread(self._update_handler, update)
 
-        message_types = {
-            'message': (Message, self._handle_message),
-            'edited_message': (Message, lambda m, u: self._create_thread(
-                self._message_edit_handler, m) if hasattr(
-                self, '_message_edit_handler') else None)
-        }
+            message_types = {
+                'message': (Message, self._handle_message),
+                'edited_message': (Message, lambda m, u: self._create_thread(
+                    self._message_edit_handler, m) if hasattr(
+                    self, '_message_edit_handler') else None)
+            }
 
-        for update_type, (cls, handler) in message_types.items():
-            if update_type in update:
-                message = cls(
+            for update_type, (cls, handler) in message_types.items():
+                if update_type in update:
+                    message = cls(self, {'ok': True, 'result': update[update_type]})
+                    handler(message, update)
+
+            if 'callback_query' in update and hasattr(self, '_callback_handler'):
+                callback_data = update['callback_query']
+                obj = CallbackQuery(self, {'ok': True, 'result': callback_data})
+                message = Message(
                     self, {
-                        'ok': True, 'result': update[update_type]})
-                handler(message, update)
+                        'ok': True, 'result': callback_data['message']}) if 'message' in callback_data else None
+                chat = Chat(
+                    self, {
+                        'ok': True, 'result': callback_data['message']['chat']}) if message else None
+                user = User(self, {'ok': True, 'result': callback_data['from']})
 
-        if 'callback_query' in update and hasattr(self, '_callback_handler'):
-            callback_data = update['callback_query']
-            obj = CallbackQuery(self, {'ok': True, 'result': callback_data})
-            message = Message(
-                self, {
-                    'ok': True, 'result': callback_data['message']}) if 'message' in callback_data else None
-            chat = Chat(
-                self, {
-                    'ok': True, 'result': callback_data['message']['chat']}) if message else None
-            user = User(self, {'ok': True, 'result': callback_data['from']})
-
-            conds = conditions(self, user, message, obj, chat)
-            params = inspect.signature(self._callback_handler).parameters
-            args = (obj, conds) if len(params) > 1 else (obj,)
-            self._create_thread(self._callback_handler, *args)
+                params = inspect.signature(self._callback_handler).parameters
+                args = (obj, message, chat, user) if len(params) > 1 else (obj,)
+                self._create_thread(self._callback_handler, *args)
+        except Exception as e:
+            print(f"Error handling update: {e}")
+            traceback.print_exc()
 
     def _handle_tick_events(self, current_time):
         """Handle periodic tick events"""
@@ -2386,13 +2389,13 @@ class Client:
         """Start polling for new messages"""
         try:
             self.user = self.get_me()
-        except BaseException:
-            raise BaleTokenNotFoundError("token not found")
+        except Exception as e:
+            raise BaleTokenNotFoundError(f"Token not found: {str(e)}")
 
         self._polling = True
         self._threads = []
         offset = 0
-        past_updates = set()
+        past_updates = collections.deque(maxlen=100)
         source_file = inspect.getfile(self.__class__)
         last_modified = os.path.getmtime(source_file)
 
@@ -2403,57 +2406,77 @@ class Client:
 
         while self._polling:
             try:
-                if debug:
-                    current_modified = os.path.getmtime(source_file)
-                    if current_modified > last_modified:
-                        last_modified = current_modified
-                        print("Source file changed, restarting...")
-                        python = sys.executable
-                        os.execl(python, python, *sys.argv)
+                if debug and self._check_source_file_changed(source_file, last_modified):
+                    last_modified = os.path.getmtime(source_file)
+                    print("Source file changed, restarting...")
+                    python = sys.executable
+                    os.execl(python, python, *sys.argv)
 
                 updates = self.get_updates(offset=offset, timeout=30)
                 for update in updates:
                     update_id = update['update_id']
                     if update_id not in past_updates:
-                        past_updates.add(update_id)
+                        past_updates.append(update_id)
                         self._handle_update(update)
                         offset = update_id + 1
-                        if len(past_updates) > 100:
-                            past_updates = set(
-                                sorted(list(past_updates))[-50:])
 
                 current_time = time.time()
                 self._handle_tick_events(current_time)
                 self._threads = [t for t in self._threads if t.is_alive()]
                 time.sleep(0.1)
-            except Exception:
-                print(f"Error in polling: {traceback.format_exc()}")
+            except Exception as e:
+                print(f"Error in polling: {e}")
+                traceback.print_exc()
                 time.sleep(1)
 
     def _check_source_file_changed(self, source_file, last_modified):
+        """Check if source file has been modified"""
         try:
-            current_mtime = os.path.getmtime(source_file)
-            return current_mtime != last_modified
+            return os.path.getmtime(source_file) > last_modified
         except (FileNotFoundError, OSError) as e:
             print(f"Error checking file modification time: {e}")
             return False
 
     def get_updates(self, offset=None, timeout=30) -> List[Dict[str, Any]]:
-        params = {
-            'offset': offset,
-            'timeout': timeout} if offset is not None else {
-            'timeout': timeout}
+        """Get updates from Bale API"""
+        params = {'timeout': timeout}
+        if offset is not None:
+            params['offset'] = offset
         response = self._make_request('GET', 'getUpdates', params=params)
         return response.get('result', [])
 
     def safe_close(self):
-        """Close the client and stop polling"""
+        """Close the client and stop polling gracefully"""
         self._polling = False
         for thread in self._threads:
-            thread.join(timeout=1.0)
+            try:
+                thread.join(timeout=1.0)
+            except Exception as e:
+                print(f"Error joining thread: {e}")
         self._threads.clear()
         if hasattr(self, '_close_handler'):
-            self._close_handler()
+            try:
+                self._close_handler()
+            except Exception as e:
+                print(f"Error in close handler: {e}")
 
-    def create_ref_link(self, data: str):
+    def create_ref_link(self, data: str) -> str:
+        """Create a reference link for the bot"""
         return f"https://ble.ir/{self.get_me().username}?start={data}"
+
+def run_multiple_bots(bots: List[Client]):
+    """Run multiple bots in separate threads"""
+    threads = []
+    for bot in bots:
+        thread = threading.Thread(target=bot.run)
+        thread.start()
+        threads.append(thread)
+    for thread in threads:
+        thread.join()
+    
+    return bots
+
+def stop_bots(bots: List[Client]):
+    """Stop multiple bots gracefully"""
+    for bot in bots:
+        bot.safe_close()
