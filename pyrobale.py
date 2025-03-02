@@ -182,67 +182,72 @@ class BaleException(Exception):
         self.error_code = error_code
         self.response = response
 
-        error_text = f"Error {error_code}: {message}" if error_code else message
+        error_text = f"Error {error_code}: {message}" if error_code and message else message or str(error_code)
         super().__init__(error_text)
 
     def __str__(self):
-        return f"{self.__class__.__name__}: {self.message}"
+        error_details = []
+        if self.error_code:
+            error_details.append(f"code={self.error_code}")
+        if self.message:
+            error_details.append(f"message='{self.message}'")
+        details = ", ".join(error_details)
+        return f"{self.__class__.__name__}({details})"
 
 
 class BaleAPIError(BaleException):
-    """Exception for API-specific errors"""
+    """Exception raised when Bale API returns an error response"""
     pass
 
 
 class BaleNetworkError(BaleException):
-    """Exception for network-related errors"""
+    """Exception raised when network-related issues occur during API calls"""
     pass
 
 
 class BaleAuthError(BaleException):
-    """Exception for authentication errors"""
+    """Exception raised when authentication fails or token is invalid"""
     pass
 
 
 class BaleValidationError(BaleException):
-    """Exception for data validation errors"""
+    """Exception raised when request data fails validation"""
     pass
 
 
 class BaleTimeoutError(BaleException):
-    """Exception for timeout errors"""
+    """Exception raised when API request times out"""
     pass
 
 
 class BaleNotFoundError(BaleException):
-    """Exception for when a resource is not found"""
+    """Exception raised when requested resource is not found (404)"""
     pass
 
 
 class BaleForbiddenError(BaleException):
-    """Exception for forbidden access errors"""
+    """Exception raised when access to resource is forbidden (403)"""
     pass
 
 
 class BaleServerError(BaleException):
-    """Exception for server-side errors"""
+    """Exception raised when server encounters an error (5xx)"""
     pass
 
 
 class BaleRateLimitError(BaleException):
-    """Exception for rate limit errors"""
+    """Exception raised when API rate limit is exceeded (429)"""
     pass
 
 
 class BaleTokenNotFoundError(BaleException):
-    """Exception for when a token is not found"""
+    """Exception raised when required API token is missing"""
     pass
 
 
 class BaleUnknownError(BaleException):
-    """Exception for unknown errors"""
+    """Exception raised for unexpected or unknown errors"""
     pass
-
 
 class LabeledPrice:
     def __init__(self, label: str, amount: int):
@@ -386,9 +391,16 @@ class InlineKeyboardButton:
 
 
 class MenuKeyboardMarkup:
-    def __init__(self):
+    def __init__(self, menu_keyboard: Optional[list] = None):
         self.menu_keyboard = []
-
+        if menu_keyboard:
+            for row_idx, row in enumerate(menu_keyboard):
+                if isinstance(row, tuple) or isinstance(row, str):
+                    buttons = [row] if isinstance(row, str) else row
+                    for button in buttons:
+                        if not isinstance(button, str):
+                            raise ValueError("Button must be string")
+                        self.add(MenuKeyboardButton(button), row_idx)
     def add(self, button: MenuKeyboardButton,
             row: int = 0) -> 'MenuKeyboardMarkup':
         if row < 0:
@@ -421,9 +433,18 @@ class MenuKeyboardMarkup:
 
 
 class InlineKeyboardMarkup:
-    def __init__(self):
+    def __init__(self, inline_keyboard: Optional[list] = None):
         self.inline_keyboard = []
-
+        if inline_keyboard:
+            for row_idx, row in enumerate(inline_keyboard):
+                for button in row:
+                    if not isinstance(button, (tuple, list)):
+                        raise ValueError("Button must be a tuple or list")
+                    if len(button) != 2:
+                        raise ValueError("Button must contain exactly text and callback_data/url/web_app")
+                    if not isinstance(button[0], str) or not isinstance(button[1], str):
+                        raise ValueError("Button text and data must be strings")
+                    self.add(InlineKeyboardButton(button[0], callback_data=button[1]), row_idx)
     def add(self, button: InlineKeyboardButton,
             row: int = 0) -> 'InlineKeyboardMarkup':
         if row < 0:
