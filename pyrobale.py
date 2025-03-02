@@ -2464,5 +2464,4 @@ class Client:
             self._close_handler()
 
     def create_ref_link(self, data: str):
-
         return f"https://ble.ir/{self.get_me().username}?start={data}"
