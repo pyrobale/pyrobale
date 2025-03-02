@@ -32,7 +32,6 @@ class ChatActions:
 
 
 class conditions:
-
     """
     A class for defining conditions for message handling.
     """
@@ -73,7 +72,7 @@ class conditions:
         """Check if message is in group chat"""
         return self.chat.type in ['group', 'supergroup']
 
-    def is_channel(self) -> bool:
+    def is_channel_chat(self) -> bool:
         """Check if message is in channel"""
         return self.chat.type == 'channel'
 
@@ -2221,6 +2220,16 @@ class Client:
         response = self._make_request('GET', 'getChatMember', json=data)
         return response.get('status') not in ['left', 'kicked']
 
+    def wait_for_message(self, check_func):
+        """Wait for a message that satisfies the check function"""
+        while self._polling:
+            updates = self.get_updates(timeout=1)
+            for update in updates:
+                if 'message' in update:
+                    message = Message(self, {'ok': True, 'result': update['message']})
+                    if check_func(message):
+                        return update
+
     def on_message(self, func):
         """Decorator for handling new messages"""
         self._message_handler = func
@@ -2455,4 +2464,5 @@ class Client:
             self._close_handler()
 
     def create_ref_link(self, data: str):
+
         return f"https://ble.ir/{self.get_me().username}?start={data}"
