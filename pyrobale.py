@@ -2220,15 +2220,7 @@ class Client:
         response = self._make_request('GET', 'getChatMember', json=data)
         return response.get('status') not in ['left', 'kicked']
 
-    def wait_for_message(self, check_func):
-        """Wait for a message that satisfies the check function"""
-        while self._polling:
-            updates = self.get_updates(timeout=1)
-            for update in updates:
-                if 'message' in update:
-                    message = Message(self, {'ok': True, 'result': update['message']})
-                    if check_func(message):
-                        return update
+
 
     def on_message(self, func):
         """Decorator for handling new messages"""
