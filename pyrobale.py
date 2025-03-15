@@ -27,7 +27,7 @@ import sqlite3
 import json
 import traceback
 
-__version__ = '0.2.9.1'
+__version__ = '0.2.9.2'
 
 class BaleException(Exception):
     """Base exception for Bale API errors"""
