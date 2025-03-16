@@ -1183,6 +1183,14 @@ class Message:
             photo_url,
             self,
             reply_markup)
+    
+    def forward(self,
+                chat_id: Union[str, int]) -> 'Message':
+        """Forward a message to this user"""
+        return self.client.forward_message(
+            chat_id,
+            self.chat.id,
+            self.message_id)
 
 
 
