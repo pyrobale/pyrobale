@@ -26,8 +26,10 @@ from typing import Union, Optional, Dict, Any, List, Tuple, Callable
 import sqlite3
 import json
 import traceback
+import asyncio
+import queue
 
-__version__ = '0.2.9.2'
+__version__ = '0.2.9.3'
 
 class BaleException(Exception):
     """Base exception for Bale API errors"""
@@ -1613,6 +1615,10 @@ class Client:
         self._threads = []
         self._polling = False
         self.user = None
+        self.event_handlers = []
+        self.message_queue = queue.Queue()
+        self.lock = threading.Lock()
+
 
     def set_state(self,
                   chat_or_user_id: Union[Chat,
@@ -2413,6 +2419,40 @@ class Client:
                 self._close_handler()
             except Exception as e:
                 print(f"Error in close handler: {e}")
+    
+    def wait_for_message(self, checker: Callable, global_events: bool = False) -> dict:
+        """
+        wait for a message that satisfies the checker function
+        """
+        result_queue = queue.Queue()
+
+        def handler(message):
+            if checker(message):
+                if not global_events:
+                    return
+                result_queue.put(message)
+
+        with self.lock:
+            self.event_handlers.append(handler)
+
+        try:
+            while True:
+                message = self.message_queue.get()
+                if checker(message):
+                    return message
+        finally:
+            with self.lock:
+                self.event_handlers.remove(handler)
+
+    def process_event(self, message):
+        """
+        process an event and call the appropriate handler
+        """
+        self.message_queue.put(message)
+
+        with self.lock:
+            for handler in self.event_handlers[:]:
+                threading.Thread(target=handler, args=(message,), daemon=True).start()
 
     def create_ref_link(self, data: str) -> str:
         """Create a reference link for the bot"""
