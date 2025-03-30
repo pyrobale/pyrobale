@@ -31,6 +31,7 @@ import queue
 
 __version__ = '0.2.9.3'
 
+
 class BaleException(Exception):
     """Base exception for Bale API errors"""
 
@@ -56,6 +57,8 @@ class BaleException(Exception):
 class BaleAPIError(BaleException):
     """Exception raised when Bale API returns an error response"""
     pass
+
+
 class BaleNetworkError(BaleException):
     """Exception raised when network-related issues occur during API calls"""
     pass
@@ -105,12 +108,33 @@ class BaleUnknownError(BaleException):
     """Exception raised for unexpected or unknown errors"""
     pass
 
+
 class ChatActions:
     """Represents different chat action states that can be sent to Bale"""
     TYPING: str = 'typing'
     PHOTO: str = 'upload_photo'
     VIDEO: str = 'record_video'
     CHOOSE_STICKER: str = 'choose_sticker'
+
+
+class Sticker:
+    def __init__(self, data: dict):
+        self.file_id = data.get('file_id')
+        self.file_unique_id = data.get('file_unique_id')
+        self.type = data.get('type')
+        self.width = data.get('width')
+        self.height = data.get('height')
+        self.file_size = data.get('file_size')
+
+
+class StickerSet:
+    def __init__(self, data: dict):
+        self.name = data.get('name')
+        self.title = data.get('title')
+        self.stickers = [Sticker(sticker)
+                         for sticker in data.get('stickers', [])]
+        self.thumbnail = data.get('thumbnail')
+
 
 class DataBase:
 
@@ -485,7 +509,7 @@ class Chat:
                      reply_to_message: Union[int,
                                              str,
                                              'Message'] = None,
-                     reply_markup: Union['MenuKeyboardMarkup' , 'InlineKeyboardMarkup'] = None):
+                     reply_markup: Union['MenuKeyboardMarkup', 'InlineKeyboardMarkup'] = None):
         return self.client.send_invoice(
             self.id,
             title,
@@ -894,7 +918,7 @@ class User:
                      reply_to_message: Union[int,
                                              str,
                                              'Message'] = None,
-                     reply_markup: Union['MenuKeyboardMarkup' , 'InlineKeyboardMarkup'] = None):
+                     reply_markup: Union['MenuKeyboardMarkup', 'InlineKeyboardMarkup'] = None):
         return self.client.send_invoice(
             self.id,
             title,
@@ -1172,7 +1196,7 @@ class Message:
                       provider_token: str,
                       prices: list,
                       photo_url: Optional[str] = None,
-                      reply_markup: Union['MenuKeyboardMarkup' , 'InlineKeyboardMarkup'] = None):
+                      reply_markup: Union['MenuKeyboardMarkup', 'InlineKeyboardMarkup'] = None):
         return self.client.send_invoice(
             self.chat.id,
             title,
@@ -1183,7 +1207,7 @@ class Message:
             photo_url,
             self,
             reply_markup)
-    
+
     def forward(self,
                 chat_id: Union[str, int]) -> 'Message':
         """Forward a message to this user"""
@@ -1191,7 +1215,6 @@ class Message:
             chat_id,
             self.chat.id,
             self.message_id)
-
 
 
 class LabeledPrice:
@@ -1557,7 +1580,7 @@ class InputMediaDocument(InputMedia):
 
 
 class CallbackQuery:
-    
+
     """Represents a callback query from a callback button"""
 
     def __init__(self, client: 'Client', data: Dict[str, Any]):
@@ -1597,6 +1620,7 @@ class CallbackQuery:
             reply_markup=reply_markup,
             reply_to_message=self.message.id)
 
+
 class Client:
     """Main client class for interacting with Bale API"""
 
@@ -1626,7 +1650,7 @@ class Client:
         self.event_handlers = []
         self.message_queue = queue.Queue()
         self.lock = threading.Lock()
-
+        self.waiting_events = {}
 
     def set_state(self,
                   chat_or_user_id: Union[Chat,
@@ -2163,6 +2187,44 @@ class Client:
         response = self._make_request('GET', 'getChatMembersCount', json=data)
         return response['result']
 
+    def upload_sticker_file(self, user_id: int, sticker: 'InputFile'):
+        """Upload a file for future use in sticker sets"""
+        data = {
+            'user_id': user_id
+        }
+        files = {
+            'sticker': sticker
+        }
+        response = self._make_request('POST', 'uploadStickerFile', data=data, files=files)
+        return response['result']
+
+    def create_new_sticker_set(
+            self, user_id: int, name: str, title: str, stickers: List['InputFile']) -> bool:
+        """Create a new sticker set owned by a user"""
+        data = {
+            'user_id': user_id,
+            'name': name,
+            'title': title
+        }
+        files = {}
+        for i, sticker in enumerate(stickers):
+            files[f'stickers[{i}]'] = sticker
+        response = self._make_request('POST', 'createNewStickerSet', data=data, files=files)
+        return response['result']
+
+    def add_sticker_to_set(self, user_id: int, name: str,
+                           sticker: 'InputFile') -> bool:
+        """Add a new sticker to a set created by the bot"""
+        data = {
+            'user_id': user_id,
+            'name': name
+        }
+        files = {
+            'sticker': sticker
+        }
+        response = self._make_request('POST', 'addStickerToSet', data=data, files=files)
+        return response['result']
+
     def is_joined(self, user: Union[User, int, str],
                   chat: Union[Chat, int, str]) -> bool:
         """Check if user is a member of the chat"""
@@ -2247,6 +2309,10 @@ class Client:
     def _handle_message(self, message, update):
         """Handle different types of messages"""
         msg_data = update.get('message', {})
+
+        if 'message' in update:
+            message = Message(self, {'ok': True, 'result': update['message']})
+            self.process_event(message)
 
         if 'new_chat_members' in msg_data and hasattr(
                 self, '_member_join_handler'):
@@ -2361,6 +2427,9 @@ class Client:
 
         self._polling = True
         self._threads = []
+        self.message_queue = queue.Queue()
+        self.event_handlers = []
+        self.lock = threading.Lock()
         offset = 0
         past_updates = collections.deque(maxlen=100)
         source_file = inspect.getfile(self.__class__)
@@ -2385,6 +2454,10 @@ class Client:
                     update_id = update['update_id']
                     if update_id not in past_updates:
                         past_updates.append(update_id)
+                        if 'message' in update:
+                            message = Message(
+                                self, {'ok': True, 'result': update['message']})
+                            self.process_event(message)
                         self._handle_update(update)
                         offset = update_id + 1
 
@@ -2428,43 +2501,13 @@ class Client:
             except Exception as e:
                 print(f"Error in close handler: {e}")
     
-    def wait_for_message(self, checker: Callable, global_events: bool = False) -> dict:
-        """
-        wait for a message that satisfies the checker function
-        """
-        result_queue = queue.Queue()
-
-        def handler(message):
-            if checker(message):
-                if not global_events:
-                    return
-                result_queue.put(message)
-
-        with self.lock:
-            self.event_handlers.append(handler)
-
-        try:
-            while True:
-                message = self.message_queue.get()
-                if checker(message):
-                    return message
-        finally:
-            with self.lock:
-                self.event_handlers.remove(handler)
-
-    def process_event(self, message):
-        """
-        process an event and call the appropriate handler
-        """
-        self.message_queue.put(message)
-
-        with self.lock:
-            for handler in self.event_handlers[:]:
-                threading.Thread(target=handler, args=(message,), daemon=True).start()
+    def wait_for_message(self, checker=Any):
+        self.waiting_events[checker]        
 
     def create_ref_link(self, data: str) -> str:
         """Create a reference link for the bot"""
         return f"https://ble.ir/{self.get_me().username}?start={data}"
+
 
 def run_multiple_bots(bots: List[Client]) -> List[Client]:
     """
