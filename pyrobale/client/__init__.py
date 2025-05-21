@@ -45,6 +45,25 @@ class Client:
         self.base_url = base_url
         self.requests_base =  base_url+token
         print(self.requests_base)
+    
+    async def get_updates(self,
+                          offset: Optional[int] = None,
+                          limit: Optional[int] = None,
+                          timeout: Optional[int] = None) -> List[Dict]:
+        data = await make_get(self.requests_base+f"/getUpdates?offset={offset}&limit={limit}&timeout={timeout}")
+        return data['result']
+    
+    async def set_webhook(self, url: str) -> bool:
+        data = await make_post(self.requests_base+"/setWebhook", data={
+            "url": url
+        })
+        return data['result']
+    
+    async def get_webhook_info(self) -> Dict:
+            data = await make_get(self.requests_base+"/getWebhookInfo")
+            return data['result']
+    
+
     async def get_me(self) -> User:
         data = await make_get(self.requests_base+"/getMe")
         return User(**data['result'])

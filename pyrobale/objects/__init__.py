@@ -31,6 +31,7 @@ from .stickerset import StickerSet
 from .successfulpayment import SuccessfulPayment
 from .messageid import MessageId
 from .labeledprice import LabeledPrice
+from .update import Update
 
 __all__ = [
     "Voice",
@@ -69,5 +70,6 @@ __all__ = [
     "StickerSet",
     "SuccessfulPayment",
     "MessageId",
-    "LabeledPrice"
+    "LabeledPrice",
+    "Update",
 ]
