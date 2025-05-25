@@ -7,7 +7,13 @@ class InlineKeyboardButton:
     """
     Represents a button in an inline keyboard.
     """
-    def __init__(self, text: str, url: str = None, callback_data: str = None, web_app: 'WebAppData' = None, copy_text_button: 'CopyTextButton' = None, **kwargs):
+    def __init__(self, 
+                 text: str, 
+                 url: str = None, 
+                 callback_data: str = None, 
+                 web_app: 'WebAppData' = None, 
+                 copy_text_button: 'CopyTextButton' = None, 
+                 **kwargs):
         self.text = text
         self.url = url
         self.callback_data = callback_data

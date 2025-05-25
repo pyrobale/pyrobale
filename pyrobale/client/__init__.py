@@ -98,7 +98,7 @@ class Client:
             "chat_id": chat_id,
             "text": text,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup.to_dict() if reply_markup else None.to_dict() if reply_markup else None
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -125,14 +125,12 @@ class Client:
     
     async def send_photo(self,
                          chat_id: Union[int,str],
-                         from_chat_id: Union[int,str],
                          photo: Union[InputFile,str],
                          caption: Optional[str] = None,
                          reply_to_message_id: Optional[int]= None,
                          reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None) -> Message:
         data = await make_post(self.requests_base+"/sendPhoto", data={
             "chat_id": chat_id,
-            "from_chat_id": from_chat_id,
             "photo": photo,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
@@ -219,7 +217,7 @@ class Client:
                                chat_id: int,
                                media: List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]],
                                reply_to_message_id: Optional[int] = None,
-                               reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None) -> Message:
+                               reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None) -> List[Message]:
         data = await make_post(self.requests_base+"/sendMediaGroup", data={
             "chat_id": chat_id,
             "media": media,
@@ -459,7 +457,15 @@ class Client:
             "type": update_type,
             "callback": callback
         })
-
+    
+    def remove_handler(self, callback: Callable[[Any], Union[None, Awaitable[None]]]) -> None:
+        """Remove a handler from the list of handlers."""
+        self.handlers = [handler for handler in self.handlers if handler["callback"] != callback]
+    
+    def remove_all_handlers(self) -> None:
+        """Remove all handlers from the list of handlers."""
+        self.handlers = []
+    
     async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
         """Start polling updates from the server."""
         if self.running:
@@ -484,6 +490,16 @@ class Client:
     async def stop_polling(self) -> None:
         """Stop polling updates."""
         self.running = False
+    
+    def run(self) -> None:
+        """Run the client."""
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.start_polling())
+    
+    def stop(self) -> None:
+        """Stop the client."""
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.stop_polling())
 
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
         """Process an update received via webhook."""
