@@ -491,10 +491,10 @@ class Client:
         """Stop polling updates."""
         self.running = False
     
-    def run(self) -> None:
+    def run(self, timeout: int = 30, limit: int = 100) -> None:
         """Run the client."""
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.start_polling())
+        loop.run_until_complete(self.start_polling(timeout,limit))
     
     def stop(self) -> None:
         """Stop the client."""
