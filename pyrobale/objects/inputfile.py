@@ -1,7 +1,7 @@
 from typing import List, Union
 
 class InputFile:
-    def __init__(self, file: Union[bytes, str]):
+    def __init__(self, file: Union[bytes, str], **kwargs):
         """
         Initialize an InputFile object that can handle file uploads in 3 ways:
         1. Using file_id for files already on Bale servers

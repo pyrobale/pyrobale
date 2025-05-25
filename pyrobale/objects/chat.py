@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from typing import Optional, Union
+from typing import Optional,Union
 if TYPE_CHECKING:
     from .utils import build_api_url
     from .chatphoto import ChatPhoto
@@ -13,7 +13,15 @@ class Chat:
     """
     Represents a chat in the Bale messenger.
     """
-    def __init__(self, id: int, type: str, title: Optional[str], username: Optional[str], first_name: Optional[str], last_name: Optional[str], photo: Optional['ChatPhoto']):
+    def __init__(self,
+                 id: Optional[int] = None,
+                 type: Optional[str] = None,
+                 title: Optional[str] = None,
+                 username: Optional[str] = None,
+                 first_name: Optional[str] = None,
+                 last_name: Optional[str] = None,
+                 photo: Optional['ChatPhoto'] = None,
+                 **kwargs):
         self.id = id
         self.type = type
         self.title = title

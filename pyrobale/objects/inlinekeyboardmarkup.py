@@ -1,53 +1,60 @@
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Union, Optional
+
 if TYPE_CHECKING:
     from .webappinfo import WebAppInfo
     from .copytextbutton import CopyTextButton
 
 class InlineKeyboardMarkup:
-    """
-    Represents an inline keyboard.
-    Attributes:
-        Each dictionary contains the following keys:
-            - inline_keyboard (list): A list of lists of dictionaries representing the buttons in the keyboard.
-            - text (str): The text of the button.
-            - callback_data (str, optional): The callback data associated with the button.
-            - url (str, optional): The URL associated with the button.
-            - web_app (WebApp, optional): The web app associated with the button.
-            - copy_text_button (CopyTextButton, optional): The copy text button associated with the button.
-    """
-    def __init__(self):
-        self.inline_keyboard = []
+    def __init__(self) -> None:
+        self.inline_keyboard: list[list[dict]] = []
 
-    def add_button(self, text: str, callback_data: str = None, url: str = None, web_app: Union['WebAppInfo',str] = None, copy_text_button: 'CopyTextButton' = None):
-        """Add a button to the current row"""
+    def add_button(
+    self,
+    text: str,
+    callback_data: Optional[str] = None,
+    url: Optional[str] = None,
+    web_app: Optional[Union['WebAppInfo', str]] = None,
+    copy_text_button: Optional['CopyTextButton'] = None,
+    **kwargs
+    ) -> 'InlineKeyboardMarkup':
         button = {"text": text}
+
+        field_count = sum(
+            field is not None for field in [callback_data, url, web_app, copy_text_button]
+        )
+        if field_count == 0:
+            raise ValueError("At least one of callback_data, url, web_app, or copy_text must be provided.")
+        if field_count > 1:
+            raise ValueError("Only one of callback_data, url, web_app, or copy_text can be provided.")
+
         if callback_data:
             button["callback_data"] = callback_data
-        if url:
+        elif url:
             button["url"] = url
-        if web_app:
-            button["web_app"] = web_app
-        if copy_text_button:
-            button["copy_text_button"] = copy_text_button.text
-        if not any(button.values()):
-            raise ValueError("At least one attribute must be provided for the button")
-        
-        if [callback_data, url, web_app, copy_text_button].count(None) > 1:
-            raise ValueError("Only one of callback_data, url, web_app, or copy_text_button can be provided for a button")
-                
+        elif web_app:
+            if isinstance(web_app, str):
+                button["web_app"] = {"url": web_app}
+            elif hasattr(web_app, 'to_dict'):
+                button["web_app"] = web_app.to_dict()
+            else:
+                raise ValueError("web_app must be a string URL or an object with to_dict() method.")
+        elif copy_text_button:
+            button["copy_text"] = {"text": copy_text_button.text}
+
         if not self.inline_keyboard:
             self.inline_keyboard.append([])
         self.inline_keyboard[-1].append(button)
         return self
-    
-    def add_row(self):
-        """Add a new row for buttons"""
+
+
+    def add_row(self) -> 'InlineKeyboardMarkup':
         self.inline_keyboard.append([])
         return self
-    
-    @property
-    def json(self):
+
+    def to_dict(self) -> dict:
+        print(self.inline_keyboard)
         return {"inline_keyboard": self.inline_keyboard}
-    
-    def __str__(self):
-        return str(self.json)
+
+    @property
+    def json(self) -> dict:
+        return self.to_dict()

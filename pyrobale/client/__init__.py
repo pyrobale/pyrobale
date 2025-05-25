@@ -34,6 +34,15 @@ from ..objects.utils import *
 import asyncio
 import aiohttp
 import bale
+from enum import Enum
+
+class UpdatesTypes(Enum):
+    MESSAGE = "message"
+    MESSAGE_EDITED = "message_edited"
+    CALLBACK_QUERY = "callback_query"
+    PRE_CHECKOUT_QUERY = "pre_checkout_query"
+    MEMBER_JOINED = "member_joined"
+    MEMBER_LEFT = "member_left"
 
 class Client:
     """
@@ -44,7 +53,11 @@ class Client:
         self.token = token
         self.base_url = base_url
         self.requests_base =  base_url+token
-        print(self.requests_base)
+        
+        self.handlers = []
+        self.running = False
+        self.last_update_id = 0
+
     
     async def get_updates(self,
                           offset: Optional[int] = None,
@@ -85,7 +98,7 @@ class Client:
             "chat_id": chat_id,
             "text": text,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -123,7 +136,7 @@ class Client:
             "photo": photo,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -138,7 +151,7 @@ class Client:
             "audio": audio,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -153,7 +166,7 @@ class Client:
             "document": document,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -168,7 +181,7 @@ class Client:
             "video": video,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -183,7 +196,7 @@ class Client:
             "animation": animation,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -198,7 +211,7 @@ class Client:
             "voice": voice,
             "caption": caption,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -211,7 +224,7 @@ class Client:
             "chat_id": chat_id,
             "media": media,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -226,7 +239,7 @@ class Client:
             "latitude": latitude,
             "longitude": longitude,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -243,7 +256,7 @@ class Client:
             "first_name": first_name,
             "last_name": last_name,
             "reply_to_message_id": reply_to_message_id,
-            "reply_markup": reply_markup
+            "reply_markup": reply_markup.to_dict() if reply_markup else None
         })
         return Message(**pythonize(data['result']))
     
@@ -253,6 +266,17 @@ class Client:
         })
         return File(**pythonize(data['result']))
     
+    async def answer_callback_query(self,
+                                    callback_query_id: str,
+                                    text: Optional[str] = None,
+                                    show_alert: Optional[bool] = None):
+        data = await make_post(self.requests_base+"/answerCallbackQuery", data={
+            "callback_query_id": callback_query_id,
+            "text": text,
+            "show_alert": show_alert
+        })
+        return data.get("ok", False)
+
     async def ban_chat_member(self,
                               chat_id: int,
                               user_id: int) -> bool:
@@ -394,3 +418,73 @@ class Client:
             "chat_id": chat_id
         })
         return data.get("result", "")
+    
+    
+    
+    async def process_update(self, update: Dict[str, Any]) -> None:
+        """Process a single update and call registered handlers."""
+        update_id = update.get("update_id")
+        if update_id:
+            self.last_update_id = update_id + 1
+
+        for handler in self.handlers:
+            update_type = handler["type"].value
+            if update_type in update:
+                event = update[update_type]
+                
+                event = self._convert_event(handler["type"], event)
+                
+                if asyncio.iscoroutinefunction(handler["callback"]):
+                    await handler["callback"](event)
+                else:
+                    handler["callback"](event)
+
+    def _convert_event(self, handler_type: UpdatesTypes, event: Dict[str, Any]) -> Any:
+        """Convert raw event data to appropriate object type."""
+        if handler_type in (UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED):
+            return Message(**pythonize(event),kwargs={"client": self})
+        elif handler_type == UpdatesTypes.CALLBACK_QUERY:
+            return CallbackQuery(kwargs={'client':self}, **pythonize(event))
+        elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
+            return PreCheckoutQuery(kwargs={'client':self}, **pythonize(event))
+        elif handler_type == UpdatesTypes.MEMBER_JOINED:
+            return ChatMember(kwargs={'client':self}, **pythonize(event.get("new_chat_member", {})))
+        elif handler_type == UpdatesTypes.MEMBER_LEFT:
+            return ChatMember(kwargs={'client':self}, **pythonize(event.get("left_chat_member", {})))
+        return event
+
+    def add_handler(self, update_type: UpdatesTypes, callback: Callable[[Any], Union[None, Awaitable[None]]]) -> None:
+        """Register a handler for specific update type."""
+        self.handlers.append({
+            "type": update_type,
+            "callback": callback
+        })
+
+    async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
+        """Start polling updates from the server."""
+        if self.running:
+            raise RuntimeError("Client is already running")
+        
+        self.running = True
+        while self.running:
+            try:
+                updates = await self.get_updates(
+                    offset=self.last_update_id,
+                    limit=limit,
+                    timeout=timeout
+                )
+                
+                for update in updates:
+                    await self.process_update(update)
+                    
+            except Exception as e:
+                print(f"Error while polling updates: {e}")
+                await asyncio.sleep(5)
+
+    async def stop_polling(self) -> None:
+        """Stop polling updates."""
+        self.running = False
+
+    async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
+        """Process an update received via webhook."""
+        await self.process_update(update_data)

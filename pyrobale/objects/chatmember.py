@@ -8,19 +8,37 @@ class ChatMember:
     """
     Represents a chat member in the Bale messenger, including their user information and status.
     """
-    def __init__(self, user: 'User', status: str, custom_title: str = None,
-                 is_anonymous: bool = None, can_be_edited: bool = None,
-                 can_manage_chat: bool = None, can_delete_messages: bool = None,
-                 can_edit_messages: bool = None, can_post_messages: bool = None,
-                 can_restrict_members: bool = None, can_promote_members: bool = None,
-                 can_change_info: bool = None, can_invite_users: bool = None,
-                 can_pin_messages: bool = None, can_manage_topics: bool = None,
-                 until_date: int = None, is_member: bool = None,
-                 can_send_messages: bool = None, can_send_audios: bool = None,
-                 can_send_documents: bool = None, can_send_photos: bool = None,
-                 can_send_videos: bool = None, can_send_video_notes: bool = None,
-                 can_send_voice_notes: bool = None, can_send_polls: bool = None,
-                 can_send_other_messages: bool = None, can_add_web_page_previews: bool = None):
+    def __init__(
+                self,
+                user: 'User',
+                status: str,
+                custom_title: Optional[str] = None,
+                is_anonymous: Optional[bool] = None,
+                can_be_edited: Optional[bool] = None,
+                can_manage_chat: Optional[bool] = None,
+                can_delete_messages: Optional[bool] = None,
+                can_edit_messages: Optional[bool] = None,
+                can_post_messages: Optional[bool] = None,
+                can_restrict_members: Optional[bool] = None,
+                can_promote_members: Optional[bool] = None,
+                can_change_info: Optional[bool] = None,
+                can_invite_users: Optional[bool] = None,
+                can_pin_messages: Optional[bool] = None,
+                can_manage_topics: Optional[bool] = None,
+                until_date: Optional[int] = None,
+                is_member: Optional[bool] = None,
+                can_send_messages: Optional[bool] = None,
+                can_send_audios: Optional[bool] = None,
+                can_send_documents: Optional[bool] = None,
+                can_send_photos: Optional[bool] = None,
+                can_send_videos: Optional[bool] = None,
+                can_send_video_notes: Optional[bool] = None,
+                can_send_voice_notes: Optional[bool] = None,
+                can_send_polls: Optional[bool] = None,
+                can_send_other_messages: Optional[bool] = None,
+                can_add_web_page_previews: Optional[bool] = None,
+                **kwargs
+             ):
         self.user = user
         self.status = status
         self.custom_title = custom_title

@@ -3,3 +3,6 @@ class PyroBaleException(Exception):
 
 class InvalidTokenException(PyroBaleException):
     pass
+
+class NotFoundException(PyroBaleException):
+    pass
