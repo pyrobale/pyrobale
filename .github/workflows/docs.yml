@@ -25,7 +25,7 @@ jobs:
 
       - name: Generate documentation using pdoc (Google style)
         run: |
-          pdoc --html --output-dir docs --force --format google pyrobale
+          pdoc pyrobale --output-dir docs --docformat google
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
