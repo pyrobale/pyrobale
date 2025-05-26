@@ -4,10 +4,10 @@ from typing import Optional, Union
 if TYPE_CHECKING:
     from .utils import build_api_url
     from .user import User
+    from ..client import Client
 from .chat import Chat
 from .user import User
 from .enums import ChatType
-from ..client import Client
 
 
 class ChatMember:
