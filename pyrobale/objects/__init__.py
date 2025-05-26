@@ -1,6 +1,13 @@
 from .voice import Voice
 from .replykeyboardmarkup import ReplyKeyboardMarkup
-from .inputmedias import InputMedia, InputMediaPhoto, InputMediaVideo, InputMediaAnimation, InputMediaAudio, InputMediaDocument
+from .inputmedias import (
+    InputMedia,
+    InputMediaPhoto,
+    InputMediaVideo,
+    InputMediaAnimation,
+    InputMediaAudio,
+    InputMediaDocument,
+)
 from .message import Message
 from .invoice import Invoice
 from .audio import Audio
@@ -21,7 +28,7 @@ from .webappdata import WebAppData
 from .precheckoutquery import PreCheckoutQuery
 from .location import Location
 from .document import Document
-from .inlinekeyboardmarkup import InlineKeyboardMarkup  
+from .inlinekeyboardmarkup import InlineKeyboardMarkup
 from .file import File
 from .copytextbutton import CopyTextButton
 from ..client import Client

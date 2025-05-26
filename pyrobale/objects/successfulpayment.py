@@ -1,5 +1,13 @@
 class SuccessfulPayment:
-    def __init__(self, currency: str, total_amount: int, invoice_payload: str, telegram_payment_charge_id: str, provider_payment_charge_id: str, **kwargs):
+    def __init__(
+        self,
+        currency: str,
+        total_amount: int,
+        invoice_payload: str,
+        telegram_payment_charge_id: str,
+        provider_payment_charge_id: str,
+        **kwargs
+    ):
         self.currency = currency
         self.total_amount = total_amount
         self.invoice_payload = invoice_payload

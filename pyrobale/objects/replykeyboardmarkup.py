@@ -4,6 +4,7 @@ if TYPE_CHECKING:
     from .webappinfo import WebAppInfo
     from .copytextbutton import CopyTextButton
 
+
 class ReplyKeyboardMarkup:
     """
     Represents a reply keyboard.
@@ -15,11 +16,18 @@ class ReplyKeyboardMarkup:
             - request_location (bool, optional): If True, the user's location will be sent.
             - web_app (WebApp, optional): The web app associated with the button.
     """
+
     def __init__(self):
         self.keyboard = []
 
-    def add_button(self, text: str, request_contact: bool = None, request_location: bool = None, web_app: Union['WebAppInfo', str] = None):
-        """Add a button to the current row"""
+    def add_button(
+        self,
+        text: str,
+        request_contact: bool = None,
+        request_location: bool = None,
+        web_app: Union["WebAppInfo", str] = None,
+    ):
+        """Add a button to the current row."""
         button = {"text": text}
         if request_contact:
             button["request_contact"] = request_contact
@@ -34,7 +42,7 @@ class ReplyKeyboardMarkup:
         return self
 
     def add_row(self):
-        """Add a new row for buttons"""
+        """Add a new row for buttons."""
         self.keyboard.append([])
         return self
 
