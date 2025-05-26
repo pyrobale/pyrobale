@@ -4,11 +4,11 @@ from typing import Optional
 class User:
     def __init__(
         self,
-        id: int,
-        is_bot: bool,
-        first_name: str,
-        last_name: Optional[str],
-        username: Optional[str],
+        id: int = None,
+        is_bot: bool = None,
+        first_name: str = None,
+        last_name: Optional[str] = None,
+        username: Optional[str] = None,
     ):
         self.id = id
         self.is_bot = is_bot
