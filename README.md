@@ -2,140 +2,97 @@
 
 # Bale Bot API Python Library
 
-A Python wrapper for the Bale Bot API that makes it easy to build Bale bots.
+A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Bale bots simple and intuitive.
 
 ## Features
 
-- Full Bale Bot API support
-- Object-oriented design
-- Easy-to-use interface
-- Support for:
-  - Messages
-  - Photos
-  - Documents
-  - Audio
-  - Video
-  - Voice messages
-  - Location
-  - Contact sharing
-  - Inline keyboards
-  - Menu keyboards
-  - Callback queries
-  - Chat administration
-  - Payment system
-  - Database integration
+- 🚀 **Simple & Intuitive** - Clean, Pythonic API design
+- 📨 **Full Message Support** - Text, photos, videos, documents, and more
+- ⌨️ **Interactive Elements** - Inline keyboards, reply keyboards, and buttons
+- 🔄 **Real-time Updates** - Webhook and polling support
+- 📁 **File Handling** - Easy upload and download of media files
+- 🛡️ **Error Handling** - Comprehensive exception handling
+- 📖 **Type Hints** - Full typing support for better development experience
+- ⚡ **Async Support** - Both synchronous and asynchronous operations
 
 ## Installation
 
-``pip install pyrobale``
+```bash
+pip install pyrobale
+```
 
 ## Quick Start
 
-```py
-from bale import Client, MenuKeyboardMarkup, MenuKeyboardButton
+```python
+from pyrobale.client import Client
+from pyrobale.objects import Message, UpdatesTypes
 
-# Initialize bot with token
 bot = Client("YOUR_BOT_TOKEN")
 
-# Handle incoming messages
-@bot.on_message
-def handle_message(message):
-    if message.text == "/start":
-        # Create keyboard
-        keyboard = MenuKeyboardMarkup()
-        keyboard.add(MenuKeyboardButton("Hello!"))
-  
-        # Send welcome message
-        message.reply_message("Welcome!", reply_markup=keyboard)
+async def message_handler(message: User):
+    await message.reply("Hello, world!")
 
-# Start the bot
+bot.add_handler(UpdatesTypes.MESSAGE, message_handler)
 bot.run()
 ```
 
-## Key Components
+## Examples
 
-### Client
-
-The main class for interacting with Bale API. Handles all API requests and provides event decorators.
-
-### Message
-
-Represents a message in Bale with methods for replying, editing, and deleting messages.
-
-### User
-
-Represents a Bale user with their properties and methods.
-
-### Chat
-
-Represents a chat conversation with methods for sending messages and managing chat settings.
-
-### Keyboards
-
-- `MenuKeyboardMarkup`: For creating text keyboards
-- `InlineKeyboardMarkup`: For creating inline keyboards
-
-### Database
-
-Built-in SQLite database support for storing persistent data.
-
-## Event Handlers
-
-# Message handler
-
+### Echo Bot
 ```python
-@bot.on_message
-def handle_message(message):
-    pass
+from pyrobale.client import Client
+from pyrobale.objects import Message, UpdatesTypes
+
+bot = Client("YOUR_BOT_TOKEN")
+
+async def message_handler(message: Message):
+    await message.reply(message.text)
+
+bot.add_handler(UpdatesTypes.MESSAGE, message_handler)
+bot.run()
 ```
 
-# Callback query handler
-
+### Inline Keyboard
 ```python
-@bot.on_callback_query
-def handle_callback(callback):
-    pass
+from pyrobale.client import Client
+from pyrobale.objects import Message, UpdatesTypes, InlineKeyboardButton, InlineKeyboardMarkup, CopyTextButton
+
+bot = Client("YOUR_BOT_TOKEN")
+async def message_handler(message: Message):
+    buttons = InlineKeyboardMarkup()
+    buttons.add_button("URL", url="https://google.com")
+    buttons.add_button("Callback", callback_data="callback")
+    buttons.add_row()
+    buttons.add_button("WebApp", web_app="https://daradege.ir")
+    buttons.add_button("Copy", copy_text_button=CopyTextButton("TEXT"))
+    await message.reply("Hello, world!", reply_markup=buttons)
 ```
 
-# Periodic task handler
 
-```python
-@bot.on_tick(60)  # Runs every 60 seconds
-def handle_tick():
-    pass
-```
+## Core Abilities
 
-# Ready event handler
+- **Message Handling** - Process text, commands, and media messages
+- **Callback Queries** - Handle inline keyboard interactions
+- **File Operations** - Send and receive photos, videos, documents
+- **Chat Management** - Get chat info, member management
+- **Custom Keyboards** - Create interactive user interfaces
+- **Webhook Support** - Production-ready webhook handling
+- **Middleware Support** - Add custom processing layers
 
-```python
-@bot.on_ready
-def handle_ready():
-    pass
-```
+## Documentation
 
-# Member join handler
+For detailed documentation and advanced usage, visit our [documentation site](https://pyrobale.readthedocs.io).
 
-```python
-@bot.on_member_chat_join
-def handle_join(message, chat, user):
-    pass
-```
+## Contributing
 
-# Member leave handler
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-```python
-@bot.on_member_chat_leave
-def handle_leave(message, chat, user):
-    pass
-```
+## License
 
-## Database Usage
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-# Access database
+## Support
 
-```py
-with bot.database as db:
-    db.write_key("user_123", {"points": 100})
-  
-    data = db.read_key("user_123")
-```
+- 📖 [Documentation](https://pyrobale.readthedocs.io)
+- 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
+- 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
