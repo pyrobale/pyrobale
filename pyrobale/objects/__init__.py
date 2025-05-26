@@ -1,3 +1,6 @@
+"""# objects in pyrobale, we have a lot of objects that are used to represent
+different types of data."""
+
 from .voice import Voice
 from .replykeyboardmarkup import ReplyKeyboardMarkup
 from .inputmedias import (

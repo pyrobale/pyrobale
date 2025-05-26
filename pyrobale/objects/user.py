@@ -1,5 +1,6 @@
 from typing import Optional
 
+
 class User:
     def __init__(
         self,

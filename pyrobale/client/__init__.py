@@ -45,7 +45,9 @@ from ..objects.enums import UpdatesTypes, ChatAction, ChatType
 class Client:
     """A client for interacting with the Bale messenger API.
 
-    token: The bot token to use for authentication.
+    Args:
+        token (str): The bot token.
+        base_url (str, optional): The base URL for the API. Defaults to "https://tapi.bale.ai/bot".
     """
 
     def __init__(self, token: str, base_url: str = "https://tapi.bale.ai/bot"):
@@ -63,6 +65,15 @@ class Client:
         limit: Optional[int] = None,
         timeout: Optional[int] = None,
     ) -> List[Dict]:
+        """Get updates from the Bale API.
+
+        Args:
+            offset (int, optional): The offset of the updates to get. Defaults to None.
+            limit (int, optional): The maximum number of updates to get. Defaults to None.
+            timeout (int, optional): The timeout for the request. Defaults to None.
+        Returns:
+            List[Dict]: The updates.
+        """
         data = await make_get(
             self.requests_base
             + f"/getUpdates?offset={offset}&limit={limit}&timeout={timeout}"
@@ -70,22 +81,49 @@ class Client:
         return data["result"]
 
     async def set_webhook(self, url: str) -> bool:
+        """Set the webhook for the bot.
+
+        Args:
+            url (str): The URL to set the webhook to.
+        Returns:
+            bool: True if the webhook was set successfully, False otherwise.
+        """
         data = await make_post(self.requests_base + "/setWebhook", data={"url": url})
         return data["result"]
 
     async def get_webhook_info(self) -> Dict:
+        """Get the webhook information for the bot.
+
+        Returns:
+            Dict: The webhook information.
+        """
         data = await make_get(self.requests_base + "/getWebhookInfo")
         return data["result"]
 
     async def get_me(self) -> User:
+        """Get information about the bot.
+
+        Returns:
+            User: The information about the bot.
+        """
         data = await make_get(self.requests_base + "/getMe")
         return User(**data["result"])
 
     async def logout(self) -> bool:
+        """Log out the bot.
+
+        Returns:
+            bool: True if the bot was logged out successfully, False otherwise.
+        """
         data = await make_get(self.requests_base + "/logOut")
         return data["result"]
 
     async def close(self) -> bool:
+        """Close the bot.
+
+        Returns:
+            bool: True if the bot was closed successfully, False otherwise.
+        """
         data = await make_get(self.requests_base + "/close")
         return data["result"]
 
@@ -96,6 +134,16 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a message to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the message to.
+            text (str): The text of the message.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendMessage",
             data={
@@ -110,6 +158,15 @@ class Client:
     async def forward_message(
         self, chat_id: int, from_chat_id: int, message_id: int
     ) -> Message:
+        """Forward a message to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to forward the message to.
+            from_chat_id (int): The ID of the chat to forward the message from.
+            message_id (int): The ID of the message to forward.
+        Returns:
+            Message: The message that was forwarded.
+        """
         data = await make_post(
             self.requests_base + "/forwardMessage",
             data={
@@ -123,6 +180,15 @@ class Client:
     async def copy_message(
         self, chat_id: int, from_chat_id: int, message_id: int
     ) -> Message:
+        """Copy a message to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to copy the message to.
+            from_chat_id (int): The ID of the chat to copy the message from.
+            message_id (int): The ID of the message to copy.
+        Returns:
+            Message: The message that was copied.
+        """
         data = await make_post(
             self.requests_base + "/copyMessage",
             data={
@@ -141,6 +207,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a photo to a chat.
+
+        Args:
+            chat_id (Union[int, str]): The ID of the chat to send the photo to.
+            photo (Union[InputFile, str]): The photo to send.
+            caption (str, optional): The caption of the photo. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendPhoto",
             data={
@@ -161,6 +238,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send an audio to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the audio to.
+            audio (Union[InputFile, str]): The audio to send.
+            caption (str, optional): The caption of the audio. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendAudio",
             data={
@@ -181,6 +269,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a document to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the document to.
+            document (Union[InputFile, str]): The document to send.
+            caption (str, optional): The caption of the document. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendDocument",
             data={
@@ -201,6 +300,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a video to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the video to.
+            video (Union[InputFile, str]): The video to send.
+            caption (str, optional): The caption of the video. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendVideo",
             data={
@@ -221,6 +331,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send an animation to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the animation to.
+            animation (Union[InputFile, str]): The animation to send.
+            caption (str, optional): The caption of the animation. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendAnimation",
             data={
@@ -241,6 +362,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a voice message to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the voice message to.
+            voice (Union[InputFile, str]): The voice message to send.
+            caption (str, optional): The caption of the voice message. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendVoice",
             data={
@@ -260,6 +392,16 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> List[Message]:
+        """Send a media group to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the media group to.
+            media (List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]]): The media group to send.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            List[Message]: The messages that were sent.
+        """
         data = await make_post(
             self.requests_base + "/sendMediaGroup",
             data={
@@ -279,6 +421,17 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a location to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the location to.
+            latitude (float): The latitude of the location.
+            longitude (float): The longitude of the location.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendLocation",
             data={
@@ -300,6 +453,18 @@ class Client:
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
+        """Send a contact to a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to send the contact to.
+            phone_number (str): The phone number of the contact.
+            first_name (str): The first name of the contact.
+            last_name (str, optional): The last name of the contact. Defaults to None.
+            reply_to_message_id (int, optional): The ID of the message to reply to. Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply markup to use. Defaults to None.
+        Returns:
+            Message: The message that was sent.
+        """
         data = await make_post(
             self.requests_base + "/sendContact",
             data={
@@ -314,6 +479,13 @@ class Client:
         return Message(**pythonize(data["result"]))
 
     async def get_file(self, file_id: str) -> File:
+        """Get a file from the Bale servers.
+
+        Args:
+            file_id (str): The ID of the file to get.
+        Returns:
+            File: The file that was retrieved.
+        """
         data = await make_post(
             self.requests_base + "/getFile", data={"file_id": file_id}
         )
@@ -325,6 +497,15 @@ class Client:
         text: Optional[str] = None,
         show_alert: Optional[bool] = None,
     ):
+        """Answer a callback query.
+
+        Args:
+            callback_query_id (str): The ID of the callback query to answer.
+            text (str, optional): The text to show to the user. Defaults to None.
+            show_alert (bool, optional): Whether to show an alert to the user. Defaults to None.
+        Returns:
+            bool: Whether the callback query was answered successfully.
+        """
         data = await make_post(
             self.requests_base + "/answerCallbackQuery",
             data={
@@ -336,6 +517,15 @@ class Client:
         return data.get("ok", False)
 
     async def ban_chat_member(self, chat_id: int, user_id: int) -> bool:
+        """Ban a user from a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to ban the user from.
+            user_id (int): The ID of the user to ban.
+        Returns:
+            bool: Whether the user was banned successfully
+        """
+        
         data = await make_post(
             self.requests_base + "/banChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
@@ -343,6 +533,14 @@ class Client:
         return data.get("ok", False)
 
     async def unban_chat_member(self, chat_id: int, user_id: int) -> bool:
+        """Unban a user from a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to unban the user from.
+            user_id (int): The ID of the user to unban.
+        Returns:
+            bool: Whether the user was unbanned successfully.
+        """
         data = await make_post(
             self.requests_base + "/unbanChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
@@ -350,6 +548,14 @@ class Client:
         return data.get("ok", False)
 
     async def get_chat_member(self, chat_id: int, user_id: int) -> ChatMember:
+        """Get a chat member.
+
+        Args:
+            chat_id (int): The ID of the chat to get the member from.
+            user_id (int): The ID of the user to get.
+        Returns:
+            ChatMember: The chat member that was retrieved.
+        """
         data = await make_post(
             self.requests_base + "/getChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
@@ -371,6 +577,22 @@ class Client:
         can_pin_messages: Optional[bool] = None,
         can_promote_members: Optional[bool] = None,
     ):
+        """Promote a user in a chat.
+
+        Args:
+            chat_id (int): The ID of the chat to promote the user in.
+            user_id (int): The ID of the user to promote.
+            can_change_info (bool, optional): Whether the user can change the chat info. Defaults to None.
+            can_post_messages (bool, optional): Whether the user can post messages. Defaults to None.
+            can_edit_messages (bool, optional): Whether the user can edit messages. Defaults to None.
+            can_delete_messages (bool, optional): Whether the user can delete messages. Defaults to None.
+            can_invite_users (bool, optional): Whether the user can invite users. Defaults to None.
+            can_restrict_members (bool, optional): Whether the user can restrict members. Defaults to None.
+            can_pin_messages (bool, optional): Whether the user can pin messages. Defaults to None.
+            can_promote_members (bool, optional): Whether the user can promote members. Defaults to None.
+        Returns:
+            bool: Whether the user was promoted successfully.
+        """
         data = await make_post(
             self.requests_base + "/promoteChatMember",
             data={
@@ -389,6 +611,15 @@ class Client:
         return data.get("ok", False)
 
     async def set_chat_photo(self, chat_id: int, photo: InputFile) -> bool:
+        """Set a new profile photo for the chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            photo (InputFile): New chat photo
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/setChatPhoto",
             data={"chat_id": chat_id, "photo": photo},
@@ -396,24 +627,57 @@ class Client:
         return data.get("ok", False)
 
     async def leave_chat(self, chat_id: int) -> bool:
+        """Leave a group, supergroup or channel.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/leaveChat", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
 
     async def get_chat(self, chat_id: int) -> Chat:
+        """Get up to date information about the chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            Chat: Chat object with information about the chat
+        """
         data = await make_post(
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
         return Chat(**pythonize(data["result"]))
 
     async def get_chat_members_count(self, chat_id: int) -> int:
+        """Get the number of members in a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            int: Number of members in the chat
+        """
         data = await make_post(
             self.requests_base + "/getChatMembersCount", data={"chat_id": chat_id}
         )
         return data.get("result", 0)
 
     async def pin_chat_message(self, chat_id: int, message_id: int) -> bool:
+        """Pin a message in a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            message_id (int): Identifier of a message to pin
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/pinChatMessage",
             data={"chat_id": chat_id, "message_id": message_id},
@@ -421,18 +685,43 @@ class Client:
         return data.get("ok", False)
 
     async def unpin_chat_message(self, chat_id: int) -> bool:
+        """Unpin a message in a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/unpinChatMessage", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
 
     async def unpin_all_chat_messages(self, chat_id: int) -> bool:
+        """Unpin all messages in a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/unpinAllChatMessages", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
 
     async def set_chat_title(self, chat_id: int, title: str) -> bool:
+        """Change the title of a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            title (str): New chat title, 1-255 characters
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/setChatTitle",
             data={"chat_id": chat_id, "title": title},
@@ -440,6 +729,15 @@ class Client:
         return data.get("ok", False)
 
     async def set_chat_description(self, chat_id: int, description: str) -> bool:
+        """Change the description of a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            description (str): New chat description, 0-255 characters
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/setChatDescription",
             data={"chat_id": chat_id, "description": description},
@@ -447,18 +745,43 @@ class Client:
         return data.get("ok", False)
 
     async def delete_chat_photo(self, chat_id: int) -> bool:
+        """Delete a chat photo.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/deleteChatPhoto", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
 
     async def create_chat_invite_link(self, chat_id: int) -> str:
+        """Create an additional invite link for a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            str: The new invite link
+        """
         data = await make_post(
             self.requests_base + "/createChatInviteLink", data={"chat_id": chat_id}
         )
         return data.get("result", "")
 
     async def revoke_chat_invite_link(self, chat_id: int, invite_link: str) -> str:
+        """Revoke an invite link created by the bot.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            invite_link (str): The invite link to revoke
+
+        Returns:
+            str: The revoked invite link
+        """
         data = await make_post(
             self.requests_base + "/revokeChatInviteLink",
             data={"chat_id": chat_id, "invite_link": invite_link},
@@ -466,12 +789,29 @@ class Client:
         return data.get("result", "")
 
     async def export_chat_invite_link(self, chat_id: int) -> str:
+        """Generate a new primary invite link for a chat.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+
+        Returns:
+            str: The new invite link
+        """
         data = await make_post(
             self.requests_base + "/exportChatInviteLink", data={"chat_id": chat_id}
         )
         return data.get("result", "")
 
     async def send_chat_action(self, chat_id: int, action: ChatAction) -> bool:
+        """Tell the user that something is happening on the bot's side.
+
+        Args:
+            chat_id (int): Unique identifier for the target chat
+            action (ChatAction): Type of action to broadcast
+
+        Returns:
+            bool: True on success
+        """
         data = await make_post(
             self.requests_base + "/sendChatAction",
             data={"chat_id": str(chat_id), "action": action.value},
@@ -479,7 +819,11 @@ class Client:
         return data.get("ok", False)
 
     async def process_update(self, update: Dict[str, Any]) -> None:
-        """Process a single update and call registered handlers."""
+        """Process a single update and call registered handlers.
+
+        Args:
+            update (Dict[str, Any]): The update to process
+        """
         update_id = update.get("update_id")
         if update_id:
             self.last_update_id = update_id + 1
@@ -497,7 +841,15 @@ class Client:
                     handler["callback"](event)
 
     def _convert_event(self, handler_type: UpdatesTypes, event: Dict[str, Any]) -> Any:
-        """Convert raw event data to appropriate object type."""
+        """Convert raw event data to appropriate object type.
+
+        Args:
+            handler_type (UpdatesTypes): Type of the update
+            event (Dict[str, Any]): Raw event data
+
+        Returns:
+            Any: Converted event object
+        """
         if handler_type in (UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED):
             return Message(**pythonize(event), kwargs={"client": self})
         elif handler_type == UpdatesTypes.CALLBACK_QUERY:
@@ -519,13 +871,22 @@ class Client:
         update_type: UpdatesTypes,
         callback: Callable[[Any], Union[None, Awaitable[None]]],
     ) -> None:
-        """Register a handler for specific update type."""
+        """Register a handler for specific update type.
+
+        Args:
+            update_type (UpdatesTypes): Type of update to handle
+            callback (Callable): Function to call when update is received
+        """
         self.handlers.append({"type": update_type, "callback": callback})
 
     def remove_handler(
         self, callback: Callable[[Any], Union[None, Awaitable[None]]]
     ) -> None:
-        """Remove a handler from the list of handlers."""
+        """Remove a handler from the list of handlers.
+
+        Args:
+            callback (Callable): Handler function to remove
+        """
         self.handlers = [
             handler for handler in self.handlers if handler["callback"] != callback
         ]
@@ -535,7 +896,15 @@ class Client:
         self.handlers = []
 
     async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
-        """Start polling updates from the server."""
+        """Start polling updates from the server.
+
+        Args:
+            timeout (int, optional): Timeout in seconds for long polling. Defaults to 30.
+            limit (int, optional): Maximum number of updates to retrieve. Defaults to 100.
+
+        Raises:
+            RuntimeError: If client is already running
+        """
         if self.running:
             raise RuntimeError("Client is already running")
 
@@ -558,7 +927,12 @@ class Client:
         self.running = False
 
     def run(self, timeout: int = 30, limit: int = 100) -> None:
-        """Run the client."""
+        """Run the client.
+
+        Args:
+            timeout (int, optional): Timeout in seconds for long polling. Defaults to 30.
+            limit (int, optional): Maximum number of updates to retrieve. Defaults to 100.
+        """
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.start_polling(timeout, limit))
 
@@ -568,5 +942,9 @@ class Client:
         loop.run_until_complete(self.stop_polling())
 
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
-        """Process an update received via webhook."""
+        """Process an update received via webhook.
+
+        Args:
+            update_data (Dict[str, Any]): Update data received from webhook
+        """
         await self.process_update(update_data)

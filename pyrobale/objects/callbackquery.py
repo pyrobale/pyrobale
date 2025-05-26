@@ -34,9 +34,7 @@ class CallbackQuery:
         """Sends a response to the callback query.
 
         :param text: The text of the response.
-
         :param show_alert: Whether to show an alert to the user.
-
         :return: true if the response was sent successfully.
         """
         return await self.bot.answer_callback_query(self.id, text, show_alert)

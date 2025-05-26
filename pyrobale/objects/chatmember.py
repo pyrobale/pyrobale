@@ -79,8 +79,8 @@ class ChatMember:
         """Bans the chat member from the chat.
 
         :param chat_id: The ID of the chat.
-
-        :return: True if the member was banned successfully, False otherwise.
+        :return: True if the member was banned successfully, False
+            otherwise.
         """
         data = await self.chat.ban(self.user.id)
         return data
@@ -88,7 +88,8 @@ class ChatMember:
     async def unban(self) -> bool:
         """Unbans the chat member from the chat.
 
-        :return: True if the member was unbanned successfully, False otherwise.
+        :return: True if the member was unbanned successfully, False
+            otherwise.
         """
         data = await self.chat.unban(self.user.id)
         return data
