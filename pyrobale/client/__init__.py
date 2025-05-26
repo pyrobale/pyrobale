@@ -38,8 +38,6 @@ from ..objects.webappdata import WebAppData
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 import asyncio
-import aiohttp
-import bale
 from enum import Enum
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType
 

@@ -1,8 +1,4 @@
-from typing import Optional, Union
-from .utils import build_api_url
-import asyncio
-import aiohttp
-
+from typing import Optional
 
 class User:
     def __init__(
