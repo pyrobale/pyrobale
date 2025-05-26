@@ -1,0 +1,36 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pdoc
+
+      - name: Generate docs with pdoc
+        run: |
+          mkdir -p build_docs
+          pdoc pyrobale -o build_docs --docformat google
+
+      - name: Push to pyrobale/docs repo
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.DOCS_PUSH_TOKEN }}
+          external_repository: pyrobale/docs
+          publish_dir: ./build_docs
+          publish_branch: main
+          commit_message: "📄 Auto-update docs from pyrobale"
