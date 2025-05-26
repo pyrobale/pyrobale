@@ -56,6 +56,7 @@ class Client:
         self.requests_base = base_url + token
 
         self.handlers = []
+        self._waiters = []
         self.running = False
         self.last_update_id = 0
 
@@ -818,6 +819,15 @@ class Client:
         )
         return data.get("ok", False)
 
+    async def wait_for(
+        self,
+        update_type: UpdatesTypes, 
+        check=None
+        ):
+        future = asyncio.get_running_loop().create_future()
+        self._waiters.append((update_type, check, future))
+        return await future
+
     async def process_update(self, update: Dict[str, Any]) -> None:
         """Process a single update and call registered handlers.
 
@@ -827,6 +837,16 @@ class Client:
         update_id = update.get("update_id")
         if update_id:
             self.last_update_id = update_id + 1
+
+        for waiter in list(self._waiters):
+            w_type, check, future = waiter
+            if w_type.value in update:
+                event = update[w_type.value]
+                event = self._convert_event(w_type, event)
+                if check is None or check(event):
+                    if not future.done():
+                        future.set_result(event)
+                    self._waiters.remove(waiter)
 
         for handler in self.handlers:
             update_type = handler["type"].value

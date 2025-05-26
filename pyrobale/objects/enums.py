@@ -18,6 +18,9 @@ class ChatAction(Enum):
     TYPING = "typing"
     PHOTO = "upload_photo"
     VIDEO = "upload_video"
+    REVORDVIDEO = "record_video"
+    VOICE = "upload_voice"
+    DOCUMENT = "upload_document"
 
 
 class ChatType(Enum):
