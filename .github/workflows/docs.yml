@@ -1,36 +1,50 @@
-name: Build and Deploy Docs
+name: Deploy Docs
 
 on:
   push:
     branches:
-      - main
+      - main  # یا شاخه‌ی اصلی شما
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source repo
-        uses: actions/checkout@v4
+      - name: Checkout main repo
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install pdoc
-
-      - name: Generate docs with pdoc
         run: |
-          mkdir -p build_docs
-          pdoc pyrobale -o build_docs --docformat google
+          python -m pip install --upgrade pip
+          pip install pdoc
 
-      - name: Push to pyrobale/docs repo
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Generate documentation with pdoc
+        run: |
+          pdoc --output-dir docs --force --template-dir ./pdoc-templates --format google --html pyrobale
+
+      - name: Checkout docs repo
+        uses: actions/checkout@v3
         with:
-          personal_token: ${{ secrets.DOCS_PUSH_TOKEN }}
-          external_repository: pyrobale/docs
-          publish_dir: ./build_docs
-          publish_branch: main
-          commit_message: "📄 Auto-update docs from pyrobale"
+          repository: daradege/pyrobale-docs
+          token: ${{ secrets.DOCS_DEPLOY_SSH }}
+          ssh-key: ${{ secrets.DOCS_DEPLOY_SSH_KEY }}
+          path: docs-repo
+
+      - name: Copy docs to docs repo
+        run: |
+          rm -rf docs-repo/*
+          cp -r docs/* docs-repo/
+
+      - name: Commit and push docs
+        run: |
+          cd docs-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Update docs [skip ci]" || echo "No changes to commit"
+          git push
