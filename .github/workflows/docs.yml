@@ -33,7 +33,7 @@ jobs:
           ssh-private-key: ${{ secrets.DOCS_DEPLOY_SSH_KEY }}
 
       - name: Clone docs repository via SSH
-        run: git clone git@github.com:daradege/pyrobale-docs.git docs-repo
+        run: git clone git@github.com:daradege/docs.git docs-repo
 
       - name: Copy generated docs to docs repo
         run: |
