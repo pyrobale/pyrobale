@@ -83,7 +83,7 @@ async def message_handler(message: Message):
 
 ## Documentation
 
-For detailed documentation and advanced usage, visit our [documentation site](https://pyrobale.readthedocs.io).
+For detailed documentation and advanced usage, visit our [documentation site](https://pyrobale.github.io).
 
 ## Contributing
 
@@ -95,7 +95,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📖 [Documentation](https://pyrobale.readthedocs.io)
+- 📖 [Documentation](https://pyrobale.github.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
 """
