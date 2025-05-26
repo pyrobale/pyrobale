@@ -28,9 +28,10 @@ jobs:
           pdoc --html --output-dir docs --force --format google pyrobale
 
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.1
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.DOCS_DEPLOY_SSH_KEY }}
+
 
       - name: Clone docs repository via SSH
         run: git clone git@github.com:daradege/docs.git docs-repo
