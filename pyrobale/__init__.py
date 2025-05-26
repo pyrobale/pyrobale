@@ -5,6 +5,7 @@
 
 A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Bale bots simple and intuitive.
 
+
 ## Features
 
 - 🚀 **Simple & Intuitive** - Clean, Pythonic API design
