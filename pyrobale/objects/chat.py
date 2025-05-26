@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from ..client import Client
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
+from .enums import ChatType, ChatAction, UpdatesTypes
 import asyncio
 import aiohttp
 
@@ -171,3 +172,9 @@ class Chat:
         Set the photo of the chat.
         """
         return await self.client.set_chat_photo(chat_id=self.id, photo=photo)
+
+    async def send_action(self, action: ChatAction) -> bool:
+        """
+        Send an action to the chat.
+        """
+        return await self.client.send_chat_action(chat_id=self.id, action=action)

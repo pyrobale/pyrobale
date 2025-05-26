@@ -32,8 +32,12 @@ from .successfulpayment import SuccessfulPayment
 from .messageid import MessageId
 from .labeledprice import LabeledPrice
 from .update import Update
+from .enums import UpdatesTypes, ChatAction, ChatType
 
 __all__ = [
+    "UpdatesTypes",
+    "ChatAction",
+    "ChatType",
     "Voice",
     "ReplyKeyboardMarkup",
     "InputMediaPhoto",

@@ -35,14 +35,7 @@ import asyncio
 import aiohttp
 import bale
 from enum import Enum
-
-class UpdatesTypes(Enum):
-    MESSAGE = "message"
-    MESSAGE_EDITED = "message_edited"
-    CALLBACK_QUERY = "callback_query"
-    PRE_CHECKOUT_QUERY = "pre_checkout_query"
-    MEMBER_JOINED = "member_joined"
-    MEMBER_LEFT = "member_left"
+from ..objects.enums import UpdatesTypes, ChatAction, ChatType
 
 class Client:
     """
@@ -417,6 +410,15 @@ class Client:
         })
         return data.get("result", "")
     
+    async def send_chat_action(self,
+                               chat_id: int,
+                               action: ChatAction) -> bool:
+        data = await make_post(self.requests_base+"/sendChatAction", data={
+            "chat_id": str(chat_id),
+            "action": action.value
+        })
+        return data.get("ok", False)
+    
     
     
     async def process_update(self, update: Dict[str, Any]) -> None:
@@ -433,7 +435,7 @@ class Client:
                 event = self._convert_event(handler["type"], event)
                 
                 if asyncio.iscoroutinefunction(handler["callback"]):
-                    await handler["callback"](event)
+                    asyncio.create_task(handler["callback"](event))
                 else:
                     handler["callback"](event)
 
@@ -473,7 +475,7 @@ class Client:
         
         self.running = True
         while self.running:
-            try:
+            if 1:
                 updates = await self.get_updates(
                     offset=self.last_update_id,
                     limit=limit,
@@ -483,8 +485,8 @@ class Client:
                 for update in updates:
                     await self.process_update(update)
                     
-            except Exception as e:
-                print(f"Error while polling updates: {e}")
+            else: # except Exception as e:
+                # print(f"Error while polling updates: {e}")
                 await asyncio.sleep(5)
 
     async def stop_polling(self) -> None:

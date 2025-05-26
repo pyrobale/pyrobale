@@ -20,12 +20,11 @@ class CallbackQuery:
                 **kwargs
                 ):
         self.id = id
-        self.user : 'Message' = User(**user)
-        self.message : 'Message' = Message(**message)
-        self.chat : 'Chat' = Chat(**message.chat)
-        self.data = data
-        print(kwargs)
-        self.bot : 'Client' = kwargs.get('kwargs',{}).get('client')
+        self.user : 'User' = User(**user) if user else None
+        self.message : 'Message' = Message(**message) if message else None
+        self.chat : 'Chat' = self.message.chat if self.message else None
+        self.data = data if data else None
+        self.bot : 'Client' = kwargs.get('kwargs',{}).get('client', None)
     
     async def answer(self, text: Optional[str] = None, show_alert: bool = False):
         """
