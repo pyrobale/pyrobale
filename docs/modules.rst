@@ -1,7 +1,7 @@
-pyrobale
-========
+pyrobale package
+================
 
-.. toctree::
-   :maxdepth: 4
-
-   pyrobale
+.. automodule:: pyrobale
+   :members:
+   :undoc-members:
+   :show-inheritance:

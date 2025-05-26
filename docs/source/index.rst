@@ -1,5 +1,5 @@
 Welcome to PyroBale's documentation!
-====================================
+=====================================
 
 .. toctree::
    :maxdepth: 2
