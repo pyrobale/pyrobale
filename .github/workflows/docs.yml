@@ -1,4 +1,4 @@
-name: Deploy Documentation
+name: Build and Deploy Docs
 
 on:
   push:
@@ -6,45 +6,33 @@ on:
       - main
 
 jobs:
-  build-and-deploy-docs:
+  docs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3
-
-      - name: Setup Python 3.10
-        uses: actions/setup-python@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          python-version: "3.10"
+          fetch-depth: 0
 
-      - name: Upgrade pip and install pdoc
-        run: |
-          python -m pip install --upgrade pip
-          pip install pdoc
-
-      - name: Generate documentation using pdoc (Google style)
-        run: |
-          pdoc --html --output-dir docs --force --format google pyrobale
-
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          ssh-private-key: ${{ secrets.DOCS_DEPLOY_SSH_KEY }}
+          python-version: '3.11'
 
-      - name: Clone docs repository via SSH
-        run: git clone git@github.com:daradege/docs.git docs-repo
-
-      - name: Copy generated docs to docs repo
+      - name: Install dependencies
         run: |
-          rm -rf docs-repo/*
-          cp -r docs/* docs-repo/
+          pip install pdoc aiohttp
 
-      - name: Commit and push docs changes
-        working-directory: docs-repo
+      - name: Generate documentation
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add --all
-          git diff --quiet && echo "No changes detected, skipping commit" || git commit -m "Update docs [skip ci]"
-          git push origin main
+          pdoc pyrobale --output-dir docs --docformat google
+
+      - name: Deploy to docs branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
+          external_repository: pyrobale/docs
+          publish_branch: docs
+          publish_dir: ./docs
+          commit_message: "Auto-generate docs from ${{ github.sha }}"
