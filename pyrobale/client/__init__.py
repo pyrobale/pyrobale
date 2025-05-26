@@ -824,6 +824,12 @@ class Client:
         update_type: UpdatesTypes, 
         check=None
         ):
+        """Wait until a specified update
+
+        Args:
+            update_type (UpdatesTypes): The type of update you're waiting for it.
+            check: a condition that will be checked before passing.
+        """
         future = asyncio.get_running_loop().create_future()
         self._waiters.append((update_type, check, future))
         return await future
@@ -847,6 +853,7 @@ class Client:
                     if not future.done():
                         future.set_result(event)
                     self._waiters.remove(waiter)
+                    return update
 
         for handler in self.handlers:
             update_type = handler["type"].value
@@ -859,6 +866,36 @@ class Client:
                     asyncio.create_task(handler["callback"](event))
                 else:
                     handler["callback"](event)
+
+    def base_handler_decorator(self, update_type: UpdatesTypes):
+        def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
+            self.add_handler(update_type, callback)
+            return callback
+        return decorator
+
+    def on_message(self):
+        return self.base_handler_decorator(UpdatesTypes.MESSAGE)
+    
+    def on_edited_message(self):
+        return self.base_handler_decorator(UpdatesTypes.MESSAGE_EDITED)
+
+    def on_callback_query(self):
+        return self.base_handler_decorator(UpdatesTypes.CALLBACK_QUERY)
+    
+    def on_new_members(self):
+        return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)
+    
+    def on_memebers_left(self):
+        return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)
+    
+    def on_pre_checkout_query(self):
+        return self.base_handler_decorator(UpdatesTypes.PRE_CHECKOUT_QUERY)
+    
+    def on_photo(self):
+        return self.base_handler_decorator(UpdatesTypes.PHOTO)
+    
+    def on_successful_payment(self):
+        return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)
 
     def _convert_event(self, handler_type: UpdatesTypes, event: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type.
