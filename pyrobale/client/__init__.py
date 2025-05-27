@@ -985,7 +985,8 @@ class Client:
             UpdatesTypes.MESSAGE,
             UpdatesTypes.MESSAGE_EDITED,
             UpdatesTypes.MEMBER_JOINED,
-            UpdatesTypes.MEMBER_LEFT
+            UpdatesTypes.MEMBER_LEFT,
+            UpdatesTypes.SUCCESSFUL_PAYMENT
         ):
             if event.get("new_chat_member", False) and handler_type == UpdatesTypes.MEMBER_JOINED:
                 return (
@@ -1016,6 +1017,12 @@ class Client:
                         kwargs={"client": self},
                         **pythonize(event.get("message", {}))
                     )
+                )
+            
+            elif event.get("successful_payment", False) and handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
+                return (
+                    Message(**pythonize(event.get("successful_payment", {})),
+                    kwargs={"client": self})
                 )
             
             else:
