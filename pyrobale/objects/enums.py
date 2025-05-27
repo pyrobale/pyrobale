@@ -10,6 +10,7 @@ class UpdatesTypes(Enum):
     PRE_CHECKOUT_QUERY = "pre_checkout_query"
     MEMBER_JOINED = "member_joined"
     MEMBER_LEFT = "member_left"
+    SUCCESSFUL_PAYMENT = "successful_payment"
 
 class Filters(Enum):
     """Filters that you can use in handlers"""

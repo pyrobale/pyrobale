@@ -981,22 +981,57 @@ class Client:
         Returns:
             Any: Converted event object
         """
-        if handler_type in (UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED):
-            return Message(**pythonize(event), kwargs={"client": self})
+        if handler_type in (
+            UpdatesTypes.MESSAGE,
+            UpdatesTypes.MESSAGE_EDITED,
+            UpdatesTypes.MEMBER_JOINED,
+            UpdatesTypes.MEMBER_LEFT
+        ):
+            if event.get("new_chat_member", False) and handler_type == UpdatesTypes.MEMBER_JOINED:
+                return (
+                    ChatMember(
+                        kwargs={"client": self},
+                        **pythonize(event.get("new_chat_member", {}))
+                    ),
+                    Chat(
+                        kwargs={"client": self},
+                        **pythonize(event.get("chat", {}))
+                    ),
+                    Message(
+                        kwargs={"client": self},
+                        **pythonize(event.get("message", {}))
+                    )
+                )
+            elif event.get("left_chat_member", False) and handler_type == UpdatesTypes.MEMBER_LEFT:
+                return (
+                    ChatMember(
+                        kwargs={"client": self},
+                        **pythonize(event.get("left_chat_member", {}))
+                    ),
+                    Chat(
+                        kwargs={"client": self},
+                        **pythonize(event.get("chat", {}))
+                    ),
+                    Message(
+                        kwargs={"client": self},
+                        **pythonize(event.get("message", {}))
+                    )
+                )
+            
+            else:
+                return (
+                    Message(kwargs={"client": self}, **pythonize(event))
+                    )
+        
+        
         elif handler_type == UpdatesTypes.CALLBACK_QUERY:
             return CallbackQuery(kwargs={"client": self}, **pythonize(event))
+        
         elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
             return PreCheckoutQuery(kwargs={"client": self}, **pythonize(event))
-        elif handler_type == UpdatesTypes.MEMBER_JOINED:
-            return ChatMember(
-                kwargs={"client": self}, **pythonize(event.get("new_chat_member", {}))
-            )
-        elif handler_type == UpdatesTypes.MEMBER_LEFT:
-            return ChatMember(
-                kwargs={"client": self}, **pythonize(event.get("left_chat_member", {}))
-            )
-        return event
-
+        
+        return event    
+    
     def add_handler(
         self,
         update_type: UpdatesTypes,

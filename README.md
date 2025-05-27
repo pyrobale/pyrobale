@@ -29,14 +29,33 @@ from pyrobale.objects import Message, UpdatesTypes
 
 bot = Client("YOUR_BOT_TOKEN")
 
+@bot.on_message()
 async def message_handler(message: User):
     await message.reply("Hello, world!")
 
-bot.add_handler(UpdatesTypes.MESSAGE, message_handler)
 bot.run()
 ```
 
 ## Examples
+
+### Conversation Bot
+```python
+from pyrobale.objects import *
+from pyrobale.client import Client, Message, UpdatesTypes
+import asyncio
+
+client = Client("YOUR_BOT_TOKEN")
+
+async def handle_message(message: Message):
+    if message.text == "/start":
+        await message.reply("سلام! من یک ربات PyRoBale هستم!")
+        await client.wait_for(UpdatesTypes.MESSAGE)
+        await message.reply("Okay! wait_for Test Compeleted")
+
+client.add_handler(UpdatesTypes.MESSAGE, handle_message)
+
+client.run()
+```
 
 ### Echo Bot
 ```python
@@ -45,10 +64,10 @@ from pyrobale.objects import Message, UpdatesTypes
 
 bot = Client("YOUR_BOT_TOKEN")
 
+@bot.on_message()
 async def message_handler(message: Message):
     await message.reply(message.text)
 
-bot.add_handler(UpdatesTypes.MESSAGE, message_handler)
 bot.run()
 ```
 
