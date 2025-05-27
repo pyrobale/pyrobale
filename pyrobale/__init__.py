@@ -1,6 +1,5 @@
 """
 ![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
-![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
 
 # Bale Bot API Python Library
 
@@ -117,7 +116,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 [Documentation](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
-
 """
 
 from .objects.utils import *
