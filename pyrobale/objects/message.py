@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from ..client import Client
 from ..objects.chat import Chat
 from ..objects.user import User
+from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 
 class Message:

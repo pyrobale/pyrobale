@@ -1,6 +1,7 @@
-from typing import Optional
-from ..client import Client
+from typing import Optional, TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from ..client import Client
 
 class User:
     def __init__(
@@ -17,10 +18,4 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
-        self.client: Client = kwargs.get("kwargs", {}).get("client")
-    
-    def set_state(self, state: str):
-        self.client.state_machine.set_state(self.id, state)
-    
-    def del_state(self, state: str):
-        self.client.state_machine.del_state(self.id)
+        self.client: Optional["Client"] = kwargs.get("client", None)
