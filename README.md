@@ -30,7 +30,7 @@ from pyrobale.objects import Message, UpdatesTypes
 bot = Client("YOUR_BOT_TOKEN")
 
 @bot.on_message()
-async def message_handler(message: User):
+async def message_handler(message: Message):
     await message.reply("Hello, world!")
 
 bot.run()
