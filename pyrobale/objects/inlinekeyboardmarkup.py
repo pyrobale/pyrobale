@@ -15,7 +15,7 @@ class InlineKeyboardMarkup:
         callback_data: Optional[str] = None,
         url: Optional[str] = None,
         web_app: Optional[Union["WebAppInfo", str]] = None,
-        copy_text_button: Optional["CopyTextButton"] = None,
+        copy_text_button: Optional[Union["CopyTextButton", str]] = None,
         **kwargs
     ) -> "InlineKeyboardMarkup":
         """Adds a button to the inline keyboard.
@@ -24,8 +24,8 @@ class InlineKeyboardMarkup:
             text (str): The text to display on the button.
             callback_data (str, optional): The callback data to send when the button is clicked.
             url (str, optional): The URL to open when the button is clicked.
-            web_app (WebAppInfo, optional): The web app to open when the button is clicked.
-            copy_text_button (CopyTextButton, optional): The copy text button to add to the button.
+            web_app (WebAppInfo OR string, optional): The web app to open when the button is clicked.
+            copy_text_button (CopyTextButton OR string, optional): The copy text button to add to the button.
 
         Returns:
             InlineKeyboardMarkup: The updated InlineKeyboardMarkup object.
@@ -59,7 +59,14 @@ class InlineKeyboardMarkup:
                     "web_app must be a string URL or an object with to_dict() method."
                 )
         elif copy_text_button:
-            button["copy_text"] = {"text": copy_text_button.text}
+            if isinstance(copy_text_button, str):
+                button["copy_text"] = {"text": copy_text_button}
+            elif hasattr(copy_text_button, "text"):
+                button["copy_text"] = {"text": copy_text_button.text}
+            else:
+                raise ValueError(
+                    "copy_text_button must be a string or an object with a 'text' attribute."
+                )
 
         if not self.inline_keyboard:
             self.inline_keyboard.append([])
