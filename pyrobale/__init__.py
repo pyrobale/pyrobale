@@ -1,10 +1,10 @@
 """
 ![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
+![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
 
 # Bale Bot API Python Library
 
 A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Bale bots simple and intuitive.
-
 
 ## Features
 
@@ -32,14 +32,32 @@ from pyrobale.objects import Message, UpdatesTypes
 bot = Client("YOUR_BOT_TOKEN")
 
 @bot.on_message()
-async def message_handler(message: Message):
+async def message_handler(message: User):
     await message.reply("Hello, world!")
-
 
 bot.run()
 ```
 
 ## Examples
+
+### Conversation Bot
+```python
+from pyrobale.objects import *
+from pyrobale.client import Client, Message, UpdatesTypes
+import asyncio
+
+client = Client("YOUR_BOT_TOKEN")
+
+async def handle_message(message: Message):
+    if message.text == "/start":
+        await message.reply("سلام! من یک ربات PyRoBale هستم!")
+        await client.wait_for(UpdatesTypes.MESSAGE)
+        await message.reply("Okay! wait_for Test Compeleted")
+
+client.add_handler(UpdatesTypes.MESSAGE, handle_message)
+
+client.run()
+```
 
 ### Echo Bot
 ```python
@@ -84,7 +102,7 @@ async def message_handler(message: Message):
 
 ## Documentation
 
-For detailed documentation and advanced usage, visit our [documentation site](https://pyrobale.github.io).
+For detailed documentation and advanced usage, visit our [documentation site](https://pyrobale.readthedocs.io).
 
 ## Contributing
 
@@ -96,9 +114,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📖 [Documentation](https://pyrobale.github.io)
+- 📖 [Documentation](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
+
 """
 
 from .objects.utils import *
