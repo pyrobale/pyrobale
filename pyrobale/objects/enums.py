@@ -12,6 +12,7 @@ class UpdatesTypes(Enum):
     MEMBER_LEFT = "member_left"
     SUCCESSFUL_PAYMENT = "successful_payment"
 
+
 class Filters(Enum):
     """Filters that you can use in handlers"""
 
@@ -22,6 +23,7 @@ class Filters(Enum):
     VOICE = "voice"
     CONTACT = "contact"
     LOCATION = "location"
+
 
 class ChatAction(Enum):
     """Actions of a user in a chat."""

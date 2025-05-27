@@ -3,6 +3,7 @@ from typing import Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import Client
 
+
 class User:
     def __init__(
         self,

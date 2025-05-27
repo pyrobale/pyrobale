@@ -480,20 +480,20 @@ class Client:
             },
         )
         return Message(**pythonize(data["result"]))
-    
+
     async def send_invoice(
-                self,
-                chat_id: Union[str, int],
-                title: str,
-                description: str,
-                payload: str,
-                provider_token: str,
-                prices: list[LabeledPrice],
-                photo_url: Optional[str] = None,
-                reply_to_message_id: Optional[int] = None
-            ) -> Message:
+        self,
+        chat_id: Union[str, int],
+        title: str,
+        description: str,
+        payload: str,
+        provider_token: str,
+        prices: list[LabeledPrice],
+        photo_url: Optional[str] = None,
+        reply_to_message_id: Optional[int] = None,
+    ) -> Message:
         """Sends a message including a invoice for user to pay.
-        
+
         Args:
             chat_id (string OR integer): unique chat id to send the invoice
             title (string): the title of invoice
@@ -517,11 +517,10 @@ class Client:
                 "provider_token": provider_token,
                 "prices": prices,
                 "photo_url": photo_url,
-                "reply_to_message_id": reply_to_message_id
-            }
+                "reply_to_message_id": reply_to_message_id,
+            },
         )
         return Message(**pythonize(data["result"]))
-
 
     async def get_file(self, file_id: str) -> File:
         """Get a file from the Bale servers.
@@ -570,7 +569,7 @@ class Client:
         Returns:
             bool: Whether the user was banned successfully
         """
-        
+
         data = await make_post(
             self.requests_base + "/banChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
@@ -802,22 +801,22 @@ class Client:
             self.requests_base + "/deleteChatPhoto", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
-    
+
     async def edit_message(
-            self,
-            chat_id: Union[int, str],
-            message_id: int,
-            text: str,
-            reply_markup: Optional[InlineKeyboardMarkup] = None
-            ) -> Message:
+        self,
+        chat_id: Union[int, str],
+        message_id: int,
+        text: str,
+        reply_markup: Optional[InlineKeyboardMarkup] = None,
+    ) -> Message:
         """Edits a message in a specified chat
-        
+
         Args:
             chat_id (int OR str): Unique identifier for the target chat
             message_id (int): Unique indentifier for the message you want to edit
             text (str): New text of message
             reply_markup (InlineKeyboardMarkup): Inline markup you can add or change in message
-        
+
         Returns:
             Message: The object of edited message
         """
@@ -828,8 +827,8 @@ class Client:
                 "chat_id": chat_id,
                 "message_id": message_id,
                 "text": text,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None
-            }
+                "reply_markup": reply_markup.to_dict() if reply_markup else None,
+            },
         )
         return Message(**pythonize(data["result"]))
 
@@ -893,11 +892,7 @@ class Client:
         )
         return data.get("ok", False)
 
-    async def wait_for(
-        self,
-        update_type: UpdatesTypes, 
-        check=None
-        ):
+    async def wait_for(self, update_type: UpdatesTypes, check=None):
         """Wait until a specified update
 
         Args:
@@ -945,29 +940,30 @@ class Client:
         def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
             self.add_handler(update_type, callback)
             return callback
+
         return decorator
 
     def on_message(self):
         return self.base_handler_decorator(UpdatesTypes.MESSAGE)
-    
+
     def on_edited_message(self):
         return self.base_handler_decorator(UpdatesTypes.MESSAGE_EDITED)
 
     def on_callback_query(self):
         return self.base_handler_decorator(UpdatesTypes.CALLBACK_QUERY)
-    
+
     def on_new_members(self):
         return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)
-    
+
     def on_memebers_left(self):
         return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)
-    
+
     def on_pre_checkout_query(self):
         return self.base_handler_decorator(UpdatesTypes.PRE_CHECKOUT_QUERY)
-    
+
     def on_photo(self):
         return self.base_handler_decorator(UpdatesTypes.PHOTO)
-    
+
     def on_successful_payment(self):
         return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)
 
@@ -986,59 +982,57 @@ class Client:
             UpdatesTypes.MESSAGE_EDITED,
             UpdatesTypes.MEMBER_JOINED,
             UpdatesTypes.MEMBER_LEFT,
-            UpdatesTypes.SUCCESSFUL_PAYMENT
+            UpdatesTypes.SUCCESSFUL_PAYMENT,
         ):
-            if event.get("new_chat_member", False) and handler_type == UpdatesTypes.MEMBER_JOINED:
+            if (
+                event.get("new_chat_member", False)
+                and handler_type == UpdatesTypes.MEMBER_JOINED
+            ):
                 return (
                     ChatMember(
                         kwargs={"client": self},
-                        **pythonize(event.get("new_chat_member", {}))
+                        **pythonize(event.get("new_chat_member", {})),
                     ),
-                    Chat(
-                        kwargs={"client": self},
-                        **pythonize(event.get("chat", {}))
-                    ),
+                    Chat(kwargs={"client": self}, **pythonize(event.get("chat", {}))),
                     Message(
-                        kwargs={"client": self},
-                        **pythonize(event.get("message", {}))
-                    )
+                        kwargs={"client": self}, **pythonize(event.get("message", {}))
+                    ),
                 )
-            elif event.get("left_chat_member", False) and handler_type == UpdatesTypes.MEMBER_LEFT:
+            elif (
+                event.get("left_chat_member", False)
+                and handler_type == UpdatesTypes.MEMBER_LEFT
+            ):
                 return (
                     ChatMember(
                         kwargs={"client": self},
-                        **pythonize(event.get("left_chat_member", {}))
+                        **pythonize(event.get("left_chat_member", {})),
                     ),
-                    Chat(
-                        kwargs={"client": self},
-                        **pythonize(event.get("chat", {}))
-                    ),
+                    Chat(kwargs={"client": self}, **pythonize(event.get("chat", {}))),
                     Message(
-                        kwargs={"client": self},
-                        **pythonize(event.get("message", {}))
-                    )
+                        kwargs={"client": self}, **pythonize(event.get("message", {}))
+                    ),
                 )
-            
-            elif event.get("successful_payment", False) and handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
-                return (
-                    Message(**pythonize(event.get("successful_payment", {})),
-                    kwargs={"client": self})
+
+            elif (
+                event.get("successful_payment", False)
+                and handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT
+            ):
+                return Message(
+                    **pythonize(event.get("successful_payment", {})),
+                    kwargs={"client": self},
                 )
-            
+
             else:
-                return (
-                    Message(kwargs={"client": self}, **pythonize(event))
-                    )
-        
-        
+                return Message(kwargs={"client": self}, **pythonize(event))
+
         elif handler_type == UpdatesTypes.CALLBACK_QUERY:
             return CallbackQuery(kwargs={"client": self}, **pythonize(event))
-        
+
         elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
             return PreCheckoutQuery(kwargs={"client": self}, **pythonize(event))
-        
-        return event    
-    
+
+        return event
+
     def add_handler(
         self,
         update_type: UpdatesTypes,

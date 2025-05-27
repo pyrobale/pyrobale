@@ -1,5 +1,6 @@
 from typing import Optional
 
+
 class CallbackQuery:
     """Represents a callback query from a user."""
 
@@ -17,13 +18,15 @@ class CallbackQuery:
         self.chat = None
         self.data = data if data else None
         self.bot = kwargs.get("kwargs", {}).get("client", None)
-        
+
         if user:
             from .user import User
+
             self.user = User(**user)
-        
+
         if message:
             from .message import Message
+
             self.message = Message(**message)
             self.chat = self.message.chat if self.message else None
 
