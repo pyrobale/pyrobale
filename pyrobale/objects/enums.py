@@ -11,6 +11,16 @@ class UpdatesTypes(Enum):
     MEMBER_JOINED = "member_joined"
     MEMBER_LEFT = "member_left"
 
+class Filters(Enum):
+    """Filters that you can use in handlers"""
+
+    TEXT = "text"
+    PHOTO = "photo"
+    VIDEO = "video"
+    AUDIO = "audio"
+    VOICE = "voice"
+    CONTACT = "contact"
+    LOCATION = "location"
 
 class ChatAction(Enum):
     """Actions of a user in a chat."""

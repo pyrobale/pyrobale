@@ -124,7 +124,7 @@ class Message:
             **kwargs: Additional keyword arguments
         """
         self.id: int = message_id
-        self.user: "User" = User(**from_user) if from_user else None
+        self.user: "User" = User(**from_user, kwargs={"client": self.client}) if from_user else None
         self.date: int = date
         self.chat: Optional["Chat"] = (
             chat if isinstance(chat, Chat) else Chat(**chat) if chat else None
@@ -166,13 +166,13 @@ class Message:
         """
         if self.chat and self.chat.id:
             await self.client.send_message(
-                self.chat.id, text, reply_markup=reply_markup
+                self.chat.id, text, reply_to_message_id=self.id, reply_markup=reply_markup
             )
 
     async def edit(
         self,
         text: str,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+        reply_markup: Optional[InlineKeyboardMarkup] = None,
     ):
         """Edit the current message text.
 
@@ -214,7 +214,7 @@ class Message:
         """
         if self.chat and self.chat.id:
             await self.client.send_photo(
-                self.chat.id, photo=photo, caption=caption, reply_markup=reply_markup
+                self.chat.id, photo=photo, caption=caption, reply_to_message_id=self.id, reply_markup=reply_markup
             )
 
     async def reply_video(
@@ -232,7 +232,7 @@ class Message:
         """
         if self.chat and self.chat.id:
             await self.client.send_video(
-                self.chat.id, video=video, caption=caption, reply_markup=reply_markup
+                self.chat.id, video=video, caption=caption, reply_to_message_id=self.id, reply_markup=reply_markup
             )
 
     async def reply_audio(
@@ -250,7 +250,7 @@ class Message:
         """
         if self.chat and self.chat.id:
             await self.client.send_audio(
-                self.chat.id, audio=audio, caption=caption, reply_markup=reply_markup
+                self.chat.id, audio=audio, caption=caption, reply_to_message_id=self.id, reply_markup=reply_markup
             )
 
     async def reply_document(
@@ -271,6 +271,7 @@ class Message:
                 self.chat.id,
                 document=document,
                 caption=caption,
+                reply_to_message_id=self.id,
                 reply_markup=reply_markup,
             )
 
@@ -308,6 +309,7 @@ class Message:
                 self.chat.id,
                 latitude=latitude,
                 longitude=longitude,
+                reply_to_message_id=self.id,
                 reply_markup=reply_markup,
             )
 
@@ -329,6 +331,7 @@ class Message:
                 self.chat.id,
                 phone_number=phone_number,
                 first_name=first_name,
+                reply_to_message_id=self.id,
                 reply_markup=reply_markup,
             )
 

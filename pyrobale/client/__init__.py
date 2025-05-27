@@ -40,6 +40,7 @@ from ..objects.utils import *
 import asyncio
 from enum import Enum
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType
+from ..StateMachine import StateMachine
 
 
 class Client:
@@ -59,6 +60,7 @@ class Client:
         self._waiters = []
         self.running = False
         self.last_update_id = 0
+        self.state_machine = StateMachine()
 
     async def get_updates(
         self,
@@ -478,6 +480,48 @@ class Client:
             },
         )
         return Message(**pythonize(data["result"]))
+    
+    async def send_invoice(
+                self,
+                chat_id: Union[str, int],
+                title: str,
+                description: str,
+                payload: str,
+                provider_token: str,
+                prices: list[LabeledPrice],
+                photo_url: Optional[str] = None,
+                reply_to_message_id: Optional[int] = None
+            ) -> Message:
+        """Sends a message including a invoice for user to pay.
+        
+        Args:
+            chat_id (string OR integer): unique chat id to send the invoice
+            title (string): the title of invoice
+            description (string): desciption of invoice, you can explain the invoice here
+            payload (string): payload of invoice, user will not see this, it'll be returned after successful payment
+            provider_token (string): Wallet token or card number of receiver
+            prices (list of LabledPrice): a list of prices that user must pay
+            photo_url (Optional: string): url of a photo that will be sent with invoice
+            reply_to_message_id (Optional: int): message id to reply that
+
+        Returns:
+            Message: returns the sent message with invoice
+        """
+        data = await make_post(
+            self.requests_base + "/sendInvoice",
+            data={
+                "chat_id": chat_id,
+                "title": title,
+                "description": description,
+                "payload": payload,
+                "provider_token": provider_token,
+                "prices": prices,
+                "photo_url": photo_url,
+                "reply_to_message_id": reply_to_message_id
+            }
+        )
+        return Message(**pythonize(data["result"]))
+
 
     async def get_file(self, file_id: str) -> File:
         """Get a file from the Bale servers.
@@ -758,6 +802,36 @@ class Client:
             self.requests_base + "/deleteChatPhoto", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
+    
+    async def edit_message(
+            self,
+            chat_id: Union[int, str],
+            message_id: int,
+            text: str,
+            reply_markup: Optional[InlineKeyboardMarkup] = None
+            ) -> Message:
+        """Edits a message in a specified chat
+        
+        Args:
+            chat_id (int OR str): Unique identifier for the target chat
+            message_id (int): Unique indentifier for the message you want to edit
+            text (str): New text of message
+            reply_markup (InlineKeyboardMarkup): Inline markup you can add or change in message
+        
+        Returns:
+            Message: The object of edited message
+        """
+
+        data = await make_post(
+            self.requests_base + "/editMessageText",
+            data={
+                "chat_id": chat_id,
+                "message_id": message_id,
+                "text": text,
+                "reply_markup": reply_markup.to_dict() if reply_markup else None
+            }
+        )
+        return Message(**pythonize(data["result"]))
 
     async def create_chat_invite_link(self, chat_id: int) -> str:
         """Create an additional invite link for a chat.
