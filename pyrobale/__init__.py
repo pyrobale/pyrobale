@@ -31,7 +31,7 @@ from pyrobale.objects import Message, UpdatesTypes
 bot = Client("YOUR_BOT_TOKEN")
 
 @bot.on_message()
-async def message_handler(message: User):
+async def message_handler(message: Message):
     await message.reply("Hello, world!")
 
 bot.run()
@@ -116,6 +116,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 [Documentation](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
+
 """
 
 from .objects.utils import *
