@@ -41,6 +41,7 @@ import asyncio
 from enum import Enum
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType
 from ..StateMachine import StateMachine
+from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException
 
 
 class Client:
@@ -81,7 +82,16 @@ class Client:
             self.requests_base
             + f"/getUpdates?offset={offset}&limit={limit}&timeout={timeout}"
         )
-        return data["result"]
+        if data['ok']:
+            if 'result' in data.keys():
+                return data["result"]
+            else:
+                if data['error_code'] == 403:
+                    raise InvalidTokenException("Forbidden 403 : --ENTERED TOKEN IS NOT VALID--")
+                elif data['error_code'] == 404:
+                    raise NotFoundException("Not Found 404")
+        else:
+            raise PyroBaleException("--WE HAD AN ERROR DURING GET UPDATES--")
 
     async def set_webhook(self, url: str) -> bool:
         """Set the webhook for the bot.

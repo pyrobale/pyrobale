@@ -122,3 +122,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 from .objects.utils import *
 from .exceptions import *
 from .objects import *
+from .client import Client
