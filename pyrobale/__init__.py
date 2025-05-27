@@ -1,7 +1,6 @@
 """
 ![pyrobaletext](https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png)
 
-
 # Bale Bot API Python Library
 
 A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Bale bots simple and intuitive.
