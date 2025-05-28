@@ -124,6 +124,7 @@ class Message:
             reply_markup: Inline keyboard markup
             **kwargs: Additional keyword arguments
         """
+        self.client: Client = kwargs.get("kwargs", {}).get("client")
         self.id: int = message_id
         self.user: "User" = (
             User(**from_user, kwargs={"client": self.client}) if from_user else None
@@ -154,7 +155,7 @@ class Message:
         self.successful_payment: Optional["SuccessfulPayment"] = successful_payment
         self.web_app_data: Optional["WebAppData"] = web_app_data
         self.reply_markup: Optional["InlineKeyboardMarkup"] = reply_markup
-        self.client: Client = kwargs.get("kwargs", {}).get("client")
+        
 
     async def reply(
         self,

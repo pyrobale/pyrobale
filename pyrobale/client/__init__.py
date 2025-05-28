@@ -39,7 +39,7 @@ from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 import asyncio
 from enum import Enum
-from ..objects.enums import UpdatesTypes, ChatAction, ChatType
+from ..objects.enums import UpdatesTypes, ChatAction, ChatType, Filters
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException
 
@@ -923,6 +923,7 @@ class Client:
         if update_id:
             self.last_update_id = update_id + 1
 
+        # First, check waiters
         for waiter in list(self._waiters):
             w_type, check, future = waiter
             if w_type.value in update:
@@ -932,19 +933,29 @@ class Client:
                     if not future.done():
                         future.set_result(event)
                     self._waiters.remove(waiter)
-                    return update
+                    return update  # <-- you may want to remove this if the function shouldn't return
 
+        # Then call registered handlers
         for handler in self.handlers:
             update_type = handler["type"].value
             if update_type in update:
-                event = update[update_type]
+                raw_event = update[update_type]
+                event = self._convert_event(handler["type"], raw_event)
 
-                event = self._convert_event(handler["type"], event)
+                # 👉 FILTER SUPPORT: If a filter is set, skip if the condition doesn't match
+                filter = handler.get("filter")
+                if filter is not None:
+                    attr = getattr(event, filter.value, None)
+                    if attr is None:
+                        continue
 
+
+                # Run the handler
                 if asyncio.iscoroutinefunction(handler["callback"]):
                     asyncio.create_task(handler["callback"](event))
                 else:
                     handler["callback"](event)
+
 
     def base_handler_decorator(self, update_type: UpdatesTypes):
         """Base decorator for handling different types of updates.
@@ -955,19 +966,22 @@ class Client:
         Returns:
             Callable: A decorator function that registers the callback for the specified update type.
         """
-        def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
-            self.add_handler(update_type, callback)
-            return callback
+        def wrapper(filter: Optional[Filters] = None):
+            def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
+                self.add_handler(update_type, callback, filter)
+                return callback
+            return decorator
+        return wrapper
 
-        return decorator
 
-    def on_message(self):
+    def on_message(self, filter: Optional[Filters] = None):
         """Decorator for handling new message updates.
 
         Returns:
             Callable: A decorator function that registers the callback for message updates.
         """
-        return self.base_handler_decorator(UpdatesTypes.MESSAGE)
+        return self.base_handler_decorator(UpdatesTypes.MESSAGE)(filter)
+
 
     def on_edited_message(self):
         """Decorator for handling edited message updates.
@@ -1085,18 +1099,19 @@ class Client:
 
         return event
 
-    def add_handler(
-        self,
-        update_type: UpdatesTypes,
-        callback: Callable[[Any], Union[None, Awaitable[None]]],
-    ) -> None:
+    def add_handler(self, update_type, callback, filter: Optional[Filters] = None):
         """Register a handler for specific update type.
 
         Args:
             update_type (UpdatesTypes): Type of update to handle
             callback (Callable): Function to call when update is received
         """
-        self.handlers.append({"type": update_type, "callback": callback})
+        self.handlers.append({
+        "type": update_type,
+        "callback": callback,
+        "filter": filter,
+        })
+
 
     def remove_handler(
         self, callback: Callable[[Any], Union[None, Awaitable[None]]]
