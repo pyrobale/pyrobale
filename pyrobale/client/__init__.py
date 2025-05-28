@@ -1087,7 +1087,7 @@ class Client:
 
         self.running = True
         while self.running:
-            if 1:
+            try:
                 updates = await self.get_updates(
                     offset=self.last_update_id, limit=limit, timeout=timeout
                 )
@@ -1095,9 +1095,8 @@ class Client:
                 for update in updates:
                     await self.process_update(update)
 
-            else:  # except Exception as e:
-                # print(f"Error while polling updates: {e}")
-                await asyncio.sleep(5)
+            except Exception as e:
+                raise e
 
     async def stop_polling(self) -> None:
         """Stop polling updates."""
