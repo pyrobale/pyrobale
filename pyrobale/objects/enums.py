@@ -11,6 +11,7 @@ class UpdatesTypes(Enum):
     MEMBER_JOINED = "member_joined"
     MEMBER_LEFT = "member_left"
     SUCCESSFUL_PAYMENT = "successful_payment"
+    COMMAND = "message"
 
 
 class Filters(Enum):

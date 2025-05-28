@@ -43,3 +43,24 @@ class StateMachine:
             del self.__states[user_id]
         else:
             raise KeyError
+    
+    def save_local(self, file_name: str):
+        """Saves the state of all users to a file
+
+        Args:
+            file_name (string): name of file to save the state of users
+        """
+        with open(file_name, "w") as f:
+            for user_id, state in self.__states.items():
+                f.write(f"{user_id} {state}\n")
+    
+    def load_local(self, file_name: str):
+        """Loads the state of all users from a file
+
+        Args:
+            file_name (string): name of file to load the state of users
+        """
+        with open(file_name, "r") as f:
+            for line in f:
+                user_id, state = line.split()
+                self.__states[user_id] = state
