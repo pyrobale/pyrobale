@@ -926,7 +926,6 @@ class Client:
         if update_id:
             self.last_update_id = update_id + 1
 
-        # First, check waiters
         for waiter in list(self._waiters):
             w_type, check, future = waiter
             if w_type.value in update:
@@ -936,28 +935,38 @@ class Client:
                     if not future.done():
                         future.set_result(event)
                     self._waiters.remove(waiter)
-                    return update  # <-- you may want to remove this if the function shouldn't return
+                    return
 
-        # Then call registered handlers
         for handler in self.handlers:
             update_type = handler["type"].value
             if update_type in update:
                 raw_event = update[update_type]
                 event = self._convert_event(handler["type"], raw_event)
 
-                # 👉 FILTER SUPPORT: If a filter is set, skip if the condition doesn't match
+                if handler["type"] == UpdatesTypes.COMMAND:
+                    if hasattr(event, 'text') and event.text and event.text.startswith('/'):
+                        command_text = event.text[1:]
+                        command_parts = command_text.split()
+                        if command_parts:
+                            actual_command = command_parts[0]
+                            expected_command = handler.get("command", "")
+                            
+                            if actual_command != expected_command:
+                                continue
+                    else:
+                        continue
+
                 filter = handler.get("filter")
                 if filter is not None:
                     attr = getattr(event, filter.value, None)
                     if attr is None:
                         continue
-
-
-                # Run the handler
+                    
                 if asyncio.iscoroutinefunction(handler["callback"]):
                     asyncio.create_task(handler["callback"](event))
                 else:
                     handler["callback"](event)
+
 
 
     def base_handler_decorator(self, update_type: UpdatesTypes):
@@ -975,6 +984,20 @@ class Client:
                 return callback
             return decorator
         return wrapper
+    
+    def on_command(self, command: str, filter: Optional[Filters] = None):
+        """Decorator for handling command updates.
+
+        Args:
+            command (str): The command to handle.
+            filter (Optional[Filters]): An optional filter to apply to the command.
+        Returns:
+            Callable: A decorator function that registers the callback for the specified command.
+        """
+        def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
+            self.add_handler(UpdatesTypes.COMMAND, callback, filter, command=command)
+            return callback
+        return decorator
 
 
     def on_message(self, filter: Optional[Filters] = None):
@@ -1036,6 +1059,7 @@ class Client:
             Callable: A decorator function that registers the callback for successful payment updates.
         """
         return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)
+    
     def _convert_event(self, handler_type: UpdatesTypes, event: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type.
 
@@ -1052,6 +1076,7 @@ class Client:
             UpdatesTypes.MEMBER_JOINED,
             UpdatesTypes.MEMBER_LEFT,
             UpdatesTypes.SUCCESSFUL_PAYMENT,
+            UpdatesTypes.COMMAND
         ):
             if (
                 event.get("new_chat_member", False)
@@ -1102,18 +1127,21 @@ class Client:
 
         return event
 
-    def add_handler(self, update_type, callback, filter: Optional[Filters] = None):
+
+    def add_handler(self, update_type, callback, filter: Optional[Filters] = None, **kwargs):
         """Register a handler for specific update type.
 
         Args:
             update_type (UpdatesTypes): Type of update to handle
             callback (Callable): Function to call when update is received
         """
-        self.handlers.append({
-        "type": update_type,
-        "callback": callback,
-        "filter": filter,
-        })
+        data = {
+            "type": update_type,
+            "callback": callback,
+            "filter": filter,
+        }
+        data.update(kwargs)
+        self.handlers.append(data)
 
 
     def remove_handler(
