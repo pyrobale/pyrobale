@@ -965,7 +965,7 @@ class Client:
     def on_new_members(self):
         return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)
 
-    def on_memebers_left(self):
+    def on_members_left(self):
         return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)
 
     def on_pre_checkout_query(self):
