@@ -947,6 +947,14 @@ class Client:
                     handler["callback"](event)
 
     def base_handler_decorator(self, update_type: UpdatesTypes):
+        """Base decorator for handling different types of updates.
+
+        Args:
+            update_type (UpdatesTypes): The type of update to handle.
+
+        Returns:
+            Callable: A decorator function that registers the callback for the specified update type.
+        """
         def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
             self.add_handler(update_type, callback)
             return callback
@@ -954,29 +962,63 @@ class Client:
         return decorator
 
     def on_message(self):
+        """Decorator for handling new message updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for message updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.MESSAGE)
 
     def on_edited_message(self):
+        """Decorator for handling edited message updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for edited message updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.MESSAGE_EDITED)
 
     def on_callback_query(self):
+        """Decorator for handling callback query updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for callback query updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.CALLBACK_QUERY)
 
     def on_new_members(self):
+        """Decorator for handling new chat members updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for new members updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)
 
     def on_members_left(self):
         return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)
 
     def on_pre_checkout_query(self):
+        """Decorator for handling pre-checkout query updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for pre-checkout query updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.PRE_CHECKOUT_QUERY)
 
     def on_photo(self):
+        """Decorator for handling photo updates.
+
+        Returns:
+            Callable: A decorator function that registers the callback for photo updates.
+        """
         return self.base_handler_decorator(UpdatesTypes.PHOTO)
 
     def on_successful_payment(self):
-        return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)
+        """Decorator for handling successful payment updates.
 
+        Returns:
+            Callable: A decorator function that registers the callback for successful payment updates.
+        """
+        return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)
     def _convert_event(self, handler_type: UpdatesTypes, event: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type.
 
@@ -1087,7 +1129,7 @@ class Client:
 
         self.running = True
         while self.running:
-            if 1:
+            try:
                 updates = await self.get_updates(
                     offset=self.last_update_id, limit=limit, timeout=timeout
                 )
@@ -1095,9 +1137,8 @@ class Client:
                 for update in updates:
                     await self.process_update(update)
 
-            else:  # except Exception as e:
-                # print(f"Error while polling updates: {e}")
-                await asyncio.sleep(5)
+            except Exception as e:
+                raise e
 
     async def stop_polling(self) -> None:
         """Stop polling updates."""
