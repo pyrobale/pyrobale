@@ -517,6 +517,9 @@ class Client:
         Returns:
             Message: returns the sent message with invoice
         """
+        new_prices = []
+        for price in prices:
+            new_prices.append(price.json)
         data = await make_post(
             self.requests_base + "/sendInvoice",
             data={
@@ -525,7 +528,7 @@ class Client:
                 "description": description,
                 "payload": payload,
                 "provider_token": provider_token,
-                "prices": prices,
+                "prices": new_prices,
                 "photo_url": photo_url,
                 "reply_to_message_id": reply_to_message_id,
             },
