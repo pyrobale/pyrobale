@@ -314,6 +314,7 @@ class Message:
         self,
         latitude: float,
         longitude: float,
+        horizontal_accuracy: Optional[float] = None,
         reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ):
         """Reply with a location to the current message.
@@ -328,6 +329,7 @@ class Message:
                 self.chat.id,
                 latitude=latitude,
                 longitude=longitude,
+                horizontal_accuracy=horizontal_accuracy,
                 reply_to_message_id=self.id,
                 reply_markup=reply_markup,
             )

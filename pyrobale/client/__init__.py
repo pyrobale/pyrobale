@@ -89,10 +89,6 @@ class Client:
             else:
                 if data['error_code'] == 403:
                     raise InvalidTokenException("Forbidden 403 : --ENTERED TOKEN IS NOT VALID--")
-                elif data['error_code'] == 404:
-                    raise NotFoundException("Not Found 404")
-        else:
-            raise PyroBaleException("--WE HAD AN ERROR DURING GET UPDATES--")
 
     async def set_webhook(self, url: str) -> bool:
         """Set the webhook for the bot.
@@ -432,6 +428,7 @@ class Client:
         chat_id: int,
         latitude: float,
         longitude: float,
+        horizontal_accuracy: Optional[float] = None,
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
     ) -> Message:
@@ -452,6 +449,7 @@ class Client:
                 "chat_id": chat_id,
                 "latitude": latitude,
                 "longitude": longitude,
+                "horizontal_accuracy": horizontal_accuracy,
                 "reply_to_message_id": reply_to_message_id,
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },

@@ -8,3 +8,9 @@ class InvalidTokenException(PyroBaleException):
 
 class NotFoundException(PyroBaleException):
     pass
+
+class ForbiddenException(PyroBaleException):
+    pass
+
+class InternalServerException(PyroBaleException):
+    pass
