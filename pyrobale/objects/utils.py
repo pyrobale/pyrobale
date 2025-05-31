@@ -15,11 +15,11 @@ async def make_post(url: str, data: dict = None, headers: dict = None) -> dict:
                     return json
                 else:
                     if json['error_code'] == 404:
-                        raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else "No description returned in error"}")
+                        raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else 'No description returned in error'}")
                     elif json['error_code'] == 403:
-                        raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else "No description returned in error"}")
+                        raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else 'No description returned in error'}")
                     else:
-                        raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else "No description!"}")
+                        raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description!'}")
 
 
 async def make_get(url: str, headers: dict = None) -> dict:
@@ -31,11 +31,11 @@ async def make_get(url: str, headers: dict = None) -> dict:
                     return json
                 else:
                     if json['error_code'] == 404:
-                        raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else "No description returned in error"}")
+                        raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else 'No description returned in error'}")
                     elif json['error_code'] == 403:
-                        raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else "No description returned in error"}")
+                        raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else 'No description returned in error'}")
                     else:
-                        raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else "No description!"}")
+                        raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
 
 
 def pythonize(dictionary: dict) -> dict:
