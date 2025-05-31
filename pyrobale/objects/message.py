@@ -360,9 +360,7 @@ class Message:
         description: str,
         payload: str,
         provider_token: str,
-        currency: str,
-        prices: list,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+        prices: list
     ):
         """Reply with an invoice to the current message.
 
@@ -371,7 +369,6 @@ class Message:
             description: Product description
             payload: Bot-defined invoice payload
             provider_token: Payment provider token
-            currency: Three-letter ISO 4217 currency code
             prices: Price breakdown (amount in smallest units)
             reply_markup: Optional keyboard markup
         """
@@ -382,7 +379,5 @@ class Message:
                 description=description,
                 payload=payload,
                 provider_token=provider_token,
-                currency=currency,
-                prices=prices,
-                reply_markup=reply_markup,
+                prices=prices
             )
