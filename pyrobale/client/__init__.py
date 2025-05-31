@@ -943,7 +943,7 @@ class Client:
             if update_type in update:
                 raw_event = update[update_type]
                 event = self._convert_event(handler["type"], raw_event)
-
+                
                 if handler["type"] == UpdatesTypes.COMMAND:
                     if hasattr(event, 'text') and event.text and event.text.startswith('/'):
                         command_text = event.text[1:]
@@ -954,8 +954,6 @@ class Client:
                             
                             if actual_command != expected_command:
                                 continue
-                    else:
-                        continue
 
                 flt = handler.get("filter")
                 if flt is not None:
