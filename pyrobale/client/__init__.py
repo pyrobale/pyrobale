@@ -39,7 +39,8 @@ from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 import asyncio
 from enum import Enum
-from ..objects.enums import UpdatesTypes, ChatAction, ChatType, Filters
+from ..objects.enums import UpdatesTypes, ChatAction, ChatType
+from ..filters import Filters, equals
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException
 
@@ -956,11 +957,18 @@ class Client:
                     else:
                         continue
 
-                filter = handler.get("filter")
-                if filter is not None:
-                    attr = getattr(event, filter.value, None)
-                    if attr is None:
-                        continue
+                flt = handler.get("filter")
+                if flt is not None:
+                    if callable(flt):
+                        try:
+                            if not flt(event):
+                                continue
+                        except Exception as e:
+                            print(f"[Filter Error] {e}")
+                            continue
+                    elif isinstance(flt, Filters):
+                        if not hasattr(event, flt.value):
+                            continue
                     
                 if asyncio.iscoroutinefunction(handler["callback"]):
                     asyncio.create_task(handler["callback"](event))
