@@ -386,6 +386,17 @@ class Chat:
             bool: True on success
         """
         return await self.client.leave_chat(chat_id=self.id)
+    
+    async def is_joined(self, user_id: int) -> bool:
+        """Check if a user is joined to the chat.
+        
+        Parameters:
+            user_id (int): Unique identifier of the target user
+        
+        Returns:
+            bool: True if the user is joined to the chat, False otherwise
+        """
+        return await self.client.is_joined(user_id, self.id)
 
     async def pin(self, message_id: int) -> bool:
         """Pin a message in the chat.

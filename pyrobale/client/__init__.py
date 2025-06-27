@@ -695,6 +695,22 @@ class Client:
             self.requests_base + "/leaveChat", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
+    
+    async def is_joined(self, user_id: int, chat_id: int) -> bool:
+        """Check if a user is joined to a chat.
+        
+        Args:
+            user_id (int): Unique identifier for the target chat
+            chat_id (int): Unique identifier for the target chat
+        
+        Returns:
+            bool: True if the user is joined to the chat, False otherwise
+        """
+        data = await make_post(
+            self.requests_base + "/getChatMember",
+            data={"chat_id": chat_id, "user_id": user_id},
+        )
+        return data.get("result", {}).get("status") in ["member", "creator", "administrator"]
 
     async def get_chat(self, chat_id: int) -> Chat:
         """Get up to date information about the chat.
