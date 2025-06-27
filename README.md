@@ -13,7 +13,7 @@ A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Ba
 - 📁 **File Handling** - Easy upload and download of media files
 - 🛡️ **Error Handling** - Comprehensive exception handling
 - 📖 **Type Hints** - Full typing support for better development experience
-- ⚡ **Async Support** - Both synchronous and asynchronous operations
+- ⚡ **Async Support** - asynchronous operations
 
 ## Installation
 
@@ -42,13 +42,12 @@ bot.run()
 ```python
 from pyrobale.objects import *
 from pyrobale.client import Client, Message, UpdatesTypes
-import asyncio
 
 client = Client("YOUR_BOT_TOKEN")
 
 async def handle_message(message: Message):
     if message.text == "/start":
-        await message.reply("سلام! من یک ربات PyRoBale هستم!")
+        await message.reply("Hi! Im a pyrobale RoBot!")
         await client.wait_for(UpdatesTypes.MESSAGE)
         await message.reply("Okay! wait_for Test Compeleted")
 

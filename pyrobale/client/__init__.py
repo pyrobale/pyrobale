@@ -1186,7 +1186,7 @@ class Client:
 
                 for update in updates:
                     await self.process_update(update)
-
+                    
             except Exception as e:
                 raise e
 
