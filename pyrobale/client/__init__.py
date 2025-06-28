@@ -37,13 +37,16 @@ from ..objects.voice import Voice
 from ..objects.webappdata import WebAppData
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
-import asyncio
-from enum import Enum
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType
+from ..objects.peerdata import PeerData
 from ..filters import Filters, equals
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException
 
+from enum import Enum
+import asyncio
+from bs4 import BeautifulSoup
+from json import loads, JSONDecodeError
 
 class Client:
     """A client for interacting with the Bale messenger API.
@@ -725,7 +728,100 @@ class Client:
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
         return Chat(**pythonize(data["result"]))
+    
+    @staticmethod
+    async def get_ble_ir_page(username_or_phone_number: str) -> Union[dict, PeerData]:
+        """Get BleIR user/group information.
+        
+        Args:
+            username_or_phone_number (str): Username or phone number
+            
+        Returns:
+            Union[dict, PeerData]: User/group information or error dict
+        """
+        url = f"https://ble.ir/{username_or_phone_number}"
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                req = await response.text()
+                
+        if """<p class="__404_title__lxIKL">گفتگوی مورد نظر وجود ندارد.</p>""" in req:
+            return PeerData(
+                    is_ok=False,
+                    avatar=None,
+                    description=None,
+                    name=None,
+                    is_bot=None,
+                    is_verified=None,
+                    is_private=None,
+                    members=None,
+                    last_message=None,
+                    user_id=None,
+                    username=None,
+                )
+            
+        soup = BeautifulSoup(req, "html.parser")
+        json_data = {}
+        
+        try:
+            json_script = soup.find("script", id="__NEXT_DATA__").text
+            json_data = loads(json_script)
+            page_props = json_data.get("props", {}).get("pageProps", {})
+            user_data = page_props.get("user", {})
+            group_data = page_props.get("group", {})
+            messages = page_props.get("messages", [])
+        except (AttributeError, KeyError, JSONDecodeError):
+            pass
 
+        try:
+            avatar = soup.find("img", class_="Avatar_img___C2_3")["src"]
+        except (AttributeError, KeyError):
+            avatar = None
+
+        try:
+            description = soup.find("div", class_="Profile_description__YTAr_").text
+        except AttributeError:
+            description = None
+
+        try:
+            name = soup.find("h1", class_="Profile_name__pQglx").text
+        except AttributeError:
+            name = None
+
+        is_bot = user_data.get("isBot", False)
+        is_verified = user_data.get("isVerified", group_data.get("isVerified", False))
+        is_private = user_data.get("isPrivate", group_data.get("isPrivate", False))
+        members = group_data.get("members")
+        username = user_data.get("nick")
+        user_id = page_props.get("peer", {}).get("id")
+
+        last_message = None
+        if messages:
+            try:
+                last_msg = messages[-1]["message"]
+                last_message = (
+                    last_msg.get("documentMessage", {}).get("caption", {}).get("text")
+                    or last_msg.get("textMessage", {}).get("text")
+                )
+                if last_message:
+                    last_message = last_message.replace("&zwnj;", "")
+            except (KeyError, IndexError):
+                pass
+
+        return PeerData(
+            True,
+            avatar,
+            description,
+            name,
+            is_bot,
+            is_verified,
+            is_private,
+            members,
+            last_message,
+            user_id,
+            username
+        )
+        
     async def get_chat_members_count(self, chat_id: int) -> int:
         """Get the number of members in a chat.
 
