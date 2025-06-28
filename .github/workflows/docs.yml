@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pdoc aiohttp
+          pip install pdoc aiohttp beautifulsoup4
 
       - name: Generate documentation
         run: |
