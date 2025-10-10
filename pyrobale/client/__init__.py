@@ -421,6 +421,15 @@ class Client:
         )
         return data.get("ok", False)
 
+    async def kick_chat_member(self, chat_id: int, user_id: int) -> bool:
+        """kick a user from a specified chat"""
+        try:
+            self.ban_chat_member(chat_id, user_id)
+            self.unban_chat_member(chat_id, user_id)
+            return True
+        except:
+            return False
+
     async def get_chat_member(self, chat_id: int, user_id: int) -> ChatMember:
         """Get a chat member."""
         data = await make_post(
