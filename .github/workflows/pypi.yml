@@ -1,0 +1,36 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Extract version info
+      id: version
+      run: |
+        STABLE=$(python -c "from version import stable; print(str(stable).lower())")
+        VERSION=$(python -c "from version import version; print(version)")
+        echo "stable=$STABLE" >> $GITHUB_OUTPUT
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Stable: $STABLE, Version: $VERSION"
+
+    - name: Build and publish
+      if: steps.version.outputs.stable == 'true'
+      run: |
+        pip install build twine
+        python -m build
+        twine upload dist/* --username __token__ --password ${{ secrets.PYPI }}
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI }}

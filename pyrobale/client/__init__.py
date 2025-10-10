@@ -67,6 +67,9 @@ class Client:
         self.last_update_id = 0
         self.state_machine = StateMachine()
 
+        self.check_defined_message = True
+        self.defined_messages = {}
+
     async def get_updates(
         self,
         offset: Optional[int] = None,
@@ -1037,6 +1040,11 @@ class Client:
         if update_id:
             self.last_update_id = update_id + 1
 
+        if self.check_defined_message:
+            update_raw = update['message']
+            if update_raw.get("text") in self.defined_messages.keys():
+                await self.send_message(update_raw.get('chat').get('id'), self.defined_messages.get(update_raw.get("text")), update.get('message_id'))
+
         for waiter in list(self._waiters):
             w_type, check, future = waiter
             if w_type.value in update:
@@ -1052,6 +1060,8 @@ class Client:
             update_type = handler["type"].value
             if update_type in update:
                 raw_event = update[update_type]
+
+
                 event = self._convert_event(handler["type"], raw_event)
                 
                 if handler["type"] == UpdatesTypes.COMMAND:
