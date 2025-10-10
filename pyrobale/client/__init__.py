@@ -1041,9 +1041,14 @@ class Client:
             self.last_update_id = update_id + 1
 
         if self.check_defined_message:
-            update_raw = update['message']
-            if update_raw.get("text") in self.defined_messages.keys():
-                await self.send_message(update_raw.get('chat').get('id'), self.defined_messages.get(update_raw.get("text")), update.get('message_id'))
+            try:
+                update_raw = update['message']
+                if update_raw.get("text") in self.defined_messages.keys():
+                    await self.send_message(update_raw.get('chat').get('id'), self.defined_messages.get(update_raw.get("text")), update.get('message_id'))
+            except KeyError:
+                pass
+            except Exception as e:
+                print(e)
 
         for waiter in list(self._waiters):
             w_type, check, future = waiter
