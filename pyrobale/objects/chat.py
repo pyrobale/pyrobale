@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
 from .enums import ChatType, ChatAction, UpdatesTypes
 import asyncio
-import aiohttp
+
 
 
 class Chat:

@@ -15,7 +15,23 @@ class UpdatesTypes(Enum):
     PHOTO = "message"
 
 
+class ChatPermissions(Enum):
+    """permissions every user has in chats"""
 
+    CAN_SEND_MESSAGE = "can_send_messages"
+    CAN_SEND_MEDIA = "can_send_media_messages"
+    CAN_SEND_AUDIO = "can_send_audios"
+    CAN_SEND_DOCUMENT = "can_send_documents"
+    CAN_SEND_PHOTOS = "can_send_photos"
+    CAN_SEND_VIDEOS = "can_send_videos"
+    CAN_SEND_POLLS = "can_send_polls"
+    CAN_CHANGE_INFO = "can_change_info"
+    CAN_INVITE_USERS = "can_invite_users"
+    CAN_PIN_MESSAGE = "can_pin_messages"
+    CAN_MANAGE_CHAT = "can_manage_chat"
+    CAN_DELETE_MESSAGES = "can_delete_messages"
+    CAN_RESTRICT_USERS = "can_restrict_members"
+    CAN_PROMOTE_USERS = "can_promote_members"
 
 
 class ChatAction(Enum):

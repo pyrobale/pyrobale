@@ -157,6 +157,13 @@ class Message:
         self.reply_markup: Optional["InlineKeyboardMarkup"] = reply_markup
         
 
+    @property
+    async def is_admin(self):
+        if self.client.get_chat_member(self.chat, self.user.id).status in ['administrator', 'creator']:
+            return True
+        else:
+            return False
+
     async def reply(
         self,
         text: str,

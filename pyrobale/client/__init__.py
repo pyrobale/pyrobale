@@ -37,7 +37,7 @@ from ..objects.voice import Voice
 from ..objects.webappdata import WebAppData
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
-from ..objects.enums import UpdatesTypes, ChatAction, ChatType
+from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.peerdata import PeerData
 from ..filters import Filters
 from ..StateMachine import StateMachine
@@ -439,6 +439,21 @@ class Client:
         return ChatMember(
             kwargs={"client": self, "chat": chat_id}, **pythonize(data["result"])
         )
+    
+    async def is_user_admin(self, chat_id: int, user_id: int) -> bool:
+        """Checks if a user is admin in a chat"""
+        if self.get_chat_member(chat_id, user_id).status in ['creator', 'administrator']:
+            return True
+        else:
+            return False
+        
+    async def user_has_permissions(self, chat_id: int, user_id: int, permissions: ChatPermissions) -> bool:
+        """checks if a user has a specified permission"""
+        member = self.get_chat_member(chat_id, user_id)
+        if member.inputs[permissions.value]: 
+            return True
+        else: 
+            return False
 
     async def promote_chat_member(
             self,

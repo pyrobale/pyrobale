@@ -74,6 +74,29 @@ class ChatMember:
         self.can_add_web_page_previews = can_add_web_page_previews
         self.client: Client = kwargs.get("kwargs", {}).get("client")
         self.chat: Chat = Chat(**kwargs.get("kwargs", {}).get("chat"))
+        self.inputs = {k: v for k, v in {
+            "can_be_edited": can_be_edited,
+            "can_manage_chat": can_manage_chat,
+            "can_delete_messages": can_delete_messages,
+            "can_edit_messages": can_edit_messages,
+            "can_post_messages": can_post_messages,
+            "can_restrict_members": can_restrict_members,
+            "can_promote_members": can_promote_members,
+            "can_change_info": can_change_info,
+            "can_invite_users": can_invite_users,
+            "can_pin_messages": can_pin_messages,
+            "can_manage_topics": can_manage_topics,
+            "can_send_messages": can_send_messages,
+            "can_send_audios": can_send_audios,
+            "can_send_documents": can_send_documents,
+            "can_send_photos": can_send_photos,
+            "can_send_videos": can_send_videos,
+            "can_send_video_notes": can_send_video_notes,
+            "can_send_voice_notes": can_send_voice_notes,
+            "can_send_polls": can_send_polls,
+            "can_send_other_messages": can_send_other_messages,
+            "can_add_web_page_previews": can_add_web_page_previews,
+        }.items() if v is not None}
 
     async def ban(self) -> bool:
         """Bans the chat member from the chat.
