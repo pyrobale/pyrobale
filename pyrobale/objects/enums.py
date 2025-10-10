@@ -12,6 +12,7 @@ class UpdatesTypes(Enum):
     MEMBER_LEFT = "member_left"
     SUCCESSFUL_PAYMENT = "successful_payment"
     COMMAND = "message"
+    PHOTO = "message"
 
 
 
