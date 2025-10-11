@@ -130,9 +130,16 @@ class Message:
             User(**from_user, kwargs={"client": self.client}) if from_user else None
         )
         self.date: int = date
-        self.chat: Optional["Chat"] = (
-            chat if isinstance(chat, Chat) else Chat(**chat) if chat else None
-        )
+        if isinstance(chat, Chat):
+            self.chat: Chat = chat
+        elif chat != None:
+            data = chat
+            data['client'] = self.client
+            chat = data
+            self.chat: Chat = Chat(**chat)
+        else:
+            self.chat: Chat = None
+
         self.forward_from: Optional["User"] = forward_from
         self.forward_from_chat: Optional["Chat"] = forward_from_chat
         self.forward_from_message_id: Optional[int] = forward_from_message_id

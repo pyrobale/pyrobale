@@ -51,6 +51,7 @@ class Chat:
         first_name: Optional[str] = None,
         last_name: Optional[str] = None,
         photo: Optional["ChatPhoto"] = None,
+        client: Optional["Client"] = None,
         **kwargs
     ):
         self.id = id
@@ -63,7 +64,7 @@ class Chat:
         self.first_name = first_name
         self.last_name = last_name
         self.photo: "ChatPhoto" = photo
-        self.client: "Client" = kwargs.get("kwargs", {}).get("client")
+        self.client: "Client" = client
 
     async def send_message(
         self,
@@ -316,7 +317,7 @@ class Chat:
         )
 
     async def ban(self, user_id: int) -> bool:
-        """Ban a user from the chat.
+        """Bans a user from the chat.
 
         Parameters:
             user_id (int): Unique identifier of the target user
@@ -326,6 +327,17 @@ class Chat:
             bool: True on success
         """
         return await self.client.ban_chat_member(chat_id=self.id, user_id=user_id)
+
+    async def kick(self, user_id: int) -> bool:
+        """Kicks a user from the chat.
+
+        Parameters:
+            user_id (int): Unique identifier of the target user
+
+        Returns:
+            bool: True on success
+        """
+        return await self.client.kick_chat_member(chat_id=self.id, user_id=user_id)
 
     async def unban(self, user_id: int) -> bool:
         """Unban a previously banned user in the chat.

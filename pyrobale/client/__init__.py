@@ -132,7 +132,7 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return Message(**pythonize(data["result"]))
+        return Message(**pythonize(data.get("result")))
 
     async def forward_message(
             self, chat_id: int, from_chat_id: int, message_id: int
@@ -424,8 +424,8 @@ class Client:
     async def kick_chat_member(self, chat_id: int, user_id: int) -> bool:
         """kick a user from a specified chat"""
         try:
-            self.ban_chat_member(chat_id, user_id)
-            self.unban_chat_member(chat_id, user_id)
+            await self.ban_chat_member(chat_id, user_id)
+            await self.unban_chat_member(chat_id, user_id)
             return True
         except:
             return False
@@ -436,13 +436,19 @@ class Client:
             self.requests_base + "/getChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
+
+        temp = data
+        temp["chat"] = await self.get_chat(chat_id)
+        data = temp
+
         return ChatMember(
-            kwargs={"client": self, "chat": chat_id}, **pythonize(data["result"])
+            kwargs={"client": self, "chat": chat_id}, **pythonize(data.get("result"))
         )
     
     async def is_user_admin(self, chat_id: int, user_id: int) -> bool:
         """Checks if a user is admin in a chat"""
-        if self.get_chat_member(chat_id, user_id).status in ['creator', 'administrator']:
+        chat_user = await self.get_chat_member(chat_id, user_id)
+        if chat_user.status in ['creator', 'administrator']:
             return True
         else:
             return False
@@ -514,7 +520,12 @@ class Client:
         data = await make_post(
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
-        return Chat(**pythonize(data["result"]))
+
+        temp = data.get("result")
+        temp["client"] = self
+        data = temp
+        print(data)
+        return Chat(**pythonize(data))
 
     @staticmethod
     async def get_ble_ir_page(username_or_phone_number: str) -> PeerData:

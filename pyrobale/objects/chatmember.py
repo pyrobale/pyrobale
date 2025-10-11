@@ -73,7 +73,7 @@ class ChatMember:
         self.can_send_other_messages = can_send_other_messages
         self.can_add_web_page_previews = can_add_web_page_previews
         self.client: Client = kwargs.get("kwargs", {}).get("client")
-        self.chat: Chat = Chat(**kwargs.get("kwargs", {}).get("chat"))
+        self.chat: Chat = kwargs.get('chat')
         self.inputs = {k: v for k, v in {
             "can_be_edited": can_be_edited,
             "can_manage_chat": can_manage_chat,
@@ -106,6 +106,24 @@ class ChatMember:
             otherwise.
         """
         data = await self.chat.ban(self.user.id)
+        return data
+
+    async def kick(self) -> bool:
+        """Kicks the chat member from the chat.
+
+        :param chat_id: The ID of the chat.
+        :return: True if the member was kicked successfully, False
+            otherwise.
+        """
+        data = await self.chat.ban(self.user.id)
+        return data
+
+    async def is_admin(self) -> bool:
+        """Checks if the user is an administrator.
+
+        :return: True if the user is an administrator.
+        """
+        data = await self.client.is_user_admin(self.chat.id, self.user.id)
         return data
 
     async def unban(self) -> bool:
