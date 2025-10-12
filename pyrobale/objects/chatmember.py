@@ -123,8 +123,10 @@ class ChatMember:
 
         :return: True if the user is an administrator.
         """
-        data = await self.client.is_user_admin(self.chat.id, self.user.id)
-        return data
+        if self.status in ['creator', 'administrator']:
+            return True
+        else:
+            return False
 
     async def unban(self) -> bool:
         """Unbans the chat member from the chat.
