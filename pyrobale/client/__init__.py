@@ -722,11 +722,11 @@ class Client:
 
     async def process_update(self, update: Dict[str, Any]) -> None:
         """Process a single update and call registered handlers."""
-        # print(f"Processing update: {update}")
-
         update_id = update.get("update_id")
         if update_id:
             self.last_update_id = update_id + 1
+
+        
         if self.check_defined_message:
             try:
                 update_raw = update.get('message', {})
@@ -738,6 +738,8 @@ class Client:
                     )
             except Exception as e:
                 print(f"Error processing defined message: {e}")
+
+        
         for waiter in list(self._waiters):
             w_type, check, future = waiter
             if w_type.value in update:
@@ -752,34 +754,53 @@ class Client:
                 except Exception as e:
                     print(f"Error in waiter conversion: {e}")
                     continue
+
+        
         for handler in self.handlers:
             handler_type = handler["type"]
             update_type_key = handler_type.value
 
-            if update_type_key not in update:
-                continue
-
-            raw_event = update[update_type_key]
-
-            try:
-                event = self._convert_event(handler_type, raw_event)
-            except Exception as e:
-                print(f"Error converting event for handler {handler_type}: {e}")
-                continue
+            
             if handler_type == UpdatesTypes.COMMAND:
-                if not hasattr(event, 'text') or not event.text or not event.text.startswith('/'):
+                
+                if "message" not in update or "text" not in update["message"]:
                     continue
 
-                command_text = event.text[1:].split('@')[0]
-                command_parts = command_text.split()
+                message_text = update["message"]["text"]
+                if not message_text.startswith("/"):
+                    continue
+
+                
+                command_parts = message_text[1:].split()
                 if not command_parts:
                     continue
 
-                actual_command = command_parts[0]
+                actual_command = command_parts[0].split('@')[0]  
                 expected_command = handler.get("command", "")
 
                 if actual_command != expected_command:
                     continue
+
+                
+                try:
+                    event = self._convert_event(UpdatesTypes.MESSAGE, update["message"])
+                except Exception as e:
+                    print(f"Error converting command event: {e}")
+                    continue
+
+            else:
+                
+                if update_type_key not in update:
+                    continue
+
+                raw_event = update[update_type_key]
+                try:
+                    event = self._convert_event(handler_type, raw_event)
+                except Exception as e:
+                    print(f"Error converting event for handler {handler_type}: {e}")
+                    continue
+
+            
             flt = handler.get("filter")
             if flt is not None:
                 if callable(flt):
@@ -792,6 +813,8 @@ class Client:
                 elif isinstance(flt, Filters):
                     if not hasattr(event, flt.value):
                         continue
+
+            
             try:
                 if asyncio.iscoroutinefunction(handler["callback"]):
                     asyncio.create_task(handler["callback"](event))
@@ -799,55 +822,32 @@ class Client:
                     handler["callback"](event)
             except Exception as e:
                 print(f"Error executing handler: {e}")
-
+                
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
         kwargs = {"client": self}
 
         try:
-            if handler_type == UpdatesTypes.MESSAGE:
+            if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND]:
                 return Message(kwargs=kwargs, **pythonize(event_data))
-
-            elif handler_type == UpdatesTypes.MESSAGE_EDITED:
-                return Message(kwargs=kwargs, **pythonize(event_data))
-
             elif handler_type == UpdatesTypes.CALLBACK_QUERY:
                 return CallbackQuery(kwargs=kwargs, **pythonize(event_data))
-
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
                 return PreCheckoutQuery(kwargs=kwargs, **pythonize(event_data))
-
             elif handler_type == UpdatesTypes.MEMBER_JOINED:
                 if "new_chat_member" in event_data:
-                    return (
-                        ChatMember(kwargs=kwargs, **pythonize(event_data["new_chat_member"])),
-                        Chat(kwargs=kwargs, **pythonize(event_data.get("chat", {}))),
-                        Message(kwargs=kwargs, **pythonize(event_data))
-                    )
+                    return ChatMember(kwargs=kwargs, **pythonize(event_data["new_chat_member"]))
                 return Message(kwargs=kwargs, **pythonize(event_data))
-
             elif handler_type == UpdatesTypes.MEMBER_LEFT:
                 if "left_chat_member" in event_data:
-                    return (
-                        ChatMember(kwargs=kwargs, **pythonize(event_data["left_chat_member"])),
-                        Chat(kwargs=kwargs, **pythonize(event_data.get("chat", {}))),
-                        Message(kwargs=kwargs, **pythonize(event_data))
-                    )
+                    return ChatMember(kwargs=kwargs, **pythonize(event_data["left_chat_member"]))
                 return Message(kwargs=kwargs, **pythonize(event_data))
-
             elif handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
                 if "successful_payment" in event_data:
                     return SuccessfulPayment(kwargs=kwargs, **pythonize(event_data["successful_payment"]))
                 return Message(kwargs=kwargs, **pythonize(event_data))
-
-            elif handler_type == UpdatesTypes.COMMAND:
-                return Message(kwargs=kwargs, **pythonize(event_data))
-
-            elif handler_type == UpdatesTypes.PHOTO:
-                return Message(kwargs=kwargs, **pythonize(event_data))
-
-            else:                return event_data
-
+            else:
+                return event_data
         except Exception as e:
             print(f"Error converting event {handler_type}: {e}")
             return event_data

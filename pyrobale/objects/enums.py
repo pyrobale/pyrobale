@@ -11,8 +11,8 @@ class UpdatesTypes(Enum):
     MEMBER_JOINED = "member_joined"
     MEMBER_LEFT = "member_left"
     SUCCESSFUL_PAYMENT = "successful_payment"
-    COMMAND = "message"
-    PHOTO = "message"
+    COMMAND = "command"
+    PHOTO = "photo"
 
 
 class ChatPermissions(Enum):

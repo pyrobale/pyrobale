@@ -1,2 +1,2 @@
-stable = False
-version = "0.4.2"
+stable = True
+version = "0.4.3"
