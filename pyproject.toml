@@ -1,6 +1,6 @@
 [project]
 name = "pyrobale"
-version = "0.4.3"
+version = "0.4.4"
 authors = [
     { name = "Ali Safamanesh", email = "daradege@proton.me" },
     { name = "Aydin Rahbaran", email = "codewizaard9@gmail.com"}

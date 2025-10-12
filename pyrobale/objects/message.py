@@ -91,6 +91,8 @@ class Message:
             successful_payment: Optional["SuccessfulPayment"] = None,
             web_app_data: Optional["WebAppData"] = None,
             reply_markup: Optional["InlineKeyboardMarkup"] = None,
+            reply_to_message: Optional[int] = None,
+            client: Optional["Client"] = None,
             **kwargs
     ):
         """Initialize a Message object with the provided attributes.
@@ -122,9 +124,17 @@ class Message:
             successful_payment: Successful payment information
             web_app_data: Web App data
             reply_markup: Inline keyboard markup
+            reply_to_message: Message ID in the original chat
+            client: Client instance associated with this message
             **kwargs: Additional keyword arguments including client instance
         """
         self.client: Client = kwargs.get("kwargs", {}).get("client")
+        if not self.client:
+            self.client = client
+        if reply_to_message != None:
+            self.reply_to_message = Message(**reply_to_message)
+        else:
+            self.reply_to_message = None
         self.id: int = message_id
         self.user: "User" = (
             User(**from_user, kwargs={"client": self.client}) if from_user else None
@@ -162,6 +172,7 @@ class Message:
         self.successful_payment: Optional["SuccessfulPayment"] = successful_payment
         self.web_app_data: Optional["WebAppData"] = web_app_data
         self.reply_markup: Optional["InlineKeyboardMarkup"] = reply_markup
+        self.reply_to_message
 
     @property
     async def is_admin(self):
