@@ -1,4 +1,4 @@
-name: Build and Deploy Docs
+name: Build and Deploy Sphinx Docs
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  docs:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,17 +22,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pdoc aiohttp beautifulsoup4
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install sphinx furo sphinx-autoapi sphinx-copybutton sphinx-design sphinx-material
 
-      - name: Generate documentation
+      - name: Build documentation with Sphinx
         run: |
-          pdoc pyrobale --output-dir docs --docformat google
+          cd docs
+          make clean
+          make html
 
-      - name: Deploy to docs branch
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
-          external_repository: pyrobale/docs
-          publish_branch: docs
-          publish_dir: ./docs
-          commit_message: "Auto-generate docs from ${{ github.sha }}"
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: pyrobale/pyrobale
+          publish_branch: gh-pages
+          publish_dir: ./docs/build/html
+          commit_message: "📚 Auto-generate Sphinx docs from ${{ github.sha }}"
+          force_orphan: true
