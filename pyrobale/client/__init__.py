@@ -527,7 +527,6 @@ class Client:
         temp = data.get("result")
         temp["client"] = self
         data = temp
-        print(data)
         return Chat(**pythonize(data))
 
     @staticmethod
