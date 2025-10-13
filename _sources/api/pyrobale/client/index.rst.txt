@@ -1,0 +1,558 @@
+pyrobale.client
+===============
+
+.. py:module:: pyrobale.client
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.client.Client
+
+
+Package Contents
+----------------
+
+.. py:class:: Client(token, base_url = 'https://tapi.bale.ai/bot')
+
+   A client for interacting with the Bale messenger API.
+
+   :param token: The bot token.
+   :type token: str
+   :param base_url: The base URL for the API. Defaults to "https://tapi.bale.ai/bot".
+   :type base_url: str, optional
+
+
+   .. py:attribute:: token
+
+
+   .. py:attribute:: base_url
+      :value: 'https://tapi.bale.ai/bot'
+
+
+
+   .. py:attribute:: requests_base
+
+
+   .. py:attribute:: handlers
+      :value: []
+
+
+
+   .. py:attribute:: running
+      :value: False
+
+
+
+   .. py:attribute:: last_update_id
+      :value: 0
+
+
+
+   .. py:attribute:: state_machine
+
+
+   .. py:attribute:: check_defined_message
+      :value: True
+
+
+
+   .. py:attribute:: defined_messages
+
+
+   .. py:method:: get_updates(offset = None, limit = None, timeout = None)
+      :async:
+
+
+      Get updates from the Bale API.
+
+
+
+   .. py:method:: set_webhook(url)
+      :async:
+
+
+      Set the webhook for the bot.
+
+
+
+   .. py:method:: get_webhook_info()
+      :async:
+
+
+      Get the webhook information for the bot.
+
+
+
+   .. py:method:: get_me()
+      :async:
+
+
+      Get information about the bot.
+
+
+
+   .. py:method:: logout()
+      :async:
+
+
+      Log out the bot.
+
+
+
+   .. py:method:: close()
+      :async:
+
+
+      Close the bot.
+
+
+
+   .. py:method:: send_message(chat_id, text, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a message to a chat.
+
+
+
+   .. py:method:: forward_message(chat_id, from_chat_id, message_id)
+      :async:
+
+
+      Forward a message to a chat.
+
+
+
+   .. py:method:: copy_message(chat_id, from_chat_id, message_id)
+      :async:
+
+
+      Copy a message to a chat.
+
+
+
+   .. py:method:: send_photo(chat_id, photo, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a photo to a chat.
+
+
+
+   .. py:method:: send_audio(chat_id, audio, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send an audio to a chat.
+
+
+
+   .. py:method:: send_document(chat_id, document, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a document to a chat.
+
+
+
+   .. py:method:: send_video(chat_id, video, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a video to a chat.
+
+
+
+   .. py:method:: send_animation(chat_id, animation, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send an animation to a chat.
+
+
+
+   .. py:method:: send_voice(chat_id, voice, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a voice message to a chat.
+
+
+
+   .. py:method:: send_media_group(chat_id, media, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a media group to a chat.
+
+
+
+   .. py:method:: send_location(chat_id, latitude, longitude, horizontal_accuracy = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a location to a chat.
+
+
+
+   .. py:method:: send_contact(chat_id, phone_number, first_name, last_name = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a contact to a chat.
+
+
+
+   .. py:method:: send_invoice(chat_id, title, description, payload, provider_token, prices, photo_url = None, reply_to_message_id = None)
+      :async:
+
+
+      Sends a message including a invoice for user to pay.
+
+
+
+   .. py:method:: get_file(file_id)
+      :async:
+
+
+      Get a file from the Bale servers.
+
+
+
+   .. py:method:: answer_callback_query(callback_query_id, text = None, show_alert = None)
+      :async:
+
+
+      Answer a callback query.
+
+
+
+   .. py:method:: ban_chat_member(chat_id, user_id)
+      :async:
+
+
+      Ban a user from a chat.
+
+
+
+   .. py:method:: unban_chat_member(chat_id, user_id)
+      :async:
+
+
+      Unban a user from a chat.
+
+
+
+   .. py:method:: kick_chat_member(chat_id, user_id)
+      :async:
+
+
+      kick a user from a specified chat
+
+
+
+   .. py:method:: get_chat_member(chat_id, user_id)
+      :async:
+
+
+      Get a chat member.
+
+
+
+   .. py:method:: is_user_admin(chat_id, user_id)
+      :async:
+
+
+      Checks if a user is admin in a chat
+
+
+
+   .. py:method:: user_has_permissions(chat_id, user_id, permissions)
+      :async:
+
+
+      checks if a user has a specified permission
+
+
+
+   .. py:method:: promote_chat_member(chat_id, user_id, can_change_info = None, can_post_messages = None, can_edit_messages = None, can_delete_messages = None, can_invite_users = None, can_restrict_members = None, can_pin_messages = None, can_promote_members = None)
+      :async:
+
+
+      Promote a user in a chat.
+
+
+
+   .. py:method:: set_chat_photo(chat_id, photo)
+      :async:
+
+
+      Set a new profile photo for the chat.
+
+
+
+   .. py:method:: leave_chat(chat_id)
+      :async:
+
+
+      Leave a group, supergroup or channel.
+
+
+
+   .. py:method:: is_joined(user_id, chat_id)
+      :async:
+
+
+      Check if a user is joined to a chat.
+
+
+
+   .. py:method:: get_chat(chat_id)
+      :async:
+
+
+      Get up to date information about the chat.
+
+
+
+   .. py:method:: get_ble_ir_page(username_or_phone_number)
+      :staticmethod:
+
+      :async:
+
+
+      Get BleIR user/group information.
+
+
+
+   .. py:method:: get_chat_members_count(chat_id)
+      :async:
+
+
+      Get the number of members in a chat.
+
+
+
+   .. py:method:: pin_chat_message(chat_id, message_id)
+      :async:
+
+
+      Pin a message in a chat.
+
+
+
+   .. py:method:: unpin_chat_message(chat_id)
+      :async:
+
+
+      Unpin a message in a chat.
+
+
+
+   .. py:method:: unpin_all_chat_messages(chat_id)
+      :async:
+
+
+      Unpin all messages in a chat.
+
+
+
+   .. py:method:: set_chat_title(chat_id, title)
+      :async:
+
+
+      Change the title of a chat.
+
+
+
+   .. py:method:: set_chat_description(chat_id, description)
+      :async:
+
+
+      Change the description of a chat.
+
+
+
+   .. py:method:: delete_chat_photo(chat_id)
+      :async:
+
+
+      Delete a chat photo.
+
+
+
+   .. py:method:: edit_message(chat_id, message_id, text, reply_markup = None)
+      :async:
+
+
+      Edits a message in a specified chat
+
+
+
+   .. py:method:: create_chat_invite_link(chat_id)
+      :async:
+
+
+      Create an additional invite link for a chat.
+
+
+
+   .. py:method:: revoke_chat_invite_link(chat_id, invite_link)
+      :async:
+
+
+      Revoke an invite link created by the bot.
+
+
+
+   .. py:method:: export_chat_invite_link(chat_id)
+      :async:
+
+
+      Generate a new primary invite link for a chat.
+
+
+
+   .. py:method:: send_chat_action(chat_id, action)
+      :async:
+
+
+      Tell the user that something is happening on the bot's side.
+
+
+
+   .. py:method:: wait_for(update_type, check=None)
+      :async:
+
+
+      Wait until a specified update
+
+
+
+   .. py:method:: process_update(update)
+      :async:
+
+
+      Process a single update and call registered handlers.
+
+
+
+   .. py:method:: base_handler_decorator(update_type)
+
+      Base decorator for handling different types of updates.
+
+
+
+   .. py:method:: on_command(command, filter = None)
+
+      Decorator for handling command updates.
+
+
+
+   .. py:method:: on_message(filter = None)
+
+      Decorator for handling new message updates.
+
+
+
+   .. py:method:: on_edited_message(filter = None)
+
+      Decorator for handling edited message updates.
+
+
+
+   .. py:method:: on_callback_query(filter = None)
+
+      Decorator for handling callback query updates.
+
+
+
+   .. py:method:: on_new_members(filter = None)
+
+      Decorator for handling new chat members updates.
+
+
+
+   .. py:method:: on_members_left(filter = None)
+
+      Decorator for handling members left updates.
+
+
+
+   .. py:method:: on_pre_checkout_query(filter = None)
+
+      Decorator for handling pre-checkout query updates.
+
+
+
+   .. py:method:: on_photo(filter = None)
+
+      Decorator for handling photo updates.
+
+
+
+   .. py:method:: on_successful_payment(filter = None)
+
+      Decorator for handling successful payment updates.
+
+
+
+   .. py:method:: add_handler(update_type, callback, filter = None, **kwargs)
+
+      Register a handler for specific update type.
+
+
+
+   .. py:method:: remove_handler(callback)
+
+      Remove a handler from the list of handlers.
+
+
+
+   .. py:method:: remove_all_handlers()
+
+      Remove all handlers from the list of handlers.
+
+
+
+   .. py:method:: start_polling(timeout = 30, limit = 100)
+      :async:
+
+
+      Start polling updates from the server.
+
+
+
+   .. py:method:: stop_polling()
+      :async:
+
+
+      Stop polling updates.
+
+
+
+   .. py:method:: run(timeout = 30, limit = 100)
+
+      Run the client.
+
+
+
+   .. py:method:: stop()
+      :async:
+
+
+      Stop the client.
+
+
+
+   .. py:method:: handle_webhook_update(update_data)
+      :async:
+
+
+      Process an update received via webhook.
+
+
+

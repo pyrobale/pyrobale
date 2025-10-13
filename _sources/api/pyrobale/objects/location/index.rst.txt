@@ -1,0 +1,25 @@
+pyrobale.objects.location
+=========================
+
+.. py:module:: pyrobale.objects.location
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.location.Location
+
+
+Module Contents
+---------------
+
+.. py:class:: Location(latitude, longitude)
+
+   .. py:attribute:: latitude
+
+
+   .. py:attribute:: longitude
+
+

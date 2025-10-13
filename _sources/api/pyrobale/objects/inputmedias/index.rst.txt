@@ -1,0 +1,175 @@
+pyrobale.objects.inputmedias
+============================
+
+.. py:module:: pyrobale.objects.inputmedias
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.inputmedias.InputMedia
+   pyrobale.objects.inputmedias.InputMediaPhoto
+   pyrobale.objects.inputmedias.InputMediaVideo
+   pyrobale.objects.inputmedias.InputMediaAnimation
+   pyrobale.objects.inputmedias.InputMediaAudio
+   pyrobale.objects.inputmedias.InputMediaDocument
+
+
+Module Contents
+---------------
+
+.. py:class:: InputMedia(media, caption=None)
+
+   Base class for all input media types.
+
+   This is an abstract class that should not be used directly.
+
+
+   .. py:attribute:: media
+
+
+   .. py:attribute:: caption
+      :value: None
+
+
+
+.. py:class:: InputMediaPhoto(media, caption=None)
+
+   Bases: :py:obj:`InputMedia`
+
+
+   Represents a photo to be sent.
+
+   This object represents a photo that needs to be sent to Bale.
+
+
+   .. py:attribute:: type
+      :value: 'photo'
+
+
+
+.. py:class:: InputMediaVideo(media, caption=None, thumbnail=None, width=None, height=None, duration=None)
+
+   Bases: :py:obj:`InputMedia`
+
+
+   Represents a video to be sent.
+
+   This object represents a video that needs to be sent to Bale.
+
+
+   .. py:attribute:: type
+      :value: 'video'
+
+
+
+   .. py:attribute:: thumbnail
+      :value: None
+
+
+
+   .. py:attribute:: width
+      :value: None
+
+
+
+   .. py:attribute:: height
+      :value: None
+
+
+
+   .. py:attribute:: duration
+      :value: None
+
+
+
+.. py:class:: InputMediaAnimation(media, caption=None, thumbnail=None, width=None, height=None, duration=None)
+
+   Bases: :py:obj:`InputMedia`
+
+
+   Represents an animation to be sent.
+
+   This object represents an animation file (GIF or H.264/MPEG-4 AVC
+   video without sound) that needs to be sent to Bale.
+
+
+   .. py:attribute:: type
+      :value: 'animation'
+
+
+
+   .. py:attribute:: thumbnail
+      :value: None
+
+
+
+   .. py:attribute:: width
+      :value: None
+
+
+
+   .. py:attribute:: height
+      :value: None
+
+
+
+   .. py:attribute:: duration
+      :value: None
+
+
+
+.. py:class:: InputMediaAudio(media, caption=None, thumbnail=None, duration=None, title=None)
+
+   Bases: :py:obj:`InputMedia`
+
+
+   Represents an audio file to be sent.
+
+   This object represents an audio file that needs to be sent to Bale.
+   The file will be treated as music.
+
+
+   .. py:attribute:: type
+      :value: 'audio'
+
+
+
+   .. py:attribute:: thumbnail
+      :value: None
+
+
+
+   .. py:attribute:: duration
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+.. py:class:: InputMediaDocument(media, caption=None, thumbnail=None)
+
+   Bases: :py:obj:`InputMedia`
+
+
+   Represents a document to be sent.
+
+   This object represents a general file (document) that needs to be
+   sent to Bale.
+
+
+   .. py:attribute:: type
+      :value: 'document'
+
+
+
+   .. py:attribute:: thumbnail
+      :value: None
+
+
+

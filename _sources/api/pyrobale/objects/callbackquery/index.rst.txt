@@ -1,0 +1,58 @@
+pyrobale.objects.callbackquery
+==============================
+
+.. py:module:: pyrobale.objects.callbackquery
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.callbackquery.CallbackQuery
+
+
+Module Contents
+---------------
+
+.. py:class:: CallbackQuery(id = None, user = None, message = None, data = None, **kwargs)
+
+   Represents a callback query from a user.
+
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: user
+      :value: None
+
+
+
+   .. py:attribute:: message
+      :value: None
+
+
+
+   .. py:attribute:: chat
+      :value: None
+
+
+
+   .. py:attribute:: data
+      :value: None
+
+
+
+   .. py:attribute:: bot
+
+
+   .. py:method:: answer(text = None, show_alert = False)
+      :async:
+
+
+      Sends a response to the callback query.
+
+
+

@@ -1,0 +1,35 @@
+pyrobale.objects.utils
+======================
+
+.. py:module:: pyrobale.objects.utils
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   pyrobale.objects.utils.build_api_url
+   pyrobale.objects.utils.make_post
+   pyrobale.objects.utils.make_get
+   pyrobale.objects.utils.pythonize
+
+
+Module Contents
+---------------
+
+.. py:function:: build_api_url(base, endpoint)
+
+.. py:function:: make_post(url, data = None, headers = None)
+   :async:
+
+
+.. py:function:: make_get(url, headers = None)
+   :async:
+
+
+.. py:function:: pythonize(dictionary)
+
+   Converts a dictionary with keys in snake_case to camelCase.
+
+

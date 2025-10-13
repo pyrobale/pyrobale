@@ -1,0 +1,15 @@
+pyrobale.exceptions
+===================
+
+.. py:module:: pyrobale.exceptions
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /api/pyrobale/exceptions/common/index
+
+

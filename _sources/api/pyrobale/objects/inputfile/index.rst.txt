@@ -1,0 +1,22 @@
+pyrobale.objects.inputfile
+==========================
+
+.. py:module:: pyrobale.objects.inputfile
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.inputfile.InputFile
+
+
+Module Contents
+---------------
+
+.. py:class:: InputFile(file, **kwargs)
+
+   .. py:attribute:: file
+
+

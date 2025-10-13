@@ -1,0 +1,28 @@
+pyrobale.objects.labeledprice
+=============================
+
+.. py:module:: pyrobale.objects.labeledprice
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.labeledprice.LabeledPrice
+
+
+Module Contents
+---------------
+
+.. py:class:: LabeledPrice(label, amount)
+
+   .. py:attribute:: label
+
+
+   .. py:attribute:: amount
+
+
+   .. py:property:: json
+
+

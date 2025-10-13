@@ -1,0 +1,34 @@
+pyrobale.objects.successfulpayment
+==================================
+
+.. py:module:: pyrobale.objects.successfulpayment
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.successfulpayment.SuccessfulPayment
+
+
+Module Contents
+---------------
+
+.. py:class:: SuccessfulPayment(currency, total_amount, invoice_payload, telegram_payment_charge_id, provider_payment_charge_id, **kwargs)
+
+   .. py:attribute:: currency
+
+
+   .. py:attribute:: total_amount
+
+
+   .. py:attribute:: invoice_payload
+
+
+   .. py:attribute:: telegram_payment_charge_id
+
+
+   .. py:attribute:: provider_payment_charge_id
+
+

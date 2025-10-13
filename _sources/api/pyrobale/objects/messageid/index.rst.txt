@@ -1,0 +1,22 @@
+pyrobale.objects.messageid
+==========================
+
+.. py:module:: pyrobale.objects.messageid
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.messageid.MessageId
+
+
+Module Contents
+---------------
+
+.. py:class:: MessageId(message_id)
+
+   .. py:attribute:: message_id
+
+

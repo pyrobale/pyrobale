@@ -1,0 +1,25 @@
+pyrobale.objects.copytextbutton
+===============================
+
+.. py:module:: pyrobale.objects.copytextbutton
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.copytextbutton.CopyTextButton
+
+
+Module Contents
+---------------
+
+.. py:class:: CopyTextButton(text, **kwargs)
+
+   Represents a copy text button.
+
+
+   .. py:attribute:: text
+
+

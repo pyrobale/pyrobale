@@ -1,0 +1,34 @@
+pyrobale.objects.precheckoutquery
+=================================
+
+.. py:module:: pyrobale.objects.precheckoutquery
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.precheckoutquery.PreCheckoutQuery
+
+
+Module Contents
+---------------
+
+.. py:class:: PreCheckoutQuery(id, from_user, currency, total_amount, invoice_payload, **kwargs)
+
+   .. py:attribute:: id
+
+
+   .. py:attribute:: from_user
+
+
+   .. py:attribute:: currency
+
+
+   .. py:attribute:: total_amount
+
+
+   .. py:attribute:: invoice_payload
+
+

@@ -1,0 +1,61 @@
+pyrobale.exceptions.common
+==========================
+
+.. py:module:: pyrobale.exceptions.common
+
+
+Exceptions
+----------
+
+.. autoapisummary::
+
+   pyrobale.exceptions.common.PyroBaleException
+   pyrobale.exceptions.common.InvalidTokenException
+   pyrobale.exceptions.common.NotFoundException
+   pyrobale.exceptions.common.ForbiddenException
+   pyrobale.exceptions.common.InternalServerException
+
+
+Module Contents
+---------------
+
+.. py:exception:: PyroBaleException
+
+   Bases: :py:obj:`Exception`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: InvalidTokenException
+
+   Bases: :py:obj:`PyroBaleException`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: NotFoundException
+
+   Bases: :py:obj:`PyroBaleException`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: ForbiddenException
+
+   Bases: :py:obj:`PyroBaleException`
+
+
+   Common base class for all non-exit exceptions.
+
+
+.. py:exception:: InternalServerException
+
+   Bases: :py:obj:`PyroBaleException`
+
+
+   Common base class for all non-exit exceptions.
+
+

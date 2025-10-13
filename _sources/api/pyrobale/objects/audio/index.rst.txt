@@ -1,0 +1,57 @@
+pyrobale.objects.audio
+======================
+
+.. py:module:: pyrobale.objects.audio
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.audio.Audio
+
+
+Module Contents
+---------------
+
+.. py:class:: Audio(file_id = None, file_unique_id = None, duration = None, title = None, file_name = None, mime_type = None, file_size = None, **kwargs)
+
+   Represents an audio file to be treated as music to be sent.
+
+
+   .. py:attribute:: file_id
+      :value: None
+
+
+
+   .. py:attribute:: file_unique_id
+      :value: None
+
+
+
+   .. py:attribute:: duration
+      :value: None
+
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: file_name
+      :value: None
+
+
+
+   .. py:attribute:: mime_type
+      :value: None
+
+
+
+   .. py:attribute:: file_size
+      :value: None
+
+
+

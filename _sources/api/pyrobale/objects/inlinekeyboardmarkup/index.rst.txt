@@ -1,0 +1,62 @@
+pyrobale.objects.inlinekeyboardmarkup
+=====================================
+
+.. py:module:: pyrobale.objects.inlinekeyboardmarkup
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup
+
+
+Module Contents
+---------------
+
+.. py:class:: InlineKeyboardMarkup
+
+   .. py:attribute:: inline_keyboard
+      :type:  list[list[dict]]
+      :value: []
+
+
+
+   .. py:method:: add_button(text, callback_data = None, url = None, web_app = None, copy_text_button = None, **kwargs)
+
+      Adds a button to the inline keyboard.
+
+      :param text: The text to display on the button.
+      :type text: str
+      :param callback_data: The callback data to send when the button is clicked.
+      :type callback_data: str, optional
+      :param url: The URL to open when the button is clicked.
+      :type url: str, optional
+      :param web_app: The web app to open when the button is clicked.
+      :type web_app: WebAppInfo OR string, optional
+      :param copy_text_button: The copy text button to add to the button.
+      :type copy_text_button: CopyTextButton OR string, optional
+
+      :returns: The updated InlineKeyboardMarkup object.
+      :rtype: InlineKeyboardMarkup
+
+
+
+   .. py:method:: add_row()
+
+      Adds a new row to the inline keyboard.
+
+      :returns: The updated InlineKeyboardMarkup object.
+      :rtype: InlineKeyboardMarkup
+
+
+
+   .. py:method:: to_dict()
+
+
+   .. py:property:: json
+      :type: dict
+
+
+

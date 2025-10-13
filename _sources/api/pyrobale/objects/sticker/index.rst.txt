@@ -1,0 +1,37 @@
+pyrobale.objects.sticker
+========================
+
+.. py:module:: pyrobale.objects.sticker
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.sticker.Sticker
+
+
+Module Contents
+---------------
+
+.. py:class:: Sticker(file_id, file_unique_id, type, width, height, file_size)
+
+   .. py:attribute:: file_id
+
+
+   .. py:attribute:: file_unique_id
+
+
+   .. py:attribute:: type
+
+
+   .. py:attribute:: width
+
+
+   .. py:attribute:: height
+
+
+   .. py:attribute:: file_size
+
+

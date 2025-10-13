@@ -1,0 +1,22 @@
+pyrobale.objects.webappinfo
+===========================
+
+.. py:module:: pyrobale.objects.webappinfo
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.webappinfo.WebAppInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: WebAppInfo(url)
+
+   .. py:attribute:: url
+
+

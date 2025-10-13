@@ -1,0 +1,28 @@
+pyrobale.filters.func_filters
+=============================
+
+.. py:module:: pyrobale.filters.func_filters
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   pyrobale.filters.func_filters.equals
+
+
+Module Contents
+---------------
+
+.. py:function:: equals(expected_text)
+
+   Check if the event text or caption is equal to the expected text.
+
+   :param expected_text: The expected text to compare with.
+   :type expected_text: str
+
+   :returns: A function that checks if the event text or caption is equal to the expected text.
+   :rtype: Callable
+
+

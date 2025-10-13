@@ -1,0 +1,48 @@
+pyrobale.objects.user
+=====================
+
+.. py:module:: pyrobale.objects.user
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.user.User
+
+
+Module Contents
+---------------
+
+.. py:class:: User(id = None, is_bot = None, first_name = None, last_name = None, username = None, **kwargs)
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: is_bot
+      :value: None
+
+
+
+   .. py:attribute:: first_name
+      :value: None
+
+
+
+   .. py:attribute:: last_name
+      :value: None
+
+
+
+   .. py:attribute:: username
+      :value: None
+
+
+
+   .. py:attribute:: client
+      :type:  Optional[pyrobale.client.Client]
+
+

@@ -1,0 +1,28 @@
+pyrobale
+========
+
+.. py:module:: pyrobale
+
+.. autoapi-nested-parse::
+
+   Welcome to Pyrobale!
+
+   - 📖 Documentation: https://pyrobale.ir/docs
+   - ☕ Repository: https://github.com/pyrobale/pyrobale
+   - 💬 Forum: https://forum.pyrobale.ir
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /api/pyrobale/StateMachine/index
+   /api/pyrobale/client/index
+   /api/pyrobale/exceptions/index
+   /api/pyrobale/filters/index
+   /api/pyrobale/objects/index
+
+

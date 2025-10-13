@@ -1,0 +1,43 @@
+pyrobale.objects.video
+======================
+
+.. py:module:: pyrobale.objects.video
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.video.Video
+
+
+Module Contents
+---------------
+
+.. py:class:: Video(file_id, file_unique_id, width, height, duration, file_name, mime_type, file_size)
+
+   .. py:attribute:: file_id
+
+
+   .. py:attribute:: file_unique_id
+
+
+   .. py:attribute:: width
+
+
+   .. py:attribute:: height
+
+
+   .. py:attribute:: duration
+
+
+   .. py:attribute:: file_name
+
+
+   .. py:attribute:: mime_type
+
+
+   .. py:attribute:: file_size
+
+

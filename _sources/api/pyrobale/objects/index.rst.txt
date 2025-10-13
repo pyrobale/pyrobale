@@ -1,0 +1,55 @@
+pyrobale.objects
+================
+
+.. py:module:: pyrobale.objects
+
+.. autoapi-nested-parse::
+
+   # objects in pyrobale, we have a lot of objects that are used to represent
+   different types of data.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /api/pyrobale/objects/animation/index
+   /api/pyrobale/objects/audio/index
+   /api/pyrobale/objects/callbackquery/index
+   /api/pyrobale/objects/chat/index
+   /api/pyrobale/objects/chatmember/index
+   /api/pyrobale/objects/chatphoto/index
+   /api/pyrobale/objects/contact/index
+   /api/pyrobale/objects/copytextbutton/index
+   /api/pyrobale/objects/document/index
+   /api/pyrobale/objects/enums/index
+   /api/pyrobale/objects/file/index
+   /api/pyrobale/objects/inlinekeyboardbutton/index
+   /api/pyrobale/objects/inlinekeyboardmarkup/index
+   /api/pyrobale/objects/inputfile/index
+   /api/pyrobale/objects/inputmedias/index
+   /api/pyrobale/objects/invoice/index
+   /api/pyrobale/objects/keyboardbutton/index
+   /api/pyrobale/objects/labeledprice/index
+   /api/pyrobale/objects/location/index
+   /api/pyrobale/objects/message/index
+   /api/pyrobale/objects/messageid/index
+   /api/pyrobale/objects/peerdata/index
+   /api/pyrobale/objects/photosize/index
+   /api/pyrobale/objects/precheckoutquery/index
+   /api/pyrobale/objects/replykeyboardmarkup/index
+   /api/pyrobale/objects/sticker/index
+   /api/pyrobale/objects/stickerset/index
+   /api/pyrobale/objects/successfulpayment/index
+   /api/pyrobale/objects/update/index
+   /api/pyrobale/objects/user/index
+   /api/pyrobale/objects/utils/index
+   /api/pyrobale/objects/video/index
+   /api/pyrobale/objects/voice/index
+   /api/pyrobale/objects/webappdata/index
+   /api/pyrobale/objects/webappinfo/index
+
+

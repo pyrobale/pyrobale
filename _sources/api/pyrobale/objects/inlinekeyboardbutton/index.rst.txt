@@ -1,0 +1,45 @@
+pyrobale.objects.inlinekeyboardbutton
+=====================================
+
+.. py:module:: pyrobale.objects.inlinekeyboardbutton
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton
+
+
+Module Contents
+---------------
+
+.. py:class:: InlineKeyboardButton(text, url = None, callback_data = None, web_app = None, copy_text_button = None, **kwargs)
+
+   Represents a button in an inline keyboard.
+
+
+   .. py:attribute:: text
+
+
+   .. py:attribute:: url
+      :value: None
+
+
+
+   .. py:attribute:: callback_data
+      :value: None
+
+
+
+   .. py:attribute:: web_app
+      :value: None
+
+
+
+   .. py:attribute:: copy_text_button
+      :value: None
+
+
+

@@ -1,0 +1,212 @@
+pyrobale.objects.enums
+======================
+
+.. py:module:: pyrobale.objects.enums
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.enums.UpdatesTypes
+   pyrobale.objects.enums.ChatPermissions
+   pyrobale.objects.enums.ChatAction
+   pyrobale.objects.enums.ChatType
+
+
+Module Contents
+---------------
+
+.. py:class:: UpdatesTypes(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of updates.
+
+
+   .. py:attribute:: MESSAGE
+      :value: 'message'
+
+
+
+   .. py:attribute:: MESSAGE_EDITED
+      :value: 'message_edited'
+
+
+
+   .. py:attribute:: CALLBACK_QUERY
+      :value: 'callback_query'
+
+
+
+   .. py:attribute:: PRE_CHECKOUT_QUERY
+      :value: 'pre_checkout_query'
+
+
+
+   .. py:attribute:: MEMBER_JOINED
+      :value: 'member_joined'
+
+
+
+   .. py:attribute:: MEMBER_LEFT
+      :value: 'member_left'
+
+
+
+   .. py:attribute:: SUCCESSFUL_PAYMENT
+      :value: 'successful_payment'
+
+
+
+   .. py:attribute:: COMMAND
+      :value: 'command'
+
+
+
+   .. py:attribute:: PHOTO
+      :value: 'photo'
+
+
+
+.. py:class:: ChatPermissions(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   permissions every user has in chats
+
+
+   .. py:attribute:: CAN_SEND_MESSAGE
+      :value: 'can_send_messages'
+
+
+
+   .. py:attribute:: CAN_SEND_MEDIA
+      :value: 'can_send_media_messages'
+
+
+
+   .. py:attribute:: CAN_SEND_AUDIO
+      :value: 'can_send_audios'
+
+
+
+   .. py:attribute:: CAN_SEND_DOCUMENT
+      :value: 'can_send_documents'
+
+
+
+   .. py:attribute:: CAN_SEND_PHOTOS
+      :value: 'can_send_photos'
+
+
+
+   .. py:attribute:: CAN_SEND_VIDEOS
+      :value: 'can_send_videos'
+
+
+
+   .. py:attribute:: CAN_SEND_POLLS
+      :value: 'can_send_polls'
+
+
+
+   .. py:attribute:: CAN_CHANGE_INFO
+      :value: 'can_change_info'
+
+
+
+   .. py:attribute:: CAN_INVITE_USERS
+      :value: 'can_invite_users'
+
+
+
+   .. py:attribute:: CAN_PIN_MESSAGE
+      :value: 'can_pin_messages'
+
+
+
+   .. py:attribute:: CAN_MANAGE_CHAT
+      :value: 'can_manage_chat'
+
+
+
+   .. py:attribute:: CAN_DELETE_MESSAGES
+      :value: 'can_delete_messages'
+
+
+
+   .. py:attribute:: CAN_RESTRICT_USERS
+      :value: 'can_restrict_members'
+
+
+
+   .. py:attribute:: CAN_PROMOTE_USERS
+      :value: 'can_promote_members'
+
+
+
+.. py:class:: ChatAction(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Actions of a user in a chat.
+
+
+   .. py:attribute:: TYPING
+      :value: 'typing'
+
+
+
+   .. py:attribute:: PHOTO
+      :value: 'upload_photo'
+
+
+
+   .. py:attribute:: VIDEO
+      :value: 'upload_video'
+
+
+
+   .. py:attribute:: REVORDVIDEO
+      :value: 'record_video'
+
+
+
+   .. py:attribute:: VOICE
+      :value: 'upload_voice'
+
+
+
+   .. py:attribute:: DOCUMENT
+      :value: 'upload_document'
+
+
+
+.. py:class:: ChatType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of chats.
+
+
+   .. py:attribute:: PRIVATE
+      :value: 'private'
+
+
+
+   .. py:attribute:: GROUP
+      :value: 'group'
+
+
+
+   .. py:attribute:: CHANNEL
+      :value: 'channel'
+
+
+

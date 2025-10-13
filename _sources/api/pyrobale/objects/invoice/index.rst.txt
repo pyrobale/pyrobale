@@ -1,0 +1,34 @@
+pyrobale.objects.invoice
+========================
+
+.. py:module:: pyrobale.objects.invoice
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.invoice.Invoice
+
+
+Module Contents
+---------------
+
+.. py:class:: Invoice(title, description, start_parameter, currency, total_amount)
+
+   .. py:attribute:: title
+
+
+   .. py:attribute:: description
+
+
+   .. py:attribute:: start_parameter
+
+
+   .. py:attribute:: currency
+
+
+   .. py:attribute:: total_amount
+
+

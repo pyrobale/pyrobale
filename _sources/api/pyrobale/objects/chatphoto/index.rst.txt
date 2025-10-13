@@ -1,0 +1,42 @@
+pyrobale.objects.chatphoto
+==========================
+
+.. py:module:: pyrobale.objects.chatphoto
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.chatphoto.ChatPhoto
+
+
+Module Contents
+---------------
+
+.. py:class:: ChatPhoto(small_file_id = None, small_file_unique_id = None, big_file_id = None, big_file_unique_id = None, **kwargs)
+
+   This object represents a chat photo.
+
+
+   .. py:attribute:: small_file_id
+      :value: None
+
+
+
+   .. py:attribute:: small_file_unique_id
+      :value: None
+
+
+
+   .. py:attribute:: big_file_id
+      :value: None
+
+
+
+   .. py:attribute:: big_file_unique_id
+      :value: None
+
+
+

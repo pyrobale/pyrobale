@@ -1,0 +1,54 @@
+pyrobale.objects.replykeyboardmarkup
+====================================
+
+.. py:module:: pyrobale.objects.replykeyboardmarkup
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup
+
+
+Module Contents
+---------------
+
+.. py:class:: ReplyKeyboardMarkup
+
+   Represents a reply keyboard.
+   .. attribute:: Each dictionary contains the following keys
+
+      
+      
+      - keyboard (list): A list of lists of dictionaries representing the buttons in the keyboard.
+      - text (str): The text of the button.
+      - request_contact (bool, optional): If True, the user's phone number will be sent.
+      - request_location (bool, optional): If True, the user's location will be sent.
+      - web_app (WebApp, optional): The web app associated with the button.
+
+
+   .. py:attribute:: keyboard
+      :value: []
+
+
+
+   .. py:method:: add_button(text, request_contact = None, request_location = None, web_app = None)
+
+      Add a button to the current row.
+
+
+
+   .. py:method:: add_row()
+
+      Add a new row for buttons.
+
+
+
+   .. py:property:: json
+
+
+   .. py:method:: __str__()
+
+

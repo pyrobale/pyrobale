@@ -1,0 +1,549 @@
+pyrobale.objects.chat
+=====================
+
+.. py:module:: pyrobale.objects.chat
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.chat.Chat
+
+
+Module Contents
+---------------
+
+.. py:class:: Chat(id = None, type = None, title = None, username = None, first_name = None, last_name = None, photo = None, client = None, **kwargs)
+
+   Represents a chat in the Bale messenger.
+
+   :param id: Unique identifier for this chat
+   :type id: Optional[int]
+   :param type: Type of chat, can be either "private", "group", or "channel"
+   :type type: Optional[str]
+   :param title: Title, for groups and channels
+   :type title: Optional[str]
+   :param username: Username, for private chats and channels if available
+   :type username: Optional[str]
+   :param first_name: First name of the other party in a private chat
+   :type first_name: Optional[str]
+   :param last_name: Last name of the other party in a private chat
+   :type last_name: Optional[str]
+   :param photo: Chat photo object
+   :type photo: Optional[ChatPhoto]
+   :param \*\*kwargs: Additional keyword arguments
+
+   .. attribute:: id
+
+      Unique identifier for this chat
+
+      :type: int
+
+   .. attribute:: type
+
+      Type of chat
+
+      :type: str
+
+   .. attribute:: PRIVATE
+
+      True if chat is private
+
+      :type: bool
+
+   .. attribute:: GROUP
+
+      True if chat is group
+
+      :type: bool
+
+   .. attribute:: CHANNEL
+
+      True if chat is channel
+
+      :type: bool
+
+   .. attribute:: title
+
+      Chat title
+
+      :type: str
+
+   .. attribute:: username
+
+      Chat username
+
+      :type: str
+
+   .. attribute:: first_name
+
+      First name
+
+      :type: str
+
+   .. attribute:: last_name
+
+      Last name
+
+      :type: str
+
+   .. attribute:: photo
+
+      Chat photo
+
+      :type: ChatPhoto
+
+   .. attribute:: client
+
+      Client instance
+
+      :type: Client
+
+
+   .. py:attribute:: id
+      :value: None
+
+
+
+   .. py:attribute:: type
+      :value: None
+
+
+
+   .. py:attribute:: PRIVATE
+
+
+   .. py:attribute:: GROUP
+
+
+   .. py:attribute:: CHANNEL
+
+
+   .. py:attribute:: title
+      :value: None
+
+
+
+   .. py:attribute:: username
+      :value: None
+
+
+
+   .. py:attribute:: first_name
+      :value: None
+
+
+
+   .. py:attribute:: last_name
+      :value: None
+
+
+
+   .. py:attribute:: photo
+      :type:  pyrobale.objects.chatphoto.ChatPhoto
+      :value: None
+
+
+
+   .. py:attribute:: client
+      :type:  pyrobale.client.Client
+      :value: None
+
+
+
+   .. py:method:: send_message(text, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a message to the chat.
+
+      :param text: Text of the message to be sent
+      :type text: str
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: get_chat_member(user_id)
+      :async:
+
+
+      Get information about a member of a chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+
+      :returns: Information about the chat member
+      :rtype: ChatMember
+
+
+
+   .. py:method:: get_chat_members_count()
+      :async:
+
+
+      Get the number of members in the chat.
+
+      :returns: Number of members in the chat
+      :rtype: int
+
+
+
+   .. py:method:: send_photo(photo, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a photo to the chat.
+
+      :param photo: Photo to send (file_id or URL)
+      :type photo: str
+      :param caption: Photo caption
+      :type caption: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_video(video, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a video to the chat.
+
+      :param video: Video to send (file_id or URL)
+      :type video: str
+      :param caption: Video caption
+      :type caption: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_audio(audio, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send an audio file to the chat.
+
+      :param audio: Audio file to send (file_id or URL)
+      :type audio: str
+      :param caption: Audio caption
+      :type caption: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_document(document, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a document to the chat.
+
+      :param document: Document to send (file_id or URL)
+      :type document: str
+      :param caption: Document caption
+      :type caption: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_sticker(sticker, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a sticker to the chat.
+
+      :param sticker: Sticker to send (file_id or URL)
+      :type sticker: str
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_voice(voice, caption = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a voice message to the chat.
+
+      :param voice: Voice message to send (file_id or URL)
+      :type voice: str
+      :param caption: Voice message caption
+      :type caption: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_location(latitude, longitude, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a location to the chat.
+
+      :param latitude: Latitude of the location
+      :type latitude: float
+      :param longitude: Longitude of the location
+      :type longitude: float
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: send_contact(phone_number, first_name, last_name = None, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Send a contact to the chat.
+
+      :param phone_number: Contact's phone number
+      :type phone_number: str
+      :param first_name: Contact's first name
+      :type first_name: str
+      :param last_name: Contact's last name
+      :type last_name: Optional[str]
+      :param reply_to_message_id: If the message is a reply, ID of the original message
+      :type reply_to_message_id: int, optional
+      :param reply_markup: Additional interface options
+      :type reply_markup: Union[ReplyKeyboardMarkup, InlineKeyboardMarkup], optional
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: ban(user_id)
+      :async:
+
+
+      Bans a user from the chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+      :param until_date: Date when the user will be unbanned (Unix time)
+      :type until_date: Optional[int]
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: kick(user_id)
+      :async:
+
+
+      Kicks a user from the chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: unban(user_id)
+      :async:
+
+
+      Unban a previously banned user in the chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: promote(user_id, can_change_info = None, can_post_messages = None, can_edit_messages = None, can_delete_messages = None, can_invite_users = None, can_restrict_members = None, can_pin_messages = None, can_promote_members = None)
+      :async:
+
+
+      Promote or demote a user in a chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+      :param can_change_info: Pass True if the user can change chat title, photo and other settings
+      :type can_change_info: Optional[bool]
+      :param can_post_messages: Pass True if the user can post messages in channels
+      :type can_post_messages: Optional[bool]
+      :param can_edit_messages: Pass True if the user can edit messages in channels
+      :type can_edit_messages: Optional[bool]
+      :param can_delete_messages: Pass True if the user can delete messages
+      :type can_delete_messages: Optional[bool]
+      :param can_invite_users: Pass True if the user can invite new users
+      :type can_invite_users: Optional[bool]
+      :param can_restrict_members: Pass True if the user can restrict, ban or unban chat members
+      :type can_restrict_members: Optional[bool]
+      :param can_pin_messages: Pass True if the user can pin messages
+      :type can_pin_messages: Optional[bool]
+      :param can_promote_members: Pass True if the user can add new administrators
+      :type can_promote_members: Optional[bool]
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: leave()
+      :async:
+
+
+      Leave the chat.
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: is_joined(user_id)
+      :async:
+
+
+      Check if a user is joined to the chat.
+
+      :param user_id: Unique identifier of the target user
+      :type user_id: int
+
+      :returns: True if the user is joined to the chat, False otherwise
+      :rtype: bool
+
+
+
+   .. py:method:: pin(message_id)
+      :async:
+
+
+      Pin a message in the chat.
+
+      :param message_id: Identifier of a message to pin
+      :type message_id: int
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: unpin()
+      :async:
+
+
+      Unpin a message in the chat.
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: unpin_all()
+      :async:
+
+
+      Unpin all messages in the chat.
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: set_title(title)
+      :async:
+
+
+      Change the title of a chat.
+
+      :param title: New chat title, 1-255 characters
+      :type title: str
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: set_description(description)
+      :async:
+
+
+      Change the description of a chat.
+
+      :param description: New chat description, 0-255 characters
+      :type description: str
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: set_photo(photo)
+      :async:
+
+
+      Set the photo of the chat.
+
+      :param photo: Photo to set. Pass a file_id as string to send a photo that exists on the Telegram servers, pass an HTTP URL as a string for Telegram to get a photo from the Internet, or pass "attach://<file_attach_name>" to upload a new photo that exists on the local server.
+      :type photo: str
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: send_action(action)
+      :async:
+
+
+      Send an action to the chat.
+
+      :param action: Action to send to the chat
+      :type action: objects.enums.ChatAction
+
+      :returns: True on success
+      :rtype: bool
+
+
+

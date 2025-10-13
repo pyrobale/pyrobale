@@ -1,0 +1,19 @@
+pyrobale.objects.stickerset
+===========================
+
+.. py:module:: pyrobale.objects.stickerset
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.stickerset.StickerSet
+
+
+Module Contents
+---------------
+
+.. py:class:: StickerSet(name, title, stickers, thumb)
+

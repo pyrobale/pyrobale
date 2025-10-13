@@ -1,0 +1,68 @@
+pyrobale.objects.animation
+==========================
+
+.. py:module:: pyrobale.objects.animation
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.animation.Animation
+
+
+Module Contents
+---------------
+
+.. py:class:: Animation(file_id = None, file_unique_id = None, width = None, height = None, duration = None, thumb = None, file_name = None, mime_type = None, file_size = None, **kwargs)
+
+   Represents an animation file (GIF or H.264/MPEG-4 AVC video without
+   sound) to be sent.
+
+
+   .. py:attribute:: file_id
+      :value: None
+
+
+
+   .. py:attribute:: file_unique_id
+      :value: None
+
+
+
+   .. py:attribute:: width
+      :value: None
+
+
+
+   .. py:attribute:: height
+      :value: None
+
+
+
+   .. py:attribute:: duration
+      :value: None
+
+
+
+   .. py:attribute:: thumb
+      :value: None
+
+
+
+   .. py:attribute:: file_name
+      :value: None
+
+
+
+   .. py:attribute:: mime_type
+      :value: None
+
+
+
+   .. py:attribute:: file_size
+      :value: None
+
+
+

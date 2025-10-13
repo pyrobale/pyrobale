@@ -1,0 +1,37 @@
+pyrobale.objects.keyboardbutton
+===============================
+
+.. py:module:: pyrobale.objects.keyboardbutton
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.keyboardbutton.KeyboardButton
+
+
+Module Contents
+---------------
+
+.. py:class:: KeyboardButton(text, request_contact = False, request_location = False, web_app = None, **kwargs)
+
+   .. py:attribute:: text
+
+
+   .. py:attribute:: request_contact
+      :value: False
+
+
+
+   .. py:attribute:: request_location
+      :value: False
+
+
+
+   .. py:attribute:: web_app
+      :value: None
+
+
+

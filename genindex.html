@@ -1,0 +1,1987 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
+        <link rel="prefetch" href="_static/pyrobale.png" as="image">
+
+    <link rel="shortcut icon" href="_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 --><title>Index - Pyrobale Documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     <strong>🚀 Pyrobale Beta!</strong> - Modern library for Bale bot API 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Pyrobale Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><div class="sidebar-scroll"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/pyrobale.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Pyrobale Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API Documents</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/pyrobale/index.html">pyrobale</a><input aria-label="Toggle navigation of pyrobale" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/pyrobale/StateMachine/index.html">pyrobale.StateMachine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/pyrobale/client/index.html">pyrobale.client</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/pyrobale/exceptions/index.html">pyrobale.exceptions</a><input aria-label="Toggle navigation of pyrobale.exceptions" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/exceptions/common/index.html">pyrobale.exceptions.common</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/pyrobale/filters/index.html">pyrobale.filters</a><input aria-label="Toggle navigation of pyrobale.filters" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/filters/enum_filters/index.html">pyrobale.filters.enum_filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/filters/func_filters/index.html">pyrobale.filters.func_filters</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="api/pyrobale/objects/index.html">pyrobale.objects</a><input aria-label="Toggle navigation of pyrobale.objects" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/animation/index.html">pyrobale.objects.animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/audio/index.html">pyrobale.objects.audio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/callbackquery/index.html">pyrobale.objects.callbackquery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chat/index.html">pyrobale.objects.chat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chatmember/index.html">pyrobale.objects.chatmember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chatphoto/index.html">pyrobale.objects.chatphoto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/contact/index.html">pyrobale.objects.contact</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/copytextbutton/index.html">pyrobale.objects.copytextbutton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/document/index.html">pyrobale.objects.document</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/enums/index.html">pyrobale.objects.enums</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/file/index.html">pyrobale.objects.file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inlinekeyboardbutton/index.html">pyrobale.objects.inlinekeyboardbutton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inlinekeyboardmarkup/index.html">pyrobale.objects.inlinekeyboardmarkup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inputfile/index.html">pyrobale.objects.inputfile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inputmedias/index.html">pyrobale.objects.inputmedias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/invoice/index.html">pyrobale.objects.invoice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/keyboardbutton/index.html">pyrobale.objects.keyboardbutton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/labeledprice/index.html">pyrobale.objects.labeledprice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/location/index.html">pyrobale.objects.location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/message/index.html">pyrobale.objects.message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/messageid/index.html">pyrobale.objects.messageid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/peerdata/index.html">pyrobale.objects.peerdata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/photosize/index.html">pyrobale.objects.photosize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/precheckoutquery/index.html">pyrobale.objects.precheckoutquery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/replykeyboardmarkup/index.html">pyrobale.objects.replykeyboardmarkup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/sticker/index.html">pyrobale.objects.sticker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/stickerset/index.html">pyrobale.objects.stickerset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/successfulpayment/index.html">pyrobale.objects.successfulpayment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/update/index.html">pyrobale.objects.update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/user/index.html">pyrobale.objects.user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/utils/index.html">pyrobale.objects.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/video/index.html">pyrobale.objects.video</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/voice/index.html">pyrobale.objects.voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/webappdata/index.html">pyrobale.objects.webappdata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/webappinfo/index.html">pyrobale.objects.webappinfo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div class="sidebar-tree">
+  <hr style="margin: 1rem 0; border-color: var(--color-background-border);">
+
+  <p style="font-weight: 600; color: var(--color-foreground-primary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+    📚 Guides
+  </p>
+
+  <ul>
+    <li class="toctree-l1">
+      <a class="reference internal" href="../examples/index.html">
+        🎯 Examples
+      </a>
+    </li>
+    <li class="toctree-l1">
+      <a class="reference internal" href="../persian-handbook/index.html">
+        📖 Persian Handbook
+      </a>
+    </li>
+    <li class="toctree-l1">
+      <a class="reference internal" href="../api/index.html">
+        🔧 API Reference
+      </a>
+    </li>
+  </ul>
+</div><div class="sidebar-tree">
+  <hr style="margin: 1rem 0; border-color: var(--color-background-border);">
+
+  <p style="font-weight: 600; color: var(--color-foreground-primary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+    🔗 Project Links
+  </p>
+
+  <ul>
+    <li class="toctree-l1">
+      <a class="reference external" href="https://github.com/pyrobale/pyrobale" target="_blank">
+        <span style="color: #6e7681;">💻</span> GitHub
+      </a>
+    </li>
+    <li class="toctree-l1">
+      <a class="reference external" href="https://forum.pyrobale.ir" target="_blank">
+        <span style="color: #6e7681;">💬</span> Forum
+      </a>
+    </li>
+    <li class="toctree-l1">
+      <a class="reference external" href="https://pyrobale.ir" target="_blank">
+        <span style="color: #6e7681;">🌐</span> Website
+      </a>
+    </li>
+    <li class="toctree-l1">
+      <a class="reference external" href="https://pypi.org/project/pyrobale" target="_blank">
+        <span style="color: #6e7681;">🐍</span> PyPI
+      </a>
+    </li>
+  </ul>
+</div></div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.__str__">__str__() (pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.add_button">add_button() (pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.add_button">(pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.add_handler">add_handler() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.add_row">add_row() (pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.add_row">(pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice.amount">amount (pyrobale.objects.labeledprice.LabeledPrice attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation">Animation (class in pyrobale.objects.animation)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/message/index.html#id10">animation (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.animation">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.answer">answer() (pyrobale.objects.callbackquery.CallbackQuery method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.answer_callback_query">answer_callback_query() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio">Audio (class in pyrobale.objects.audio)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.AUDIO">AUDIO (pyrobale.filters.enum_filters.Filters attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id11">audio (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.audio">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.avatar">avatar (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.ban">ban() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.ban">(pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.ban_chat_member">ban_chat_member() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.base_handler_decorator">base_handler_decorator() (pyrobale.client.Client method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.base_url">base_url (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.big_file_id">big_file_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.big_file_unique_id">big_file_unique_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.bot">bot (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.build_api_url">build_api_url() (in module pyrobale.objects.utils)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.callback_data">callback_data (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.CALLBACK_QUERY">CALLBACK_QUERY (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.callback_query">callback_query (pyrobale.objects.update.Update attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery">CallbackQuery (class in pyrobale.objects.callbackquery)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_add_web_page_previews">can_add_web_page_previews (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_be_edited">can_be_edited (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_change_info">can_change_info (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_CHANGE_INFO">CAN_CHANGE_INFO (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_delete_messages">can_delete_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_DELETE_MESSAGES">CAN_DELETE_MESSAGES (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_edit_messages">can_edit_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_invite_users">can_invite_users (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_INVITE_USERS">CAN_INVITE_USERS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_manage_chat">can_manage_chat (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_MANAGE_CHAT">CAN_MANAGE_CHAT (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_manage_topics">can_manage_topics (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_PIN_MESSAGE">CAN_PIN_MESSAGE (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_pin_messages">can_pin_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_post_messages">can_post_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_promote_members">can_promote_members (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_PROMOTE_USERS">CAN_PROMOTE_USERS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_restrict_members">can_restrict_members (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_RESTRICT_USERS">CAN_RESTRICT_USERS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_AUDIO">CAN_SEND_AUDIO (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_audios">can_send_audios (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_DOCUMENT">CAN_SEND_DOCUMENT (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_documents">can_send_documents (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_MEDIA">CAN_SEND_MEDIA (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_MESSAGE">CAN_SEND_MESSAGE (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_messages">can_send_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_other_messages">can_send_other_messages (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_photos">can_send_photos (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_PHOTOS">CAN_SEND_PHOTOS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_polls">can_send_polls (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_POLLS">CAN_SEND_POLLS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_video_notes">can_send_video_notes (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_videos">can_send_videos (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_VIDEOS">CAN_SEND_VIDEOS (pyrobale.objects.enums.ChatPermissions attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_voice_notes">can_send_voice_notes (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMedia.caption">caption (pyrobale.objects.inputmedias.InputMedia attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/message/index.html#id17">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.caption">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id4">CHANNEL (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.CHANNEL">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.CHANNEL">(pyrobale.objects.enums.ChatType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat">Chat (class in pyrobale.objects.chat)</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.chat">chat (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.chat">(pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.chat">(pyrobale.objects.message.Message attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction">ChatAction (class in pyrobale.objects.enums)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember">ChatMember (class in pyrobale.objects.chatmember)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions">ChatPermissions (class in pyrobale.objects.enums)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto">ChatPhoto (class in pyrobale.objects.chatphoto)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType">ChatType (class in pyrobale.objects.enums)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.check_defined_message">check_defined_message (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client">Client (class in pyrobale.client)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id10">client (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.client">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.client">(pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#id0">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.client">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.client">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.close">close() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.COMMAND">COMMAND (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact">Contact (class in pyrobale.objects.contact)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.CONTACT">CONTACT (pyrobale.filters.enum_filters.Filters attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id18">contact (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.contact">[1]</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.copy_message">copy_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.copy_text_button">copy_text_button (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/copytextbutton/index.html#pyrobale.objects.copytextbutton.CopyTextButton">CopyTextButton (class in pyrobale.objects.copytextbutton)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.create_chat_invite_link">create_chat_invite_link() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.currency">currency (pyrobale.objects.invoice.Invoice attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.currency">(pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.currency">(pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.custom_title">custom_title (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.data">data (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/webappdata/index.html#pyrobale.objects.webappdata.WebAppData.data">(pyrobale.objects.webappdata.WebAppData attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#id3">date (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.date">[1]</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.defined_messages">defined_messages (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.del_state">del_state() (pyrobale.StateMachine.StateMachine method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.delete">delete() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.delete_chat_photo">delete_chat_photo() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.description">description (pyrobale.objects.invoice.Invoice attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.description">(pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document">Document (class in pyrobale.objects.document)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.DOCUMENT">DOCUMENT (pyrobale.objects.enums.ChatAction attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id12">document (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.document">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.duration">duration (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.duration">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.duration">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio.duration">(pyrobale.objects.inputmedias.InputMediaAudio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo.duration">(pyrobale.objects.inputmedias.InputMediaVideo attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.duration">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.edit">edit() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.edit_message">edit_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id8">edite_date (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.edite_date">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.edited_message">edited_message (pyrobale.objects.update.Update attribute)</a>
+</li>
+        <li><a href="api/pyrobale/filters/func_filters/index.html#pyrobale.filters.func_filters.equals">equals() (in module pyrobale.filters.func_filters)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.export_chat_invite_link">export_chat_invite_link() (pyrobale.client.Client method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/file/index.html#pyrobale.objects.file.File">File (class in pyrobale.objects.file)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.file">file (pyrobale.objects.inputfile.InputFile attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.file_id">file_id (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.file_id">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.file_id">(pyrobale.objects.document.Document attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/file/index.html#pyrobale.objects.file.File.file_id">(pyrobale.objects.file.File attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize.file_id">(pyrobale.objects.photosize.PhotoSize attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.file_id">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.file_id">(pyrobale.objects.video.Video attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/voice/index.html#pyrobale.objects.voice.Voice.file_id">(pyrobale.objects.voice.Voice attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.file_name">file_name (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.file_name">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.file_name">(pyrobale.objects.document.Document attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.file_name">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/file/index.html#pyrobale.objects.file.File.file_path">file_path (pyrobale.objects.file.File attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.file_size">file_size (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.file_size">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.file_size">(pyrobale.objects.document.Document attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/file/index.html#pyrobale.objects.file.File.file_size">(pyrobale.objects.file.File attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize.file_size">(pyrobale.objects.photosize.PhotoSize attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.file_size">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.file_size">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.file_unique_id">file_unique_id (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.file_unique_id">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.file_unique_id">(pyrobale.objects.document.Document attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/file/index.html#pyrobale.objects.file.File.file_unique_id">(pyrobale.objects.file.File attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize.file_unique_id">(pyrobale.objects.photosize.PhotoSize attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.file_unique_id">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.file_unique_id">(pyrobale.objects.video.Video attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/voice/index.html#pyrobale.objects.voice.Voice.file_unique_id">(pyrobale.objects.voice.Voice attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters">Filters (class in pyrobale.filters.enum_filters)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id7">first_name (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.first_name">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.first_name">(pyrobale.objects.contact.Contact attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.first_name">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.ForbiddenException">ForbiddenException</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward">forward() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id7">forward_date (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_date">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id4">forward_from (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_from">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id5">forward_from_chat (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_from_chat">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id6">forward_from_message_id (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_from_message_id">[1]</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.forward_message">forward_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.from_user">from_user (pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_ble_ir_page">get_ble_ir_page() (pyrobale.client.Client static method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_chat">get_chat() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_member">get_chat_member() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_chat_member">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_members_count">get_chat_members_count() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_chat_members_count">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_file">get_file() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_me">get_me() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.get_state">get_state() (pyrobale.StateMachine.StateMachine method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_updates">get_updates() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_webhook_info">get_webhook_info() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id3">GROUP (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.GROUP">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.GROUP">(pyrobale.objects.enums.ChatType attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.handle_webhook_update">handle_webhook_update() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.handlers">handlers (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.height">height (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.height">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo.height">(pyrobale.objects.inputmedias.InputMediaVideo attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize.height">(pyrobale.objects.photosize.PhotoSize attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.height">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.height">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.id">id (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#id0">(pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.id">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#id1">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.id">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.id">(pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.id">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.inline_keyboard">inline_keyboard (pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton">InlineKeyboardButton (class in pyrobale.objects.inlinekeyboardbutton)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup">InlineKeyboardMarkup (class in pyrobale.objects.inlinekeyboardmarkup)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile">InputFile (class in pyrobale.objects.inputfile)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMedia">InputMedia (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation">InputMediaAnimation (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio">InputMediaAudio (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaDocument">InputMediaDocument (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaPhoto">InputMediaPhoto (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo">InputMediaVideo (class in pyrobale.objects.inputmedias)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.inputs">inputs (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InternalServerException">InternalServerException</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InvalidTokenException">InvalidTokenException</a>
+</li>
+        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice">Invoice (class in pyrobale.objects.invoice)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id22">invoice (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.invoice">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.invoice_payload">invoice_payload (pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.invoice_payload">(pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.is_admin">is_admin (pyrobale.objects.message.Message property)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.is_admin">is_admin() (pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.is_anonymous">is_anonymous (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_bot">is_bot (pyrobale.objects.peerdata.PeerData attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.is_bot">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.is_joined">is_joined() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.is_joined">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.is_member">is_member (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_ok">is_ok (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_private">is_private (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.is_user_admin">is_user_admin() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_verified">is_verified (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.json">json (pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup property)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice.json">(pyrobale.objects.labeledprice.LabeledPrice property)</a>
+</li>
+          <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.json">(pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.keyboard">keyboard (pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/keyboardbutton/index.html#pyrobale.objects.keyboardbutton.KeyboardButton">KeyboardButton (class in pyrobale.objects.keyboardbutton)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.kick">kick() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.kick">(pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.kick_chat_member">kick_chat_member() (pyrobale.client.Client method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice.label">label (pyrobale.objects.labeledprice.LabeledPrice attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice">LabeledPrice (class in pyrobale.objects.labeledprice)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.last_message">last_message (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id8">last_name (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.last_name">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.last_name">(pyrobale.objects.contact.Contact attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.last_name">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.last_update_id">last_update_id (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/location/index.html#pyrobale.objects.location.Location.latitude">latitude (pyrobale.objects.location.Location attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.leave">leave() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.leave_chat">leave_chat() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id21">left_chat_member (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.left_chat_member">[1]</a>
+</li>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.load_local">load_local() (pyrobale.StateMachine.StateMachine method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/location/index.html#pyrobale.objects.location.Location">Location (class in pyrobale.objects.location)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.LOCATION">LOCATION (pyrobale.filters.enum_filters.Filters attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id19">location (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.location">[1]</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.logout">logout() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/location/index.html#pyrobale.objects.location.Location.longitude">longitude (pyrobale.objects.location.Location attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.make_get">make_get() (in module pyrobale.objects.utils)</a>
+</li>
+        <li><a href="api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.make_post">make_post() (in module pyrobale.objects.utils)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMedia.media">media (pyrobale.objects.inputmedias.InputMedia attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.MEMBER_JOINED">MEMBER_JOINED (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.MEMBER_LEFT">MEMBER_LEFT (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.members">members (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message">Message (class in pyrobale.objects.message)</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.message">message (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.MESSAGE">MESSAGE (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.message">message (pyrobale.objects.update.Update attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.MESSAGE_EDITED">MESSAGE_EDITED (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/messageid/index.html#pyrobale.objects.messageid.MessageId.message_id">message_id (pyrobale.objects.messageid.MessageId attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/messageid/index.html#pyrobale.objects.messageid.MessageId">MessageId (class in pyrobale.objects.messageid)</a>
+</li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.mime_type">mime_type (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.mime_type">(pyrobale.objects.audio.Audio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.mime_type">(pyrobale.objects.document.Document attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.mime_type">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="api/pyrobale/index.html#module-pyrobale">pyrobale</a>
+</li>
+          <li><a href="api/pyrobale/client/index.html#module-pyrobale.client">pyrobale.client</a>
+</li>
+          <li><a href="api/pyrobale/exceptions/index.html#module-pyrobale.exceptions">pyrobale.exceptions</a>
+</li>
+          <li><a href="api/pyrobale/exceptions/common/index.html#module-pyrobale.exceptions.common">pyrobale.exceptions.common</a>
+</li>
+          <li><a href="api/pyrobale/filters/index.html#module-pyrobale.filters">pyrobale.filters</a>
+</li>
+          <li><a href="api/pyrobale/filters/enum_filters/index.html#module-pyrobale.filters.enum_filters">pyrobale.filters.enum_filters</a>
+</li>
+          <li><a href="api/pyrobale/filters/func_filters/index.html#module-pyrobale.filters.func_filters">pyrobale.filters.func_filters</a>
+</li>
+          <li><a href="api/pyrobale/objects/index.html#module-pyrobale.objects">pyrobale.objects</a>
+</li>
+          <li><a href="api/pyrobale/objects/animation/index.html#module-pyrobale.objects.animation">pyrobale.objects.animation</a>
+</li>
+          <li><a href="api/pyrobale/objects/audio/index.html#module-pyrobale.objects.audio">pyrobale.objects.audio</a>
+</li>
+          <li><a href="api/pyrobale/objects/callbackquery/index.html#module-pyrobale.objects.callbackquery">pyrobale.objects.callbackquery</a>
+</li>
+          <li><a href="api/pyrobale/objects/chat/index.html#module-pyrobale.objects.chat">pyrobale.objects.chat</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#module-pyrobale.objects.chatmember">pyrobale.objects.chatmember</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatphoto/index.html#module-pyrobale.objects.chatphoto">pyrobale.objects.chatphoto</a>
+</li>
+          <li><a href="api/pyrobale/objects/contact/index.html#module-pyrobale.objects.contact">pyrobale.objects.contact</a>
+</li>
+          <li><a href="api/pyrobale/objects/copytextbutton/index.html#module-pyrobale.objects.copytextbutton">pyrobale.objects.copytextbutton</a>
+</li>
+          <li><a href="api/pyrobale/objects/document/index.html#module-pyrobale.objects.document">pyrobale.objects.document</a>
+</li>
+          <li><a href="api/pyrobale/objects/enums/index.html#module-pyrobale.objects.enums">pyrobale.objects.enums</a>
+</li>
+          <li><a href="api/pyrobale/objects/file/index.html#module-pyrobale.objects.file">pyrobale.objects.file</a>
+</li>
+          <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#module-pyrobale.objects.inlinekeyboardbutton">pyrobale.objects.inlinekeyboardbutton</a>
+</li>
+          <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#module-pyrobale.objects.inlinekeyboardmarkup">pyrobale.objects.inlinekeyboardmarkup</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputfile/index.html#module-pyrobale.objects.inputfile">pyrobale.objects.inputfile</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#module-pyrobale.objects.inputmedias">pyrobale.objects.inputmedias</a>
+</li>
+          <li><a href="api/pyrobale/objects/invoice/index.html#module-pyrobale.objects.invoice">pyrobale.objects.invoice</a>
+</li>
+          <li><a href="api/pyrobale/objects/keyboardbutton/index.html#module-pyrobale.objects.keyboardbutton">pyrobale.objects.keyboardbutton</a>
+</li>
+          <li><a href="api/pyrobale/objects/labeledprice/index.html#module-pyrobale.objects.labeledprice">pyrobale.objects.labeledprice</a>
+</li>
+          <li><a href="api/pyrobale/objects/location/index.html#module-pyrobale.objects.location">pyrobale.objects.location</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#module-pyrobale.objects.message">pyrobale.objects.message</a>
+</li>
+          <li><a href="api/pyrobale/objects/messageid/index.html#module-pyrobale.objects.messageid">pyrobale.objects.messageid</a>
+</li>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#module-pyrobale.objects.peerdata">pyrobale.objects.peerdata</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#module-pyrobale.objects.photosize">pyrobale.objects.photosize</a>
+</li>
+          <li><a href="api/pyrobale/objects/precheckoutquery/index.html#module-pyrobale.objects.precheckoutquery">pyrobale.objects.precheckoutquery</a>
+</li>
+          <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#module-pyrobale.objects.replykeyboardmarkup">pyrobale.objects.replykeyboardmarkup</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#module-pyrobale.objects.sticker">pyrobale.objects.sticker</a>
+</li>
+          <li><a href="api/pyrobale/objects/stickerset/index.html#module-pyrobale.objects.stickerset">pyrobale.objects.stickerset</a>
+</li>
+          <li><a href="api/pyrobale/objects/successfulpayment/index.html#module-pyrobale.objects.successfulpayment">pyrobale.objects.successfulpayment</a>
+</li>
+          <li><a href="api/pyrobale/objects/update/index.html#module-pyrobale.objects.update">pyrobale.objects.update</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#module-pyrobale.objects.user">pyrobale.objects.user</a>
+</li>
+          <li><a href="api/pyrobale/objects/utils/index.html#module-pyrobale.objects.utils">pyrobale.objects.utils</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#module-pyrobale.objects.video">pyrobale.objects.video</a>
+</li>
+          <li><a href="api/pyrobale/objects/voice/index.html#module-pyrobale.objects.voice">pyrobale.objects.voice</a>
+</li>
+          <li><a href="api/pyrobale/objects/webappdata/index.html#module-pyrobale.objects.webappdata">pyrobale.objects.webappdata</a>
+</li>
+          <li><a href="api/pyrobale/objects/webappinfo/index.html#module-pyrobale.objects.webappinfo">pyrobale.objects.webappinfo</a>
+</li>
+          <li><a href="api/pyrobale/StateMachine/index.html#module-pyrobale.StateMachine">pyrobale.StateMachine</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.name">name (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/message/index.html#id20">new_chat_members (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.new_chat_members">[1]</a>
+</li>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.NotFoundException">NotFoundException</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_callback_query">on_callback_query() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_command">on_command() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_edited_message">on_edited_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_members_left">on_members_left() (pyrobale.client.Client method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_message">on_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_new_members">on_new_members() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_photo">on_photo() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_pre_checkout_query">on_pre_checkout_query() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.on_successful_payment">on_successful_payment() (pyrobale.client.Client method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData">PeerData (class in pyrobale.objects.peerdata)</a>
+</li>
+        <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.phone_number">phone_number (pyrobale.objects.contact.Contact attribute)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.PHOTO">PHOTO (pyrobale.filters.enum_filters.Filters attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id9">photo (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.photo">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.PHOTO">PHOTO (pyrobale.objects.enums.ChatAction attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.PHOTO">(pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#id13">photo (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.photo">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize">PhotoSize (class in pyrobale.objects.photosize)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.pin">pin() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.pin_chat_message">pin_chat_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.PRE_CHECKOUT_QUERY">PRE_CHECKOUT_QUERY (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.pre_checkout_query">pre_checkout_query (pyrobale.objects.update.Update attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery">PreCheckoutQuery (class in pyrobale.objects.precheckoutquery)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id2">PRIVATE (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.PRIVATE">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.PRIVATE">(pyrobale.objects.enums.ChatType attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.process_update">process_update() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.promote">promote() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.promote">(pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.promote_chat_member">promote_chat_member() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.provider_payment_charge_id">provider_payment_charge_id (pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
+</li>
+        <li>
+    pyrobale
+
+        <ul>
+          <li><a href="api/pyrobale/index.html#module-pyrobale">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.client
+
+        <ul>
+          <li><a href="api/pyrobale/client/index.html#module-pyrobale.client">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.exceptions
+
+        <ul>
+          <li><a href="api/pyrobale/exceptions/index.html#module-pyrobale.exceptions">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.exceptions.common
+
+        <ul>
+          <li><a href="api/pyrobale/exceptions/common/index.html#module-pyrobale.exceptions.common">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.filters
+
+        <ul>
+          <li><a href="api/pyrobale/filters/index.html#module-pyrobale.filters">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.filters.enum_filters
+
+        <ul>
+          <li><a href="api/pyrobale/filters/enum_filters/index.html#module-pyrobale.filters.enum_filters">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.filters.func_filters
+
+        <ul>
+          <li><a href="api/pyrobale/filters/func_filters/index.html#module-pyrobale.filters.func_filters">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects
+
+        <ul>
+          <li><a href="api/pyrobale/objects/index.html#module-pyrobale.objects">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.animation
+
+        <ul>
+          <li><a href="api/pyrobale/objects/animation/index.html#module-pyrobale.objects.animation">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.audio
+
+        <ul>
+          <li><a href="api/pyrobale/objects/audio/index.html#module-pyrobale.objects.audio">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.callbackquery
+
+        <ul>
+          <li><a href="api/pyrobale/objects/callbackquery/index.html#module-pyrobale.objects.callbackquery">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.chat
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#module-pyrobale.objects.chat">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.chatmember
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#module-pyrobale.objects.chatmember">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.chatphoto
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatphoto/index.html#module-pyrobale.objects.chatphoto">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.contact
+
+        <ul>
+          <li><a href="api/pyrobale/objects/contact/index.html#module-pyrobale.objects.contact">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.copytextbutton
+
+        <ul>
+          <li><a href="api/pyrobale/objects/copytextbutton/index.html#module-pyrobale.objects.copytextbutton">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.document
+
+        <ul>
+          <li><a href="api/pyrobale/objects/document/index.html#module-pyrobale.objects.document">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.enums
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#module-pyrobale.objects.enums">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    pyrobale.objects.file
+
+        <ul>
+          <li><a href="api/pyrobale/objects/file/index.html#module-pyrobale.objects.file">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.inlinekeyboardbutton
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#module-pyrobale.objects.inlinekeyboardbutton">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.inlinekeyboardmarkup
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#module-pyrobale.objects.inlinekeyboardmarkup">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.inputfile
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputfile/index.html#module-pyrobale.objects.inputfile">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.inputmedias
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#module-pyrobale.objects.inputmedias">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.invoice
+
+        <ul>
+          <li><a href="api/pyrobale/objects/invoice/index.html#module-pyrobale.objects.invoice">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.keyboardbutton
+
+        <ul>
+          <li><a href="api/pyrobale/objects/keyboardbutton/index.html#module-pyrobale.objects.keyboardbutton">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.labeledprice
+
+        <ul>
+          <li><a href="api/pyrobale/objects/labeledprice/index.html#module-pyrobale.objects.labeledprice">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.location
+
+        <ul>
+          <li><a href="api/pyrobale/objects/location/index.html#module-pyrobale.objects.location">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.message
+
+        <ul>
+          <li><a href="api/pyrobale/objects/message/index.html#module-pyrobale.objects.message">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.messageid
+
+        <ul>
+          <li><a href="api/pyrobale/objects/messageid/index.html#module-pyrobale.objects.messageid">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.peerdata
+
+        <ul>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#module-pyrobale.objects.peerdata">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.photosize
+
+        <ul>
+          <li><a href="api/pyrobale/objects/photosize/index.html#module-pyrobale.objects.photosize">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.precheckoutquery
+
+        <ul>
+          <li><a href="api/pyrobale/objects/precheckoutquery/index.html#module-pyrobale.objects.precheckoutquery">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.replykeyboardmarkup
+
+        <ul>
+          <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#module-pyrobale.objects.replykeyboardmarkup">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.sticker
+
+        <ul>
+          <li><a href="api/pyrobale/objects/sticker/index.html#module-pyrobale.objects.sticker">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.stickerset
+
+        <ul>
+          <li><a href="api/pyrobale/objects/stickerset/index.html#module-pyrobale.objects.stickerset">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.successfulpayment
+
+        <ul>
+          <li><a href="api/pyrobale/objects/successfulpayment/index.html#module-pyrobale.objects.successfulpayment">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.update
+
+        <ul>
+          <li><a href="api/pyrobale/objects/update/index.html#module-pyrobale.objects.update">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.user
+
+        <ul>
+          <li><a href="api/pyrobale/objects/user/index.html#module-pyrobale.objects.user">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.utils
+
+        <ul>
+          <li><a href="api/pyrobale/objects/utils/index.html#module-pyrobale.objects.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.video
+
+        <ul>
+          <li><a href="api/pyrobale/objects/video/index.html#module-pyrobale.objects.video">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.voice
+
+        <ul>
+          <li><a href="api/pyrobale/objects/voice/index.html#module-pyrobale.objects.voice">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.webappdata
+
+        <ul>
+          <li><a href="api/pyrobale/objects/webappdata/index.html#module-pyrobale.objects.webappdata">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.webappinfo
+
+        <ul>
+          <li><a href="api/pyrobale/objects/webappinfo/index.html#module-pyrobale.objects.webappinfo">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.StateMachine
+
+        <ul>
+          <li><a href="api/pyrobale/StateMachine/index.html#module-pyrobale.StateMachine">module</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.PyroBaleException">PyroBaleException</a>
+</li>
+        <li><a href="api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.pythonize">pythonize() (in module pyrobale.objects.utils)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.remove_all_handlers">remove_all_handlers() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.remove_handler">remove_handler() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply">reply() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_audio">reply_audio() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_contact">reply_contact() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_document">reply_document() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_invoice">reply_invoice() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_location">reply_location() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id25">reply_markup (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_markup">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_photo">reply_photo() (pyrobale.objects.message.Message method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_sticker">reply_sticker() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_video">reply_video() (pyrobale.objects.message.Message method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup">ReplyKeyboardMarkup (class in pyrobale.objects.replykeyboardmarkup)</a>
+</li>
+        <li><a href="api/pyrobale/objects/keyboardbutton/index.html#pyrobale.objects.keyboardbutton.KeyboardButton.request_contact">request_contact (pyrobale.objects.keyboardbutton.KeyboardButton attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/keyboardbutton/index.html#pyrobale.objects.keyboardbutton.KeyboardButton.request_location">request_location (pyrobale.objects.keyboardbutton.KeyboardButton attribute)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.requests_base">requests_base (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.restrict">restrict() (pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.revoke_chat_invite_link">revoke_chat_invite_link() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.REVORDVIDEO">REVORDVIDEO (pyrobale.objects.enums.ChatAction attribute)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.run">run() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.running">running (pyrobale.client.Client attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.save_local">save_local() (pyrobale.StateMachine.StateMachine method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_action">send_action() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_animation">send_animation() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_audio">send_audio() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_audio">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_chat_action">send_chat_action() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_contact">send_contact() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_contact">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_document">send_document() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_document">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_invoice">send_invoice() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_location">send_location() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_location">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_media_group">send_media_group() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_message">send_message() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_message">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_photo">send_photo() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_photo">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_sticker">send_sticker() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_video">send_video() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_video">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_voice">send_voice() (pyrobale.client.Client method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_voice">(pyrobale.objects.chat.Chat method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_description">set_chat_description() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_photo">set_chat_photo() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_title">set_chat_title() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_description">set_description() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_photo">set_photo() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.set_state">set_state() (pyrobale.StateMachine.StateMachine method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_title">set_title() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_webhook">set_webhook() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.small_file_id">small_file_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.small_file_unique_id">small_file_unique_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.start_parameter">start_parameter (pyrobale.objects.invoice.Invoice attribute)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.start_polling">start_polling() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.state_machine">state_machine (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine">StateMachine (class in pyrobale.StateMachine)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.status">status (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker">Sticker (class in pyrobale.objects.sticker)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id14">sticker (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.sticker">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/stickerset/index.html#pyrobale.objects.stickerset.StickerSet">StickerSet (class in pyrobale.objects.stickerset)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.stop">stop() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.stop_polling">stop_polling() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.SUCCESSFUL_PAYMENT">SUCCESSFUL_PAYMENT (pyrobale.objects.enums.UpdatesTypes attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/message/index.html#id23">successful_payment (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.successful_payment">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment">SuccessfulPayment (class in pyrobale.objects.successfulpayment)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.telegram_payment_charge_id">telegram_payment_charge_id (pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.TEXT">TEXT (pyrobale.filters.enum_filters.Filters attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/copytextbutton/index.html#pyrobale.objects.copytextbutton.CopyTextButton.text">text (pyrobale.objects.copytextbutton.CopyTextButton attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.text">(pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/keyboardbutton/index.html#pyrobale.objects.keyboardbutton.KeyboardButton.text">(pyrobale.objects.keyboardbutton.KeyboardButton attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#id9">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.text">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.thumb">thumb (pyrobale.objects.animation.Animation attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document.thumbnail">thumbnail (pyrobale.objects.document.Document attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.thumbnail">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio.thumbnail">(pyrobale.objects.inputmedias.InputMediaAudio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaDocument.thumbnail">(pyrobale.objects.inputmedias.InputMediaDocument attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo.thumbnail">(pyrobale.objects.inputmedias.InputMediaVideo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.title">title (pyrobale.objects.audio.Audio attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#id5">(pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.title">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio.title">(pyrobale.objects.inputmedias.InputMediaAudio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.title">(pyrobale.objects.invoice.Invoice attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.to_dict">to_dict() (pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.token">token (pyrobale.client.Client attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.total_amount">total_amount (pyrobale.objects.invoice.Invoice attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.total_amount">(pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.total_amount">(pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id1">type (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.type">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.type">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio.type">(pyrobale.objects.inputmedias.InputMediaAudio attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaDocument.type">(pyrobale.objects.inputmedias.InputMediaDocument attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaPhoto.type">(pyrobale.objects.inputmedias.InputMediaPhoto attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo.type">(pyrobale.objects.inputmedias.InputMediaVideo attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.type">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.TYPING">TYPING (pyrobale.objects.enums.ChatAction attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unban">unban() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.unban">(pyrobale.objects.chatmember.ChatMember method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.unban_chat_member">unban_chat_member() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unpin">unpin() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unpin_all">unpin_all() (pyrobale.objects.chat.Chat method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.unpin_all_chat_messages">unpin_all_chat_messages() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.unpin_chat_message">unpin_chat_message() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.until_date">until_date (pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update">Update (class in pyrobale.objects.update)</a>
+</li>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.update_id">update_id (pyrobale.objects.update.Update attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes">UpdatesTypes (class in pyrobale.objects.enums)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.url">url (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/webappinfo/index.html#pyrobale.objects.webappinfo.WebAppInfo.url">(pyrobale.objects.webappinfo.WebAppInfo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User">User (class in pyrobale.objects.user)</a>
+</li>
+        <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.user">user (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.user">(pyrobale.objects.chatmember.ChatMember attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/message/index.html#id2">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.user">[1]</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.user_has_permissions">user_has_permissions() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.user_id">user_id (pyrobale.objects.contact.Contact attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.user_id">(pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/chat/index.html#id6">username (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.username">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.username">(pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.username">(pyrobale.objects.user.User attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video">Video (class in pyrobale.objects.video)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.VIDEO">VIDEO (pyrobale.filters.enum_filters.Filters attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.VIDEO">(pyrobale.objects.enums.ChatAction attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#id15">video (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.video">[1]</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/voice/index.html#pyrobale.objects.voice.Voice">Voice (class in pyrobale.objects.voice)</a>
+</li>
+        <li><a href="api/pyrobale/filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters.VOICE">VOICE (pyrobale.filters.enum_filters.Filters attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.VOICE">(pyrobale.objects.enums.ChatAction attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#id16">voice (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.voice">[1]</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.wait_for">wait_for() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.web_app">web_app (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/keyboardbutton/index.html#pyrobale.objects.keyboardbutton.KeyboardButton.web_app">(pyrobale.objects.keyboardbutton.KeyboardButton attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pyrobale/objects/message/index.html#id24">web_app_data (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.web_app_data">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/webappdata/index.html#pyrobale.objects.webappdata.WebAppData">WebAppData (class in pyrobale.objects.webappdata)</a>
+</li>
+        <li><a href="api/pyrobale/objects/webappinfo/index.html#pyrobale.objects.webappinfo.WebAppInfo">WebAppInfo (class in pyrobale.objects.webappinfo)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.width">width (pyrobale.objects.animation.Animation attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.width">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo.width">(pyrobale.objects.inputmedias.InputMediaVideo attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize.width">(pyrobale.objects.photosize.PhotoSize attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker.width">(pyrobale.objects.sticker.Sticker attribute)</a>
+</li>
+          <li><a href="api/pyrobale/objects/video/index.html#pyrobale.objects.video.Video.width">(pyrobale.objects.video.Video attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Ali Safamanesh &amp; Aydin Rahbaran
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/yourusername/pyrobale" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=8a448e45"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

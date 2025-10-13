@@ -1,0 +1,524 @@
+pyrobale.objects.message
+========================
+
+.. py:module:: pyrobale.objects.message
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.message.Message
+
+
+Module Contents
+---------------
+
+.. py:class:: Message(message_id = None, from_user = None, date = None, chat = None, text = None, forward_from = None, forward_from_chat = None, forward_from_message_id = None, forward_date = None, edite_date = None, animation = None, audio = None, document = None, photo = None, sticker = None, video = None, voice = None, caption = None, contact = None, location = None, new_chat_members = None, left_chat_member = None, invoice = None, successful_payment = None, web_app_data = None, reply_markup = None, reply_to_message = None, client = None, **kwargs)
+
+   This class represents a Message object in Telegram.
+
+   A message can contain various types of content like text, media, location, etc.
+   It also provides methods to reply, edit, delete, and forward messages.
+
+   .. attribute:: id
+
+      Unique message identifier
+
+      :type: int
+
+   .. attribute:: user
+
+      Sender of the message
+
+      :type: User
+
+   .. attribute:: date
+
+      Date the message was sent in Unix time
+
+      :type: int
+
+   .. attribute:: chat
+
+      Conversation the message belongs to
+
+      :type: Chat
+
+   .. attribute:: text
+
+      Text content of the message
+
+      :type: str
+
+   .. attribute:: forward_from
+
+      Original sender of a forwarded message
+
+      :type: User
+
+   .. attribute:: forward_from_chat
+
+      Original chat of a forwarded message
+
+      :type: Chat
+
+   .. attribute:: forward_from_message_id
+
+      Message ID in the original chat
+
+      :type: int
+
+   .. attribute:: forward_date
+
+      Date when message was forwarded
+
+      :type: int
+
+   .. attribute:: edite_date
+
+      Date when message was last edited
+
+      :type: int
+
+   .. attribute:: animation
+
+      Message is an animation
+
+      :type: Animation
+
+   .. attribute:: audio
+
+      Message is an audio file
+
+      :type: Audio
+
+   .. attribute:: document
+
+      Message is a general file
+
+      :type: Document
+
+   .. attribute:: photo
+
+      Message is a photo
+
+      :type: list[PhotoSize]
+
+   .. attribute:: sticker
+
+      Message is a sticker
+
+      :type: Sticker
+
+   .. attribute:: video
+
+      Message is a video
+
+      :type: Video
+
+   .. attribute:: voice
+
+      Message is a voice message
+
+      :type: Voice
+
+   .. attribute:: caption
+
+      Caption for media messages
+
+      :type: str
+
+   .. attribute:: contact
+
+      Message is a shared contact
+
+      :type: Contact
+
+   .. attribute:: location
+
+      Message is a shared location
+
+      :type: Location
+
+   .. attribute:: new_chat_members
+
+      New members added to the chat
+
+      :type: list[User]
+
+   .. attribute:: left_chat_member
+
+      Member removed from the chat
+
+      :type: User
+
+   .. attribute:: invoice
+
+      Message is an invoice for payment
+
+      :type: Invoice
+
+   .. attribute:: successful_payment
+
+      Message is a service message about successful payment
+
+      :type: SuccessfulPayment
+
+   .. attribute:: web_app_data
+
+      Data from a Web App
+
+      :type: WebAppData
+
+   .. attribute:: reply_markup
+
+      Inline keyboard attached to the message
+
+      :type: InlineKeyboardMarkup
+
+   .. attribute:: client
+
+      Client instance associated with this message
+
+      :type: Client
+
+
+   .. py:attribute:: client
+      :type:  pyrobale.client.Client
+
+
+   .. py:attribute:: id
+      :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: user
+      :type:  pyrobale.objects.user.User
+      :value: None
+
+
+
+   .. py:attribute:: date
+      :type:  int
+      :value: None
+
+
+
+   .. py:attribute:: forward_from
+      :type:  Optional[pyrobale.objects.user.User]
+      :value: None
+
+
+
+   .. py:attribute:: forward_from_chat
+      :type:  Optional[pyrobale.objects.chat.Chat]
+      :value: None
+
+
+
+   .. py:attribute:: forward_from_message_id
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: forward_date
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: edite_date
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: text
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: animation
+      :type:  Optional[pyrobale.objects.animation.Animation]
+      :value: None
+
+
+
+   .. py:attribute:: audio
+      :type:  Optional[pyrobale.objects.audio.Audio]
+      :value: None
+
+
+
+   .. py:attribute:: document
+      :type:  Optional[pyrobale.objects.document.Document]
+      :value: None
+
+
+
+   .. py:attribute:: photo
+      :type:  Optional[list[pyrobale.objects.photosize.PhotoSize]]
+      :value: None
+
+
+
+   .. py:attribute:: sticker
+      :type:  Optional[pyrobale.objects.sticker.Sticker]
+      :value: None
+
+
+
+   .. py:attribute:: video
+      :type:  Optional[pyrobale.objects.video.Video]
+      :value: None
+
+
+
+   .. py:attribute:: voice
+      :type:  Optional[pyrobale.objects.voice.Voice]
+      :value: None
+
+
+
+   .. py:attribute:: caption
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: contact
+      :type:  Optional[pyrobale.objects.contact.Contact]
+      :value: None
+
+
+
+   .. py:attribute:: location
+      :type:  Optional[pyrobale.objects.location.Location]
+      :value: None
+
+
+
+   .. py:attribute:: new_chat_members
+      :type:  Optional[list[pyrobale.objects.user.User]]
+      :value: None
+
+
+
+   .. py:attribute:: left_chat_member
+      :type:  Optional[pyrobale.objects.user.User]
+      :value: None
+
+
+
+   .. py:attribute:: invoice
+      :type:  Optional[pyrobale.objects.invoice.Invoice]
+      :value: None
+
+
+
+   .. py:attribute:: successful_payment
+      :type:  Optional[pyrobale.objects.successfulpayment.SuccessfulPayment]
+      :value: None
+
+
+
+   .. py:attribute:: web_app_data
+      :type:  Optional[pyrobale.objects.webappdata.WebAppData]
+      :value: None
+
+
+
+   .. py:attribute:: reply_markup
+      :type:  Optional[pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup]
+      :value: None
+
+
+
+   .. py:property:: is_admin
+
+      Check if the message sender is an admin in the chat.
+
+      :returns: True if user is admin or creator, False otherwise
+      :rtype: bool
+
+
+   .. py:method:: reply(text, reply_markup = None)
+      :async:
+
+
+      Reply to the current message with text.
+
+      :param text: The text to send
+      :param reply_markup: Optional keyboard markup for the message
+
+      :returns: The sent message object
+      :rtype: Message
+
+
+
+   .. py:method:: edit(text, reply_markup = None)
+      :async:
+
+
+      Edit the current message text.
+
+      :param text: The new text
+      :param reply_markup: Optional new keyboard markup
+
+      :returns: The edited message object
+      :rtype: Message
+
+
+
+   .. py:method:: delete()
+      :async:
+
+
+      Delete the current message.
+
+      :returns: True if successful
+      :rtype: bool
+
+
+
+   .. py:method:: forward(chat_id)
+      :async:
+
+
+      Forward the current message to another chat.
+
+      :param chat_id: Destination chat ID
+
+      :returns: The forwarded message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_photo(photo, caption = None, reply_markup = None)
+      :async:
+
+
+      Reply with a photo to the current message.
+
+      :param photo: Photo to send (file_id or URL)
+      :param caption: Optional caption for the photo
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent photo message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_video(video, caption = None, reply_markup = None)
+      :async:
+
+
+      Reply with a video to the current message.
+
+      :param video: Video to send (file_id or URL)
+      :param caption: Optional caption for the video
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent video message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_audio(audio, caption = None, reply_markup = None)
+      :async:
+
+
+      Reply with an audio file to the current message.
+
+      :param audio: Audio to send (file_id or URL)
+      :param caption: Optional caption for the audio
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent audio message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_document(document, caption = None, reply_markup = None)
+      :async:
+
+
+      Reply with a document to the current message.
+
+      :param document: Document to send (file_id or URL)
+      :param caption: Optional caption for the document
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent document message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_sticker(sticker, reply_markup = None)
+      :async:
+
+
+      Reply with a sticker to the current message.
+
+      :param sticker: Sticker to send (file_id or URL)
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent sticker message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_location(latitude, longitude, horizontal_accuracy = None, reply_markup = None)
+      :async:
+
+
+      Reply with a location to the current message.
+
+      :param latitude: Latitude of the location
+      :param longitude: Longitude of the location
+      :param horizontal_accuracy: The radius of uncertainty for the location
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent location message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_contact(phone_number, first_name, reply_markup = None)
+      :async:
+
+
+      Reply with a contact to the current message.
+
+      :param phone_number: Contact's phone number
+      :param first_name: Contact's first name
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent contact message object
+      :rtype: Message
+
+
+
+   .. py:method:: reply_invoice(title, description, payload, provider_token, prices, reply_markup = None)
+      :async:
+
+
+      Reply with an invoice to the current message.
+
+      :param title: Product name
+      :param description: Product description
+      :param payload: Bot-defined invoice payload
+      :param provider_token: Payment provider token
+      :param prices: Price breakdown (amount in smallest units)
+      :param reply_markup: Optional keyboard markup
+
+      :returns: The sent invoice message object
+      :rtype: Message
+
+
+

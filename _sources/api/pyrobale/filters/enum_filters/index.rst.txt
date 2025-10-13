@@ -1,0 +1,60 @@
+pyrobale.filters.enum_filters
+=============================
+
+.. py:module:: pyrobale.filters.enum_filters
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.filters.enum_filters.Filters
+
+
+Module Contents
+---------------
+
+.. py:class:: Filters(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Filters that you can use in handlers
+
+
+   .. py:attribute:: TEXT
+      :value: 'text'
+
+
+
+   .. py:attribute:: PHOTO
+      :value: 'photo'
+
+
+
+   .. py:attribute:: VIDEO
+      :value: 'video'
+
+
+
+   .. py:attribute:: AUDIO
+      :value: 'audio'
+
+
+
+   .. py:attribute:: VOICE
+      :value: 'voice'
+
+
+
+   .. py:attribute:: CONTACT
+      :value: 'contact'
+
+
+
+   .. py:attribute:: LOCATION
+      :value: 'location'
+
+
+

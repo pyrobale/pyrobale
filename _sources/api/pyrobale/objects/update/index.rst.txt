@@ -1,0 +1,42 @@
+pyrobale.objects.update
+=======================
+
+.. py:module:: pyrobale.objects.update
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.update.Update
+
+
+Module Contents
+---------------
+
+.. py:class:: Update(update_id, message = None, edited_message = None, callback_query = None, pre_checkout_query = None, **kwargs)
+
+   .. py:attribute:: update_id
+
+
+   .. py:attribute:: message
+      :value: None
+
+
+
+   .. py:attribute:: edited_message
+      :value: None
+
+
+
+   .. py:attribute:: callback_query
+      :value: None
+
+
+
+   .. py:attribute:: pre_checkout_query
+      :value: None
+
+
+

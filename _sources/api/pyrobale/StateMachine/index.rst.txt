@@ -1,0 +1,69 @@
+pyrobale.StateMachine
+=====================
+
+.. py:module:: pyrobale.StateMachine
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.StateMachine.StateMachine
+
+
+Package Contents
+----------------
+
+.. py:class:: StateMachine
+
+   .. py:method:: set_state(user_id, state)
+
+      Sets or updates state of a user
+
+      :param user_id: unique id of user for setting the state
+      :type user_id: string OR integer
+      :param state: state of user (it can be anything)
+      :type state: string
+
+
+
+   .. py:method:: get_state(user_id)
+
+      Gets state of a specified user
+
+      :param user_id: unique id of user for getting the state
+      :type user_id: string OR integer
+
+      :returns: the state of user
+      :rtype: Str
+
+
+
+   .. py:method:: del_state(user_id)
+
+      Deletes the saved state of user
+
+      :param user_id: unique if of user to delete its state
+      :type user_id: string OR integer
+
+
+
+   .. py:method:: save_local(file_name)
+
+      Saves the state of all users to a file
+
+      :param file_name: name of file to save the state of users
+      :type file_name: string
+
+
+
+   .. py:method:: load_local(file_name)
+
+      Loads the state of all users from a file
+
+      :param file_name: name of file to load the state of users
+      :type file_name: string
+
+
+

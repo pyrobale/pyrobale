@@ -1,0 +1,55 @@
+pyrobale.objects.peerdata
+=========================
+
+.. py:module:: pyrobale.objects.peerdata
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.peerdata.PeerData
+
+
+Module Contents
+---------------
+
+.. py:class:: PeerData(is_ok, avatar, description, name, is_bot, is_verified, is_private, members, last_message, user_id, username)
+
+   A class to parse data received from ble.ir pages.
+
+
+   .. py:attribute:: is_ok
+
+
+   .. py:attribute:: avatar
+
+
+   .. py:attribute:: description
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: is_bot
+
+
+   .. py:attribute:: is_verified
+
+
+   .. py:attribute:: is_private
+
+
+   .. py:attribute:: members
+
+
+   .. py:attribute:: last_message
+
+
+   .. py:attribute:: user_id
+
+
+   .. py:attribute:: username
+
+

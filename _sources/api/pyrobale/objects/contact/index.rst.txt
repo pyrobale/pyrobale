@@ -1,0 +1,39 @@
+pyrobale.objects.contact
+========================
+
+.. py:module:: pyrobale.objects.contact
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.contact.Contact
+
+
+Module Contents
+---------------
+
+.. py:class:: Contact(phone_number = None, first_name = None, last_name = None, user_id = None, **kwargs)
+
+   .. py:attribute:: phone_number
+      :value: None
+
+
+
+   .. py:attribute:: first_name
+      :value: None
+
+
+
+   .. py:attribute:: last_name
+      :value: None
+
+
+
+   .. py:attribute:: user_id
+      :value: None
+
+
+
