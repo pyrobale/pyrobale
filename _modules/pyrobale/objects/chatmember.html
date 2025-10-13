@@ -344,7 +344,7 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.chatmember</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_api_url</span>
@@ -390,12 +390,14 @@
         <span class="n">can_send_polls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">can_send_other_messages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">can_add_web_page_previews</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">chat</span><span class="p">:</span> <span class="s2">&quot;Chat&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">client</span><span class="p">:</span> <span class="s2">&quot;Client&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-<div class="viewcode-block" id="ChatMember.user">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.user">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span></div>
-
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">User</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">user</span><span class="p">)</span>
 <div class="viewcode-block" id="ChatMember.status">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.status">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span></div>
@@ -500,13 +502,21 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_add_web_page_previews">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">can_add_web_page_previews</span> <span class="o">=</span> <span class="n">can_add_web_page_previews</span></div>
 
-<div class="viewcode-block" id="ChatMember.client">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.client">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kwargs&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span></div>
+
+        <span class="k">if</span> <span class="n">client</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ChatMember.chat">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.chat">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chat&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">chat</span></div>
+
+
+        <span class="k">if</span> <span class="n">chat</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="s2">&quot;Chat&quot;</span> <span class="o">=</span> <span class="n">chat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ChatMember.inputs">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.inputs">[docs]</a>
@@ -558,6 +568,7 @@
 <span class="sd">            otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">ban</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">unban</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span></div>
 
 

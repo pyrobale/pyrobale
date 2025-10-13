@@ -15,13 +15,10 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatMember(user, status, custom_title = None, is_anonymous = None, can_be_edited = None, can_manage_chat = None, can_delete_messages = None, can_edit_messages = None, can_post_messages = None, can_restrict_members = None, can_promote_members = None, can_change_info = None, can_invite_users = None, can_pin_messages = None, can_manage_topics = None, until_date = None, is_member = None, can_send_messages = None, can_send_audios = None, can_send_documents = None, can_send_photos = None, can_send_videos = None, can_send_video_notes = None, can_send_voice_notes = None, can_send_polls = None, can_send_other_messages = None, can_add_web_page_previews = None, **kwargs)
+.. py:class:: ChatMember(user, status, custom_title = None, is_anonymous = None, can_be_edited = None, can_manage_chat = None, can_delete_messages = None, can_edit_messages = None, can_post_messages = None, can_restrict_members = None, can_promote_members = None, can_change_info = None, can_invite_users = None, can_pin_messages = None, can_manage_topics = None, until_date = None, is_member = None, can_send_messages = None, can_send_audios = None, can_send_documents = None, can_send_photos = None, can_send_videos = None, can_send_video_notes = None, can_send_voice_notes = None, can_send_polls = None, can_send_other_messages = None, can_add_web_page_previews = None, chat = None, client = None, **kwargs)
 
    Represents a chat member in the Bale messenger, including their user
    information and status.
-
-
-   .. py:attribute:: user
 
 
    .. py:attribute:: status
@@ -152,12 +149,10 @@ Module Contents
 
 
 
-   .. py:attribute:: client
-      :type:  pyrobale.client.Client
-
-
    .. py:attribute:: chat
       :type:  pyrobale.objects.chat.Chat
+      :value: None
+
 
 
    .. py:attribute:: inputs

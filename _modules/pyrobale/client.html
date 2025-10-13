@@ -888,13 +888,12 @@
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
         <span class="p">)</span>
 
-        <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span>
         <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;chat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chat</span><span class="p">(</span><span class="n">chat_id</span><span class="p">)</span>
+        <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">temp</span>
 
-        <span class="k">return</span> <span class="n">ChatMember</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">},</span> <span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">))</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ChatMember</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
 
     
 <div class="viewcode-block" id="Client.is_user_admin">
@@ -1342,7 +1341,8 @@
                 
     <span class="k">def</span><span class="w"> </span><span class="nf">_convert_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">event_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert raw event data to appropriate object type.&quot;&quot;&quot;</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">}</span>
+        <span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">))</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">:</span> <span class="n">chat</span><span class="p">}</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">handler_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE_EDITED</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">]:</span>
