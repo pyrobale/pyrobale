@@ -374,7 +374,111 @@ div.content {
 </div>
 <section id="id2">
 <h2>مقدمه<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
-<p>به راهنمای فارسی پایروبله خوش آمدید.</p>
+<p>به راهنمای فارسی پایروبله خوش آمدید.
+اینجا از صفر شروع می کنیم و به صورت کامل نحوه کارکرد ربات های بله و شروع با پایروبله رو به شما آموزش می دیم!</p>
+<section id="id3">
+<h3>پیش نیاز شروع با پایروبله<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>برای شروع نوشتن ربات با کتابخانه <strong>پایروبله</strong>:</p>
+<dl class="simple">
+<dt>لازم است که</dt><dd><ul class="simple">
+<li><p>پایتون را تا حد خوبی بلد باشید</p></li>
+<li><p>درک کاملی از نحوه کارکرد کتابخانه های پایتون داشته باشید</p></li>
+</ul>
+</dd>
+<dt>بهتر است که</dt><dd><ul class="simple">
+<li><p>پایتون شئ گرا را درک کرده باشید</p></li>
+<li><p>نحوه کارکرد API را درک کرده باشید</p></li>
+<li><p>توانایی مطالعه مستندات و مطرح کردن سوال در فروم را داشته باشید</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>فهم نحوه کارکرد ربات های بله<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>بله برای ارتباط گرفتن با ربات ها از api استفاده می کند. این بدین معناست که هر اتفاق جدیدی که در رابطه با ربات می افتد (مثلا شخصی پیام جدیدی می دهد یا پیام خود را ویرایش می کند یا دکمه ربات را فشار می دهد و تغییراتی از این جنس) پیامرسان بله آن اتفاق را در قالب یک محتوای متنی (با فرمت JSON) و با نام <strong>آپدیت</strong> به api خود اضافه می کند و شما باید هر ثانیه به api بله درخواست بزنید و تغییرات جدید را دنبال کنید.</p>
+</section>
+<section id="id5">
+<h3>دریافت توکن از بات فادر<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>برای ایجاد یک ربات جدید در پیامرسان بله، باید در
+<a class="reference external" href="https://ble.ir/botfather">بات فادر</a>
+یک بازوی جدید ثبت کنید.</p>
+<p>دستور /newbot را ارسال کنید و ربات خود را ایجاد کنید و توکن را دریافت کنید.</p>
+<p>این توکن مثل رمزعبور برای ربات شماست. لزومی ندارد آن را جایی به جز در کد وارد کنید و به کسی بدهید.</p>
+</section>
+</section>
+<section id="id7">
+<h2>شروع با پایروبله<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>در این قسمت می خواهیم به استفاده از توکنی که دریافت کرده ایم یک ربات ساده ایجاد کنیم.</p>
+<section id="id8">
+<h3>نصب پایروبله<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<p>ابتدا باید کتابخانه پایروبله را نصب کنید.</p>
+<p>با کمک دستور</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyrobale
+</pre></div>
+</div>
+<p>کتابخانه را نصب کنید.</p>
+</section>
+<section id="id9">
+<h3>نوشتن کد<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<p>حالا یک فایل با پسوند .py ایجاد کنید.</p>
+<p>در خط اول، باید کتابخانه پایروبله را وارد کد کنید
+پس دستور زیر را داخل فایل می نویسید</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyrobale</span>
+</pre></div>
+</div>
+<p>سپس با استفاده از ایجاد متغیر توکن خود را در کد ذخیره می کنیم</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TOKEN&quot;</span>
+</pre></div>
+</div>
+<p>به جای YOUR_TOKEN توکنی که از بات فادر دریافت کردید رو وارد کنید.</p>
+<p>سپس نیاز به این داریم که یک کارخواه (کلاینت) ایجاد کنیم تا با بله در ارتباط باشد. پس از کد زیر استفاده می کنیم تا کلاینت رو با توکن شما ایجاد کنیم.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>حالا ربات ما ایجاد شده و  در مرحله بعدی باید رفتار ربات رو تعیین کنیم.</p>
+<p>ابتدا می خواهیم اگر کسی برای ربات ما دستور /start را ارسال کرد، به او سلام کنیم.</p>
+<p>پس از دستور زیر استفاده می کنیم تا دستور start را برای ربات تعریف کنیم.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@client</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>سپس دقیقا زیر همین خط، یک تابع ایجاد می کنیم تا کد های خود را بنویسیم.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>تابع ما یک پارامتر message می گیرد که این را خود پایروبله به تابع شما می دهد.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>نکته: کلیدواژه async پیش از تعریف تابع، باعث می شود ربات شما به صورت همزمان توانایی انجام چندین کار را داشته باشد. قرار ندادن این کلیدواژه پیش از تعریف تابع باعث دریافت خطا از طرف پایروبله می شود!</p>
+</div>
+<p>بعد از ایجاد تابع، باید در جواب به پیام کاربر، به او سلام کنیم، پس از دستور زیر استفاده می کنیم</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;سلام!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>نکته: کلیدواژه await پیش از دستورات پایروبله برای هماهنگ شدن دستورات با توابع async هستند. قرار ندادن این کلیدواژه پیش از دستوراتی که خروجی Coroutine دارند باعث دریافت خطا از طرف پایروبله می شود.</p>
+</div>
+<p>حال ربات ما آماده ست!</p>
+<p>برای ارسال دستور روشن شدن ربات کافیست که خط زیر را به عنوان خط آخر به فایل اضافه کنیم:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>فایل نهایی چیزی شبیه به این خواهد بود:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyrobale</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;YOUR_TOKEN&quot;</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+<span class="nd">@client</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;سلام!&quot;</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>و فایل را ذخیره و اجرا کنید.</p>
+<p>حالا ربات ساده شما آماده ست!</p>
+</section>
 </section>
 </section>
 
@@ -423,7 +527,17 @@ div.content {
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">📖 کتابچه فارسی</a><ul>
-<li><a class="reference internal" href="#id2">مقدمه</a></li>
+<li><a class="reference internal" href="#id2">مقدمه</a><ul>
+<li><a class="reference internal" href="#id3">پیش نیاز شروع با پایروبله</a></li>
+<li><a class="reference internal" href="#id4">فهم نحوه کارکرد ربات های بله</a></li>
+<li><a class="reference internal" href="#id5">دریافت توکن از بات فادر</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">شروع با پایروبله</a><ul>
+<li><a class="reference internal" href="#id8">نصب پایروبله</a></li>
+<li><a class="reference internal" href="#id9">نوشتن کد</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
