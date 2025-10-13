@@ -28,7 +28,10 @@ jobs:
       - name: Build documentation
         run: |
           sphinx-build -b html docs/source docs/build/html
-          echo "docs.pyrobale.ir" >> CNAME
+
+      - name: Create CNAME file
+        run: |
+          echo "docs.pyrobale.ir" > docs/build/html/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
