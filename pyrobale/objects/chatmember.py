@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from typing import Optional, Union
+from typing import Optional, Union, Any
 
 if TYPE_CHECKING:
     from .utils import build_api_url
@@ -43,9 +43,14 @@ class ChatMember:
         can_send_polls: Optional[bool] = None,
         can_send_other_messages: Optional[bool] = None,
         can_add_web_page_previews: Optional[bool] = None,
+        chat: "Chat" = None,
+        client: "Client" = None,
         **kwargs
     ):
-        self.user = user
+        if isinstance(user, User):
+            self.user = user
+        else:
+            self.user = User(**user)
         self.status = status
         self.custom_title = custom_title
         self.is_anonymous = is_anonymous
@@ -72,8 +77,19 @@ class ChatMember:
         self.can_send_polls = can_send_polls
         self.can_send_other_messages = can_send_other_messages
         self.can_add_web_page_previews = can_add_web_page_previews
-        self.client: Client = kwargs.get("kwargs", {}).get("client")
-        self.chat: Chat = kwargs.get('chat')
+
+        if client:
+            self.client: Client = client
+        else:
+            self.client = kwargs.get("client")
+
+        self.chat: Chat = chat
+
+        if chat:
+            self.chat: "Chat" = chat
+        else:
+            self.chat = kwargs.get("client")
+
         self.inputs = {k: v for k, v in {
             "can_be_edited": can_be_edited,
             "can_manage_chat": can_manage_chat,
@@ -116,6 +132,7 @@ class ChatMember:
             otherwise.
         """
         data = await self.chat.ban(self.user.id)
+        data = await self.chat.unban(self.user.id)
         return data
 
     async def is_admin(self) -> bool:

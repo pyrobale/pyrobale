@@ -1,7 +1,7 @@
 """
 Welcome to Pyrobale!
 
-- 📖 Documentation: https://pyrobale.ir/docs
+- 📖 Documentation: https://docs.pyrobale.ir
 - ☕ Repository: https://github.com/pyrobale/pyrobale
 - 💬 Forum: https://forum.pyrobale.ir
 

@@ -440,13 +440,12 @@ class Client:
             data={"chat_id": chat_id, "user_id": user_id},
         )
 
-        temp = data
+        temp = data.get("result")
         temp["chat"] = await self.get_chat(chat_id)
+        temp["client"] = self
         data = temp
 
-        return ChatMember(
-            kwargs={"client": self, "chat": chat_id}, **pythonize(data.get("result"))
-        )
+        return ChatMember(**pythonize(data))
     
     async def is_user_admin(self, chat_id: int, user_id: int) -> bool:
         """Checks if a user is admin in a chat"""
@@ -827,7 +826,8 @@ class Client:
                 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
-        kwargs = {"client": self}
+        chat = Chat(**event_data.get("chat"))
+        kwargs = {"client": self, "chat": chat}
 
         try:
             if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND]:
