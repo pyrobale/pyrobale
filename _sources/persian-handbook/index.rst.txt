@@ -19,7 +19,9 @@
         direction: rtl;
     }
 
-    p.admonition-title pre {direction: ltr}
+    p.admonition-title, pre {
+    direction: ltr
+    }
 
     </style>
 
