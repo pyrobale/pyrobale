@@ -411,7 +411,10 @@ class Client:
             self.requests_base + "/banChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
-        return data.get("ok", False)
+        try:
+            return data.get("ok", False)
+        except AttributeError:
+            raise ForbiddenException("You cannot ban this member!")
 
     async def unban_chat_member(self, chat_id: int, user_id: int) -> bool:
         """Unban a user from a chat."""

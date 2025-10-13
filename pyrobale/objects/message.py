@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 from typing import Optional, Union
+from ..objects.utils import pythonize
 
 if TYPE_CHECKING:
     from .utils import build_api_url
@@ -132,7 +133,8 @@ class Message:
         if not self.client:
             self.client = client
         if reply_to_message != None:
-            self.reply_to_message = Message(**reply_to_message)
+            reply_to_message['client'] = self.client
+            self.reply_to_message = Message(**pythonize(reply_to_message))
         else:
             self.reply_to_message = None
         self.id: int = message_id
