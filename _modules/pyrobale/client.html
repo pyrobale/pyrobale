@@ -403,6 +403,9 @@
 <span class="sd">    Args:</span>
 <span class="sd">        token (str): The bot token.</span>
 <span class="sd">        base_url (str, optional): The base URL for the API. Defaults to &quot;https://tapi.bale.ai/bot&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Client: The client instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://tapi.bale.ai/bot&quot;</span><span class="p">):</span>
@@ -454,7 +457,16 @@
             <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get updates from the Bale API.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get updates from the Bale API.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            offset (int, optional): The offset to start with. Defaults to None.</span>
+<span class="sd">            limit (int, optional): The maximum number of updates to return. Defaults to None.</span>
+<span class="sd">            timeout (int, optional): The maximum number of seconds to wait. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Dict]: The updates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/getUpdates?offset=</span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&amp;timeout=</span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
@@ -470,7 +482,14 @@
 <div class="viewcode-block" id="Client.set_webhook">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.set_webhook">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_webhook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the webhook for the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the webhook for the bot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): The webhook URL.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the webhook was set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setWebhook&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
@@ -478,7 +497,11 @@
 <div class="viewcode-block" id="Client.get_webhook_info">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_webhook_info">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_webhook_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the webhook information for the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the webhook information for the bot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict: The webhook information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getWebhookInfo&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="p">{})</span></div>
 
@@ -486,7 +509,11 @@
 <div class="viewcode-block" id="Client.get_me">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_me">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_me</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get information about the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get information about the bot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            User: The bot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getMe&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span></div>
 
@@ -494,7 +521,11 @@
 <div class="viewcode-block" id="Client.logout">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.logout">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log out the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log out the bot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the bot was logged out.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/logOut&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
@@ -502,7 +533,11 @@
 <div class="viewcode-block" id="Client.close">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.close">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the bot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the bot was closed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/close&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
@@ -516,7 +551,17 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a message to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a message to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            text (str): The text to send.</span>
+<span class="sd">            reply_to_message_id (int, optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional):  The reply keyboard markup (buttons). Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -536,7 +581,15 @@
             <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
             <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a message to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deletes a message from a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            message_id (int): The message ID to delete.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the message was deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/deleteMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -552,7 +605,16 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">forward_message</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">from_chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward a message to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward a message to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            from_chat_id (int): The chat to send the message to.</span>
+<span class="sd">            message_id (int): The message ID to forward.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/forwardMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -569,7 +631,16 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">copy_message</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">from_chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy a message to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy a message to a chat without forwarding.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            from_chat_id (int): The chat to send the message to.</span>
+<span class="sd">            message_id (int): The message ID to forward.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/copyMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -591,7 +662,15 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a photo to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a photo to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
+<span class="sd">            photo (Union[InputFile, str]): The photo to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the photo. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendPhoto&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -615,7 +694,18 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an audio to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an audio to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            audio (Union[InputFile, str]): The audio file to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the audio. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendAudio&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -639,7 +729,18 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a document to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a document to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            document (Union[InputFile, str]): The document to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the document. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendDocument&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -663,7 +764,18 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a video to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a video to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            video (Union[InputFile, str]): The video file to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the video. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendVideo&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -687,7 +799,18 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an animation to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an animation (GIF) to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            animation (Union[InputFile, str]): The animation file to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the animation. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendAnimation&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -711,7 +834,18 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a voice message to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a voice message to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            voice (Union[InputFile, str]): The voice file to send.</span>
+<span class="sd">            caption (Optional[str], optional): The caption of the voice. Defaults to None.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendVoice&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -734,7 +868,17 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Message</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a media group to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a media group to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            media (List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]]): The media to send.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Message]: The list of messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendMediaGroup&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -758,7 +902,19 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a location to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a location to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            latitude (float): The latitude of the location.</span>
+<span class="sd">            longitude (float): The longitude of the location.</span>
+<span class="sd">            horizontal_accuracy (Optional[float], optional): The horizontal accuracy of the location.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendLocation&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -784,7 +940,19 @@
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a contact to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a contact to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            phone_number (str): The phone number of the contact.</span>
+<span class="sd">            first_name (str): The first name of the contact.</span>
+<span class="sd">            last_name (Optional[str], optional): The last name of the contact.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendContact&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -812,7 +980,21 @@
             <span class="n">photo_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a message including a invoice for user to pay.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a message including a invoice for user to pay.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (Union[str, int]): The chat to send the message to.</span>
+<span class="sd">            title (str): The title of the invoice.</span>
+<span class="sd">            description (str): The description of the invoice.</span>
+<span class="sd">            payload (str): The payload of the invoice.</span>
+<span class="sd">            provider_token (str): The provider token.</span>
+<span class="sd">            prices (List[LabeledPrice]): The prices of the invoice.</span>
+<span class="sd">            photo_url (Optional[str], optional): The photo url of the invoice.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">new_prices</span> <span class="o">=</span> <span class="p">[</span><span class="n">price</span><span class="o">.</span><span class="n">json</span> <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">]</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendInvoice&quot;</span><span class="p">,</span>
@@ -833,7 +1015,14 @@
 <div class="viewcode-block" id="Client.get_file">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_file">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">File</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a file from the Bale servers.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a file from the Bale servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_id (str): The file ID.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            File: The file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getFile&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file_id&quot;</span><span class="p">:</span> <span class="n">file_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -848,7 +1037,16 @@
             <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">show_alert</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Answer a callback query.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Answer a callback query.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback_query_id (str): The callback query ID.</span>
+<span class="sd">            text (Optional[str], optional): The text of the answer.</span>
+<span class="sd">            show_alert (Optional[bool], optional): Whether the answer should be shown.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the answer was shown.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/answerCallbackQuery&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -863,7 +1061,15 @@
 <div class="viewcode-block" id="Client.ban_chat_member">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.ban_chat_member">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">ban_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ban a user from a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ban a user from a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to ban.</span>
+<span class="sd">            user_id (int): The user to ban.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the ban was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/banChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
@@ -877,7 +1083,15 @@
 <div class="viewcode-block" id="Client.unban_chat_member">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.unban_chat_member">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unban_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unban a user from a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unban a user from a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to unban.</span>
+<span class="sd">            user_id (int): The user to unban.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the unban was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unbanChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
@@ -888,7 +1102,15 @@
 <div class="viewcode-block" id="Client.kick_chat_member">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.kick_chat_member">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">kick_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;kick a user from a specified chat&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;kick a user from a specified chat</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to kick.</span>
+<span class="sd">            user_id (int): The user to kick.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the kick was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">ban_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">unban_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
@@ -900,7 +1122,15 @@
 <div class="viewcode-block" id="Client.get_chat_member">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_member">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChatMember</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a chat member.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a chat member.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            user_id (int): The user to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ChatMember: The chat member.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
@@ -917,7 +1147,15 @@
 <div class="viewcode-block" id="Client.is_user_admin">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.is_user_admin">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">is_user_admin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a user is admin in a chat&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a user is admin in a chat</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            user_id (int): The user to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the user is admin in a chat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">chat_user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">chat_user</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">,</span> <span class="s1">&#39;administrator&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -928,7 +1166,16 @@
 <div class="viewcode-block" id="Client.user_has_permissions">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.user_has_permissions">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">user_has_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">permissions</span><span class="p">:</span> <span class="n">ChatPermissions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;checks if a user has a specified permission&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;checks if a user has a specified permission</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            user_id (int): The user to get.</span>
+<span class="sd">            permissions (ChatPermissions): The permissions to check.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the user has a specified permission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">member</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">permissions</span><span class="o">.</span><span class="n">value</span><span class="p">]:</span> 
             <span class="k">return</span> <span class="kc">True</span>
@@ -951,7 +1198,23 @@
             <span class="n">can_pin_messages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">can_promote_members</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Promote a user in a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Promote a user in a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            user_id (int): The user to get.</span>
+<span class="sd">            can_change_info (Optional[bool], optional): Whether the user can change the information.</span>
+<span class="sd">            can_post_messages (Optional[bool], optional): Whether the user can post messages.</span>
+<span class="sd">            can_edit_messages (Optional[bool], optional): Whether the user can edit messages.</span>
+<span class="sd">            can_delete_messages (Optional[bool], optional): Whether the user can delete messages.</span>
+<span class="sd">            can_invite_users (Optional[bool], optional): Whether the user can invite users.</span>
+<span class="sd">            can_restrict_members (Optional[bool], optional): Whether the user can restrict members.</span>
+<span class="sd">            can_pin_messages (Optional[bool], optional): Whether the user can pin messages.</span>
+<span class="sd">            can_promote_members (Optional[bool], optional): Whether the user can promote members.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the user has a specified permission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/promoteChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -973,7 +1236,15 @@
 <div class="viewcode-block" id="Client.set_chat_photo">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_photo">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_chat_photo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">photo</span><span class="p">:</span> <span class="n">InputFile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set a new profile photo for the chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set a new profile photo for the chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            photo (InputFile): The photo to set.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the photo was set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatPhoto&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;photo&quot;</span><span class="p">:</span> <span class="n">photo</span><span class="p">},</span>
@@ -984,7 +1255,14 @@
 <div class="viewcode-block" id="Client.leave_chat">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.leave_chat">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">leave_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Leave a group, supergroup or channel.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Leave a group, supergroup or channel.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the chat was leaved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/leaveChat&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -994,7 +1272,15 @@
 <div class="viewcode-block" id="Client.is_joined">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.is_joined">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">is_joined</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a user is joined to a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a user is joined to a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id (int): The user to get.</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the user is joined to a chat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
@@ -1005,7 +1291,14 @@
 <div class="viewcode-block" id="Client.get_chat">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_chat">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chat</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get up to date information about the chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get up to date information about the chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Chat: The chat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChat&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1020,7 +1313,14 @@
 <div class="viewcode-block" id="Client.get_ble_ir_page">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_ble_ir_page">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_ble_ir_page</span><span class="p">(</span><span class="n">username_or_phone_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PeerData</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get BleIR user/group information.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get BleIR user/group information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            username_or_phone_number (str): The username or phone number.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PeerData: The BleIR user/group information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://ble.ir/</span><span class="si">{</span><span class="n">username_or_phone_number</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
@@ -1108,7 +1408,14 @@
 <div class="viewcode-block" id="Client.get_chat_members_count">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_members_count">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat_members_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the number of members in a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the number of members in a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of members in a chat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMembersCount&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1118,7 +1425,15 @@
 <div class="viewcode-block" id="Client.pin_chat_message">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.pin_chat_message">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">pin_chat_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pin a message in a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pin a message in a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            message_id (int): The message to pin.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the message was pinned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/pinChatMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;message_id&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">},</span>
@@ -1128,10 +1443,18 @@
 
 <div class="viewcode-block" id="Client.unpin_chat_message">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.unpin_chat_message">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unpin_chat_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unpin a message in a chat.&quot;&quot;&quot;</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unpin_chat_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unpin a message in a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            message_id (int): The message to unpin.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the message was unpinned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unpinChatMessage&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unpinChatMessage&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;message_id&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
@@ -1139,7 +1462,14 @@
 <div class="viewcode-block" id="Client.unpin_all_chat_messages">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.unpin_all_chat_messages">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unpin_all_chat_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unpin all messages in a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unpin all messages in a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the message was unpinned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unpinAllChatMessages&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1149,7 +1479,15 @@
 <div class="viewcode-block" id="Client.set_chat_title">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_title">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_chat_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the title of a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the title of a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            title (str): The new title.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the title was changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatTitle&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">},</span>
@@ -1160,7 +1498,15 @@
 <div class="viewcode-block" id="Client.set_chat_description">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_description">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_chat_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the description of a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the description of a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            description (str): The new description.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the description was changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatDescription&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">},</span>
@@ -1171,7 +1517,14 @@
 <div class="viewcode-block" id="Client.delete_chat_photo">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.delete_chat_photo">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_chat_photo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete a chat photo.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete a chat photo.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the photo was deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/deleteChatPhoto&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1187,7 +1540,17 @@
             <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Edits a message in a specified chat&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Edits a message in a specified chat</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            message_id (int): The message to get.</span>
+<span class="sd">            text (str): The text to edit.</span>
+<span class="sd">            reply_markup (InlineKeyboardMarkup, optional): the reply markup to use. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Message: The edited message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/editMessageText&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
@@ -1203,7 +1566,14 @@
 <div class="viewcode-block" id="Client.create_chat_invite_link">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.create_chat_invite_link">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_chat_invite_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an additional invite link for a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an additional invite link for a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The invite link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/createChatInviteLink&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1213,7 +1583,15 @@
 <div class="viewcode-block" id="Client.revoke_chat_invite_link">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.revoke_chat_invite_link">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">revoke_chat_invite_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">invite_link</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Revoke an invite link created by the bot.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Revoke an invite link created by the bot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            invite_link (str): The invite link to revoke.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The revoked invite link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/revokeChatInviteLink&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;invite_link&quot;</span><span class="p">:</span> <span class="n">invite_link</span><span class="p">},</span>
@@ -1224,7 +1602,14 @@
 <div class="viewcode-block" id="Client.export_chat_invite_link">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.export_chat_invite_link">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">export_chat_invite_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a new primary invite link for a chat.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a new primary invite link for a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The invite link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/exportChatInviteLink&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1234,7 +1619,15 @@
 <div class="viewcode-block" id="Client.send_chat_action">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_chat_action">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_chat_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ChatAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tell the user that something is happening on the bot&#39;s side.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tell the user that something is happening on the bot&#39;s side.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to get.</span>
+<span class="sd">            action (ChatAction): The action to send.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the action was sent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendChatAction&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">),</span> <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="p">},</span>
@@ -1245,7 +1638,12 @@
 <div class="viewcode-block" id="Client.wait_for">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.wait_for">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wait_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait until a specified update&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait until a specified update</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            update_type (UpdatesTypes): The update to wait for.</span>
+<span class="sd">            check (Callable, optional): The check method to check.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span><span class="o">.</span><span class="n">create_future</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_waiters</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">update_type</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="n">future</span><span class="p">))</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">future</span></div>
@@ -1254,7 +1652,14 @@
 <div class="viewcode-block" id="Client.process_update">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.process_update">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single update and call registered handlers.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single update and call registered handlers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            update (Dict[str, Any]): The update to process.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">update_id</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;update_id&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">update_id</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_update_id</span> <span class="o">=</span> <span class="n">update_id</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1358,7 +1763,15 @@
 
                 
     <span class="k">def</span><span class="w"> </span><span class="nf">_convert_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">event_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert raw event data to appropriate object type.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert raw event data to appropriate object type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler_type (UpdatesTypes): The event to convert.</span>
+<span class="sd">            event_data (Dict[str, Any]): The event to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The converted event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">))</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">:</span> <span class="n">chat</span><span class="p">}</span>
 
@@ -1390,7 +1803,14 @@
 <div class="viewcode-block" id="Client.base_handler_decorator">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.base_handler_decorator">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">base_handler_decorator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Base decorator for handling different types of updates.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Base decorator for handling different types of updates.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            update_type (UpdatesTypes): The update to process.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Callable: The decorated handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="nb">filter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Filters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">[</span><span class="kc">None</span><span class="p">]]]):</span>
@@ -1473,7 +1893,17 @@
 <div class="viewcode-block" id="Client.add_handler">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.add_handler">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="nb">filter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Filters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a handler for specific update type.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a handler for specific update type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            update_type (UpdatesTypes): The update to process.</span>
+<span class="sd">            callback (Callable): The callback to handle.</span>
+<span class="sd">            filter (Optional[Filters]): The filter to handle.</span>
+<span class="sd">            **kwargs: The kwargs to pass to the callback.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Callable: The decorated handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler_data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">update_type</span><span class="p">,</span>
             <span class="s2">&quot;callback&quot;</span><span class="p">:</span> <span class="n">callback</span><span class="p">,</span>
@@ -1486,7 +1916,12 @@
 <div class="viewcode-block" id="Client.remove_handler">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.remove_handler">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a handler from the list of handlers.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a handler from the list of handlers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (Callable): The callback to remove.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">handler</span> <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="k">if</span> <span class="n">handler</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">callback</span>
         <span class="p">]</span></div>
@@ -1502,7 +1937,12 @@
 <div class="viewcode-block" id="Client.start_polling">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.start_polling">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start_polling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start polling updates from the server.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start polling updates from the server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (int): Time to wait for updates.</span>
+<span class="sd">            limit (int): Number of updates to poll.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Client is already running&quot;</span><span class="p">)</span>
 
@@ -1531,7 +1971,13 @@
 <div class="viewcode-block" id="Client.run">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the client.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the client.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (int): Time to wait for updates.</span>
+<span class="sd">            limit (int): Number of updates to poll.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_polling</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">limit</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>

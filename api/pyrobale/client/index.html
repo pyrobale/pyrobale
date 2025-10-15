@@ -380,6 +380,12 @@
 <li><p><strong>base_url</strong> (<em>str</em><em>, </em><em>optional</em>) – The base URL for the API. Defaults to “<a class="reference external" href="https://tapi.bale.ai/bot">https://tapi.bale.ai/bot</a>”.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The client instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyrobale.client.Client" title="pyrobale.client.Client">Client</a></p>
+</dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.token">
@@ -433,13 +439,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>offset</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>limit</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>timeout</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>offset</strong> (<em>int</em><em>, </em><em>optional</em>) – The offset to start with. Defaults to None.</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of updates to return. Defaults to None.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of seconds to wait. Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[Dict]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[Dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -450,10 +459,13 @@
 <dd><p>Set the webhook for the bot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>url</strong> (<em>str</em>)</p>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – The webhook URL.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the webhook was set.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -463,8 +475,11 @@
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_webhook_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_webhook_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_webhook_info" title="Link to this definition">¶</a></dt>
 <dd><p>Get the webhook information for the bot.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dict</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The webhook information.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -474,8 +489,11 @@
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_me</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_me"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_me" title="Link to this definition">¶</a></dt>
 <dd><p>Get information about the bot.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User">pyrobale.objects.user.User</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The bot.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User">User</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -485,8 +503,11 @@
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.logout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.logout" title="Link to this definition">¶</a></dt>
 <dd><p>Log out the bot.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the bot was logged out.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -496,8 +517,11 @@
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.close" title="Link to this definition">¶</a></dt>
 <dd><p>Close the bot.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the bot was closed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -509,14 +533,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>text</strong> (<em>str</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – The text to send.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>int</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>ReplyKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -524,16 +551,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.delete_message">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.delete_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.delete_message" title="Link to this definition">¶</a></dt>
-<dd><p>Send a message to a chat.</p>
+<dd><p>Deletes a message from a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>message_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message ID to delete.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the message was deleted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,13 +575,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>from_chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>message_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>from_chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message ID to forward.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -559,17 +592,20 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.copy_message">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.copy_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.copy_message" title="Link to this definition">¶</a></dt>
-<dd><p>Copy a message to a chat.</p>
+<dd><p>Copy a message to a chat without forwarding.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>from_chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>message_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>from_chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message ID to forward.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -581,11 +617,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>photo</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
+<li><p><strong>photo</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The photo to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the photo. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -601,15 +637,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>audio</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>audio</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The audio file to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the audio. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -621,15 +662,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>document</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>document</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The document to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the document. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -641,15 +687,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>video</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>video</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The video file to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the video. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -657,19 +708,24 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.send_animation">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">send_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_to_message_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.send_animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.send_animation" title="Link to this definition">¶</a></dt>
-<dd><p>Send an animation to a chat.</p>
+<dd><p>Send an animation (GIF) to a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>animation</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>animation</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The animation file to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the animation. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -681,15 +737,20 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>voice</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>voice</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The voice file to send.</p></li>
+<li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the voice. Defaults to None.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -701,14 +762,19 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>media</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaPhoto" title="pyrobale.objects.inputmedias.InputMediaPhoto"><em>pyrobale.objects.inputmedias.InputMediaPhoto</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo" title="pyrobale.objects.inputmedias.InputMediaVideo"><em>pyrobale.objects.inputmedias.InputMediaVideo</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio" title="pyrobale.objects.inputmedias.InputMediaAudio"><em>pyrobale.objects.inputmedias.InputMediaAudio</em></a><em>]</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>media</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaPhoto" title="pyrobale.objects.inputmedias.InputMediaPhoto"><em>InputMediaPhoto</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo" title="pyrobale.objects.inputmedias.InputMediaVideo"><em>InputMediaVideo</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio" title="pyrobale.objects.inputmedias.InputMediaAudio"><em>InputMediaAudio</em></a><em>]</em><em>]</em>) – The media to send.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a>]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of messages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -720,16 +786,21 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>latitude</strong> (<em>float</em>)</p></li>
-<li><p><strong>longitude</strong> (<em>float</em>)</p></li>
-<li><p><strong>horizontal_accuracy</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>latitude</strong> (<em>float</em>) – The latitude of the location.</p></li>
+<li><p><strong>longitude</strong> (<em>float</em>) – The longitude of the location.</p></li>
+<li><p><strong>horizontal_accuracy</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) – The horizontal accuracy of the location.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -741,16 +812,21 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>phone_number</strong> (<em>str</em>)</p></li>
-<li><p><strong>first_name</strong> (<em>str</em>)</p></li>
-<li><p><strong>last_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>phone_number</strong> (<em>str</em>) – The phone number of the contact.</p></li>
+<li><p><strong>first_name</strong> (<em>str</em>) – The first name of the contact.</p></li>
+<li><p><strong>last_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The last name of the contact.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
+<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
 <li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -762,18 +838,21 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>title</strong> (<em>str</em>)</p></li>
-<li><p><strong>description</strong> (<em>str</em>)</p></li>
-<li><p><strong>payload</strong> (<em>str</em>)</p></li>
-<li><p><strong>provider_token</strong> (<em>str</em>)</p></li>
-<li><p><strong>prices</strong> (<em>list</em><em>[</em><a class="reference internal" href="../objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice" title="pyrobale.objects.labeledprice.LabeledPrice"><em>pyrobale.objects.labeledprice.LabeledPrice</em></a><em>]</em>)</p></li>
-<li><p><strong>photo_url</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – The chat to send the message to.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The title of the invoice.</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – The description of the invoice.</p></li>
+<li><p><strong>payload</strong> (<em>str</em>) – The payload of the invoice.</p></li>
+<li><p><strong>provider_token</strong> (<em>str</em>) – The provider token.</p></li>
+<li><p><strong>prices</strong> (<em>List</em><em>[</em><a class="reference internal" href="../objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice" title="pyrobale.objects.labeledprice.LabeledPrice"><em>LabeledPrice</em></a><em>]</em>) – The prices of the invoice.</p></li>
+<li><p><strong>photo_url</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The photo url of the invoice.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -784,10 +863,13 @@
 <dd><p>Get a file from the Bale servers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_id</strong> (<em>str</em>)</p>
+<dd class="field-odd"><p><strong>file_id</strong> (<em>str</em>) – The file ID.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/file/index.html#pyrobale.objects.file.File" title="pyrobale.objects.file.File">pyrobale.objects.file.File</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/file/index.html#pyrobale.objects.file.File" title="pyrobale.objects.file.File">File</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -799,13 +881,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>callback_query_id</strong> (<em>str</em>)</p></li>
-<li><p><strong>text</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>show_alert</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
+<li><p><strong>callback_query_id</strong> (<em>str</em>) – The callback query ID.</p></li>
+<li><p><strong>text</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The text of the answer.</p></li>
+<li><p><strong>show_alert</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the answer should be shown.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the answer was shown.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -817,12 +902,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to ban.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to ban.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the ban was successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -834,12 +922,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to unban.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to unban.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the unban was successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -851,12 +942,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to kick.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to kick.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the kick was successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -868,12 +962,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to get.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember" title="pyrobale.objects.chatmember.ChatMember">pyrobale.objects.chatmember.ChatMember</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The chat member.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember" title="pyrobale.objects.chatmember.ChatMember">ChatMember</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -885,12 +982,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to get.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the user is admin in a chat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -902,13 +1002,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>permissions</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.ChatPermissions" title="pyrobale.objects.enums.ChatPermissions"><em>pyrobale.objects.enums.ChatPermissions</em></a>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to get.</p></li>
+<li><p><strong>permissions</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.ChatPermissions" title="pyrobale.objects.enums.ChatPermissions"><em>ChatPermissions</em></a>) – The permissions to check.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the user has a specified permission.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -920,20 +1023,23 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>can_change_info</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_post_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_edit_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_delete_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_invite_users</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_restrict_members</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_pin_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
-<li><p><strong>can_promote_members</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to get.</p></li>
+<li><p><strong>can_change_info</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can change the information.</p></li>
+<li><p><strong>can_post_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can post messages.</p></li>
+<li><p><strong>can_edit_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can edit messages.</p></li>
+<li><p><strong>can_delete_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can delete messages.</p></li>
+<li><p><strong>can_invite_users</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can invite users.</p></li>
+<li><p><strong>can_restrict_members</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can restrict members.</p></li>
+<li><p><strong>can_pin_messages</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can pin messages.</p></li>
+<li><p><strong>can_promote_members</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em>, </em><em>optional</em>) – Whether the user can promote members.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the user has a specified permission.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -945,12 +1051,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>photo</strong> (<a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>pyrobale.objects.inputfile.InputFile</em></a>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>photo</strong> (<a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a>) – The photo to set.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the photo was set.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -961,10 +1070,13 @@
 <dd><p>Leave a group, supergroup or channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the chat was leaved.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -976,12 +1088,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to get.</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the user is joined to a chat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -992,10 +1107,13 @@
 <dd><p>Get up to date information about the chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/chat/index.html#pyrobale.objects.chat.Chat" title="pyrobale.objects.chat.Chat">pyrobale.objects.chat.Chat</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The chat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/chat/index.html#pyrobale.objects.chat.Chat" title="pyrobale.objects.chat.Chat">Chat</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1014,6 +1132,17 @@
 </dd>
 </dl>
 <p>Get BleIR user/group information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username_or_phone_number</strong> (<em>str</em>) – The username or phone number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The BleIR user/group information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData" title="pyrobale.objects.peerdata.PeerData">PeerData</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1022,10 +1151,13 @@
 <dd><p>Get the number of members in a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of members in a chat.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1037,26 +1169,35 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>message_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message to pin.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the message was pinned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.unpin_chat_message">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unpin_chat_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.unpin_chat_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.unpin_chat_message" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unpin_chat_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.unpin_chat_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.unpin_chat_message" title="Link to this definition">¶</a></dt>
 <dd><p>Unpin a message in a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message to unpin.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the message was unpinned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1067,10 +1208,13 @@
 <dd><p>Unpin all messages in a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the message was unpinned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1082,12 +1226,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>title</strong> (<em>str</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The new title.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the title was changed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1099,12 +1246,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>description</strong> (<em>str</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – The new description.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the description was changed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1115,10 +1265,13 @@
 <dd><p>Delete a chat photo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the photo was deleted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1130,14 +1283,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>message_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>text</strong> (<em>str</em>)</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message to get.</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – The text to edit.</p></li>
+<li><p><strong>reply_markup</strong> (<a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><em>optional</em>) – the reply markup to use. Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The edited message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1148,10 +1304,13 @@
 <dd><p>Create an additional invite link for a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The invite link.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1163,12 +1322,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>invite_link</strong> (<em>str</em>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>invite_link</strong> (<em>str</em>) – The invite link to revoke.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The revoked invite link.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1179,10 +1341,13 @@
 <dd><p>Generate a new primary invite link for a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>)</p>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The invite link.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1194,12 +1359,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>)</p></li>
-<li><p><strong>action</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.ChatAction" title="pyrobale.objects.enums.ChatAction"><em>pyrobale.objects.enums.ChatAction</em></a>)</p></li>
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>action</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.ChatAction" title="pyrobale.objects.enums.ChatAction"><em>ChatAction</em></a>) – The action to send.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the action was sent.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1210,7 +1378,10 @@
 <dd><p>Wait until a specified update</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>pyrobale.objects.enums.UpdatesTypes</em></a>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>UpdatesTypes</em></a>) – The update to wait for.</p></li>
+<li><p><strong>check</strong> (<em>Callable</em><em>, </em><em>optional</em>) – The check method to check.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1221,10 +1392,13 @@
 <dd><p>Process a single update and call registered handlers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>update</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>update</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The update to process.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1235,7 +1409,13 @@
 <dd><p>Base decorator for handling different types of updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>pyrobale.objects.enums.UpdatesTypes</em></a>)</p>
+<dd class="field-odd"><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>UpdatesTypes</em></a>) – The update to process.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decorated handler.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1349,10 +1529,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>pyrobale.objects.enums.UpdatesTypes</em></a>)</p></li>
-<li><p><strong>callback</strong> (<em>Callable</em>)</p></li>
-<li><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p></li>
+<li><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>UpdatesTypes</em></a>) – The update to process.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em>) – The callback to handle.</p></li>
+<li><p><strong>filter</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters" title="pyrobale.filters.enum_filters.Filters"><em>Filters</em></a><em>]</em>) – The filter to handle.</p></li>
+<li><p><strong>**kwargs</strong> – The kwargs to pass to the callback.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decorated handler.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1363,7 +1550,7 @@
 <dd><p>Remove a handler from the list of handlers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>callback</strong> (<em>Callable</em>)</p>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Callable</em>) – The callback to remove.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -1389,8 +1576,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>timeout</strong> (<em>int</em>)</p></li>
-<li><p><strong>limit</strong> (<em>int</em>)</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – Time to wait for updates.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Number of updates to poll.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1417,8 +1604,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>timeout</strong> (<em>int</em>)</p></li>
-<li><p><strong>limit</strong> (<em>int</em>)</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – Time to wait for updates.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Number of updates to poll.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

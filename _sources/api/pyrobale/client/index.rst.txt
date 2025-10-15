@@ -24,6 +24,9 @@ Package Contents
    :param base_url: The base URL for the API. Defaults to "https://tapi.bale.ai/bot".
    :type base_url: str, optional
 
+   :returns: The client instance.
+   :rtype: Client
+
 
    .. py:attribute:: token
 
@@ -68,6 +71,16 @@ Package Contents
 
       Get updates from the Bale API.
 
+      :param offset: The offset to start with. Defaults to None.
+      :type offset: int, optional
+      :param limit: The maximum number of updates to return. Defaults to None.
+      :type limit: int, optional
+      :param timeout: The maximum number of seconds to wait. Defaults to None.
+      :type timeout: int, optional
+
+      :returns: The updates.
+      :rtype: List[Dict]
+
 
 
    .. py:method:: set_webhook(url)
@@ -75,6 +88,12 @@ Package Contents
 
 
       Set the webhook for the bot.
+
+      :param url: The webhook URL.
+      :type url: str
+
+      :returns: True if the webhook was set.
+      :rtype: bool
 
 
 
@@ -84,6 +103,9 @@ Package Contents
 
       Get the webhook information for the bot.
 
+      :returns: The webhook information.
+      :rtype: Dict
+
 
 
    .. py:method:: get_me()
@@ -91,6 +113,9 @@ Package Contents
 
 
       Get information about the bot.
+
+      :returns: The bot.
+      :rtype: User
 
 
 
@@ -100,6 +125,9 @@ Package Contents
 
       Log out the bot.
 
+      :returns: True if the bot was logged out.
+      :rtype: bool
+
 
 
    .. py:method:: close()
@@ -107,6 +135,9 @@ Package Contents
 
 
       Close the bot.
+
+      :returns: True if the bot was closed.
+      :rtype: bool
 
 
 
@@ -116,13 +147,33 @@ Package Contents
 
       Send a message to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param text: The text to send.
+      :type text: str
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: int, optional
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: delete_message(chat_id, message_id)
       :async:
 
 
-      Send a message to a chat.
+      Deletes a message from a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param message_id: The message ID to delete.
+      :type message_id: int
+
+      :returns: True if the message was deleted.
+      :rtype: bool
 
 
 
@@ -132,13 +183,33 @@ Package Contents
 
       Forward a message to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param from_chat_id: The chat to send the message to.
+      :type from_chat_id: int
+      :param message_id: The message ID to forward.
+      :type message_id: int
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: copy_message(chat_id, from_chat_id, message_id)
       :async:
 
 
-      Copy a message to a chat.
+      Copy a message to a chat without forwarding.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param from_chat_id: The chat to send the message to.
+      :type from_chat_id: int
+      :param message_id: The message ID to forward.
+      :type message_id: int
+
+      :returns: The message.
+      :rtype: Message
 
 
 
@@ -148,6 +219,17 @@ Package Contents
 
       Send a photo to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: Union[int, str]
+      :param photo: The photo to send.
+      :type photo: Union[InputFile, str]
+      :param caption: The caption of the photo. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
+
 
 
    .. py:method:: send_audio(chat_id, audio, caption = None, reply_to_message_id = None, reply_markup = None)
@@ -155,6 +237,20 @@ Package Contents
 
 
       Send an audio to a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param audio: The audio file to send.
+      :type audio: Union[InputFile, str]
+      :param caption: The caption of the audio. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
 
 
 
@@ -164,6 +260,20 @@ Package Contents
 
       Send a document to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param document: The document to send.
+      :type document: Union[InputFile, str]
+      :param caption: The caption of the document. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: send_video(chat_id, video, caption = None, reply_to_message_id = None, reply_markup = None)
@@ -172,13 +282,41 @@ Package Contents
 
       Send a video to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param video: The video file to send.
+      :type video: Union[InputFile, str]
+      :param caption: The caption of the video. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: send_animation(chat_id, animation, caption = None, reply_to_message_id = None, reply_markup = None)
       :async:
 
 
-      Send an animation to a chat.
+      Send an animation (GIF) to a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param animation: The animation file to send.
+      :type animation: Union[InputFile, str]
+      :param caption: The caption of the animation. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
 
 
 
@@ -188,6 +326,20 @@ Package Contents
 
       Send a voice message to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param voice: The voice file to send.
+      :type voice: Union[InputFile, str]
+      :param caption: The caption of the voice. Defaults to None.
+      :type caption: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: send_media_group(chat_id, media, reply_to_message_id = None, reply_markup = None)
@@ -195,6 +347,18 @@ Package Contents
 
 
       Send a media group to a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param media: The media to send.
+      :type media: List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]]
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The list of messages.
+      :rtype: List[Message]
 
 
 
@@ -204,6 +368,22 @@ Package Contents
 
       Send a location to a chat.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param latitude: The latitude of the location.
+      :type latitude: float
+      :param longitude: The longitude of the location.
+      :type longitude: float
+      :param horizontal_accuracy: The horizontal accuracy of the location.
+      :type horizontal_accuracy: Optional[float], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: send_contact(chat_id, phone_number, first_name, last_name = None, reply_to_message_id = None, reply_markup = None)
@@ -211,6 +391,22 @@ Package Contents
 
 
       Send a contact to a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: int
+      :param phone_number: The phone number of the contact.
+      :type phone_number: str
+      :param first_name: The first name of the contact.
+      :type first_name: str
+      :param last_name: The last name of the contact.
+      :type last_name: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
+      :param optional): The reply keyboard markup (buttons).
+
+      :returns: The message.
+      :rtype: Message
 
 
 
@@ -220,6 +416,26 @@ Package Contents
 
       Sends a message including a invoice for user to pay.
 
+      :param chat_id: The chat to send the message to.
+      :type chat_id: Union[str, int]
+      :param title: The title of the invoice.
+      :type title: str
+      :param description: The description of the invoice.
+      :type description: str
+      :param payload: The payload of the invoice.
+      :type payload: str
+      :param provider_token: The provider token.
+      :type provider_token: str
+      :param prices: The prices of the invoice.
+      :type prices: List[LabeledPrice]
+      :param photo_url: The photo url of the invoice.
+      :type photo_url: Optional[str], optional
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+
+      :returns: The message.
+      :rtype: Message
+
 
 
    .. py:method:: get_file(file_id)
@@ -227,6 +443,12 @@ Package Contents
 
 
       Get a file from the Bale servers.
+
+      :param file_id: The file ID.
+      :type file_id: str
+
+      :returns: The file.
+      :rtype: File
 
 
 
@@ -236,6 +458,16 @@ Package Contents
 
       Answer a callback query.
 
+      :param callback_query_id: The callback query ID.
+      :type callback_query_id: str
+      :param text: The text of the answer.
+      :type text: Optional[str], optional
+      :param show_alert: Whether the answer should be shown.
+      :type show_alert: Optional[bool], optional
+
+      :returns: Whether the answer was shown.
+      :rtype: bool
+
 
 
    .. py:method:: ban_chat_member(chat_id, user_id)
@@ -243,6 +475,14 @@ Package Contents
 
 
       Ban a user from a chat.
+
+      :param chat_id: The chat to ban.
+      :type chat_id: int
+      :param user_id: The user to ban.
+      :type user_id: int
+
+      :returns: Whether the ban was successful.
+      :rtype: bool
 
 
 
@@ -252,6 +492,14 @@ Package Contents
 
       Unban a user from a chat.
 
+      :param chat_id: The chat to unban.
+      :type chat_id: int
+      :param user_id: The user to unban.
+      :type user_id: int
+
+      :returns: Whether the unban was successful.
+      :rtype: bool
+
 
 
    .. py:method:: kick_chat_member(chat_id, user_id)
@@ -259,6 +507,14 @@ Package Contents
 
 
       kick a user from a specified chat
+
+      :param chat_id: The chat to kick.
+      :type chat_id: int
+      :param user_id: The user to kick.
+      :type user_id: int
+
+      :returns: Whether the kick was successful.
+      :rtype: bool
 
 
 
@@ -268,6 +524,14 @@ Package Contents
 
       Get a chat member.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param user_id: The user to get.
+      :type user_id: int
+
+      :returns: The chat member.
+      :rtype: ChatMember
+
 
 
    .. py:method:: is_user_admin(chat_id, user_id)
@@ -275,6 +539,14 @@ Package Contents
 
 
       Checks if a user is admin in a chat
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param user_id: The user to get.
+      :type user_id: int
+
+      :returns: Whether the user is admin in a chat.
+      :rtype: bool
 
 
 
@@ -284,6 +556,16 @@ Package Contents
 
       checks if a user has a specified permission
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param user_id: The user to get.
+      :type user_id: int
+      :param permissions: The permissions to check.
+      :type permissions: ChatPermissions
+
+      :returns: Whether the user has a specified permission.
+      :rtype: bool
+
 
 
    .. py:method:: promote_chat_member(chat_id, user_id, can_change_info = None, can_post_messages = None, can_edit_messages = None, can_delete_messages = None, can_invite_users = None, can_restrict_members = None, can_pin_messages = None, can_promote_members = None)
@@ -291,6 +573,30 @@ Package Contents
 
 
       Promote a user in a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param user_id: The user to get.
+      :type user_id: int
+      :param can_change_info: Whether the user can change the information.
+      :type can_change_info: Optional[bool], optional
+      :param can_post_messages: Whether the user can post messages.
+      :type can_post_messages: Optional[bool], optional
+      :param can_edit_messages: Whether the user can edit messages.
+      :type can_edit_messages: Optional[bool], optional
+      :param can_delete_messages: Whether the user can delete messages.
+      :type can_delete_messages: Optional[bool], optional
+      :param can_invite_users: Whether the user can invite users.
+      :type can_invite_users: Optional[bool], optional
+      :param can_restrict_members: Whether the user can restrict members.
+      :type can_restrict_members: Optional[bool], optional
+      :param can_pin_messages: Whether the user can pin messages.
+      :type can_pin_messages: Optional[bool], optional
+      :param can_promote_members: Whether the user can promote members.
+      :type can_promote_members: Optional[bool], optional
+
+      :returns: Whether the user has a specified permission.
+      :rtype: bool
 
 
 
@@ -300,6 +606,14 @@ Package Contents
 
       Set a new profile photo for the chat.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param photo: The photo to set.
+      :type photo: InputFile
+
+      :returns: Whether the photo was set.
+      :rtype: bool
+
 
 
    .. py:method:: leave_chat(chat_id)
@@ -307,6 +621,12 @@ Package Contents
 
 
       Leave a group, supergroup or channel.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: Whether the chat was leaved.
+      :rtype: bool
 
 
 
@@ -316,6 +636,14 @@ Package Contents
 
       Check if a user is joined to a chat.
 
+      :param user_id: The user to get.
+      :type user_id: int
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: Whether the user is joined to a chat.
+      :rtype: bool
+
 
 
    .. py:method:: get_chat(chat_id)
@@ -323,6 +651,12 @@ Package Contents
 
 
       Get up to date information about the chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: The chat.
+      :rtype: Chat
 
 
 
@@ -334,6 +668,12 @@ Package Contents
 
       Get BleIR user/group information.
 
+      :param username_or_phone_number: The username or phone number.
+      :type username_or_phone_number: str
+
+      :returns: The BleIR user/group information.
+      :rtype: PeerData
+
 
 
    .. py:method:: get_chat_members_count(chat_id)
@@ -341,6 +681,12 @@ Package Contents
 
 
       Get the number of members in a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: The number of members in a chat.
+      :rtype: int
 
 
 
@@ -350,13 +696,29 @@ Package Contents
 
       Pin a message in a chat.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param message_id: The message to pin.
+      :type message_id: int
+
+      :returns: Whether the message was pinned.
+      :rtype: bool
 
 
-   .. py:method:: unpin_chat_message(chat_id)
+
+   .. py:method:: unpin_chat_message(chat_id, message_id)
       :async:
 
 
       Unpin a message in a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param message_id: The message to unpin.
+      :type message_id: int
+
+      :returns: Whether the message was unpinned.
+      :rtype: bool
 
 
 
@@ -366,6 +728,12 @@ Package Contents
 
       Unpin all messages in a chat.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: Whether the message was unpinned.
+      :rtype: bool
+
 
 
    .. py:method:: set_chat_title(chat_id, title)
@@ -373,6 +741,14 @@ Package Contents
 
 
       Change the title of a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param title: The new title.
+      :type title: str
+
+      :returns: Whether the title was changed.
+      :rtype: bool
 
 
 
@@ -382,6 +758,14 @@ Package Contents
 
       Change the description of a chat.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param description: The new description.
+      :type description: str
+
+      :returns: Whether the description was changed.
+      :rtype: bool
+
 
 
    .. py:method:: delete_chat_photo(chat_id)
@@ -389,6 +773,12 @@ Package Contents
 
 
       Delete a chat photo.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: Whether the photo was deleted.
+      :rtype: bool
 
 
 
@@ -398,6 +788,18 @@ Package Contents
 
       Edits a message in a specified chat
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param message_id: The message to get.
+      :type message_id: int
+      :param text: The text to edit.
+      :type text: str
+      :param reply_markup: the reply markup to use. Defaults to None.
+      :type reply_markup: InlineKeyboardMarkup, optional
+
+      :returns: The edited message.
+      :rtype: Message
+
 
 
    .. py:method:: create_chat_invite_link(chat_id)
@@ -405,6 +807,12 @@ Package Contents
 
 
       Create an additional invite link for a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: The invite link.
+      :rtype: str
 
 
 
@@ -414,6 +822,14 @@ Package Contents
 
       Revoke an invite link created by the bot.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param invite_link: The invite link to revoke.
+      :type invite_link: str
+
+      :returns: The revoked invite link.
+      :rtype: str
+
 
 
    .. py:method:: export_chat_invite_link(chat_id)
@@ -421,6 +837,12 @@ Package Contents
 
 
       Generate a new primary invite link for a chat.
+
+      :param chat_id: The chat to get.
+      :type chat_id: int
+
+      :returns: The invite link.
+      :rtype: str
 
 
 
@@ -430,6 +852,14 @@ Package Contents
 
       Tell the user that something is happening on the bot's side.
 
+      :param chat_id: The chat to get.
+      :type chat_id: int
+      :param action: The action to send.
+      :type action: ChatAction
+
+      :returns: Whether the action was sent.
+      :rtype: bool
+
 
 
    .. py:method:: wait_for(update_type, check=None)
@@ -437,6 +867,11 @@ Package Contents
 
 
       Wait until a specified update
+
+      :param update_type: The update to wait for.
+      :type update_type: UpdatesTypes
+      :param check: The check method to check.
+      :type check: Callable, optional
 
 
 
@@ -446,11 +881,22 @@ Package Contents
 
       Process a single update and call registered handlers.
 
+      :param update: The update to process.
+      :type update: Dict[str, Any]
+
+      :returns: None
+
 
 
    .. py:method:: base_handler_decorator(update_type)
 
       Base decorator for handling different types of updates.
+
+      :param update_type: The update to process.
+      :type update_type: UpdatesTypes
+
+      :returns: The decorated handler.
+      :rtype: Callable
 
 
 
@@ -512,11 +958,25 @@ Package Contents
 
       Register a handler for specific update type.
 
+      :param update_type: The update to process.
+      :type update_type: UpdatesTypes
+      :param callback: The callback to handle.
+      :type callback: Callable
+      :param filter: The filter to handle.
+      :type filter: Optional[Filters]
+      :param \*\*kwargs: The kwargs to pass to the callback.
+
+      :returns: The decorated handler.
+      :rtype: Callable
+
 
 
    .. py:method:: remove_handler(callback)
 
       Remove a handler from the list of handlers.
+
+      :param callback: The callback to remove.
+      :type callback: Callable
 
 
 
@@ -532,6 +992,11 @@ Package Contents
 
       Start polling updates from the server.
 
+      :param timeout: Time to wait for updates.
+      :type timeout: int
+      :param limit: Number of updates to poll.
+      :type limit: int
+
 
 
    .. py:method:: stop_polling()
@@ -545,6 +1010,11 @@ Package Contents
    .. py:method:: run(timeout = 30, limit = 100)
 
       Run the client.
+
+      :param timeout: Time to wait for updates.
+      :type timeout: int
+      :param limit: Number of updates to poll.
+      :type limit: int
 
 
 
