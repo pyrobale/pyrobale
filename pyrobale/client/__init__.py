@@ -133,6 +133,21 @@ class Client:
             },
         )
         return Message(**pythonize(data.get("result")))
+        
+    async def delete_message(
+            self,
+            chat_id: int,
+            message_id: int
+    ) -> bool:
+        """Send a message to a chat."""
+        data = await make_post(
+            self.requests_base + "/deleteMessage",
+            data={
+                "chat_id": chat_id,
+                "message_id": message_id,
+            },
+        )
+        return True
 
     async def forward_message(
             self, chat_id: int, from_chat_id: int, message_id: int
