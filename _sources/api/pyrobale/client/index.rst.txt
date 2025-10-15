@@ -118,6 +118,14 @@ Package Contents
 
 
 
+   .. py:method:: delete_message(chat_id, message_id)
+      :async:
+
+
+      Send a message to a chat.
+
+
+
    .. py:method:: forward_message(chat_id, from_chat_id, message_id)
       :async:
 
