@@ -238,7 +238,7 @@ class Message:
             bool: True if successful
         """
         if self.chat and self.chat.id and self.id:
-            return await self.client.delete(self.chat.id, self.id)
+            return await self.client.delete_message(self.chat.id, self.id)
 
     async def forward(self, chat_id: int) -> 'Message':
         """Forward the current message to another chat.
