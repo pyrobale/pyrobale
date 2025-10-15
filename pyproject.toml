@@ -1,6 +1,6 @@
 [project]
 name = "pyrobale"
-version = "0.4.7"
+version = "0.4.8"
 authors = [
     { name = "Ali Safamanesh", email = "daradege@proton.me" },
     { name = "Aydin Rahbaran", email = "codewizaard9@gmail.com"}
@@ -17,7 +17,9 @@ license = { file = "LICENSE" }
 dependencies = ["aiohttp", "beautifulsoup4"]
 [project.urls]
 github = "https://github.com/pyrobale/pyrobale"
-website = "https://pyrobale.github.io"
+website = "https://pyrobale.ir"
+forum = "https://forum.pyrobale.ir"
+documentation = "https://docs.pyrobale.ir"
 
 [build-system]
 requires = ["hatchling"]
