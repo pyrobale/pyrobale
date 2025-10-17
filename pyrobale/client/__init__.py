@@ -1254,7 +1254,7 @@ class Client:
         Returns:
             Any: The converted event.
         """
-        chat = Chat(**event_data.get("chat"))
+        chat = Chat(**event_data.get("chat", dict()))
         kwargs = {"client": self, "chat": chat}
 
         try:
