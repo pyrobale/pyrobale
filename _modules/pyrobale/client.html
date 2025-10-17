@@ -1772,7 +1772,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Any: The converted event.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">))</span>
+        <span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">()))</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">:</span> <span class="n">chat</span><span class="p">}</span>
 
         <span class="k">try</span><span class="p">:</span>
