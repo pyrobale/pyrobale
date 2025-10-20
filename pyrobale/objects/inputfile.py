@@ -1,9 +1,9 @@
 from typing import Dict, Union, Optional
-from io import BufferedReader, BytesIO
+from io import BufferedReader
 
 
 class InputFile:
-    def __init__(self, file_input: str | "BufferedReader" | bytes, *, file_name: Optional[str] = None) -> None:
+    def __init__(self, file_input: Union[str , "BufferedReader" , bytes], *, file_name: Optional[str] = None) -> None:
         if not isinstance(file_input, (str, BufferedReader, bytes)):
             raise TypeError(
                 "file_input parameter must be one of str, BufferedReader, and byte types"

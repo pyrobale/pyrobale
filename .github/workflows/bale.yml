@@ -1,0 +1,93 @@
+name: Send Bale Notification on Commit
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  send-bale-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version info and changes
+        id: get_info
+        run: |
+          python3 << 'EOF'
+          import subprocess
+          import re
+          import json
+          import os
+          
+          try:
+              result = subprocess.run(
+                  ['git', 'diff', '--name-only', os.environ['GITHUB_SHA'] + '~1', os.environ['GITHUB_SHA']],
+                  capture_output=True, text=True, check=True
+              )
+              changed_files = [f for f in result.stdout.strip().split('\n') if f]
+          except:
+              changed_files = ["خطا در دریافت تغییرات"]
+          
+          version = "نامشخص"
+          stable = "False"
+          
+          try:
+              with open('version.py', 'r') as f:
+                  content = f.read()
+              
+              version_match = re.search(r'version\s*=\s*["\']([^"\']+)["\']', content)
+              stable_match = re.search(r'stable\s*=\s*(True|False)', content)
+              
+              version = version_match.group(1) if version_match else "نامشخص"
+              stable = stable_match.group(1) if stable_match else "False"
+          except:
+              pass
+          
+          try:
+              commit_msg = subprocess.run(
+                  ['git', 'log', '--format=%B', '-n', '1', os.environ['GITHUB_SHA']],
+                  capture_output=True, text=True, check=True
+              ).stdout.strip()
+          except:
+              commit_msg = "خطا در دریافت پیام کامیت"
+          
+          files_text = "\\n".join([f"• {file}" for file in changed_files]) if changed_files else "بدون تغییرات فایل"
+          
+          print(f"VERSION={version}")
+          print(f"STABLE={stable}")
+          print(f"CHANGED_FILES={files_text}")
+          print(f"COMMIT_MSG={commit_msg}")
+          EOF
+
+      - name: Send message to Bale
+        run: |
+          MESSAGE=$(cat << EOF
+          🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**
+          
+          **تغییرات در فایل‌های:**
+          ${{ steps.get_info.outputs.CHANGED_FILES }}
+          
+          **پیام کامیت:**
+          ${{ steps.get_info.outputs.COMMIT_MSG }}
+          
+          **نسخه فعلی کتابخانه:** ${{ steps.get_info.outputs.VERSION }}
+          **منتشر شده در pypi:** ${{ fromJSON(steps.get_info.outputs.STABLE) && '✅' || '❌' }}
+          
+          **🔗 مشاهده در GitHub:**
+          ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          
+          🆔 @pyrobale
+          EOF
+          )
+          
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.BALE_BOT_TOKEN }}" \
+            -d "{
+              \"chat_id\": \"${{ secrets.BALE_CHAT_ID }}\",
+              \"text\": \"$MESSAGE\",
+              \"parse_mode\": \"Markdown\"
+            }" \
+            "https://tapi.bale.ai/bot${{ secrets.BALE_BOT_TOKEN }}/sendMessage"
