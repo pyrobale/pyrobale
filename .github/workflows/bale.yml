@@ -63,28 +63,10 @@ jobs:
 
       - name: Send message to Bale
         run: |
-          MESSAGE=$(cat << EOF
-          🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**
-          
-          **تغییرات در فایل‌های:**
-          ${{ steps.get_info.outputs.CHANGED_FILES }}
-          
-          **پیام کامیت:**
-          ${{ steps.get_info.outputs.COMMIT_MSG }}
-          
-          **نسخه فعلی کتابخانه:** ${{ steps.get_info.outputs.VERSION }}
-          **منتشر شده در pypi:** ${{ fromJSON(steps.get_info.outputs.STABLE) && '✅' || '❌' }}
-          
-          **🔗 مشاهده در GitHub:**
-          ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
-          
-          🆔 @pyrobale
-          EOF
-          )
+          MESSAGE='🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**\n\n**تغییرات در فایل‌های:**\n${{ steps.get_info.outputs.CHANGED_FILES }}\n\n**پیام کامیت:**\n${{ steps.get_info.outputs.COMMIT_MSG }}\n\n**نسخه فعلی کتابخانه:** ${{ steps.get_info.outputs.VERSION }}\n**منتشر شده در pypi:** ${{ fromJSON(steps.get_info.outputs.STABLE) && '✅' || '❌' }}\n\n**🔗 مشاهده در GitHub:**\n${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}\n\n🆔 @pyrobale'
           
           curl -X POST \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.BALE_BOT_TOKEN }}" \
             -d "{
               \"chat_id\": \"${{ secrets.BALE_CHAT_ID }}\",
               \"text\": \"$MESSAGE\",
