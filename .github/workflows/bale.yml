@@ -12,13 +12,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get version info and changes
-        id: get_info
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Get info and send to Bale
         run: |
           python3 << 'EOF'
+          import requests
           import subprocess
           import re
-          import json
           import os
           
           try:
@@ -31,7 +38,7 @@ jobs:
               changed_files = ["خطا در دریافت تغییرات"]
           
           version = "نامشخص"
-          stable = "False"
+          stable = False
           
           try:
               with open('version.py', 'r') as f:
@@ -41,9 +48,9 @@ jobs:
               stable_match = re.search(r'stable\s*=\s*(True|False)', content)
               
               version = version_match.group(1) if version_match else "نامشخص"
-              stable = stable_match.group(1) if stable_match else "False"
-          except:
-              pass
+              stable = stable_match.group(1) == "True" if stable_match else False
+          except Exception as e:
+              print(f"Error reading version.py: {e}")
           
           try:
               commit_msg = subprocess.run(
@@ -53,34 +60,14 @@ jobs:
           except:
               commit_msg = "خطا در دریافت پیام کامیت"
           
-          files_text = "\\n".join([f"• {file}" for file in changed_files]) if changed_files else "بدون تغییرات فایل"
-          
-          print(f"VERSION={version}")
-          print(f"STABLE={stable}")
-          print(f"CHANGED_FILES={files_text}")
-          print(f"COMMIT_MSG={commit_msg}")
-          EOF
-
-      - name: Send message to Bale
-        run: |
-          python3 << 'EOF'
-          import requests
-          import os
-          
-          bot_token = os.environ['BALE_BOT_TOKEN']
-          chat_id = os.environ['BALE_CHAT_ID']
-          version = os.environ['VERSION']
-          stable = os.environ['STABLE']
-          changed_files = os.environ['CHANGED_FILES']
-          commit_msg = os.environ['COMMIT_MSG']
-          github_url = os.environ['GITHUB_SERVER_URL'] + '/' + os.environ['GITHUB_REPOSITORY'] + '/commit/' + os.environ['GITHUB_SHA']
-          
-          pypi_status = "✅" if stable == "True" else "❌"
+          files_text = "\n".join([f"• {file}" for file in changed_files]) if changed_files else "بدون تغییرات فایل"
+          pypi_status = "✅" if stable else "❌"
+          github_url = f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/commit/{os.environ['GITHUB_SHA']}"
           
           message = f"""🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**
 
           **تغییرات در فایل‌های:**
-          {changed_files}
+          {files_text}
 
           **پیام کامیت:**
           {commit_msg}
@@ -93,6 +80,9 @@ jobs:
 
           🆔 @pyrobale"""
           
+          bot_token = os.environ['BALE_BOT_TOKEN']
+          chat_id = os.environ['BALE_CHAT_ID']
+          
           url = f"https://tapi.bale.ai/bot{bot_token}/sendMessage"
           payload = {
               "chat_id": chat_id,
@@ -102,18 +92,11 @@ jobs:
           
           response = requests.post(url, json=payload)
           if response.status_code == 200:
-              print("Message Sent!")
+              print("✅ پیام با موفقیت ارسال شد")
           else:
-              print(f"Error on sending message: {response.status_code}")
+              print(f"❌ خطا در ارسال پیام: {response.status_code}")
               print(response.text)
           EOF
         env:
           BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
           BALE_CHAT_ID: ${{ secrets.BALE_CHAT_ID }}
-          VERSION: ${{ steps.get_info.outputs.VERSION }}
-          STABLE: ${{ steps.get_info.outputs.STABLE }}
-          CHANGED_FILES: ${{ steps.get_info.outputs.CHANGED_FILES }}
-          COMMIT_MSG: ${{ steps.get_info.outputs.COMMIT_MSG }}
-          GITHUB_SERVER_URL: ${{ github.server_url }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_SHA: ${{ github.sha }}
