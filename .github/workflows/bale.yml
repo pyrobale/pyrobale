@@ -61,24 +61,22 @@ jobs:
               commit_msg = "خطا در دریافت پیام کامیت"
           
           files_text = "\n".join([f"• {file}" for file in changed_files]) if changed_files else "بدون تغییرات فایل"
-          pypi_status = "✅" if stable else "❌"
+          pypi_status = "در pypi منتشر شد!" if stable else "این نسخه هنوز در pypi منشر نشده."
           github_url = f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/commit/{os.environ['GITHUB_SHA']}"
           
           message = f"""🎉 *تغییرات جدیدی در مخزن پایروبله ایجاد شد!*
 
-           ```[تغییرات در فایل‌های:]
+           ```[تغییرات در فایل‌های]
           {files_text}
           ```
-
-          ```[پیام کامیت:]
+          ```[پیام کامیت]
           {commit_msg}
           ```
 
           *نسخه فعلی کتابخانه:* {version}
-          *منتشر شده در pypi:* {pypi_status}
+          *pypi:* {pypi_status}
 
-          *🔗 مشاهده در GitHub:*
-          {github_url}
+          [*🔗 مشاهده در GitHub:*]({github_url})
 
           🆔 @pyrobale"""
           
