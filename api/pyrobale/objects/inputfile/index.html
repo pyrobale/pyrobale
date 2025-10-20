@@ -371,16 +371,34 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrobale.objects.inputfile.InputFile">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.inputfile.</span></span><span class="sig-name descname"><span class="pre">InputFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.inputfile.</span></span><span class="sig-name descname"><span class="pre">InputFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_input</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file</strong> (<em>Union</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>]</em>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_input</strong> (<em>str</em><em> | </em><em>io.BufferedReader</em><em> | </em><em>bytes</em>)</p></li>
+<li><p><strong>file_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="pyrobale.objects.inputfile.InputFile.file">
-<span class="sig-name descname"><span class="pre">file</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile.file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile.file" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyrobale.objects.inputfile.InputFile.file_input">
+<span class="sig-name descname"><span class="pre">file_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile.file_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile.file_input" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.objects.inputfile.InputFile.file_name">
+<span class="sig-name descname"><span class="pre">file_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile.file_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile.file_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.inputfile.InputFile.to_multipart_payload">
+<span class="sig-name descname"><span class="pre">to_multipart_payload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/inputfile.html#InputFile.to_multipart_payload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.inputfile.InputFile.to_multipart_payload" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -453,7 +471,9 @@
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#pyrobale.objects.inputfile.InputFile"><code class="docutils literal notranslate"><span class="pre">InputFile</span></code></a><ul>
-<li><a class="reference internal" href="#pyrobale.objects.inputfile.InputFile.file"><code class="docutils literal notranslate"><span class="pre">InputFile.file</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.inputfile.InputFile.file_input"><code class="docutils literal notranslate"><span class="pre">InputFile.file_input</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.inputfile.InputFile.file_name"><code class="docutils literal notranslate"><span class="pre">InputFile.file_name</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.inputfile.InputFile.to_multipart_payload"><code class="docutils literal notranslate"><span class="pre">InputFile.to_multipart_payload()</span></code></a></li>
 </ul>
 </li>
 </ul>

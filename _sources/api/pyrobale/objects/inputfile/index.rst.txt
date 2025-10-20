@@ -15,8 +15,18 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: InputFile(file, **kwargs)
+.. py:class:: InputFile(file_input, *, file_name = None)
 
-   .. py:attribute:: file
+   .. py:attribute:: file_input
+      :type:  Union[bytes, str]
+
+
+   .. py:attribute:: file_name
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:method:: to_multipart_payload()
 
 
