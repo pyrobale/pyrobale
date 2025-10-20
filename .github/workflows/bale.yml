@@ -63,13 +63,57 @@ jobs:
 
       - name: Send message to Bale
         run: |
-          MESSAGE='🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**\n\n**تغییرات در فایل‌های:**\n${{ steps.get_info.outputs.CHANGED_FILES }}\n\n**پیام کامیت:**\n${{ steps.get_info.outputs.COMMIT_MSG }}\n\n**نسخه فعلی کتابخانه:** ${{ steps.get_info.outputs.VERSION }}\n**منتشر شده در pypi:** ${{ fromJSON(steps.get_info.outputs.STABLE) && '✅' || '❌' }}\n\n**🔗 مشاهده در GitHub:**\n${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}\n\n🆔 @pyrobale'
+          python3 << 'EOF'
+          import requests
+          import os
           
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"chat_id\": \"${{ secrets.BALE_CHAT_ID }}\",
-              \"text\": \"$MESSAGE\",
-              \"parse_mode\": \"Markdown\"
-            }" \
-            "https://tapi.bale.ai/bot${{ secrets.BALE_BOT_TOKEN }}/sendMessage"
+          bot_token = os.environ['BALE_BOT_TOKEN']
+          chat_id = os.environ['BALE_CHAT_ID']
+          version = os.environ['VERSION']
+          stable = os.environ['STABLE']
+          changed_files = os.environ['CHANGED_FILES']
+          commit_msg = os.environ['COMMIT_MSG']
+          github_url = os.environ['GITHUB_SERVER_URL'] + '/' + os.environ['GITHUB_REPOSITORY'] + '/commit/' + os.environ['GITHUB_SHA']
+          
+          pypi_status = "✅" if stable == "True" else "❌"
+          
+          message = f"""🎉 **نسخه جدید کتابخانه پایروبله منتشر شد!**
+
+          **تغییرات در فایل‌های:**
+          {changed_files}
+
+          **پیام کامیت:**
+          {commit_msg}
+
+          **نسخه فعلی کتابخانه:** {version}
+          **منتشر شده در pypi:** {pypi_status}
+
+          **🔗 مشاهده در GitHub:**
+          {github_url}
+
+          🆔 @pyrobale"""
+          
+          url = f"https://tapi.bale.ai/bot{bot_token}/sendMessage"
+          payload = {
+              "chat_id": chat_id,
+              "text": message,
+              "parse_mode": "Markdown"
+          }
+          
+          response = requests.post(url, json=payload)
+          if response.status_code == 200:
+              print("Message Sent!")
+          else:
+              print(f"Error on sending message: {response.status_code}")
+              print(response.text)
+          EOF
+        env:
+          BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
+          BALE_CHAT_ID: ${{ secrets.BALE_CHAT_ID }}
+          VERSION: ${{ steps.get_info.outputs.VERSION }}
+          STABLE: ${{ steps.get_info.outputs.STABLE }}
+          CHANGED_FILES: ${{ steps.get_info.outputs.CHANGED_FILES }}
+          COMMIT_MSG: ${{ steps.get_info.outputs.COMMIT_MSG }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
