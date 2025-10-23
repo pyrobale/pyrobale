@@ -369,7 +369,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.objects.utils.make_get" title="pyrobale.objects.utils.make_get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_get</span></code></a>(url[, headers])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.objects.utils.pythonize" title="pyrobale.objects.utils.pythonize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pythonize</span></code></a>(dictionary)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.objects.utils.make_via_multipart" title="pyrobale.objects.utils.make_via_multipart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_via_multipart</span></code></a>(url, data)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.objects.utils.pythonize" title="pyrobale.objects.utils.pythonize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pythonize</span></code></a>(dictionary)</p></td>
 <td><p>Converts a dictionary with keys in snake_case to camelCase.</p></td>
 </tr>
 </tbody>
@@ -423,6 +426,19 @@
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.objects.utils.make_via_multipart">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.utils.</span></span><span class="sig-name descname"><span class="pre">make_via_multipart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/utils.html#make_via_multipart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.utils.make_via_multipart" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>)</p></li>
+<li><p><strong>data</strong> (<em>aiohttp.FormData</em>)</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -512,6 +528,7 @@
 <li><a class="reference internal" href="#pyrobale.objects.utils.build_api_url"><code class="docutils literal notranslate"><span class="pre">build_api_url()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.utils.make_post"><code class="docutils literal notranslate"><span class="pre">make_post()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.utils.make_get"><code class="docutils literal notranslate"><span class="pre">make_get()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.utils.make_via_multipart"><code class="docutils literal notranslate"><span class="pre">make_via_multipart()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.utils.pythonize"><code class="docutils literal notranslate"><span class="pre">pythonize()</span></code></a></li>
 </ul>
 </li>

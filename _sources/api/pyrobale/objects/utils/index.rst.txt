@@ -12,6 +12,7 @@ Functions
    pyrobale.objects.utils.build_api_url
    pyrobale.objects.utils.make_post
    pyrobale.objects.utils.make_get
+   pyrobale.objects.utils.make_via_multipart
    pyrobale.objects.utils.pythonize
 
 
@@ -25,6 +26,10 @@ Module Contents
 
 
 .. py:function:: make_get(url, headers = None)
+   :async:
+
+
+.. py:function:: make_via_multipart(url, data)
    :async:
 
 

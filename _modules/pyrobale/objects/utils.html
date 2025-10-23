@@ -391,6 +391,13 @@
                         <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown error : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="make_via_multipart">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.make_via_multipart">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="pythonize">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/utils/index.html#pyrobale.objects.utils.pythonize">[docs]</a>
