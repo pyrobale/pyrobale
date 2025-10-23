@@ -265,16 +265,26 @@ class Client:
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
             reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
-        data = await make_post(
-            self.requests_base + "/sendPhoto",
-            data={
-                "chat_id": chat_id,
-                "photo": photo,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendPhoto"
+        if isinstance(photo, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("photo", photo.file_input)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "photo": photo,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_audio(
@@ -297,16 +307,27 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
-            self.requests_base + "/sendAudio",
-            data={
-                "chat_id": chat_id,
-                "audio": audio,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendAudio"
+        if isinstance(audio, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("audio", audio.file_input)
+            form.add_field("caption", caption)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "audio": audio,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_document(
@@ -329,16 +350,27 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
-            self.requests_base + "/sendDocument",
-            data={
-                "chat_id": chat_id,
-                "document": document,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendDocument"
+        if isinstance(document, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("document", document.file_input)
+            form.add_field("caption", caption)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "document": document,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_video(
@@ -361,16 +393,27 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
-            self.requests_base + "/sendVideo",
-            data={
-                "chat_id": chat_id,
-                "video": video,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendVideo"
+        if isinstance(video, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("video", video.file_input)
+            form.add_field("caption", caption)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "video": video,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_animation(
@@ -393,16 +436,27 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
-            self.requests_base + "/sendAnimation",
-            data={
-                "chat_id": chat_id,
-                "animation": animation,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendAnimation"
+        if isinstance(animation, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("animation", animation.file_input)
+            form.add_field("caption", caption)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "animation": animation,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_voice(
@@ -425,16 +479,27 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
-            self.requests_base + "/sendVoice",
-            data={
-                "chat_id": chat_id,
-                "voice": voice,
-                "caption": caption,
-                "reply_to_message_id": reply_to_message_id,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
-            },
-        )
+        handler = "/sendVoice"
+        if isinstance(voice, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", f"{chat_id}")
+            form.add_field("voice", voice.file_input)
+            form.add_field("caption", caption)
+            form.add_field("reply_to_message_id", reply_to_message_id)
+            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            data = await make_post(
+                self.requests_base + handler,
+                data={
+                    "chat_id": chat_id,
+                    "voice": voice,
+                    "caption": caption,
+                    "reply_to_message_id": reply_to_message_id,
+                    "reply_markup": reply_markup.to_dict() if reply_markup else None,
+                },
+            )
         return Message(**pythonize(data["result"]))
 
     async def send_media_group(

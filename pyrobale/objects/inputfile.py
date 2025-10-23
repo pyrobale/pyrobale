@@ -1,5 +1,8 @@
+import aiohttp
+import asyncio
+import os
 from typing import Dict, Union, Optional
-from io import BufferedReader
+from io import BufferedReader, BytesIO
 
 
 class InputFile:
@@ -10,7 +13,8 @@ class InputFile:
             )
 
         if isinstance(file_input, str):
-            file_input = file_input.encode()
+            file_input = open(file_input, "rb")
+            #file_input.encode()
         elif isinstance(file_input, BufferedReader):
             file_input = file_input.read()
 
@@ -32,3 +36,5 @@ class InputFile:
             payload["filename"] = self.file_name
 
         return payload
+
+
