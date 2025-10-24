@@ -469,7 +469,7 @@ Module Contents
 
 
 
-   .. py:method:: unpin()
+   .. py:method:: unpin(message_id)
       :async:
 
 

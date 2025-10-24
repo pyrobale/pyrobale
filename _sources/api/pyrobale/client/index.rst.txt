@@ -881,11 +881,6 @@ Package Contents
 
       Process a single update and call registered handlers.
 
-      :param update: The update to process.
-      :type update: Dict[str, Any]
-
-      :returns: None
-
 
 
    .. py:method:: base_handler_decorator(update_type)
