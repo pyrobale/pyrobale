@@ -1,4 +1,5 @@
 dist
 tests/*
 main.py
+test.py
 .idea

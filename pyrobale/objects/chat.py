@@ -423,13 +423,13 @@ class Chat:
             chat_id=self.id, message_id=message_id
         )
 
-    async def unpin(self) -> bool:
+    async def unpin(self, message_id: int) -> bool:
         """Unpin a message in the chat.
 
         Returns:
             bool: True on success
         """
-        return await self.client.unpin_chat_message(chat_id=self.id)
+        return await self.client.unpin_chat_message(chat_id=self.id, message_id=message_id)
 
     async def unpin_all(self) -> bool:
         """Unpin all messages in the chat.
