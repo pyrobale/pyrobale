@@ -72,6 +72,8 @@ class Client:
         self.last_update_id = 0
         self.state_machine = StateMachine()
 
+        self.me : User = None
+
         self.check_defined_message = True
         self.defined_messages = {}
 
@@ -1445,6 +1447,8 @@ class Client:
         """
         if self.running:
             raise RuntimeError("Client is already running")
+
+        self.me = await self.get_me()
 
         self.running = True
         while self.running:

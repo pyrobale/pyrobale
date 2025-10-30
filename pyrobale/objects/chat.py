@@ -82,7 +82,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_message(
+        await self.client.send_message(
             chat_id=self.id,
             text=text,
             reply_to_message_id=reply_to_message_id,
