@@ -57,6 +57,12 @@ Package Contents
    .. py:attribute:: state_machine
 
 
+   .. py:attribute:: me
+      :type:  pyrobale.objects.user.User
+      :value: None
+
+
+
    .. py:attribute:: check_defined_message
       :value: True
 
