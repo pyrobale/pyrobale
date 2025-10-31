@@ -752,6 +752,8 @@ class Client:
             data={"chat_id": chat_id, "user_id": user_id},
         )
 
+        if not data:
+            raise ForbiddenException("You cannot get this chat member!")
         temp = data.get("result")
         temp["chat"] = await self.get_chat(chat_id)
         temp["client"] = self

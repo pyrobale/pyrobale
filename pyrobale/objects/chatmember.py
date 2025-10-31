@@ -181,7 +181,6 @@ class ChatMember:
             bool: True on success
         """
         return await self.chat.promote(
-            chat_id=self.chat.id,
             user_id=self.user.id,
             can_change_info=can_change_info,
             can_post_messages=can_post_messages,

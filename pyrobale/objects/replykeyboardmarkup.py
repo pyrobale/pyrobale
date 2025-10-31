@@ -46,6 +46,12 @@ class ReplyKeyboardMarkup:
         self.keyboard.append([])
         return self
 
+    def to_dict(self):
+        """Convert to a dictionary."""
+        return {
+            "keyboard": self.keyboard,
+        }
+
     @property
     def json(self):
         return {"keyboard": self.keyboard}
