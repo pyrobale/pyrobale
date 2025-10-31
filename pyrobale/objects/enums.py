@@ -1,5 +1,4 @@
 from enum import Enum
-from .message import Message
 
 class UpdatesTypes(Enum):
     """Types of updates."""
