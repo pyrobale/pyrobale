@@ -42,7 +42,7 @@ from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.peerdata import PeerData
 from ..filters import Filters
 from ..StateMachine import StateMachine
-from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException
+from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
 
 from enum import Enum
 import asyncio
@@ -73,7 +73,7 @@ class Client:
         self.last_update_id = 0
         self.state_machine = StateMachine()
 
-        self.me : User = None
+        self.me: User = None
 
         self.check_defined_message = True
         self.defined_messages = {}
@@ -183,7 +183,7 @@ class Client:
             },
         )
         return Message(**pythonize(data.get("result")))
-        
+
     async def delete_message(
             self,
             chat_id: int,
@@ -763,7 +763,7 @@ class Client:
         data = temp
 
         return ChatMember(**pythonize(data))
-    
+
     async def is_user_admin(self, chat_id: int, user_id: int) -> bool:
         """Checks if a user is admin in a chat
 
@@ -779,7 +779,7 @@ class Client:
             return True
         else:
             return False
-        
+
     async def user_has_permissions(self, chat_id: int, user_id: int, permissions: ChatPermissions) -> bool:
         """checks if a user has a specified permission
 
@@ -791,10 +791,10 @@ class Client:
         Returns:
             bool: Whether the user has a specified permission.
         """
-        member = self.get_chat_member(chat_id, user_id)
-        if member.inputs[permissions.value]: 
+        member = await self.get_chat_member(chat_id, user_id)
+        if member.inputs[permissions.value]:
             return True
-        else: 
+        else:
             return False
 
     async def promote_chat_member(
@@ -1198,16 +1198,28 @@ class Client:
         )
         return data.get("ok", False)
 
-    async def wait_for(self, update_type: UpdatesTypes, check=None):
+    async def wait_for(self, update_type: UpdatesTypes, check=None, timeout: Optional[float] = None):
         """Wait until a specified update
 
         Args:
             update_type (UpdatesTypes): The update to wait for.
             check (Callable, optional): The check method to check.
+            timeout (float, optional): Maximum time to wait in seconds. Defaults to None (wait forever).
+
+        Returns:
+            The update object that matches the criteria.
+
+        Raises:
+            asyncio.TimeoutError: If the timeout is reached without a matching update.
         """
         future = asyncio.get_running_loop().create_future()
         self._waiters.append((update_type, check, future))
-        return await future
+
+        try:
+            return await asyncio.wait_for(future, timeout=timeout)
+        except asyncio.TimeoutError:
+            self._waiters = [w for w in self._waiters if w[2] != future]
+            raise
 
     async def process_update(self, update: Dict[str, Any]) -> None:
         """Process a single update and call registered handlers."""
@@ -1227,20 +1239,63 @@ class Client:
             except Exception as e:
                 print(f"Error processing defined message: {e}")
 
-        for waiter in list(self._waiters):
+        waiters_to_remove = []
+        for i, waiter in enumerate(self._waiters):
             w_type, check, future = waiter
-            if w_type.value in update:
-                event_data = update[w_type.value]
+            if future.done():
+                waiters_to_remove.append(i)
+                continue
+
+            is_match = False
+            event = None
+
+            if w_type == UpdatesTypes.MESSAGE and "message" in update:
+                is_match = True
+                event = self._convert_event(w_type, update["message"])
+            elif w_type == UpdatesTypes.COMMAND and "message" in update:
+                message_text = update["message"].get("text", "")
+                if message_text.startswith("/"):
+                    is_match = True
+                    event = self._convert_event(w_type, update["message"])
+            elif w_type == UpdatesTypes.CALLBACK_QUERY and "callback_query" in update:
+                is_match = True
+                event = self._convert_event(w_type, update["callback_query"])
+            elif w_type == UpdatesTypes.PHOTO and "message" in update and "photo" in update["message"]:
+                is_match = True
+                event = self._convert_event(w_type, update["message"])
+            elif w_type == UpdatesTypes.MESSAGE_EDITED and "edited_message" in update:
+                is_match = True
+                event = self._convert_event(w_type, update["edited_message"])
+            elif w_type == UpdatesTypes.MEMBER_JOINED and "message" in update and "new_chat_members" in update[
+                "message"]:
+                is_match = True
+                event = self._convert_event(w_type, update["message"])
+            elif w_type == UpdatesTypes.MEMBER_LEFT and "message" in update and "left_chat_member" in update["message"]:
+                is_match = True
+                event = self._convert_event(w_type, update["message"])
+            elif w_type == UpdatesTypes.PRE_CHECKOUT_QUERY and "pre_checkout_query" in update:
+                is_match = True
+                event = self._convert_event(w_type, update["pre_checkout_query"])
+            elif w_type == UpdatesTypes.SUCCESSFUL_PAYMENT and "message" in update and "successful_payment" in update[
+                "message"]:
+                is_match = True
+                event = self._convert_event(w_type, update["message"])
+
+            if is_match:
                 try:
-                    event = self._convert_event(w_type, event_data)
                     if check is None or check(event):
                         if not future.done():
                             future.set_result(event)
-                        self._waiters.remove(waiter)
-                        return
+                        waiters_to_remove.append(i)
                 except Exception as e:
-                    print(f"Error in waiter conversion: {e}")
-                    continue
+                    print(f"Error in waiter check: {e}")
+                    if not future.done():
+                        future.set_exception(e)
+                    waiters_to_remove.append(i)
+
+        for i in sorted(waiters_to_remove, reverse=True):
+            if i < len(self._waiters):
+                self._waiters.pop(i)
 
         for handler in self.handlers:
             handler_type = handler.get("type")
@@ -1344,6 +1399,8 @@ class Client:
             elif handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
                 if "successful_payment" in event_data:
                     return SuccessfulPayment(kwargs=kwargs, **pythonize(event_data["successful_payment"]))
+                return Message(kwargs=kwargs, **pythonize(event_data))
+            elif handler_type == UpdatesTypes.PHOTO:
                 return Message(kwargs=kwargs, **pythonize(event_data))
             else:
                 return event_data
@@ -1471,7 +1528,7 @@ class Client:
             except Exception as e:
                 print(f"Error in polling: {e}")
                 await asyncio.sleep(1)
-                
+
     async def stop_polling(self) -> None:
         """Stop polling updates."""
         self.running = False
