@@ -133,6 +133,8 @@ class Client:
             User: The bot.
         """
         data = await make_get(self.requests_base + "/getMe")
+        if not data:
+            raise InvalidTokenException("Token is invalid")
         return User(**data["result"])
 
     async def logout(self) -> bool:
