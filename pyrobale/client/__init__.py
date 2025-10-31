@@ -8,6 +8,7 @@ from ..objects.chat import Chat
 from ..objects.contact import Contact
 from ..objects.copytextbutton import CopyTextButton
 from ..objects.document import Document
+from ..objects.invitelink import InviteLink
 from ..objects.file import File
 from ..objects.inlinekeyboardbutton import InlineKeyboardButton
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
@@ -1132,7 +1133,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
-    async def create_chat_invite_link(self, chat_id: int) -> str:
+    async def create_chat_invite_link(self, chat_id: int) -> InviteLink:
         """Create an additional invite link for a chat.
 
         Args:
@@ -1144,7 +1145,10 @@ class Client:
         data = await make_post(
             self.requests_base + "/createChatInviteLink", data={"chat_id": chat_id}
         )
-        return data.get("result", "")
+        try:
+            return InviteLink(**pythonize(data.get("result")))
+        except AttributeError:
+            raise ForbiddenException("you cannot access this chat")
 
     async def revoke_chat_invite_link(self, chat_id: int, invite_link: str) -> str:
         """Revoke an invite link created by the bot.
