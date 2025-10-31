@@ -231,6 +231,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inlinekeyboardmarkup/index.html">pyrobale.objects.inlinekeyboardmarkup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inputfile/index.html">pyrobale.objects.inputfile</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/inputmedias/index.html">pyrobale.objects.inputmedias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/invitelink/index.html">pyrobale.objects.invitelink</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/invoice/index.html">pyrobale.objects.invoice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/keyboardbutton/index.html">pyrobale.objects.keyboardbutton</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/labeledprice/index.html">pyrobale.objects.labeledprice</a></li>
@@ -502,10 +503,10 @@
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_POLLS">CAN_SEND_POLLS (pyrobale.objects.enums.ChatPermissions attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_video_notes">can_send_video_notes (pyrobale.objects.chatmember.ChatMember attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.can_send_videos">can_send_videos (pyrobale.objects.chatmember.ChatMember attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions.CAN_SEND_VIDEOS">CAN_SEND_VIDEOS (pyrobale.objects.enums.ChatPermissions attribute)</a>
@@ -573,6 +574,10 @@
         <li><a href="api/pyrobale/objects/copytextbutton/index.html#pyrobale.objects.copytextbutton.CopyTextButton">CopyTextButton (class in pyrobale.objects.copytextbutton)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.create_chat_invite_link">create_chat_invite_link() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.creates_join_request">creates_join_request (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.creator">creator (pyrobale.objects.invitelink.InviteLink attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.currency">currency (pyrobale.objects.invoice.Invoice attribute)</a>
 
@@ -657,6 +662,8 @@
         <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.edited_message">edited_message (pyrobale.objects.update.Update attribute)</a>
 </li>
         <li><a href="api/pyrobale/filters/func_filters/index.html#pyrobale.filters.func_filters.equals">equals() (in module pyrobale.filters.func_filters)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.expire_date">expire_date (pyrobale.objects.invitelink.InviteLink attribute)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.export_chat_invite_link">export_chat_invite_link() (pyrobale.client.Client method)</a>
 </li>
@@ -878,9 +885,13 @@
 </li>
         <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InternalServerException">InternalServerException</a>
 </li>
+        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InvalidTokenException">InvalidTokenException</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">invite_link (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InvalidTokenException">InvalidTokenException</a>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink">InviteLink (class in pyrobale.objects.invitelink)</a>
 </li>
         <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice">Invoice (class in pyrobale.objects.invoice)</a>
 </li>
@@ -914,7 +925,11 @@
 </li>
         <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_ok">is_ok (pyrobale.objects.peerdata.PeerData attribute)</a>
 </li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.is_primary">is_primary (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
         <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.is_private">is_private (pyrobale.objects.peerdata.PeerData attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.is_revoked">is_revoked (pyrobale.objects.invitelink.InviteLink attribute)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.is_user_admin">is_user_admin() (pyrobale.client.Client method)</a>
 </li>
@@ -1026,6 +1041,8 @@
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes.MEMBER_LEFT">MEMBER_LEFT (pyrobale.objects.enums.UpdatesTypes attribute)</a>
 </li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.member_limit">member_limit (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
         <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.members">members (pyrobale.objects.peerdata.PeerData attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message">Message (class in pyrobale.objects.message)</a>
@@ -1102,6 +1119,8 @@
 </li>
           <li><a href="api/pyrobale/objects/inputmedias/index.html#module-pyrobale.objects.inputmedias">pyrobale.objects.inputmedias</a>
 </li>
+          <li><a href="api/pyrobale/objects/invitelink/index.html#module-pyrobale.objects.invitelink">pyrobale.objects.invitelink</a>
+</li>
           <li><a href="api/pyrobale/objects/invoice/index.html#module-pyrobale.objects.invoice">pyrobale.objects.invoice</a>
 </li>
           <li><a href="api/pyrobale/objects/keyboardbutton/index.html#module-pyrobale.objects.keyboardbutton">pyrobale.objects.keyboardbutton</a>
@@ -1153,8 +1172,12 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.name">name (pyrobale.objects.peerdata.PeerData attribute)</a>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.name">name (pyrobale.objects.invitelink.InviteLink attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.name">(pyrobale.objects.peerdata.PeerData attribute)</a>
 </li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/message/index.html#id20">new_chat_members (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.new_chat_members">[1]</a>
@@ -1198,6 +1221,8 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData">PeerData (class in pyrobale.objects.peerdata)</a>
+</li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.pending_join_request_count">pending_join_request_count (pyrobale.objects.invitelink.InviteLink attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.phone_number">phone_number (pyrobale.objects.contact.Contact attribute)</a>
 </li>
@@ -1404,6 +1429,13 @@
 
         <ul>
           <li><a href="api/pyrobale/objects/inputmedias/index.html#module-pyrobale.objects.inputmedias">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.invitelink
+
+        <ul>
+          <li><a href="api/pyrobale/objects/invitelink/index.html#module-pyrobale.objects.invitelink">module</a>
 </li>
         </ul></li>
         <li>
@@ -1783,6 +1815,8 @@
         </ul></li>
         <li><a href="api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.to_multipart_payload">to_multipart_payload() (pyrobale.objects.inputfile.InputFile method)</a>
 </li>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.to_url">to_url() (pyrobale.objects.invitelink.InviteLink method)</a>
+</li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.token">token (pyrobale.client.Client attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.total_amount">total_amount (pyrobale.objects.invoice.Invoice attribute)</a>
@@ -1848,6 +1882,8 @@
         <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.url">url (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.url">(pyrobale.objects.invitelink.InviteLink property)</a>
+</li>
           <li><a href="api/pyrobale/objects/webappinfo/index.html#pyrobale.objects.webappinfo.WebAppInfo.url">(pyrobale.objects.webappinfo.WebAppInfo attribute)</a>
 </li>
         </ul></li>

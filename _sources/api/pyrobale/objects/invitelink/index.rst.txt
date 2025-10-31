@@ -1,0 +1,52 @@
+pyrobale.objects.invitelink
+===========================
+
+.. py:module:: pyrobale.objects.invitelink
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.invitelink.InviteLink
+
+
+Module Contents
+---------------
+
+.. py:class:: InviteLink(invite_link, creator, creates_join_request, is_primary, is_revoked, name, expire_date, member_limit, pending_join_request_count)
+
+   .. py:attribute:: invite_link
+
+
+   .. py:attribute:: creator
+
+
+   .. py:attribute:: creates_join_request
+
+
+   .. py:attribute:: is_primary
+
+
+   .. py:attribute:: is_revoked
+
+
+   .. py:attribute:: member_limit
+
+
+   .. py:attribute:: pending_join_request_count
+
+
+   .. py:attribute:: expire_date
+
+
+   .. py:attribute:: name
+
+
+   .. py:method:: to_url()
+
+
+   .. py:property:: url
+
+

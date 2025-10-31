@@ -31,6 +31,7 @@ Submodules
    /api/pyrobale/objects/inlinekeyboardmarkup/index
    /api/pyrobale/objects/inputfile/index
    /api/pyrobale/objects/inputmedias/index
+   /api/pyrobale/objects/invitelink/index
    /api/pyrobale/objects/invoice/index
    /api/pyrobale/objects/keyboardbutton/index
    /api/pyrobale/objects/labeledprice/index

@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/pyrobale.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyrobale.objects.callbackquery - Pyrobale Documentation</title>
+        <title>pyrobale.objects.invitelink - Pyrobale Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -343,66 +343,64 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for pyrobale.objects.callbackquery</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+          <h1>Source code for pyrobale.objects.invitelink</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 
 
-<div class="viewcode-block" id="CallbackQuery">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">CallbackQuery</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a callback query from a user.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="InviteLink">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InviteLink</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">invite_link</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">creator</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">creates_join_request</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">is_primary</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">is_revoked</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expire_date</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">member_limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pending_join_request_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="InviteLink.invite_link">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">invite_link</span> <span class="o">=</span> <span class="n">invite_link</span></div>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">user</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-<div class="viewcode-block" id="CallbackQuery.id">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.id">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span></div>
+<div class="viewcode-block" id="InviteLink.creator">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.creator">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">creator</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CallbackQuery.user">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.user">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="InviteLink.creates_join_request">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.creates_join_request">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creates_join_request</span> <span class="o">=</span> <span class="n">creates_join_request</span></div>
 
-<div class="viewcode-block" id="CallbackQuery.message">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.message">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="InviteLink.is_primary">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.is_primary">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_primary</span> <span class="o">=</span> <span class="n">is_primary</span></div>
 
-<div class="viewcode-block" id="CallbackQuery.chat">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.chat">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="InviteLink.is_revoked">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.is_revoked">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_revoked</span> <span class="o">=</span> <span class="n">is_revoked</span></div>
 
-<div class="viewcode-block" id="CallbackQuery.data">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.data">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="InviteLink.member_limit">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.member_limit">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">member_limit</span> <span class="o">=</span> <span class="n">member_limit</span></div>
 
-<div class="viewcode-block" id="CallbackQuery.bot">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.bot">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kwargs&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+<div class="viewcode-block" id="InviteLink.pending_join_request_count">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.pending_join_request_count">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pending_join_request_count</span> <span class="o">=</span> <span class="n">pending_join_request_count</span></div>
+
+<div class="viewcode-block" id="InviteLink.expire_date">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.expire_date">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expire_date</span> <span class="o">=</span> <span class="n">expire_date</span></div>
+
+<div class="viewcode-block" id="InviteLink.name">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.name">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
 
 
-        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<div class="viewcode-block" id="InviteLink.to_url">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.to_url">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">invite_link</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">user</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">.message</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">message</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">chat</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="k">else</span> <span class="kc">None</span>
-
-<div class="viewcode-block" id="CallbackQuery.answer">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.answer">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">answer</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_alert</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a response to the callback query.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">answer_callback_query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">show_alert</span><span class="p">)</span></div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="InviteLink.url">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.url">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;https://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">invite_link</span><span class="si">}</span><span class="s2">&quot;</span></div>
 </div>
 
 </pre></div>

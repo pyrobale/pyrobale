@@ -232,6 +232,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/inlinekeyboardmarkup/index.html">pyrobale.objects.inlinekeyboardmarkup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/inputfile/index.html">pyrobale.objects.inputfile</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/inputmedias/index.html">pyrobale.objects.inputmedias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/invitelink/index.html">pyrobale.objects.invitelink</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/invoice/index.html">pyrobale.objects.invoice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/keyboardbutton/index.html">pyrobale.objects.keyboardbutton</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/labeledprice/index.html">pyrobale.objects.labeledprice</a></li>
@@ -353,6 +354,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.contact</span><span class="w"> </span><span class="kn">import</span> <span class="n">Contact</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.copytextbutton</span><span class="w"> </span><span class="kn">import</span> <span class="n">CopyTextButton</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.document</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..objects.invitelink</span><span class="w"> </span><span class="kn">import</span> <span class="n">InviteLink</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.file</span><span class="w"> </span><span class="kn">import</span> <span class="n">File</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardbutton</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardButton</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
@@ -1637,7 +1639,7 @@
 
 <div class="viewcode-block" id="Client.create_chat_invite_link">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.create_chat_invite_link">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_chat_invite_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_chat_invite_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InviteLink</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an additional invite link for a chat.</span>
 
 <span class="sd">        Args:</span>
@@ -1649,7 +1651,10 @@
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/createChatInviteLink&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InviteLink</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="s2">&quot;you cannot access this chat&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Client.revoke_chat_invite_link">
