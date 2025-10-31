@@ -46,6 +46,12 @@ Module Contents
 
 
 
+   .. py:method:: to_dict()
+
+      Convert to a dictionary.
+
+
+
    .. py:property:: json
 
 
