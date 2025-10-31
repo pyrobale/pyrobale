@@ -868,7 +868,7 @@ Package Contents
 
 
 
-   .. py:method:: wait_for(update_type, check=None)
+   .. py:method:: wait_for(update_type, check=None, timeout = None)
       :async:
 
 
@@ -878,6 +878,12 @@ Package Contents
       :type update_type: UpdatesTypes
       :param check: The check method to check.
       :type check: Callable, optional
+      :param timeout: Maximum time to wait in seconds. Defaults to None (wait forever).
+      :type timeout: float, optional
+
+      :returns: The update object that matches the criteria.
+
+      :raises asyncio.TimeoutError: If the timeout is reached without a matching update.
 
 
 

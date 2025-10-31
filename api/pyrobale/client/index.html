@@ -1380,14 +1380,21 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.wait_for">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.wait_for"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.wait_for" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.wait_for"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.wait_for" title="Link to this definition">¶</a></dt>
 <dd><p>Wait until a specified update</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>UpdatesTypes</em></a>) – The update to wait for.</p></li>
 <li><p><strong>check</strong> (<em>Callable</em><em>, </em><em>optional</em>) – The check method to check.</p></li>
+<li><p><strong>timeout</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum time to wait in seconds. Defaults to None (wait forever).</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The update object that matches the criteria.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>asyncio.TimeoutError</strong> – If the timeout is reached without a matching update.</p>
 </dd>
 </dl>
 </dd></dl>

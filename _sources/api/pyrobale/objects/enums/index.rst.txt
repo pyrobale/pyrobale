@@ -172,7 +172,7 @@ Module Contents
 
 
 
-   .. py:attribute:: REVORDVIDEO
+   .. py:attribute:: RECORDVIDEO
       :value: 'record_video'
 
 
