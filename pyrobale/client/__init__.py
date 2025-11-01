@@ -774,7 +774,11 @@ class Client:
         Returns:
             bool: Whether the user is admin in a chat.
         """
-        chat_user = await self.get_chat_member(chat_id, user_id)
+        try:
+            chat_user = await self.get_chat_member(chat_id, user_id)
+        except ForbiddenException:
+            return False
+
         if chat_user.status in ['creator', 'administrator']:
             return True
         else:
