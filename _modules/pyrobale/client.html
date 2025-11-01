@@ -1232,7 +1232,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the user is admin in a chat.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">chat_user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chat_user</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ForbiddenException</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
         <span class="k">if</span> <span class="n">chat_user</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">,</span> <span class="s1">&#39;administrator&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
