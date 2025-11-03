@@ -71,6 +71,17 @@ Package Contents
    .. py:attribute:: defined_messages
 
 
+   .. py:method:: ping(round_it=False)
+      :async:
+
+
+      Ping the bot to see if the bot is alive.
+      :param round_it: returns rounded number if was true
+
+      :returns: how many milliseconds it took to ping
+
+
+
    .. py:method:: get_updates(offset = None, limit = None, timeout = None)
       :async:
 

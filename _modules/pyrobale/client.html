@@ -391,7 +391,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..filters</span><span class="w"> </span><span class="kn">import</span> <span class="n">Filters</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..StateMachine</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateMachine</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotFoundException</span><span class="p">,</span> <span class="n">InvalidTokenException</span><span class="p">,</span> <span class="n">PyroBaleException</span><span class="p">,</span> <span class="n">ForbiddenException</span>
-
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
@@ -456,6 +456,30 @@
 <div class="viewcode-block" id="Client.defined_messages">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.defined_messages">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">defined_messages</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="Client.ping">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.ping">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">round_it</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ping the bot to see if the bot is alive.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            round_it: returns rounded number if was true</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            how many milliseconds it took to ping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span><span class="si">}</span><span class="s2">/getme&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                    <span class="n">response_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                    <span class="k">if</span> <span class="n">round_it</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">response_time</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">response_time</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span></div>
 
 
 <div class="viewcode-block" id="Client.get_updates">

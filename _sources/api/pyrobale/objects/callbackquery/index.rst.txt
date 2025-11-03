@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: CallbackQuery(id = None, user = None, message = None, data = None, **kwargs)
+.. py:class:: CallbackQuery(id = None, from_user = None, message = None, data = None, **kwargs)
 
    Represents a callback query from a user.
 
