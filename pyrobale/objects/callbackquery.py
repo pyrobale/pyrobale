@@ -7,7 +7,7 @@ class CallbackQuery:
     def __init__(
         self,
         id: Optional[str] = None,
-        user: Optional[dict] = None,
+        from_user: Optional[dict] = None,
         message: Optional[dict] = None,
         data: Optional[str] = None,
         **kwargs
@@ -19,10 +19,10 @@ class CallbackQuery:
         self.data = data if data else None
         self.bot = kwargs.get("kwargs", {}).get("client", None)
 
-        if user:
+        if from_user:
             from .user import User
 
-            self.user = User(**user)
+            self.user = User(**from_user)
 
         if message:
             from .message import Message

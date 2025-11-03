@@ -44,7 +44,7 @@ from ..objects.peerdata import PeerData
 from ..filters import Filters
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
-
+import time
 from enum import Enum
 import asyncio
 from bs4 import BeautifulSoup
@@ -78,6 +78,27 @@ class Client:
 
         self.check_defined_message = True
         self.defined_messages = {}
+
+    async def ping(self, round_it = False) -> float:
+        """
+        Ping the bot to see if the bot is alive.
+        Args:
+            round_it: returns rounded number if was true
+
+        Returns:
+            how many milliseconds it took to ping
+        """
+        async with aiohttp.ClientSession() as session:
+            start_time = time.perf_counter()
+            try:
+                async with session.get(f"{self.requests_base}/getme") as response:
+                    response_time = time.perf_counter() - start_time
+                    if round_it:
+                        return response_time
+                    else:
+                        return round(response_time, 2)
+            except Exception as e:
+                raise e
 
     async def get_updates(
             self,
