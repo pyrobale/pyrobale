@@ -8,6 +8,7 @@ from ..objects.chat import Chat
 from ..objects.contact import Contact
 from ..objects.copytextbutton import CopyTextButton
 from ..objects.document import Document
+from ..objects.newchatmembers import NewChatMembers
 from ..objects.invitelink import InviteLink
 from ..objects.file import File
 from ..objects.inlinekeyboardbutton import InlineKeyboardButton
@@ -1390,7 +1391,12 @@ class Client:
                 message = Message(kwargs=kwargs, **pythonize(event_data))
 
                 if handler_type == UpdatesTypes.MEMBER_JOINED and "new_chat_members" in event_data:
-                    message.new_chat_members = [User(**pythonize(u)) for u in event_data["new_chat_members"]]
+                    data = dict()
+                    data["inviter"] = User(**event_data["from"])
+                    data["date"] = event_data["date"]
+                    data["chat"] = Chat(**event_data["chat"])
+                    data["new_chat_members"] = [User(**pythonize(u)) for u in event_data["new_chat_members"]]
+                    message.new_chat_members = NewChatMembers(**data)
                 elif handler_type == UpdatesTypes.MEMBER_LEFT and "left_chat_member" in event_data:
                     message.left_chat_member = User(**pythonize(event_data["left_chat_member"]))
 

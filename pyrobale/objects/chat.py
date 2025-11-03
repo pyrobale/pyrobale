@@ -48,8 +48,6 @@ class Chat:
         type: Optional[str] = None,
         title: Optional[str] = None,
         username: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None,
         photo: Optional["ChatPhoto"] = None,
         client: Optional["Client"] = None,
         **kwargs
@@ -61,8 +59,6 @@ class Chat:
         self.CHANNEL = self.type == "channel"
         self.title = title
         self.username = username
-        self.first_name = first_name
-        self.last_name = last_name
         self.photo: "ChatPhoto" = photo
         self.client: "Client" = client
 
