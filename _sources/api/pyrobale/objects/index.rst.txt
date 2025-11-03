@@ -38,6 +38,7 @@ Submodules
    /api/pyrobale/objects/location/index
    /api/pyrobale/objects/message/index
    /api/pyrobale/objects/messageid/index
+   /api/pyrobale/objects/newchatmembers/index
    /api/pyrobale/objects/peerdata/index
    /api/pyrobale/objects/photosize/index
    /api/pyrobale/objects/precheckoutquery/index

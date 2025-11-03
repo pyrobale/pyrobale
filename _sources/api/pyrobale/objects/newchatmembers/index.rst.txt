@@ -1,0 +1,31 @@
+pyrobale.objects.newchatmembers
+===============================
+
+.. py:module:: pyrobale.objects.newchatmembers
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.newchatmembers.NewChatMembers
+
+
+Module Contents
+---------------
+
+.. py:class:: NewChatMembers(inviter, date, chat, new_chat_members)
+
+   .. py:attribute:: inviter
+
+
+   .. py:attribute:: date
+
+
+   .. py:attribute:: chat
+
+
+   .. py:attribute:: new_chat_members
+
+

@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/pyrobale.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyrobale.objects.update - Pyrobale Documentation</title>
+        <title>pyrobale.objects.newchatmembers - Pyrobale Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -344,46 +344,30 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for pyrobale.objects.update</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
+          <h1>Source code for pyrobale.objects.newchatmembers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
 
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.message</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.callbackquery</span><span class="w"> </span><span class="kn">import</span> <span class="n">CallbackQuery</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.precheckoutquery</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreCheckoutQuery</span>
+<div class="viewcode-block" id="NewChatMembers">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewChatMembers</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inviter</span><span class="p">:</span> <span class="n">User</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span><span class="p">,</span> <span class="n">new_chat_members</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="NewChatMembers.inviter">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.inviter">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inviter</span> <span class="o">=</span> <span class="n">inviter</span></div>
 
+<div class="viewcode-block" id="NewChatMembers.date">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.date">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span></div>
 
-<div class="viewcode-block" id="Update">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Update</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">update_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">edited_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">callback_query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;CallbackQuery&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">pre_checkout_query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;PreCheckoutQuery&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-<div class="viewcode-block" id="Update.update_id">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.update_id">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_id</span> <span class="o">=</span> <span class="n">update_id</span></div>
+<div class="viewcode-block" id="NewChatMembers.chat">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.chat">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">chat</span></div>
 
-<div class="viewcode-block" id="Update.message">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.message">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span></div>
-
-<div class="viewcode-block" id="Update.edited_message">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.edited_message">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">edited_message</span> <span class="o">=</span> <span class="n">edited_message</span></div>
-
-<div class="viewcode-block" id="Update.callback_query">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.callback_query">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">callback_query</span> <span class="o">=</span> <span class="n">callback_query</span></div>
-
-<div class="viewcode-block" id="Update.pre_checkout_query">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.pre_checkout_query">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_checkout_query</span> <span class="o">=</span> <span class="n">pre_checkout_query</span></div>
+<div class="viewcode-block" id="NewChatMembers.new_chat_members">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.new_chat_members">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_chat_members</span> <span class="o">=</span> <span class="n">new_chat_members</span></div>
 </div>
 
 </pre></div>

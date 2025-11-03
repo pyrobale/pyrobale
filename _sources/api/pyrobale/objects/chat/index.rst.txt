@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Chat(id = None, type = None, title = None, username = None, first_name = None, last_name = None, photo = None, client = None, **kwargs)
+.. py:class:: Chat(id = None, type = None, title = None, username = None, photo = None, client = None, **kwargs)
 
    Represents a chat in the Bale messenger.
 
@@ -127,16 +127,6 @@ Module Contents
 
 
    .. py:attribute:: username
-      :value: None
-
-
-
-   .. py:attribute:: first_name
-      :value: None
-
-
-
-   .. py:attribute:: last_name
       :value: None
 
 
