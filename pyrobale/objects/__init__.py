@@ -44,6 +44,7 @@ from .messageid import MessageId
 from .labeledprice import LabeledPrice
 from .update import Update
 from .enums import UpdatesTypes, ChatAction, ChatType
+from .newchatmembers import NewChatMembers
 
 __all__ = [
     "UpdatesTypes",
@@ -87,5 +88,6 @@ __all__ = [
     "MessageId",
     "LabeledPrice",
     "Update",
-    "InviteLink"
+    "InviteLink",
+    "NewChatMembers"
 ]
