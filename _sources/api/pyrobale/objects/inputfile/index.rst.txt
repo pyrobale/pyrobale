@@ -18,12 +18,24 @@ Module Contents
 .. py:class:: InputFile(file_input, *, file_name = None)
 
    .. py:attribute:: file_input
-      :type:  Union[bytes, str]
+      :type:  bytes
 
 
    .. py:attribute:: file_name
       :type:  Optional[str]
       :value: None
+
+
+
+   .. py:method:: __del__()
+
+      Ensure file handle is closed when object is destroyed
+
+
+
+   .. py:method:: close()
+
+      Explicitly close the file handle if needed
 
 
 

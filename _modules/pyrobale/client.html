@@ -395,7 +395,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">JSONDecodeError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">JSONDecodeError</span><span class="p">,</span> <span class="n">dumps</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp</span>
 
 
@@ -690,13 +690,13 @@
 <div class="viewcode-block" id="Client.send_photo">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_photo">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_photo</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-            <span class="n">photo</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-            <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">photo</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a photo to a chat.</span>
 
 <span class="sd">        Args:</span>
@@ -709,10 +709,22 @@
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendPhoto&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">photo</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;photo&quot;</span><span class="p">,</span> <span class="n">photo</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">photo</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;photo&quot;</span><span class="p">,</span> <span class="n">photo</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">photo</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;photo&quot;</span><span class="p">,</span> <span class="n">photo</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;photo.png&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -732,33 +744,41 @@
 <div class="viewcode-block" id="Client.send_audio">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_audio">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_audio</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-            <span class="n">audio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-            <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">audio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an audio to a chat.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
 <span class="sd">            audio (Union[InputFile, str]): The audio file to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the audio. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
-<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Message: The message.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendAudio&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">audio</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;audio.mp3&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -779,7 +799,7 @@
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_document">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_document</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">document</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -788,23 +808,31 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a document to a chat.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
 <span class="sd">            document (Union[InputFile, str]): The document to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the document. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
-<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Message: The message.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendDocument&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;document&quot;</span><span class="p">,</span> <span class="n">document</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">document</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;document&quot;</span><span class="p">,</span> <span class="n">document</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">document</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;document&quot;</span><span class="p">,</span> <span class="n">document</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;document.pdf&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -825,7 +853,7 @@
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_video">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_video</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">video</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -834,23 +862,31 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a video to a chat.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
 <span class="sd">            video (Union[InputFile, str]): The video file to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the video. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
-<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Message: The message.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendVideo&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">video</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">video</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">,</span> <span class="n">video</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;video.mp4&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -871,7 +907,7 @@
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_animation">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_animation</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">animation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -880,23 +916,31 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an animation (GIF) to a chat.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
 <span class="sd">            animation (Union[InputFile, str]): The animation file to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the animation. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
-<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Message: The message.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendAnimation&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">animation</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;animation&quot;</span><span class="p">,</span> <span class="n">animation</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">animation</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;animation&quot;</span><span class="p">,</span> <span class="n">animation</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">animation</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;animation&quot;</span><span class="p">,</span> <span class="n">animation</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;animation.gif&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -917,7 +961,7 @@
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_voice">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_voice</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">voice</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -926,23 +970,31 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a voice message to a chat.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            chat_id (int): The chat to send the message to.</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
 <span class="sd">            voice (Union[InputFile, str]): The voice file to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the voice. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
-<span class="sd">            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Message: The message.</span>
+<span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendVoice&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;voice&quot;</span><span class="p">,</span> <span class="n">voice</span><span class="o">.</span><span class="n">file_input</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="n">reply_to_message_id</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">reply_markup</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            
+            <span class="k">if</span> <span class="n">voice</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;voice&quot;</span><span class="p">,</span> <span class="n">voice</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">voice</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;voice&quot;</span><span class="p">,</span> <span class="n">voice</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;voice.ogg&quot;</span><span class="p">)</span>
+            
+            
+            <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="n">caption</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">reply_markup</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+            
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>

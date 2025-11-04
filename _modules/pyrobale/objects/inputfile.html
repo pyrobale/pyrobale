@@ -350,36 +350,66 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BufferedReader</span><span class="p">,</span> <span class="n">BytesIO</span>
-
+<span class="kn">import</span><span class="w"> </span><span class="nn">mimetypes</span>
 
 <div class="viewcode-block" id="InputFile">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InputFile</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span> <span class="p">,</span> <span class="s2">&quot;BufferedReader&quot;</span> <span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;BufferedReader&quot;</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                 <span class="s2">&quot;file_input parameter must be one of str, BufferedReader, and byte types&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">file_input</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
-            <span class="c1">#file_input.encode()</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">):</span>
-            <span class="n">file_input</span> <span class="o">=</span> <span class="n">file_input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_should_close</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="s2">&quot;file_name param must be type of str&quot;</span>
-                <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_input</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="n">file_input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_should_close</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">file_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">file_name</span><span class="p">:</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_input</span><span class="p">)</span>
+                
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">):</span>
+            <span class="n">current_pos</span> <span class="o">=</span> <span class="n">file_input</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">file_input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">file_input</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">current_pos</span><span class="p">)</span> 
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">file_name</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">file_input</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">):</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_input</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">file_input</span>
+
+        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;file_name param must be type of str&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="InputFile.file_input">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.file_input">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_input</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_input</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">file_content</span></div>
 
 <div class="viewcode-block" id="InputFile.file_name">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.file_name">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_name</span></div>
+
+
+<div class="viewcode-block" id="InputFile.__del__">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.__del__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure file handle is closed when object is destroyed&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_close</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="InputFile.close">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Explicitly close the file handle if needed&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_close</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="InputFile.to_multipart_payload">
@@ -394,8 +424,6 @@
 
         <span class="k">return</span> <span class="n">payload</span></div>
 </div>
-
-
 
 </pre></div>
         </article>

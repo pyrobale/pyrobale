@@ -256,18 +256,15 @@ Package Contents
       Send an audio to a chat.
 
       :param chat_id: The chat to send the message to.
-      :type chat_id: int
+      :type chat_id: Union[int, str]
       :param audio: The audio file to send.
       :type audio: Union[InputFile, str]
       :param caption: The caption of the audio. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
-
-      :returns: The message.
-      :rtype: Message
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
 
@@ -278,18 +275,15 @@ Package Contents
       Send a document to a chat.
 
       :param chat_id: The chat to send the message to.
-      :type chat_id: int
+      :type chat_id: Union[int, str]
       :param document: The document to send.
       :type document: Union[InputFile, str]
       :param caption: The caption of the document. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
-
-      :returns: The message.
-      :rtype: Message
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
 
@@ -300,18 +294,15 @@ Package Contents
       Send a video to a chat.
 
       :param chat_id: The chat to send the message to.
-      :type chat_id: int
+      :type chat_id: Union[int, str]
       :param video: The video file to send.
       :type video: Union[InputFile, str]
       :param caption: The caption of the video. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
-
-      :returns: The message.
-      :rtype: Message
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
 
@@ -322,18 +313,15 @@ Package Contents
       Send an animation (GIF) to a chat.
 
       :param chat_id: The chat to send the message to.
-      :type chat_id: int
+      :type chat_id: Union[int, str]
       :param animation: The animation file to send.
       :type animation: Union[InputFile, str]
       :param caption: The caption of the animation. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
-
-      :returns: The message.
-      :rtype: Message
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
 
@@ -344,18 +332,15 @@ Package Contents
       Send a voice message to a chat.
 
       :param chat_id: The chat to send the message to.
-      :type chat_id: int
+      :type chat_id: Union[int, str]
       :param voice: The voice file to send.
       :type voice: Union[InputFile, str]
       :param caption: The caption of the voice. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
-
-      :returns: The message.
-      :rtype: Message
+      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
 

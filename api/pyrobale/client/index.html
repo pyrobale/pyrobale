@@ -659,20 +659,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
 <li><p><strong>audio</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The audio file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the audio. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -684,20 +679,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
 <li><p><strong>document</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The document to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the document. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,20 +699,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
 <li><p><strong>video</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The video file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the video. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -734,20 +719,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
 <li><p><strong>animation</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The animation file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the animation. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -759,20 +739,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
 <li><p><strong>voice</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The voice file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the voice. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
 </dd>
 </dl>
 </dd></dl>
