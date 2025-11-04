@@ -48,8 +48,6 @@ class Chat:
         type: Optional[str] = None,
         title: Optional[str] = None,
         username: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None,
         photo: Optional["ChatPhoto"] = None,
         client: Optional["Client"] = None,
         **kwargs
@@ -61,8 +59,6 @@ class Chat:
         self.CHANNEL = self.type == "channel"
         self.title = title
         self.username = username
-        self.first_name = first_name
-        self.last_name = last_name
         self.photo: "ChatPhoto" = photo
         self.client: "Client" = client
 
@@ -82,7 +78,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_message(
+        await self.client.send_message(
             chat_id=self.id,
             text=text,
             reply_to_message_id=reply_to_message_id,
@@ -423,13 +419,13 @@ class Chat:
             chat_id=self.id, message_id=message_id
         )
 
-    async def unpin(self) -> bool:
+    async def unpin(self, message_id: int) -> bool:
         """Unpin a message in the chat.
 
         Returns:
             bool: True on success
         """
-        return await self.client.unpin_chat_message(chat_id=self.id)
+        return await self.client.unpin_chat_message(chat_id=self.id, message_id=message_id)
 
     async def unpin_all(self) -> bool:
         """Unpin all messages in the chat.

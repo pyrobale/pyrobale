@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 from typing import Optional, Union
+
+from pyrobale.objects.newchatmembers import NewChatMembers
 from ..objects.utils import pythonize
 
 if TYPE_CHECKING:
@@ -168,7 +170,7 @@ class Message:
         self.caption: Optional[str] = caption
         self.contact: Optional["Contact"] = contact
         self.location: Optional["Location"] = location
-        self.new_chat_members: Optional[list["User"]] = new_chat_members
+        self.new_chat_members: Optional["NewChatMembers"] = new_chat_members
         self.left_chat_member: Optional["User"] = left_chat_member
         self.invoice: Optional["Invoice"] = invoice
         self.successful_payment: Optional["SuccessfulPayment"] = successful_payment

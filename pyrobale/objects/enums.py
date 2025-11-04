@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class UpdatesTypes(Enum):
     """Types of updates."""
 
@@ -40,7 +39,7 @@ class ChatAction(Enum):
     TYPING = "typing"
     PHOTO = "upload_photo"
     VIDEO = "upload_video"
-    REVORDVIDEO = "record_video"
+    RECORDVIDEO = "record_video"
     VOICE = "upload_voice"
     DOCUMENT = "upload_document"
 

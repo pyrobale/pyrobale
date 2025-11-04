@@ -76,7 +76,7 @@ jobs:
           *نسخه فعلی کتابخانه:* {version}
           *pypi:* {pypi_status}
 
-          [*🔗 مشاهده در GitHub:*]({github_url})
+          [*🔗 مشاهده در GitHub*]({github_url})
 
           🆔 @pyrobale"""
           

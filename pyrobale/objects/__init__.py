@@ -21,6 +21,7 @@ from .chat import Chat
 from .sticker import Sticker
 from .contact import Contact
 from .animation import Animation
+from .invitelink import InviteLink
 from .user import User
 from .chatphoto import ChatPhoto
 from .webappinfo import WebAppInfo
@@ -86,4 +87,5 @@ __all__ = [
     "MessageId",
     "LabeledPrice",
     "Update",
+    "InviteLink"
 ]
