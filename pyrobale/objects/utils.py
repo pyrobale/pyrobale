@@ -37,10 +37,22 @@ async def make_get(url: str, headers: dict = None) -> dict:
                     else:
                         raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
 
-async def make_via_multipart(url: str, data: aiohttp.FormData):
+async def make_via_multipart(url: str, data: aiohttp.FormData) -> dict:
     async with aiohttp.ClientSession() as session:
         async with session.post(url, data=data) as resp:
-            return await resp.json()
+            json_response = await resp.json()
+            if json_response.get('ok'):
+                return json_response
+            else:
+                error_code = json_response.get('error_code', 0)
+                description = json_response.get('description', 'No description')
+                
+                if error_code == 404:
+                    raise NotFoundException(f"Error not found 404 : {description}")
+                elif error_code == 403:
+                    raise ForbiddenException(f"Error Forbidden 403 : {description}")
+                else:
+                    raise PyroBaleException(f"Unknown error {error_code}: {description}")
 
 def pythonize(dictionary: dict) -> dict:
     """Converts a dictionary with keys in snake_case to camelCase."""

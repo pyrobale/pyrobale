@@ -46,7 +46,7 @@ from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleExcep
 from enum import Enum
 import asyncio
 from bs4 import BeautifulSoup
-from json import loads, JSONDecodeError
+from json import loads, JSONDecodeError, dumps
 import aiohttp
 
 
@@ -249,13 +249,13 @@ class Client:
         return Message(**pythonize(data["result"]))
 
     async def send_photo(
-            self,
-            chat_id: Union[int, str],
-            photo: Union[InputFile, str],
-            caption: Optional[str] = None,
-            reply_to_message_id: Optional[int] = None,
-            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
-    ) -> Message:
+        self,
+        chat_id: Union[int, str],
+        photo: Union[InputFile, str],
+        caption: Optional[str] = None,
+        reply_to_message_id: Optional[int] = None,
+        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
+        ) -> Message:
         """Send a photo to a chat.
 
         Args:
@@ -268,10 +268,22 @@ class Client:
         handler = "/sendPhoto"
         if isinstance(photo, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("photo", photo.file_input)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if photo.file_name:
+                form.add_field("photo", photo.file_input, filename=photo.file_name)
+            else:
+                form.add_field("photo", photo.file_input, filename="photo.png")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -288,33 +300,41 @@ class Client:
         return Message(**pythonize(data["result"]))
 
     async def send_audio(
-            self,
-            chat_id: int,
-            audio: Union[InputFile, str],
-            caption: Optional[str] = None,
-            reply_to_message_id: Optional[int] = None,
-            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
-    ) -> Message:
+        self,
+        chat_id: Union[int, str],
+        audio: Union[InputFile, str],
+        caption: Optional[str] = None,
+        reply_to_message_id: Optional[int] = None,
+        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
+) -> Message:
         """Send an audio to a chat.
 
         Args:
-            chat_id (int): The chat to send the message to.
+            chat_id (Union[int, str]): The chat to send the message to.
             audio (Union[InputFile, str]): The audio file to send.
             caption (Optional[str], optional): The caption of the audio. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
-
-        Returns:
-            Message: The message.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
         handler = "/sendAudio"
         if isinstance(audio, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("audio", audio.file_input)
-            form.add_field("caption", caption)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if audio.file_name:
+                form.add_field("audio", audio.file_input, filename=audio.file_name)
+            else:
+                form.add_field("audio", audio.file_input, filename="audio.mp3")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -332,7 +352,7 @@ class Client:
 
     async def send_document(
             self,
-            chat_id: int,
+            chat_id: Union[int, str],
             document: Union[InputFile, str],
             caption: Optional[str] = None,
             reply_to_message_id: Optional[int] = None,
@@ -341,23 +361,31 @@ class Client:
         """Send a document to a chat.
 
         Args:
-            chat_id (int): The chat to send the message to.
+            chat_id (Union[int, str]): The chat to send the message to.
             document (Union[InputFile, str]): The document to send.
             caption (Optional[str], optional): The caption of the document. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
-
-        Returns:
-            Message: The message.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
         handler = "/sendDocument"
         if isinstance(document, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("document", document.file_input)
-            form.add_field("caption", caption)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if document.file_name:
+                form.add_field("document", document.file_input, filename=document.file_name)
+            else:
+                form.add_field("document", document.file_input, filename="document.pdf")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -375,7 +403,7 @@ class Client:
 
     async def send_video(
             self,
-            chat_id: int,
+            chat_id: Union[int, str],
             video: Union[InputFile, str],
             caption: Optional[str] = None,
             reply_to_message_id: Optional[int] = None,
@@ -384,23 +412,31 @@ class Client:
         """Send a video to a chat.
 
         Args:
-            chat_id (int): The chat to send the message to.
+            chat_id (Union[int, str]): The chat to send the message to.
             video (Union[InputFile, str]): The video file to send.
             caption (Optional[str], optional): The caption of the video. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
-
-        Returns:
-            Message: The message.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
         handler = "/sendVideo"
         if isinstance(video, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("video", video.file_input)
-            form.add_field("caption", caption)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if video.file_name:
+                form.add_field("video", video.file_input, filename=video.file_name)
+            else:
+                form.add_field("video", video.file_input, filename="video.mp4")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -418,7 +454,7 @@ class Client:
 
     async def send_animation(
             self,
-            chat_id: int,
+            chat_id: Union[int, str],
             animation: Union[InputFile, str],
             caption: Optional[str] = None,
             reply_to_message_id: Optional[int] = None,
@@ -427,23 +463,31 @@ class Client:
         """Send an animation (GIF) to a chat.
 
         Args:
-            chat_id (int): The chat to send the message to.
+            chat_id (Union[int, str]): The chat to send the message to.
             animation (Union[InputFile, str]): The animation file to send.
             caption (Optional[str], optional): The caption of the animation. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
-
-        Returns:
-            Message: The message.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
         handler = "/sendAnimation"
         if isinstance(animation, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("animation", animation.file_input)
-            form.add_field("caption", caption)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if animation.file_name:
+                form.add_field("animation", animation.file_input, filename=animation.file_name)
+            else:
+                form.add_field("animation", animation.file_input, filename="animation.gif")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -461,7 +505,7 @@ class Client:
 
     async def send_voice(
             self,
-            chat_id: int,
+            chat_id: Union[int, str],
             voice: Union[InputFile, str],
             caption: Optional[str] = None,
             reply_to_message_id: Optional[int] = None,
@@ -470,23 +514,31 @@ class Client:
         """Send a voice message to a chat.
 
         Args:
-            chat_id (int): The chat to send the message to.
+            chat_id (Union[int, str]): The chat to send the message to.
             voice (Union[InputFile, str]): The voice file to send.
             caption (Optional[str], optional): The caption of the voice. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
-
-        Returns:
-            Message: The message.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
         """
         handler = "/sendVoice"
         if isinstance(voice, InputFile):
             form = aiohttp.FormData()
-            form.add_field("chat_id", f"{chat_id}")
-            form.add_field("voice", voice.file_input)
-            form.add_field("caption", caption)
-            form.add_field("reply_to_message_id", reply_to_message_id)
-            form.add_field("reply_markup", reply_markup.to_dict() if reply_markup else None)
+            form.add_field("chat_id", str(chat_id))
+            
+            
+            if voice.file_name:
+                form.add_field("voice", voice.file_input, filename=voice.file_name)
+            else:
+                form.add_field("voice", voice.file_input, filename="voice.ogg")
+            
+            
+            if caption:
+                form.add_field("caption", caption)
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+            if reply_markup:
+                form.add_field("reply_markup", dumps(reply_markup.to_dict()))
+            
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
