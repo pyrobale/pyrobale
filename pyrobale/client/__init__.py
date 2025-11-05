@@ -1,4 +1,7 @@
 from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
+
+from bale.request import RequestParams
+
 from ..objects.animation import Animation
 from ..objects.audio import Audio
 from ..objects.callbackquery import CallbackQuery
@@ -45,7 +48,7 @@ from ..filters import Filters
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
 import time
-from enum import Enum
+from enum import Enum, member
 import asyncio
 from bs4 import BeautifulSoup
 from json import loads, JSONDecodeError, dumps
@@ -813,6 +816,27 @@ class Client:
             return True
         except:
             return False
+
+    async def get_chat_administrators(self, chat_id: int) -> List[ChatMember]:
+        """Gets a list of administrators of a specified chat.
+
+        Args:
+            chat_id: Chat id of the chat to get administrators for.
+
+        Returns:
+            A list of administrators.
+        """
+
+        data = await make_post(
+            self.requests_base + "/getChatAdministrators",
+            data={"chat_id": chat_id},
+        )
+
+        if not data:
+            raise ForbiddenException("You cannot get administrators for this chat!")
+
+        res = data["result"]
+        return [ChatMember(**member) for member in res]
 
     async def get_chat_member(self, chat_id: int, user_id: int) -> ChatMember:
         """Get a chat member.

@@ -96,6 +96,14 @@ class Chat:
         """
         return await self.client.get_chat_member(chat_id=self.id, user_id=user_id)
 
+    async def get_administrators(self):
+        """Gets a list of administrators of a specified chat.
+
+        Returns:
+            A list of administrators.
+        """
+        return await self.client.get_chat_administrators(self.id)
+
     async def get_chat_members_count(self) -> int:
         """Get the number of members in the chat.
 
