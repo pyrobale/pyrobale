@@ -346,6 +346,9 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.client</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Awaitable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">bale.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestParams</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.callbackquery</span><span class="w"> </span><span class="kn">import</span> <span class="n">CallbackQuery</span>
@@ -392,7 +395,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..StateMachine</span><span class="w"> </span><span class="kn">import</span> <span class="n">StateMachine</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotFoundException</span><span class="p">,</span> <span class="n">InvalidTokenException</span><span class="p">,</span> <span class="n">PyroBaleException</span><span class="p">,</span> <span class="n">ForbiddenException</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">member</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">JSONDecodeError</span><span class="p">,</span> <span class="n">dumps</span>
@@ -1269,6 +1272,30 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Client.get_chat_administrators">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_administrators">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat_administrators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ChatMember</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets a list of administrators of a specified chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id: Chat id of the chat to get administrators for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of administrators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatAdministrators&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="s2">&quot;You cannot get administrators for this chat!&quot;</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">ChatMember</span><span class="p">(</span><span class="o">**</span><span class="n">member</span><span class="p">)</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Client.get_chat_member">

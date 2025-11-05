@@ -478,6 +478,17 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Chat.get_administrators">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_administrators">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_administrators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets a list of administrators of a specified chat.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of administrators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_chat_administrators</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Chat.get_chat_members_count">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_chat_members_count">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat_members_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>

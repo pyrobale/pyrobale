@@ -175,6 +175,16 @@ Module Contents
 
 
 
+   .. py:method:: get_administrators()
+      :async:
+
+
+      Gets a list of administrators of a specified chat.
+
+      :returns: A list of administrators.
+
+
+
    .. py:method:: get_chat_members_count()
       :async:
 

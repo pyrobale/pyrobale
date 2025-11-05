@@ -953,6 +953,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.get_chat_administrators">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_chat_administrators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_chat_administrators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_chat_administrators" title="Link to this definition">¶</a></dt>
+<dd><p>Gets a list of administrators of a specified chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chat_id</strong> (<em>int</em>) – Chat id of the chat to get administrators for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of administrators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="../objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember" title="pyrobale.objects.chatmember.ChatMember">pyrobale.objects.chatmember.ChatMember</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.get_chat_member">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_chat_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_chat_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_chat_member" title="Link to this definition">¶</a></dt>
 <dd><p>Get a chat member.</p>
@@ -1747,6 +1764,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.ban_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.ban_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.unban_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.unban_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.kick_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.kick_chat_member()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.get_chat_administrators"><code class="docutils literal notranslate"><span class="pre">Client.get_chat_administrators()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.get_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.is_user_admin"><code class="docutils literal notranslate"><span class="pre">Client.is_user_admin()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.user_has_permissions"><code class="docutils literal notranslate"><span class="pre">Client.user_has_permissions()</span></code></a></li>

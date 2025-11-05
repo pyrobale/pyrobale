@@ -520,6 +520,18 @@ Package Contents
 
 
 
+   .. py:method:: get_chat_administrators(chat_id)
+      :async:
+
+
+      Gets a list of administrators of a specified chat.
+
+      :param chat_id: Chat id of the chat to get administrators for.
+
+      :returns: A list of administrators.
+
+
+
    .. py:method:: get_chat_member(chat_id, user_id)
       :async:
 
