@@ -1,7 +1,5 @@
 from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
 
-from bale.request import RequestParams
-
 from ..objects.animation import Animation
 from ..objects.audio import Audio
 from ..objects.callbackquery import CallbackQuery
