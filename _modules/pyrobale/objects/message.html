@@ -375,6 +375,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">smart_method</span>
 
 
 <div class="viewcode-block" id="Message">
@@ -620,6 +621,7 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply</span><span class="p">(</span>
@@ -646,6 +648,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.edit">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.edit">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">edit</span><span class="p">(</span>
@@ -669,6 +672,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.delete">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.delete">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -681,6 +685,7 @@
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.forward">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Message&#39;</span><span class="p">:</span>
@@ -697,6 +702,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_photo">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_photo">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_photo</span><span class="p">(</span>
@@ -726,6 +732,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_video">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_video">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_video</span><span class="p">(</span>
@@ -755,6 +762,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_audio">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_audio">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_audio</span><span class="p">(</span>
@@ -784,6 +792,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_document">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_document">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_document</span><span class="p">(</span>
@@ -813,6 +822,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_sticker">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_sticker">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_sticker</span><span class="p">(</span>
@@ -839,6 +849,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_location">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_location">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_location</span><span class="p">(</span>
@@ -871,6 +882,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_contact">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_contact">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_contact</span><span class="p">(</span>
@@ -900,6 +912,7 @@
             <span class="k">return</span> <span class="n">message</span></div>
 
 
+    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Message.reply_invoice">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_invoice">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_invoice</span><span class="p">(</span>

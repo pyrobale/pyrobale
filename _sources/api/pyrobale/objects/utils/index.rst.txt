@@ -14,6 +14,9 @@ Functions
    pyrobale.objects.utils.make_get
    pyrobale.objects.utils.make_via_multipart
    pyrobale.objects.utils.pythonize
+   pyrobale.objects.utils.sync_to_async
+   pyrobale.objects.utils.async_to_sync
+   pyrobale.objects.utils.smart_method
 
 
 Module Contents
@@ -37,4 +40,10 @@ Module Contents
 
    Converts a dictionary with keys in snake_case to camelCase.
 
+
+.. py:function:: sync_to_async(func)
+
+.. py:function:: async_to_sync(func)
+
+.. py:function:: smart_method(func)
 
