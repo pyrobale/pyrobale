@@ -42,6 +42,7 @@ from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.peerdata import PeerData
+from ..objects.transaction import Transaction
 from ..filters import Filters
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
@@ -743,6 +744,15 @@ class Client:
             },
         )
         return Message(**pythonize(data["result"]))
+    
+    @smart_method
+    async def inquire_transaction(self, transaction_id: str) -> Transaction:
+        
+        data = await make_post(
+            self.requests_base + "/inquireTransaction",
+            data={"transaction_id": transaction_id} 
+        )
+        return Transaction(**pythonize(data['result']))
 
     @smart_method
     async def get_file(self, file_id: str) -> File:
