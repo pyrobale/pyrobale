@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 from ..objects.chat import Chat
 from ..objects.user import User
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
+from .utils import smart_method
 
 
 class Message:
@@ -190,6 +191,7 @@ class Message:
         else:
             return False
 
+    @smart_method
     async def reply(
             self,
             text: str,
@@ -213,6 +215,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def edit(
             self,
             text: str,
@@ -233,6 +236,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def delete(self) -> bool:
         """Delete the current message.
 
@@ -242,6 +246,7 @@ class Message:
         if self.chat and self.chat.id and self.id:
             return await self.client.delete_message(self.chat.id, self.id)
 
+    @smart_method
     async def forward(self, chat_id: int) -> 'Message':
         """Forward the current message to another chat.
 
@@ -255,6 +260,7 @@ class Message:
             message = await self.client.forward(self.chat.id, chat_id, self.id)
             return message
 
+    @smart_method
     async def reply_photo(
             self,
             photo: str,
@@ -281,6 +287,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_video(
             self,
             video: str,
@@ -307,6 +314,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_audio(
             self,
             audio: str,
@@ -333,6 +341,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_document(
             self,
             document: str,
@@ -359,6 +368,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_sticker(
             self,
             sticker: str,
@@ -382,6 +392,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_location(
             self,
             latitude: float,
@@ -411,6 +422,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_contact(
             self,
             phone_number: str,
@@ -437,6 +449,7 @@ class Message:
             )
             return message
 
+    @smart_method
     async def reply_invoice(
             self,
             title: str,

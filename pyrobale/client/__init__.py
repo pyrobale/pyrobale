@@ -80,6 +80,7 @@ class Client:
         self.check_defined_message = True
         self.defined_messages = {}
 
+    @smart_method
     async def ping(self, round_it = False) -> float:
         """
         Ping the bot to see if the bot is alive.
@@ -101,6 +102,7 @@ class Client:
             except Exception as e:
                 raise e
 
+    @smart_method
     async def get_updates(
             self,
             offset: Optional[int] = None,
@@ -128,6 +130,7 @@ class Client:
                     raise InvalidTokenException("Forbidden 403 : --ENTERED TOKEN IS NOT VALID--")
         return []
 
+    @smart_method
     async def set_webhook(self, url: str) -> bool:
         """Set the webhook for the bot.
 
@@ -140,6 +143,7 @@ class Client:
         data = await make_post(self.requests_base + "/setWebhook", data={"url": url})
         return data.get("ok", False)
 
+    @smart_method
     async def get_webhook_info(self) -> Dict:
         """Get the webhook information for the bot.
 
@@ -149,6 +153,7 @@ class Client:
         data = await make_get(self.requests_base + "/getWebhookInfo")
         return data.get("result", {})
 
+    @smart_method
     async def get_me(self) -> User:
         """Get information about the bot.
 
@@ -160,6 +165,7 @@ class Client:
             raise InvalidTokenException("Token is invalid")
         return User(**data["result"])
 
+    @smart_method
     async def logout(self) -> bool:
         """Log out the bot.
 
@@ -169,6 +175,7 @@ class Client:
         data = await make_get(self.requests_base + "/logOut")
         return data.get("ok", False)
 
+    @smart_method
     async def close(self) -> bool:
         """Close the bot.
 
@@ -178,6 +185,7 @@ class Client:
         data = await make_get(self.requests_base + "/close")
         return data.get("ok", False)
 
+    @smart_method
     async def send_message(
             self,
             chat_id: int,
@@ -207,6 +215,7 @@ class Client:
         )
         return Message(**pythonize(data.get("result")))
 
+    @smart_method
     async def delete_message(
             self,
             chat_id: int,
@@ -230,6 +239,7 @@ class Client:
         )
         return True
 
+    @smart_method
     async def forward_message(
             self, chat_id: int, from_chat_id: int, message_id: int
     ) -> Message:
@@ -253,6 +263,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def copy_message(
             self, chat_id: int, from_chat_id: int, message_id: int
     ) -> Message:
@@ -276,6 +287,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_photo(
         self,
         chat_id: Union[int, str],
@@ -297,21 +309,21 @@ class Client:
         if isinstance(photo, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if photo.file_name:
                 form.add_field("photo", photo.file_input, filename=photo.file_name)
             else:
                 form.add_field("photo", photo.file_input, filename="photo.png")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -327,6 +339,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_audio(
         self,
         chat_id: Union[int, str],
@@ -348,21 +361,21 @@ class Client:
         if isinstance(audio, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if audio.file_name:
                 form.add_field("audio", audio.file_input, filename=audio.file_name)
             else:
                 form.add_field("audio", audio.file_input, filename="audio.mp3")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -378,6 +391,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_document(
             self,
             chat_id: Union[int, str],
@@ -399,21 +413,21 @@ class Client:
         if isinstance(document, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if document.file_name:
                 form.add_field("document", document.file_input, filename=document.file_name)
             else:
                 form.add_field("document", document.file_input, filename="document.pdf")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -429,6 +443,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_video(
             self,
             chat_id: Union[int, str],
@@ -450,21 +465,21 @@ class Client:
         if isinstance(video, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if video.file_name:
                 form.add_field("video", video.file_input, filename=video.file_name)
             else:
                 form.add_field("video", video.file_input, filename="video.mp4")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -480,6 +495,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_animation(
             self,
             chat_id: Union[int, str],
@@ -501,21 +517,21 @@ class Client:
         if isinstance(animation, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if animation.file_name:
                 form.add_field("animation", animation.file_input, filename=animation.file_name)
             else:
                 form.add_field("animation", animation.file_input, filename="animation.gif")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -531,6 +547,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_voice(
             self,
             chat_id: Union[int, str],
@@ -552,21 +569,21 @@ class Client:
         if isinstance(voice, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
-            
-            
+
+
             if voice.file_name:
                 form.add_field("voice", voice.file_input, filename=voice.file_name)
             else:
                 form.add_field("voice", voice.file_input, filename="voice.ogg")
-            
-            
+
+
             if caption:
                 form.add_field("caption", caption)
             if reply_to_message_id:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
             if reply_markup:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
-            
+
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
@@ -582,6 +599,7 @@ class Client:
             )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_media_group(
             self,
             chat_id: int,
@@ -611,6 +629,7 @@ class Client:
         )
         return [Message(**pythonize(msg)) for msg in data["result"]]
 
+    @smart_method
     async def send_location(
             self,
             chat_id: int,
@@ -646,6 +665,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_contact(
             self,
             chat_id: int,
@@ -681,6 +701,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def send_invoice(
             self,
             chat_id: Union[str, int],
@@ -723,6 +744,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def get_file(self, file_id: str) -> File:
         """Get a file from the Bale servers.
 
@@ -737,6 +759,7 @@ class Client:
         )
         return File(**pythonize(data["result"]))
 
+    @smart_method
     async def answer_callback_query(
             self,
             callback_query_id: str,
@@ -763,6 +786,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def ban_chat_member(self, chat_id: int, user_id: int) -> bool:
         """Ban a user from a chat.
 
@@ -782,6 +806,7 @@ class Client:
         except AttributeError:
             raise ForbiddenException("You cannot ban this member!")
 
+    @smart_method
     async def unban_chat_member(self, chat_id: int, user_id: int) -> bool:
         """Unban a user from a chat.
 
@@ -798,6 +823,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def kick_chat_member(self, chat_id: int, user_id: int) -> bool:
         """kick a user from a specified chat
 
@@ -815,6 +841,7 @@ class Client:
         except:
             return False
 
+    @smart_method
     async def get_chat_administrators(self, chat_id: int) -> List[ChatMember]:
         """Gets a list of administrators of a specified chat.
 
@@ -836,6 +863,7 @@ class Client:
         res = data["result"]
         return [ChatMember(**member) for member in res]
 
+    @smart_method
     async def get_chat_member(self, chat_id: int, user_id: int) -> ChatMember:
         """Get a chat member.
 
@@ -860,6 +888,7 @@ class Client:
 
         return ChatMember(**pythonize(data))
 
+    @smart_method
     async def is_user_admin(self, chat_id: int, user_id: int) -> bool:
         """Checks if a user is admin in a chat
 
@@ -880,6 +909,7 @@ class Client:
         else:
             return False
 
+    @smart_method
     async def user_has_permissions(self, chat_id: int, user_id: int, permissions: ChatPermissions) -> bool:
         """checks if a user has a specified permission
 
@@ -897,6 +927,7 @@ class Client:
         else:
             return False
 
+    @smart_method
     async def promote_chat_member(
             self,
             chat_id: int,
@@ -944,6 +975,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def set_chat_photo(self, chat_id: int, photo: InputFile) -> bool:
         """Set a new profile photo for the chat.
 
@@ -960,6 +992,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def leave_chat(self, chat_id: int) -> bool:
         """Leave a group, supergroup or channel.
 
@@ -974,6 +1007,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def is_joined(self, user_id: int, chat_id: int) -> bool:
         """Check if a user is joined to a chat.
 
@@ -990,6 +1024,7 @@ class Client:
         )
         return data.get("result", {}).get("status") in ["member", "creator", "administrator"]
 
+    @smart_method
     async def get_chat(self, chat_id: int) -> Chat:
         """Get up to date information about the chat.
 
@@ -1009,6 +1044,7 @@ class Client:
         return Chat(**pythonize(data))
 
     @staticmethod
+    @smart_method
     async def get_ble_ir_page(username_or_phone_number: str) -> PeerData:
         """Get BleIR user/group information.
 
@@ -1101,6 +1137,7 @@ class Client:
             username
         )
 
+    @smart_method
     async def get_chat_members_count(self, chat_id: int) -> int:
         """Get the number of members in a chat.
 
@@ -1115,6 +1152,7 @@ class Client:
         )
         return data.get("result", 0)
 
+    @smart_method
     async def pin_chat_message(self, chat_id: int, message_id: int) -> bool:
         """Pin a message in a chat.
 
@@ -1131,6 +1169,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def unpin_chat_message(self, chat_id: int, message_id: int) -> bool:
         """Unpin a message in a chat.
 
@@ -1146,6 +1185,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def unpin_all_chat_messages(self, chat_id: int) -> bool:
         """Unpin all messages in a chat.
 
@@ -1160,6 +1200,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def set_chat_title(self, chat_id: int, title: str) -> bool:
         """Change the title of a chat.
 
@@ -1176,6 +1217,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def set_chat_description(self, chat_id: int, description: str) -> bool:
         """Change the description of a chat.
 
@@ -1192,6 +1234,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def delete_chat_photo(self, chat_id: int) -> bool:
         """Delete a chat photo.
 
@@ -1206,6 +1249,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def edit_message(
             self,
             chat_id: Union[int, str],
@@ -1235,6 +1279,7 @@ class Client:
         )
         return Message(**pythonize(data["result"]))
 
+    @smart_method
     async def create_chat_invite_link(self, chat_id: int) -> InviteLink:
         """Create an additional invite link for a chat.
 
@@ -1252,6 +1297,7 @@ class Client:
         except AttributeError:
             raise ForbiddenException("you cannot access this chat")
 
+    @smart_method
     async def revoke_chat_invite_link(self, chat_id: int, invite_link: str) -> str:
         """Revoke an invite link created by the bot.
 
@@ -1268,6 +1314,7 @@ class Client:
         )
         return data.get("result", "")
 
+    @smart_method
     async def export_chat_invite_link(self, chat_id: int) -> str:
         """Generate a new primary invite link for a chat.
 
@@ -1282,6 +1329,7 @@ class Client:
         )
         return data.get("result", "")
 
+    @smart_method
     async def send_chat_action(self, chat_id: int, action: ChatAction) -> bool:
         """Tell the user that something is happening on the bot's side.
 
@@ -1298,6 +1346,7 @@ class Client:
         )
         return data.get("ok", False)
 
+    @smart_method
     async def wait_for(self, update_type: UpdatesTypes, check=None, timeout: Optional[float] = None):
         """Wait until a specified update
 
@@ -1321,6 +1370,7 @@ class Client:
             self._waiters = [w for w in self._waiters if w[2] != future]
             raise
 
+    @smart_method
     async def process_update(self, update: Dict[str, Any]) -> None:
         """Process a single update and call registered handlers."""
         update_id = update.get("update_id")
@@ -1608,6 +1658,7 @@ class Client:
         """Remove all handlers from the list of handlers."""
         self.handlers = []
 
+    @smart_method
     async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
         """Start polling updates from the server.
 
@@ -1634,6 +1685,7 @@ class Client:
                 print(f"Error in polling: {e}")
                 await asyncio.sleep(1)
 
+    @smart_method
     async def stop_polling(self) -> None:
         """Stop polling updates."""
         self.running = False
@@ -1651,10 +1703,12 @@ class Client:
         except KeyboardInterrupt:
             print("Bot stopped by user")
 
+    @smart_method
     async def stop(self) -> None:
         """Stop the client."""
         await self.stop_polling()
 
+    @smart_method
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
         """Process an update received via webhook."""
         await self.process_update(update_data)

@@ -1,4 +1,8 @@
 from ..exceptions import *
+import asyncio
+import inspect
+from functools import wraps
+from typing import Any, Callable, Union
 import aiohttp
 
 
@@ -46,7 +50,7 @@ async def make_via_multipart(url: str, data: aiohttp.FormData) -> dict:
             else:
                 error_code = json_response.get('error_code', 0)
                 description = json_response.get('description', 'No description')
-                
+
                 if error_code == 404:
                     raise NotFoundException(f"Error not found 404 : {description}")
                 elif error_code == 403:
@@ -62,3 +66,51 @@ def pythonize(dictionary: dict) -> dict:
             key = "from_user"
         result[key] = value
     return result
+
+
+def sync_to_async(func: Callable) -> Callable:
+    if inspect.iscoroutinefunction(func):
+        return func
+
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+def async_to_sync(func: Callable) -> Callable:
+    if not inspect.iscoroutinefunction(func):
+        return func
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                return func(*args, **kwargs)
+            else:
+                return loop.run_until_complete(func(*args, **kwargs))
+        except RuntimeError:
+            return asyncio.run(func(*args, **kwargs))
+
+    return wrapper
+
+
+def smart_method(func):
+
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if inspect.iscoroutinefunction(func):
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    return func(self, *args, **kwargs)
+                else:
+                    return loop.run_until_complete(func(self, *args, **kwargs))
+            except RuntimeError:
+                return asyncio.run(func(self, *args, **kwargs))
+        else:
+            return func(self, *args, **kwargs)
+
+    return wrapper

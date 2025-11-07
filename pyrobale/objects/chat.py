@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
+
 from typing import Optional, Union
+from .utils import smart_method
 
 if TYPE_CHECKING:
     from .utils import build_api_url
@@ -130,7 +132,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_photo(
+        await self.client.send_photo(
             chat_id=self.id,
             photo=photo,
             caption=caption,
@@ -156,7 +158,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_video(
+        await self.client.send_video(
             chat_id=self.id,
             video=video,
             caption=caption,
