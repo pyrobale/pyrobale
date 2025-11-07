@@ -1,0 +1,34 @@
+pyrobale.objects.transaction
+============================
+
+.. py:module:: pyrobale.objects.transaction
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.transaction.Transaction
+
+
+Module Contents
+---------------
+
+.. py:class:: Transaction(id, status, userID, amount, createdAt)
+
+   .. py:attribute:: id
+
+
+   .. py:attribute:: status
+
+
+   .. py:attribute:: userID
+
+
+   .. py:attribute:: amount
+
+
+   .. py:attribute:: createdAt
+
+

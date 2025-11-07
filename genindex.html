@@ -246,6 +246,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/sticker/index.html">pyrobale.objects.sticker</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/stickerset/index.html">pyrobale.objects.stickerset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/successfulpayment/index.html">pyrobale.objects.successfulpayment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/transaction/index.html">pyrobale.objects.transaction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/update/index.html">pyrobale.objects.update</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/user/index.html">pyrobale.objects.user</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/utils/index.html">pyrobale.objects.utils</a></li>
@@ -381,7 +382,11 @@
 </li>
         </ul></li>
         <li><a href="api/pyrobale/objects/labeledprice/index.html#pyrobale.objects.labeledprice.LabeledPrice.amount">amount (pyrobale.objects.labeledprice.LabeledPrice attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.amount">(pyrobale.objects.transaction.Transaction attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation">Animation (class in pyrobale.objects.animation)</a>
 </li>
     </ul></td>
@@ -587,6 +592,8 @@
         <li><a href="api/pyrobale/objects/copytextbutton/index.html#pyrobale.objects.copytextbutton.CopyTextButton">CopyTextButton (class in pyrobale.objects.copytextbutton)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.create_chat_invite_link">create_chat_invite_link() (pyrobale.client.Client method)</a>
+</li>
+        <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.createdAt">createdAt (pyrobale.objects.transaction.Transaction attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.creates_join_request">creates_join_request (pyrobale.objects.invitelink.InviteLink attribute)</a>
 </li>
@@ -879,6 +886,8 @@
 </li>
           <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.id">(pyrobale.objects.precheckoutquery.PreCheckoutQuery attribute)</a>
 </li>
+          <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.id">(pyrobale.objects.transaction.Transaction attribute)</a>
+</li>
           <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.id">(pyrobale.objects.user.User attribute)</a>
 </li>
         </ul></li>
@@ -904,14 +913,16 @@
 </li>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.inputs">inputs (pyrobale.objects.chatmember.ChatMember attribute)</a>
 </li>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.inquire_transaction">inquire_transaction() (pyrobale.client.Client method)</a>
+</li>
         <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InternalServerException">InternalServerException</a>
 </li>
         <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InvalidTokenException">InvalidTokenException</a>
 </li>
-        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">invite_link (pyrobale.objects.invitelink.InviteLink attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">invite_link (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
         <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink">InviteLink (class in pyrobale.objects.invitelink)</a>
 </li>
         <li><a href="api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.inviter">inviter (pyrobale.objects.newchatmembers.NewChatMembers attribute)</a>
@@ -1172,6 +1183,8 @@
 </li>
           <li><a href="api/pyrobale/objects/successfulpayment/index.html#module-pyrobale.objects.successfulpayment">pyrobale.objects.successfulpayment</a>
 </li>
+          <li><a href="api/pyrobale/objects/transaction/index.html#module-pyrobale.objects.transaction">pyrobale.objects.transaction</a>
+</li>
           <li><a href="api/pyrobale/objects/update/index.html#module-pyrobale.objects.update">pyrobale.objects.update</a>
 </li>
           <li><a href="api/pyrobale/objects/user/index.html#module-pyrobale.objects.user">pyrobale.objects.user</a>
@@ -1427,8 +1440,6 @@
           <li><a href="api/pyrobale/objects/enums/index.html#module-pyrobale.objects.enums">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     pyrobale.objects.file
 
@@ -1436,6 +1447,8 @@
           <li><a href="api/pyrobale/objects/file/index.html#module-pyrobale.objects.file">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     pyrobale.objects.inlinekeyboardbutton
 
@@ -1567,6 +1580,13 @@
 
         <ul>
           <li><a href="api/pyrobale/objects/successfulpayment/index.html#module-pyrobale.objects.successfulpayment">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyrobale.objects.transaction
+
+        <ul>
+          <li><a href="api/pyrobale/objects/transaction/index.html#module-pyrobale.objects.transaction">module</a>
 </li>
         </ul></li>
         <li>
@@ -1784,7 +1804,11 @@
         <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine">StateMachine (class in pyrobale.StateMachine)</a>
 </li>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.status">status (pyrobale.objects.chatmember.ChatMember attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.status">(pyrobale.objects.transaction.Transaction attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/sticker/index.html#pyrobale.objects.sticker.Sticker">Sticker (class in pyrobale.objects.sticker)</a>
 </li>
         <li><a href="api/pyrobale/objects/message/index.html#id14">sticker (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.sticker">[1]</a>
@@ -1871,6 +1895,8 @@
           <li><a href="api/pyrobale/objects/successfulpayment/index.html#pyrobale.objects.successfulpayment.SuccessfulPayment.total_amount">(pyrobale.objects.successfulpayment.SuccessfulPayment attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction">Transaction (class in pyrobale.objects.transaction)</a>
+</li>
         <li><a href="api/pyrobale/objects/chat/index.html#id1">type (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.type">[1]</a>
 
         <ul>
@@ -1921,8 +1947,6 @@
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes">UpdatesTypes (class in pyrobale.objects.enums)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/inlinekeyboardbutton/index.html#pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton.url">url (pyrobale.objects.inlinekeyboardbutton.InlineKeyboardButton attribute)</a>
 
         <ul>
@@ -1931,6 +1955,8 @@
           <li><a href="api/pyrobale/objects/webappinfo/index.html#pyrobale.objects.webappinfo.WebAppInfo.url">(pyrobale.objects.webappinfo.WebAppInfo attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User">User (class in pyrobale.objects.user)</a>
 </li>
         <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.user">user (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
@@ -1947,6 +1973,8 @@
           <li><a href="api/pyrobale/objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData.user_id">(pyrobale.objects.peerdata.PeerData attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.userID">userID (pyrobale.objects.transaction.Transaction attribute)</a>
+</li>
         <li><a href="api/pyrobale/objects/chat/index.html#id6">username (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.username">[1]</a>
 
         <ul>

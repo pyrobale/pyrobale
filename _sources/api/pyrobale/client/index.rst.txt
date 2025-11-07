@@ -440,6 +440,11 @@ Package Contents
 
 
 
+   .. py:method:: inquire_transaction(transaction_id)
+      :async:
+
+
+
    .. py:method:: get_file(file_id)
       :async:
 

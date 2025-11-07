@@ -46,6 +46,7 @@ Submodules
    /api/pyrobale/objects/sticker/index
    /api/pyrobale/objects/stickerset/index
    /api/pyrobale/objects/successfulpayment/index
+   /api/pyrobale/objects/transaction/index
    /api/pyrobale/objects/update/index
    /api/pyrobale/objects/user/index
    /api/pyrobale/objects/utils/index

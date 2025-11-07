@@ -248,6 +248,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../objects/sticker/index.html">pyrobale.objects.sticker</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/stickerset/index.html">pyrobale.objects.stickerset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/successfulpayment/index.html">pyrobale.objects.successfulpayment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../objects/transaction/index.html">pyrobale.objects.transaction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/update/index.html">pyrobale.objects.update</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/user/index.html">pyrobale.objects.user</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/utils/index.html">pyrobale.objects.utils</a></li>
@@ -850,6 +851,19 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.inquire_transaction">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inquire_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.inquire_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.inquire_transaction" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transaction_id</strong> (<em>str</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/transaction/index.html#pyrobale.objects.transaction.Transaction" title="pyrobale.objects.transaction.Transaction">pyrobale.objects.transaction.Transaction</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1759,6 +1773,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.send_location"><code class="docutils literal notranslate"><span class="pre">Client.send_location()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.send_contact"><code class="docutils literal notranslate"><span class="pre">Client.send_contact()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.send_invoice"><code class="docutils literal notranslate"><span class="pre">Client.send_invoice()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.inquire_transaction"><code class="docutils literal notranslate"><span class="pre">Client.inquire_transaction()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_file"><code class="docutils literal notranslate"><span class="pre">Client.get_file()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.answer_callback_query"><code class="docutils literal notranslate"><span class="pre">Client.answer_callback_query()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.ban_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.ban_chat_member()</span></code></a></li>
