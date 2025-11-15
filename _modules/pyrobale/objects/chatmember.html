@@ -671,6 +671,30 @@
             <span class="n">can_add_web_page_previews</span><span class="o">=</span><span class="n">can_add_web_page_previews</span><span class="p">,</span>
             <span class="n">until_date</span><span class="o">=</span><span class="n">until_date</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ChatMember.mute">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.mute">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mutes a user in a chat by restricting.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True on success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">can_send_messages</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ChatMember.unmute">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.unmute">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unmutes a user in a chat by restricting.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True on success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">can_send_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

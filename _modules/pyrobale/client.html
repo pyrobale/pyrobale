@@ -1270,6 +1270,50 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="s2">&quot;You cannot ban this member!&quot;</span><span class="p">)</span></div>
 
+    
+    <span class="nd">@smart_method</span>
+<div class="viewcode-block" id="Client.restrict_chat_member">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.restrict_chat_member">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">restrict_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="n">chat_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                   <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                   <span class="n">can_send_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_send_media_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_send_other_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_add_web_page_previews</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">until_date</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Restricts a user from a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (int): The chat to ban.</span>
+<span class="sd">            user_id (int): The user to ban.</span>
+<span class="sd">            can_send_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_send_media_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_send_other_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_add_web_page_previews (Union[bool,None]): Default is None</span>
+<span class="sd">            until_date: (Union[int,None]) Default is None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the ban was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/restrictChatMember&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+            <span class="s2">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;can_send_messages&quot;</span><span class="p">:</span> <span class="n">can_send_messages</span><span class="p">,</span>
+                <span class="s2">&quot;can_send_media_messages&quot;</span><span class="p">:</span> <span class="n">can_send_media_messages</span><span class="p">,</span>
+                <span class="s2">&quot;can_send_other_messages&quot;</span><span class="p">:</span> <span class="n">can_send_other_messages</span><span class="p">,</span>
+                <span class="s2">&quot;can_add_web_page_previews&quot;</span><span class="p">:</span> <span class="n">can_add_web_page_previews</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;until_date&quot;</span><span class="p">:</span> <span class="n">until_date</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="s2">&quot;You cannot restrict this member!&quot;</span><span class="p">)</span></div>
+
 
     <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.unban_chat_member">

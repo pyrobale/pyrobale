@@ -725,7 +725,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_contact</span><span class="p">(</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_contact</span><span class="p">(</span>
             <span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="n">phone_number</span><span class="o">=</span><span class="n">phone_number</span><span class="p">,</span>
             <span class="n">first_name</span><span class="o">=</span><span class="n">first_name</span><span class="p">,</span>
@@ -749,7 +749,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">ban_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span></div>
 
-
+    
 <div class="viewcode-block" id="Chat.kick">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.kick">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -776,6 +776,41 @@
 <span class="sd">            bool: True on success</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">unban_chat_member</span><span class="p">(</span><span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Chat.restrict">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.restrict">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                   <span class="n">can_send_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_send_media_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_send_other_messages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">can_add_web_page_previews</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">until_date</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Restricts a user from a chat.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id (int): The user to ban.</span>
+<span class="sd">            can_send_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_send_media_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_send_other_messages (Union[bool,None]): Default is None</span>
+<span class="sd">            can_add_web_page_previews (Union[bool,None]): Default is None</span>
+<span class="sd">            until_date: (Union[int,None]) Default is None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the ban was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">restrict_chat_member</span><span class="p">(</span>
+            <span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="n">can_send_messages</span><span class="o">=</span><span class="n">can_send_messages</span><span class="p">,</span>
+            <span class="n">can_send_media_messages</span><span class="o">=</span><span class="n">can_send_media_messages</span><span class="p">,</span>
+            <span class="n">can_send_other_messages</span><span class="o">=</span><span class="n">can_send_other_messages</span><span class="p">,</span>
+            <span class="n">can_add_web_page_previews</span><span class="o">=</span><span class="n">can_add_web_page_previews</span><span class="p">,</span>
+            <span class="n">until_date</span><span class="o">=</span><span class="n">until_date</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
 
 
 <div class="viewcode-block" id="Chat.promote">
@@ -941,6 +976,36 @@
 <span class="sd">            bool: True on success</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_chat_action</span><span class="p">(</span><span class="n">chat_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Chat.mute">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.mute">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mutes a user in a chat by restricting.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            user_id (int): user id to mute</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True on success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">can_send_messages</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Chat.unmute">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unmute">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unmutes a user in a chat by restricting.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            user_id (int): user id to unmute</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True on success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">can_send_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

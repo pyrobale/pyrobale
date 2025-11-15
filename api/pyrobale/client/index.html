@@ -927,6 +927,31 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.restrict_chat_member">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">restrict_chat_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_media_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_other_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_add_web_page_previews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.restrict_chat_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.restrict_chat_member" title="Link to this definition">¶</a></dt>
+<dd><p>Restricts a user from a chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to ban.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to ban.</p></li>
+<li><p><strong>can_send_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_send_media_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_send_other_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_add_web_page_previews</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>until_date</strong> (<em>pyrobale.objects.utils.Union</em><em>[</em><em>int</em><em>, </em><em>None</em><em>]</em>) – (Union[int,None]) Default is None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the ban was successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.unban_chat_member">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unban_chat_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.unban_chat_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.unban_chat_member" title="Link to this definition">¶</a></dt>
 <dd><p>Unban a user from a chat.</p>
@@ -1777,6 +1802,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.get_file"><code class="docutils literal notranslate"><span class="pre">Client.get_file()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.answer_callback_query"><code class="docutils literal notranslate"><span class="pre">Client.answer_callback_query()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.ban_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.ban_chat_member()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.restrict_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.restrict_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.unban_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.unban_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.kick_chat_member"><code class="docutils literal notranslate"><span class="pre">Client.kick_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_chat_administrators"><code class="docutils literal notranslate"><span class="pre">Client.get_chat_administrators()</span></code></a></li>

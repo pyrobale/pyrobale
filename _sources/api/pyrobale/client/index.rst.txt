@@ -493,6 +493,31 @@ Package Contents
 
 
 
+   .. py:method:: restrict_chat_member(chat_id, user_id, can_send_messages = None, can_send_media_messages = None, can_send_other_messages = None, can_add_web_page_previews = None, until_date = None)
+      :async:
+
+
+      Restricts a user from a chat.
+
+      :param chat_id: The chat to ban.
+      :type chat_id: int
+      :param user_id: The user to ban.
+      :type user_id: int
+      :param can_send_messages: Default is None
+      :type can_send_messages: Union[bool,None]
+      :param can_send_media_messages: Default is None
+      :type can_send_media_messages: Union[bool,None]
+      :param can_send_other_messages: Default is None
+      :type can_send_other_messages: Union[bool,None]
+      :param can_add_web_page_previews: Default is None
+      :type can_add_web_page_previews: Union[bool,None]
+      :param until_date: (Union[int,None]) Default is None
+
+      :returns: Whether the ban was successful.
+      :rtype: bool
+
+
+
    .. py:method:: unban_chat_member(chat_id, user_id)
       :async:
 

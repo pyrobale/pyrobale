@@ -400,6 +400,29 @@ Module Contents
 
 
 
+   .. py:method:: restrict(user_id, can_send_messages = None, can_send_media_messages = None, can_send_other_messages = None, can_add_web_page_previews = None, until_date = None)
+      :async:
+
+
+      Restricts a user from a chat.
+
+      :param user_id: The user to ban.
+      :type user_id: int
+      :param can_send_messages: Default is None
+      :type can_send_messages: Union[bool,None]
+      :param can_send_media_messages: Default is None
+      :type can_send_media_messages: Union[bool,None]
+      :param can_send_other_messages: Default is None
+      :type can_send_other_messages: Union[bool,None]
+      :param can_add_web_page_previews: Default is None
+      :type can_add_web_page_previews: Union[bool,None]
+      :param until_date: (Union[int,None]) Default is None
+
+      :returns: Whether the ban was successful.
+      :rtype: bool
+
+
+
    .. py:method:: promote(user_id, can_change_info = None, can_post_messages = None, can_edit_messages = None, can_delete_messages = None, can_invite_users = None, can_restrict_members = None, can_pin_messages = None, can_promote_members = None)
       :async:
 
@@ -541,6 +564,34 @@ Module Contents
 
       :param action: Action to send to the chat
       :type action: objects.enums.ChatAction
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: mute(user_id)
+      :async:
+
+
+      Mutes a user in a chat by restricting.
+
+      :param user_id: user id to mute
+      :type user_id: int
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: unmute(user_id)
+      :async:
+
+
+      Unmutes a user in a chat by restricting.
+
+      :param user_id: user id to unmute
+      :type user_id: int
 
       :returns: True on success
       :rtype: bool

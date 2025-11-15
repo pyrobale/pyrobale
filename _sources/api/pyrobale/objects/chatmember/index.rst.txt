@@ -253,3 +253,25 @@ Module Contents
 
 
 
+   .. py:method:: mute()
+      :async:
+
+
+      Mutes a user in a chat by restricting.
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: unmute()
+      :async:
+
+
+      Unmutes a user in a chat by restricting.
+
+      :returns: True on success
+      :rtype: bool
+
+
+

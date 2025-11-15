@@ -851,6 +851,30 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.restrict">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">restrict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_media_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_send_other_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_add_web_page_previews</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.restrict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.restrict" title="Link to this definition">¶</a></dt>
+<dd><p>Restricts a user from a chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>int</em>) – The user to ban.</p></li>
+<li><p><strong>can_send_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_send_media_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_send_other_messages</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>can_add_web_page_previews</strong> (<em>Union</em><em>[</em><em>bool</em><em>,</em><em>None</em><em>]</em>) – Default is None</p></li>
+<li><p><strong>until_date</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>None</em><em>]</em>) – (Union[int,None]) Default is None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the ban was successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.promote">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">promote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_change_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_post_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_edit_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_delete_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_invite_users</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_restrict_members</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_pin_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_promote_members</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.promote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.promote" title="Link to this definition">¶</a></dt>
 <dd><p>Promote or demote a user in a chat.</p>
@@ -1024,6 +1048,40 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.mute">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.mute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.mute" title="Link to this definition">¶</a></dt>
+<dd><p>Mutes a user in a chat by restricting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>int</em>) – user id to mute</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True on success</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.unmute">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unmute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.unmute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.unmute" title="Link to this definition">¶</a></dt>
+<dd><p>Unmutes a user in a chat by restricting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>int</em>) – user id to unmute</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True on success</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1130,6 +1188,7 @@
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.ban"><code class="docutils literal notranslate"><span class="pre">Chat.ban()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.kick"><code class="docutils literal notranslate"><span class="pre">Chat.kick()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.unban"><code class="docutils literal notranslate"><span class="pre">Chat.unban()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.restrict"><code class="docutils literal notranslate"><span class="pre">Chat.restrict()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.promote"><code class="docutils literal notranslate"><span class="pre">Chat.promote()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.leave"><code class="docutils literal notranslate"><span class="pre">Chat.leave()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.is_joined"><code class="docutils literal notranslate"><span class="pre">Chat.is_joined()</span></code></a></li>
@@ -1140,6 +1199,8 @@
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.set_description"><code class="docutils literal notranslate"><span class="pre">Chat.set_description()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.set_photo"><code class="docutils literal notranslate"><span class="pre">Chat.set_photo()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.send_action"><code class="docutils literal notranslate"><span class="pre">Chat.send_action()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.mute"><code class="docutils literal notranslate"><span class="pre">Chat.mute()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.unmute"><code class="docutils literal notranslate"><span class="pre">Chat.unmute()</span></code></a></li>
 </ul>
 </li>
 </ul>
