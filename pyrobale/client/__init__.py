@@ -815,6 +815,47 @@ class Client:
             return data.get("ok", False)
         except AttributeError:
             raise ForbiddenException("You cannot ban this member!")
+    
+    @smart_method
+    async def restrict_chat_member(self,
+                                   chat_id: int,
+                                   user_id: int,
+                                   can_send_messages: Union[bool,None] = None,
+                                   can_send_media_messages: Union[bool,None] = None,
+                                   can_send_other_messages: Union[bool,None] = None,
+                                   can_add_web_page_previews: Union[bool,None] = None,
+                                   until_date: Union[int,None] = None
+    ) -> bool:
+        """Restricts a user from a chat.
+
+        Args:
+            chat_id (int): The chat to ban.
+            user_id (int): The user to ban.
+            can_send_messages (Union[bool,None]): Default is None
+            can_send_media_messages (Union[bool,None]): Default is None
+            can_send_other_messages (Union[bool,None]): Default is None
+            can_add_web_page_previews (Union[bool,None]): Default is None
+            until_date: (Union[int,None]) Default is None
+
+        Returns:
+            bool: Whether the ban was successful.
+        """
+        data = await make_post(
+            self.requests_base + "/restrictChatMember",
+            data={"chat_id": chat_id, "user_id": user_id,
+            "permissions": {
+                "can_send_messages": can_send_messages,
+                "can_send_media_messages": can_send_media_messages,
+                "can_send_other_messages": can_send_other_messages,
+                "can_add_web_page_previews": can_add_web_page_previews
+            },
+            "until_date": until_date
+            },
+        )
+        try:
+            return data.get("ok", False)
+        except AttributeError:
+            raise ForbiddenException("You cannot restrict this member!")
 
     @smart_method
     async def unban_chat_member(self, chat_id: int, user_id: int) -> bool:

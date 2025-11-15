@@ -313,7 +313,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_contact(
+        await self.client.send_contact(
             chat_id=self.id,
             phone_number=phone_number,
             first_name=first_name,
@@ -333,7 +333,7 @@ class Chat:
             bool: True on success
         """
         return await self.client.ban_chat_member(chat_id=self.id, user_id=user_id)
-
+    
     async def kick(self, user_id: int) -> bool:
         """Kicks a user from the chat.
 
@@ -355,6 +355,38 @@ class Chat:
             bool: True on success
         """
         return await self.client.unban_chat_member(chat_id=self.id, user_id=user_id)
+
+    async def restrict(self,
+                                   user_id: int,
+                                   can_send_messages: Union[bool,None] = None,
+                                   can_send_media_messages: Union[bool,None] = None,
+                                   can_send_other_messages: Union[bool,None] = None,
+                                   can_add_web_page_previews: Union[bool,None] = None,
+                                   until_date: Union[int,None] = None
+    ) -> bool:
+        """Restricts a user from a chat.
+
+        Args:
+            user_id (int): The user to ban.
+            can_send_messages (Union[bool,None]): Default is None
+            can_send_media_messages (Union[bool,None]): Default is None
+            can_send_other_messages (Union[bool,None]): Default is None
+            can_add_web_page_previews (Union[bool,None]): Default is None
+            until_date: (Union[int,None]) Default is None
+
+        Returns:
+            bool: Whether the ban was successful.
+        """
+        data = await self.client.restrict_chat_member(
+            chat_id=self.id,
+            user_id=user_id,
+            can_send_messages=can_send_messages,
+            can_send_media_messages=can_send_media_messages,
+            can_send_other_messages=can_send_other_messages,
+            can_add_web_page_previews=can_add_web_page_previews,
+            until_date=until_date
+        )
+        return data
 
     async def promote(
         self,
@@ -490,3 +522,27 @@ class Chat:
             bool: True on success
         """
         return await self.client.send_chat_action(chat_id=self.id, action=action)
+    
+    async def mute(self, user_id: int):
+        """
+        Mutes a user in a chat by restricting.
+
+        Parameters:
+            user_id (int): user id to mute
+
+        Returns:
+            bool: True on success
+        """
+        data = await self.restrict(user_id=user_id, can_send_messages=False)
+    
+    async def unmute(self, user_id: int):
+        """
+        Unmutes a user in a chat by restricting.
+
+        Parameters:
+            user_id (int): user id to unmute
+            
+        Returns:
+            bool: True on success
+        """
+        data = await self.restrict(user_id=user_id, can_send_messages=True)

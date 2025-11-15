@@ -220,3 +220,21 @@ class ChatMember:
             can_add_web_page_previews=can_add_web_page_previews,
             until_date=until_date,
         )
+    
+    async def mute(self):
+        """
+        Mutes a user in a chat by restricting.
+
+        Returns:
+            bool: True on success
+        """
+        data = await self.restrict(can_send_messages=False)
+    
+    async def unmute(self):
+        """
+        Unmutes a user in a chat by restricting.
+
+        Returns:
+            bool: True on success
+        """
+        data = await self.restrict(can_send_messages=True)
