@@ -1,6 +1,6 @@
 from pyrobale.client import Client
-from pyrobale.objects import Message, UpdatesTypes, CallbackQuery
-from pyrobale.objects import InlineKeyboardButton, InlineKeyboardMarkup, CopyTextButton
+from pyrobale.objects import Message, CallbackQuery
+from pyrobale.objects import InlineKeyboardMarkup, CopyTextButton
 
 client = Client("YOUR_BOT_TOKEN")
 
@@ -9,6 +9,7 @@ async def message_handler(message: Message):
     buttons = InlineKeyboardMarkup()
     buttons.add_button("Callback", callback_data="callback_data")
     buttons.add_button("Copy Text", copy_text=CopyTextButton("Hello, world!"))
+    buttons.add_row()
     buttons.add_button("URL", url="https://www.google.com")
     buttons.add_button("WebApp", web_app="https://daradege.ir")
     await message.reply("These are Inline Buttons!", reply_markup=buttons)

@@ -1,5 +1,4 @@
-from ..pyrobale.client import Client
-from ..pyrobale.objects import Message, UpdatesTypes
+from pyrobale import Client, Message, UpdatesTypes
 
 client = Client("YOUR_BOT_TOKEN")
 

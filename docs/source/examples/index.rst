@@ -7,23 +7,30 @@ Examples of using Pyrobale
    :maxdepth: 2
    :caption: Examples
 
-   echo-bot
-   command-handler
-   inline-keyboard
-   state-machine
-
 Quick start
 ----------
 
-.. code-block:: python
 
-   from pyrobale import Client
-   from pyrobale.filters import text_filter
+`Echo bot <./echo_bot>`_
+****
+create a bot that can echo every message 🗣️
 
-   bot = Client("YOUR_BOT_TOKEN")
+`Defined messages <./defined_messages>`_
+****
+define your messages and do nothing! pyrobale will answer all messages as your dictionary 📕
 
-   @bot.on_message(text_filter("hi"))
-   async def hello_handler(client, message):
-       await message.reply("hi! 👋")
+`Commands <./command>`_
+****
+here's how to define commands in pyrobale 🤖
 
-   bot.run()
+`Handler system <./handler_system>`_
+****
+define custom handlers in pyrobale! ✏️
+
+`Conversation bot <./conversation>`_
+****
+have a conversation with your user! 💬
+
+`Inline keyboard <./inline_keyboard>`_
+****
+add buttons under your message ✅
