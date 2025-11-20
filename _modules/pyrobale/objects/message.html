@@ -346,10 +346,8 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.message</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects.newchatmembers</span><span class="w"> </span><span class="kn">import</span> <span class="n">NewChatMembers</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..objects.newchatmembers</span><span class="w"> </span><span class="kn">import</span> <span class="n">NewChatMembers</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pythonize</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -373,6 +371,7 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.replykeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReplyKeyboardMarkup</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
@@ -445,7 +444,7 @@
             <span class="n">successful_payment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;SuccessfulPayment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">web_app_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;WebAppData&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">reply_to_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">reply_to_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -478,21 +477,27 @@
 <span class="sd">            successful_payment: Successful payment information</span>
 <span class="sd">            web_app_data: Web App data</span>
 <span class="sd">            reply_markup: Inline keyboard markup</span>
-<span class="sd">            reply_to_message: Message ID in the original chat</span>
+<span class="sd">            reply_to_message: Reply to message object</span>
 <span class="sd">            client: Client instance associated with this message</span>
-<span class="sd">            **kwargs: Additional keyword arguments including client instance</span>
+<span class="sd">            **kwargs: Additional keyword arguments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="Message.client">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.client">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kwargs&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span></div>
+
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
-        <span class="k">if</span> <span class="n">reply_to_message</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kwargs&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">reply_to_message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reply_to_message</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">reply_to_message</span><span class="p">[</span><span class="s1">&#39;client&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reply_to_message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">reply_to_message</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reply_to_message</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reply_to_message</span> <span class="o">=</span> <span class="n">reply_to_message</span>
+
 <div class="viewcode-block" id="Message.id">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.id">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">message_id</span></div>
@@ -500,20 +505,20 @@
 <div class="viewcode-block" id="Message.user">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.user">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span> <span class="s2">&quot;User&quot;</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">from_user</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">})</span> <span class="k">if</span> <span class="n">from_user</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">from_user</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span> <span class="k">if</span> <span class="n">from_user</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Message.date">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.date">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">date</span></div>
 
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="n">Chat</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">chat</span>
-        <span class="k">elif</span> <span class="n">chat</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">chat</span>
-            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;client&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span>
-            <span class="n">chat</span> <span class="o">=</span> <span class="n">data</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">chat</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">chat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">chat_data</span> <span class="o">=</span> <span class="n">chat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">chat_data</span><span class="p">[</span><span class="s1">&#39;client&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">chat_data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -605,7 +610,6 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_markup">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply_markup</span></div>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">reply_to_message</span>
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Message.is_admin">
@@ -616,9 +620,13 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if user is admin or creator, False otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;administrator&#39;</span><span class="p">,</span> <span class="s1">&#39;creator&#39;</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">member</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_chat_member</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">member</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;administrator&#39;</span><span class="p">,</span> <span class="s1">&#39;creator&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
@@ -639,14 +647,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">text</span><span class="p">,</span>
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -666,11 +675,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The edited message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">edit_message</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot edit - chat ID, message ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -682,8 +692,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if successful</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot delete - chat ID, message ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -698,9 +709,10 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The forwarded message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">forward_message</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot forward - chat ID, message ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -722,7 +734,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent photo message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_photo</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">photo</span><span class="o">=</span><span class="n">photo</span><span class="p">,</span>
@@ -730,7 +742,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with photo - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -752,7 +765,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent video message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_video</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">video</span><span class="o">=</span><span class="n">video</span><span class="p">,</span>
@@ -760,7 +773,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with video - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -782,7 +796,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent audio message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_audio</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">audio</span><span class="o">=</span><span class="n">audio</span><span class="p">,</span>
@@ -790,7 +804,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with audio - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -812,7 +827,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent document message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_document</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">document</span><span class="o">=</span><span class="n">document</span><span class="p">,</span>
@@ -820,7 +835,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with document - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -840,14 +856,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent sticker message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_sticker</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">sticker</span><span class="o">=</span><span class="n">sticker</span><span class="p">,</span>
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with sticker - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -871,7 +888,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent location message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_location</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">latitude</span><span class="o">=</span><span class="n">latitude</span><span class="p">,</span>
@@ -880,7 +897,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with location - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -902,7 +920,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent contact message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_contact</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">phone_number</span><span class="o">=</span><span class="n">phone_number</span><span class="p">,</span>
@@ -910,7 +928,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with contact - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 
 
     <span class="nd">@smart_method</span>
@@ -938,7 +957,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The sent invoice message object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_invoice</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
@@ -949,7 +968,8 @@
                 <span class="n">reply_to_message_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                 <span class="n">reply_markup</span><span class="o">=</span><span class="n">reply_markup</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">message</span></div>
+            <span class="k">return</span> <span class="n">message</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot reply with invoice - chat ID or client is not available&quot;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

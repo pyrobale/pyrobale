@@ -374,13 +374,15 @@
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrobale.client.Client">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://tapi.bale.ai/bot'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://tapi.bale.ai/bot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">async_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client" title="Link to this definition">¶</a></dt>
 <dd><p>A client for interacting with the Bale messenger API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>token</strong> (<em>str</em>) – The bot token.</p></li>
 <li><p><strong>base_url</strong> (<em>str</em><em>, </em><em>optional</em>) – The base URL for the API. Defaults to “<a class="reference external" href="https://tapi.bale.ai/bot">https://tapi.bale.ai/bot</a>”.</p></li>
+<li><p><strong>async_mode</strong> (<em>bool</em><em>, </em><em>optional</em>) – Force async mode. If None, auto-detected.</p></li>
+<li><p><strong>max_workers</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of worker threads for handlers. Defaults to 50.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -426,6 +428,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.client.Client.handler_executor">
+<span class="sig-name descname"><span class="pre">handler_executor</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.handler_executor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.handler_executor" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.me">
 <span class="sig-name descname"><span class="pre">me</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User"><span class="pre">pyrobale.objects.user.User</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.me"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.me" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -443,14 +450,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.ping">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">round_it</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.ping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.ping" title="Link to this definition">¶</a></dt>
-<dd><p>Ping the bot to see if the bot is alive.
-:param round_it: returns rounded number if was true</p>
+<dd><p>Ping the bot to see if the bot is alive.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>how many milliseconds it took to ping</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>round_it</strong> – returns rounded number if was true</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>float</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>how many milliseconds it took to ping</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -559,7 +568,7 @@
 <li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
 <li><p><strong>text</strong> (<em>str</em>) – The text to send.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>int</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>ReplyKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>ReplyKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -644,7 +653,7 @@
 <li><p><strong>photo</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The photo to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the photo. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -664,7 +673,7 @@
 <li><p><strong>audio</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The audio file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the audio. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -684,7 +693,7 @@
 <li><p><strong>document</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The document to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the document. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -704,7 +713,7 @@
 <li><p><strong>video</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The video file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the video. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -724,7 +733,7 @@
 <li><p><strong>animation</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The animation file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the animation. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -744,7 +753,7 @@
 <li><p><strong>voice</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><em>str</em><em>]</em>) – The voice file to send.</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The caption of the voice. Defaults to None.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup (buttons). Defaults to None.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -763,9 +772,7 @@
 <li><p><strong>chat_id</strong> (<em>int</em>) – The chat to send the message to.</p></li>
 <li><p><strong>media</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaPhoto" title="pyrobale.objects.inputmedias.InputMediaPhoto"><em>InputMediaPhoto</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaVideo" title="pyrobale.objects.inputmedias.InputMediaVideo"><em>InputMediaVideo</em></a><em>, </em><a class="reference internal" href="../objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio" title="pyrobale.objects.inputmedias.InputMediaAudio"><em>InputMediaAudio</em></a><em>]</em><em>]</em>) – The media to send.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>pyrobale.objects.utils.Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -789,9 +796,7 @@
 <li><p><strong>longitude</strong> (<em>float</em>) – The longitude of the location.</p></li>
 <li><p><strong>horizontal_accuracy</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em><em>, </em><em>optional</em>) – The horizontal accuracy of the location.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>pyrobale.objects.utils.Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -815,9 +820,7 @@
 <li><p><strong>first_name</strong> (<em>str</em>) – The first name of the contact.</p></li>
 <li><p><strong>last_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The last name of the contact.</p></li>
 <li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
-<li><p><strong>Optional</strong><strong>[</strong><strong>InlineKeyboardMarkup</strong><strong>]</strong> (<em>reply_markup</em>) – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>optional</strong><strong>)</strong> – The reply keyboard markup (buttons).</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><em>pyrobale.objects.utils.Union</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>]</em><em>, </em><em>optional</em>) – The reply keyboard markup.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -858,12 +861,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.inquire_transaction">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inquire_transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.inquire_transaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.inquire_transaction" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Inquire about a transaction.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>transaction_id</strong> (<em>str</em>)</p>
+<dd class="field-odd"><p><strong>transaction_id</strong> (<em>str</em>) – The transaction ID to inquire about.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../objects/transaction/index.html#pyrobale.objects.transaction.Transaction" title="pyrobale.objects.transaction.Transaction">pyrobale.objects.transaction.Transaction</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The transaction details.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/transaction/index.html#pyrobale.objects.transaction.Transaction" title="pyrobale.objects.transaction.Transaction">Transaction</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1774,6 +1781,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.running"><code class="docutils literal notranslate"><span class="pre">Client.running</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.last_update_id"><code class="docutils literal notranslate"><span class="pre">Client.last_update_id</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.state_machine"><code class="docutils literal notranslate"><span class="pre">Client.state_machine</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.handler_executor"><code class="docutils literal notranslate"><span class="pre">Client.handler_executor</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.me"><code class="docutils literal notranslate"><span class="pre">Client.me</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.check_defined_message"><code class="docutils literal notranslate"><span class="pre">Client.check_defined_message</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.defined_messages"><code class="docutils literal notranslate"><span class="pre">Client.defined_messages</span></code></a></li>

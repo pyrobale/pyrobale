@@ -15,7 +15,7 @@ Classes
 Package Contents
 ----------------
 
-.. py:class:: Client(token, base_url = 'https://tapi.bale.ai/bot')
+.. py:class:: Client(token, base_url = 'https://tapi.bale.ai/bot', async_mode = None, max_workers = 50)
 
    A client for interacting with the Bale messenger API.
 
@@ -23,6 +23,10 @@ Package Contents
    :type token: str
    :param base_url: The base URL for the API. Defaults to "https://tapi.bale.ai/bot".
    :type base_url: str, optional
+   :param async_mode: Force async mode. If None, auto-detected.
+   :type async_mode: bool, optional
+   :param max_workers: Maximum number of worker threads for handlers. Defaults to 50.
+   :type max_workers: int, optional
 
    :returns: The client instance.
    :rtype: Client
@@ -57,6 +61,9 @@ Package Contents
    .. py:attribute:: state_machine
 
 
+   .. py:attribute:: handler_executor
+
+
    .. py:attribute:: me
       :type:  pyrobale.objects.user.User
       :value: None
@@ -76,6 +83,7 @@ Package Contents
 
 
       Ping the bot to see if the bot is alive.
+
       :param round_it: returns rounded number if was true
 
       :returns: how many milliseconds it took to ping
@@ -170,7 +178,7 @@ Package Contents
       :type text: str
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: int, optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional
 
       :returns: The message.
@@ -244,7 +252,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -263,7 +271,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -282,7 +290,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -301,7 +309,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -320,7 +328,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -339,7 +347,7 @@ Package Contents
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup: The reply keyboard markup (buttons). Defaults to None.
+      :param reply_markup: The reply keyboard markup. Defaults to None.
       :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
 
@@ -356,8 +364,8 @@ Package Contents
       :type media: List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]]
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
+      :param reply_markup: The reply keyboard markup.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
       :returns: The list of messages.
       :rtype: List[Message]
@@ -380,8 +388,8 @@ Package Contents
       :type horizontal_accuracy: Optional[float], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
+      :param reply_markup: The reply keyboard markup.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
       :returns: The message.
       :rtype: Message
@@ -404,8 +412,8 @@ Package Contents
       :type last_name: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
       :type reply_to_message_id: Optional[int], optional
-      :param reply_markup Optional[InlineKeyboardMarkup]: The reply keyboard markup (buttons).
-      :param optional): The reply keyboard markup (buttons).
+      :param reply_markup: The reply keyboard markup.
+      :type reply_markup: Optional[InlineKeyboardMarkup], optional
 
       :returns: The message.
       :rtype: Message
@@ -442,6 +450,15 @@ Package Contents
 
    .. py:method:: inquire_transaction(transaction_id)
       :async:
+
+
+      Inquire about a transaction.
+
+      :param transaction_id: The transaction ID to inquire about.
+      :type transaction_id: str
+
+      :returns: The transaction details.
+      :rtype: Transaction
 
 
 
