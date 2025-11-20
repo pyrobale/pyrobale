@@ -1,7 +1,9 @@
 from ..exceptions import *
+
 import asyncio
 import inspect
 from functools import wraps
+import functools
 from typing import Any, Callable, Union
 import aiohttp
 
@@ -74,7 +76,10 @@ def sync_to_async(func: Callable) -> Callable:
 
     @wraps(func)
     async def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(
+            None, functools.partial(func, *args, **kwargs)
+        )
 
     return wrapper
 
@@ -88,11 +93,14 @@ def async_to_sync(func: Callable) -> Callable:
         try:
             loop = asyncio.get_event_loop()
             if loop.is_running():
-                return func(*args, **kwargs)
-            else:
-                return loop.run_until_complete(func(*args, **kwargs))
+                raise RuntimeError(
+                    "Cannot call async function from running event loop. "
+                    "Use await directly."
+                )
         except RuntimeError:
-            return asyncio.run(func(*args, **kwargs))
+            pass
+
+        return asyncio.run(func(*args, **kwargs))
 
     return wrapper
 
@@ -107,9 +115,11 @@ def smart_method(func):
                 if loop.is_running():
                     return func(self, *args, **kwargs)
                 else:
-                    return loop.run_until_complete(func(self, *args, **kwargs))
+                    result = async_to_sync(func)(self, *args, **kwargs)
+                    return result
             except RuntimeError:
-                return asyncio.run(func(self, *args, **kwargs))
+                result = async_to_sync(func)(self, *args, **kwargs)
+                return result
         else:
             return func(self, *args, **kwargs)
 

@@ -10,3 +10,6 @@ async def start(message: Message):
     answer = await bot.wait_for(UpdatesTypes.MESSAGE, check=check)
 
     await answer.reply(f"Hi {answer.text}!")
+
+
+bot.run()

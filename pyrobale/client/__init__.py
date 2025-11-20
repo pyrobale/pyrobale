@@ -1,4 +1,5 @@
 from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
+from concurrent.futures import ThreadPoolExecutor
 
 from ..objects.animation import Animation
 from ..objects.audio import Audio
@@ -52,6 +53,7 @@ import asyncio
 from bs4 import BeautifulSoup
 from json import loads, JSONDecodeError, dumps
 import aiohttp
+import functools
 
 
 class Client:
@@ -60,12 +62,15 @@ class Client:
     Args:
         token (str): The bot token.
         base_url (str, optional): The base URL for the API. Defaults to "https://tapi.bale.ai/bot".
+        async_mode (bool, optional): Force async mode. If None, auto-detected.
+        max_workers (int, optional): Maximum number of worker threads for handlers. Defaults to 50.
 
     Returns:
         Client: The client instance.
     """
 
-    def __init__(self, token: str, base_url: str = "https://tapi.bale.ai/bot"):
+    def __init__(self, token: str, base_url: str = "https://tapi.bale.ai/bot",
+                 async_mode: bool = None, max_workers: int = 50):
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
@@ -76,15 +81,29 @@ class Client:
         self.last_update_id = 0
         self.state_machine = StateMachine()
 
-        self.me: User = None
+        self.handler_executor = ThreadPoolExecutor(
+            max_workers=max_workers,
+            thread_name_prefix="pyrobale_handler"
+        )
 
+        if async_mode is None:
+            try:
+                loop = asyncio.get_event_loop()
+                self._async_mode = loop.is_running()
+            except RuntimeError:
+                self._async_mode = False
+        else:
+            self._async_mode = async_mode
+
+        self.me: User = None
         self.check_defined_message = True
         self.defined_messages = {}
 
     @smart_method
-    async def ping(self, round_it = False) -> float:
+    async def ping(self, round_it=False) -> float:
         """
         Ping the bot to see if the bot is alive.
+
         Args:
             round_it: returns rounded number if was true
 
@@ -200,7 +219,7 @@ class Client:
             chat_id (int): The chat to send the message to.
             text (str): The text to send.
             reply_to_message_id (int, optional): The message ID to reply to. Defaults to None.
-            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional):  The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Union[InlineKeyboardMarkup, ReplyKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
 
         Returns:
             Message: The message.
@@ -214,7 +233,8 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return Message(**pythonize(data.get("result")))
+        result = pythonize(data.get("result"))
+        return Message(**result, client=self)
 
     @smart_method
     async def delete_message(
@@ -262,7 +282,8 @@ class Client:
                 "message_id": message_id,
             },
         )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def copy_message(
@@ -286,17 +307,18 @@ class Client:
                 "message_id": message_id,
             },
         )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_photo(
-        self,
-        chat_id: Union[int, str],
-        photo: Union[InputFile, str],
-        caption: Optional[str] = None,
-        reply_to_message_id: Optional[int] = None,
-        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
-        ) -> Message:
+            self,
+            chat_id: Union[int, str],
+            photo: Union[InputFile, str],
+            caption: Optional[str] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
+    ) -> Message:
         """Send a photo to a chat.
 
         Args:
@@ -304,19 +326,17 @@ class Client:
             photo (Union[InputFile, str]): The photo to send.
             caption (Optional[str], optional): The caption of the photo. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendPhoto"
         if isinstance(photo, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if photo.file_name:
                 form.add_field("photo", photo.file_input, filename=photo.file_name)
             else:
                 form.add_field("photo", photo.file_input, filename="photo.png")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -338,17 +358,18 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_audio(
-        self,
-        chat_id: Union[int, str],
-        audio: Union[InputFile, str],
-        caption: Optional[str] = None,
-        reply_to_message_id: Optional[int] = None,
-        reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
-) -> Message:
+            self,
+            chat_id: Union[int, str],
+            audio: Union[InputFile, str],
+            caption: Optional[str] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
+    ) -> Message:
         """Send an audio to a chat.
 
         Args:
@@ -356,19 +377,17 @@ class Client:
             audio (Union[InputFile, str]): The audio file to send.
             caption (Optional[str], optional): The caption of the audio. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendAudio"
         if isinstance(audio, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if audio.file_name:
                 form.add_field("audio", audio.file_input, filename=audio.file_name)
             else:
                 form.add_field("audio", audio.file_input, filename="audio.mp3")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -390,7 +409,8 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_document(
@@ -408,19 +428,17 @@ class Client:
             document (Union[InputFile, str]): The document to send.
             caption (Optional[str], optional): The caption of the document. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendDocument"
         if isinstance(document, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if document.file_name:
                 form.add_field("document", document.file_input, filename=document.file_name)
             else:
                 form.add_field("document", document.file_input, filename="document.pdf")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -442,7 +460,8 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_video(
@@ -460,19 +479,17 @@ class Client:
             video (Union[InputFile, str]): The video file to send.
             caption (Optional[str], optional): The caption of the video. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendVideo"
         if isinstance(video, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if video.file_name:
                 form.add_field("video", video.file_input, filename=video.file_name)
             else:
                 form.add_field("video", video.file_input, filename="video.mp4")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -494,7 +511,8 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_animation(
@@ -512,19 +530,17 @@ class Client:
             animation (Union[InputFile, str]): The animation file to send.
             caption (Optional[str], optional): The caption of the animation. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendAnimation"
         if isinstance(animation, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if animation.file_name:
                 form.add_field("animation", animation.file_input, filename=animation.file_name)
             else:
                 form.add_field("animation", animation.file_input, filename="animation.gif")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -546,7 +562,8 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_voice(
@@ -564,19 +581,17 @@ class Client:
             voice (Union[InputFile, str]): The voice file to send.
             caption (Optional[str], optional): The caption of the voice. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons). Defaults to None.
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendVoice"
         if isinstance(voice, InputFile):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
 
-
             if voice.file_name:
                 form.add_field("voice", voice.file_input, filename=voice.file_name)
             else:
                 form.add_field("voice", voice.file_input, filename="voice.ogg")
-
 
             if caption:
                 form.add_field("caption", caption)
@@ -598,7 +613,8 @@ class Client:
                     "reply_markup": reply_markup.to_dict() if reply_markup else None,
                 },
             )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_media_group(
@@ -614,7 +630,7 @@ class Client:
             chat_id (int): The chat to send the message to.
             media (List[Union[InputMediaPhoto, InputMediaVideo, InputMediaAudio]]): The media to send.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup.
 
         Returns:
             List[Message]: The list of messages.
@@ -628,7 +644,7 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return [Message(**pythonize(msg)) for msg in data["result"]]
+        return [Message(**pythonize(msg), client=self) for msg in data["result"]]
 
     @smart_method
     async def send_location(
@@ -648,7 +664,7 @@ class Client:
             longitude (float): The longitude of the location.
             horizontal_accuracy (Optional[float], optional): The horizontal accuracy of the location.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup.
 
         Returns:
             Message: The message.
@@ -664,7 +680,8 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_contact(
@@ -684,7 +701,7 @@ class Client:
             first_name (str): The first name of the contact.
             last_name (Optional[str], optional): The last name of the contact.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
-            reply_markup Optional[InlineKeyboardMarkup], optional): The reply keyboard markup (buttons).
+            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup.
 
         Returns:
             Message: The message.
@@ -700,7 +717,8 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def send_invoice(
@@ -743,14 +761,22 @@ class Client:
                 "reply_to_message_id": reply_to_message_id,
             },
         )
-        return Message(**pythonize(data["result"]))
-    
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
+
     @smart_method
     async def inquire_transaction(self, transaction_id: str) -> Transaction:
-        
+        """Inquire about a transaction.
+
+        Args:
+            transaction_id (str): The transaction ID to inquire about.
+
+        Returns:
+            Transaction: The transaction details.
+        """
         data = await make_post(
             self.requests_base + "/inquireTransaction",
-            data={"transaction_id": transaction_id} 
+            data={"transaction_id": transaction_id}
         )
         return Transaction(**pythonize(data['result']))
 
@@ -815,17 +841,17 @@ class Client:
             return data.get("ok", False)
         except AttributeError:
             raise ForbiddenException("You cannot ban this member!")
-    
+
     @smart_method
     async def restrict_chat_member(self,
                                    chat_id: int,
                                    user_id: int,
-                                   can_send_messages: Union[bool,None] = None,
-                                   can_send_media_messages: Union[bool,None] = None,
-                                   can_send_other_messages: Union[bool,None] = None,
-                                   can_add_web_page_previews: Union[bool,None] = None,
-                                   until_date: Union[int,None] = None
-    ) -> bool:
+                                   can_send_messages: Union[bool, None] = None,
+                                   can_send_media_messages: Union[bool, None] = None,
+                                   can_send_other_messages: Union[bool, None] = None,
+                                   can_add_web_page_previews: Union[bool, None] = None,
+                                   until_date: Union[int, None] = None
+                                   ) -> bool:
         """Restricts a user from a chat.
 
         Args:
@@ -843,14 +869,14 @@ class Client:
         data = await make_post(
             self.requests_base + "/restrictChatMember",
             data={"chat_id": chat_id, "user_id": user_id,
-            "permissions": {
-                "can_send_messages": can_send_messages,
-                "can_send_media_messages": can_send_media_messages,
-                "can_send_other_messages": can_send_other_messages,
-                "can_add_web_page_previews": can_add_web_page_previews
-            },
-            "until_date": until_date
-            },
+                  "permissions": {
+                      "can_send_messages": can_send_messages,
+                      "can_send_media_messages": can_send_media_messages,
+                      "can_send_other_messages": can_send_other_messages,
+                      "can_add_web_page_previews": can_add_web_page_previews
+                  },
+                  "until_date": until_date
+                  },
         )
         try:
             return data.get("ok", False)
@@ -1328,7 +1354,8 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        return Message(**pythonize(data["result"]))
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
 
     @smart_method
     async def create_chat_invite_link(self, chat_id: int) -> InviteLink:
@@ -1569,47 +1596,63 @@ class Client:
                     if not hasattr(event, flt.value):
                         continue
 
+            callback = handler["callback"]
+
+            def create_handler_task(cb, evt):
+                def execute_handler():
+                    try:
+                        if asyncio.iscoroutinefunction(cb):
+                            asyncio.run(cb(evt))
+                        else:
+                            cb(evt)
+                    except Exception as e:
+                        print(f"Error in handler execution: {e}")
+
+                return execute_handler
+
             try:
-                if asyncio.iscoroutinefunction(handler["callback"]):
-                    asyncio.create_task(handler["callback"](event))
-                else:
-                    handler["callback"](event)
+                self.handler_executor.submit(create_handler_task(callback, event))
             except Exception as e:
-                print(f"Error executing handler: {e}")
+                print(f"Error scheduling handler: {e}")
 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
-        chat = Chat(**event_data.get("chat", dict()))
-        kwargs = {"client": self, "chat": chat}
         try:
+            kwargs = {"client": self}
+
             if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND,
-                                UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT]:
-                message = Message(kwargs=kwargs, **pythonize(event_data))
+                                UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT, UpdatesTypes.PHOTO]:
+
+                message = Message(**pythonize(event_data), **kwargs)
 
                 if handler_type == UpdatesTypes.MEMBER_JOINED and "new_chat_members" in event_data:
                     data = dict()
-                    data["inviter"] = User(**event_data["from"])
+                    data["inviter"] = User(**event_data["from"], client=self)
                     data["date"] = event_data["date"]
-                    data["chat"] = Chat(**event_data["chat"])
-                    data["new_chat_members"] = [User(**pythonize(u)) for u in event_data["new_chat_members"]]
+                    data["chat"] = Chat(**event_data["chat"], client=self)
+                    data["new_chat_members"] = [User(**pythonize(u), client=self) for u in
+                                                event_data["new_chat_members"]]
                     message.new_chat_members = NewChatMembers(**data)
+
                 elif handler_type == UpdatesTypes.MEMBER_LEFT and "left_chat_member" in event_data:
-                    message.left_chat_member = User(**pythonize(event_data["left_chat_member"]))
+                    message.left_chat_member = User(**pythonize(event_data["left_chat_member"]), client=self)
 
                 return message
 
             elif handler_type == UpdatesTypes.CALLBACK_QUERY:
-                return CallbackQuery(kwargs=kwargs, **pythonize(event_data))
+                return CallbackQuery(**pythonize(event_data), **kwargs)
+
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
-                return PreCheckoutQuery(kwargs=kwargs, **pythonize(event_data))
+                return PreCheckoutQuery(**pythonize(event_data), **kwargs)
+
             elif handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
                 if "successful_payment" in event_data:
-                    return SuccessfulPayment(kwargs=kwargs, **pythonize(event_data["successful_payment"]))
-                return Message(kwargs=kwargs, **pythonize(event_data))
-            elif handler_type == UpdatesTypes.PHOTO:
-                return Message(kwargs=kwargs, **pythonize(event_data))
+                    return SuccessfulPayment(**pythonize(event_data["successful_payment"]), **kwargs)
+                return Message(**pythonize(event_data), **kwargs)
+
             else:
                 return event_data
+
         except Exception as e:
             print(f"Error converting event {handler_type}: {e}")
             return event_data
@@ -1740,6 +1783,7 @@ class Client:
     async def stop_polling(self) -> None:
         """Stop polling updates."""
         self.running = False
+        self.handler_executor.shutdown(wait=False)
 
     def run(self, timeout: int = 30, limit: int = 100) -> None:
         """Run the client.
@@ -1753,11 +1797,14 @@ class Client:
             asyncio.run(self.start_polling(timeout, limit))
         except KeyboardInterrupt:
             print("Bot stopped by user")
+        finally:
+            self.handler_executor.shutdown(wait=True)
 
     @smart_method
     async def stop(self) -> None:
         """Stop the client."""
         await self.stop_polling()
+        self.handler_executor.shutdown(wait=True)
 
     @smart_method
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:

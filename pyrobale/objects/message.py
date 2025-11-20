@@ -1,7 +1,5 @@
-from typing import TYPE_CHECKING
-from typing import Optional, Union
-
-from pyrobale.objects.newchatmembers import NewChatMembers
+from typing import TYPE_CHECKING, Optional, Union
+from ..objects.newchatmembers import NewChatMembers
 from ..objects.utils import pythonize
 
 if TYPE_CHECKING:
@@ -25,6 +23,7 @@ if TYPE_CHECKING:
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
     from ..client import Client
+
 from ..objects.chat import Chat
 from ..objects.user import User
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
@@ -95,7 +94,7 @@ class Message:
             successful_payment: Optional["SuccessfulPayment"] = None,
             web_app_data: Optional["WebAppData"] = None,
             reply_markup: Optional["InlineKeyboardMarkup"] = None,
-            reply_to_message: Optional[int] = None,
+            reply_to_message: Optional["Message"] = None,
             client: Optional["Client"] = None,
             **kwargs
     ):
@@ -128,30 +127,36 @@ class Message:
             successful_payment: Successful payment information
             web_app_data: Web App data
             reply_markup: Inline keyboard markup
-            reply_to_message: Message ID in the original chat
+            reply_to_message: Reply to message object
             client: Client instance associated with this message
-            **kwargs: Additional keyword arguments including client instance
+            **kwargs: Additional keyword arguments
         """
-        self.client: Client = kwargs.get("kwargs", {}).get("client")
+        self.client: Client = kwargs.get("client")
+
         if not self.client:
             self.client = client
-        if reply_to_message != None:
+
+        if not self.client:
+            self.client = kwargs.get("kwargs", {}).get("client")
+
+        if reply_to_message is not None and isinstance(reply_to_message, dict):
             reply_to_message['client'] = self.client
             self.reply_to_message = Message(**pythonize(reply_to_message))
         else:
-            self.reply_to_message = None
+            self.reply_to_message = reply_to_message
+
         self.id: int = message_id
         self.user: "User" = (
-            User(**from_user, kwargs={"client": self.client}) if from_user else None
+            User(**from_user, client=self.client) if from_user else None
         )
         self.date: int = date
+
         if isinstance(chat, Chat):
             self.chat: Chat = chat
-        elif chat != None:
-            data = chat
-            data['client'] = self.client
-            chat = data
-            self.chat: Chat = Chat(**chat)
+        elif chat is not None:
+            chat_data = chat.copy()
+            chat_data['client'] = self.client
+            self.chat: Chat = Chat(**chat_data)
         else:
             self.chat: Chat = None
 
@@ -177,7 +182,6 @@ class Message:
         self.successful_payment: Optional["SuccessfulPayment"] = successful_payment
         self.web_app_data: Optional["WebAppData"] = web_app_data
         self.reply_markup: Optional["InlineKeyboardMarkup"] = reply_markup
-        self.reply_to_message
 
     @property
     async def is_admin(self):
@@ -186,9 +190,13 @@ class Message:
         Returns:
             bool: True if user is admin or creator, False otherwise
         """
-        if self.client.get_chat_member(self.chat, self.user.id).status in ['administrator', 'creator']:
-            return True
-        else:
+        if not self.client or not self.chat or not self.user:
+            return False
+
+        try:
+            member = await self.client.get_chat_member(self.chat.id, self.user.id)
+            return member.status in ['administrator', 'creator']
+        except Exception:
             return False
 
     @smart_method
@@ -206,7 +214,7 @@ class Message:
         Returns:
             Message: The sent message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_message(
                 self.chat.id,
                 text,
@@ -214,6 +222,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply - chat ID or client is not available")
 
     @smart_method
     async def edit(
@@ -230,11 +239,12 @@ class Message:
         Returns:
             Message: The edited message object
         """
-        if self.chat and self.chat.id and self.id:
+        if self.chat and self.chat.id and self.id and self.client:
             message = await self.client.edit_message(
                 self.chat.id, self.id, text, reply_markup=reply_markup
             )
             return message
+        raise ValueError("Cannot edit - chat ID, message ID or client is not available")
 
     @smart_method
     async def delete(self) -> bool:
@@ -243,8 +253,9 @@ class Message:
         Returns:
             bool: True if successful
         """
-        if self.chat and self.chat.id and self.id:
+        if self.chat and self.chat.id and self.id and self.client:
             return await self.client.delete_message(self.chat.id, self.id)
+        raise ValueError("Cannot delete - chat ID, message ID or client is not available")
 
     @smart_method
     async def forward(self, chat_id: int) -> 'Message':
@@ -256,9 +267,10 @@ class Message:
         Returns:
             Message: The forwarded message object
         """
-        if self.chat and self.chat.id and self.id:
-            message = await self.client.forward(self.chat.id, chat_id, self.id)
+        if self.chat and self.chat.id and self.id and self.client:
+            message = await self.client.forward_message(chat_id, self.chat.id, self.id)
             return message
+        raise ValueError("Cannot forward - chat ID, message ID or client is not available")
 
     @smart_method
     async def reply_photo(
@@ -277,7 +289,7 @@ class Message:
         Returns:
             Message: The sent photo message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_photo(
                 self.chat.id,
                 photo=photo,
@@ -286,6 +298,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with photo - chat ID or client is not available")
 
     @smart_method
     async def reply_video(
@@ -304,7 +317,7 @@ class Message:
         Returns:
             Message: The sent video message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_video(
                 self.chat.id,
                 video=video,
@@ -313,6 +326,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with video - chat ID or client is not available")
 
     @smart_method
     async def reply_audio(
@@ -331,7 +345,7 @@ class Message:
         Returns:
             Message: The sent audio message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_audio(
                 self.chat.id,
                 audio=audio,
@@ -340,6 +354,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with audio - chat ID or client is not available")
 
     @smart_method
     async def reply_document(
@@ -358,7 +373,7 @@ class Message:
         Returns:
             Message: The sent document message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_document(
                 self.chat.id,
                 document=document,
@@ -367,6 +382,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with document - chat ID or client is not available")
 
     @smart_method
     async def reply_sticker(
@@ -383,7 +399,7 @@ class Message:
         Returns:
             Message: The sent sticker message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_sticker(
                 self.chat.id,
                 sticker=sticker,
@@ -391,6 +407,7 @@ class Message:
                 reply_markup=reply_markup
             )
             return message
+        raise ValueError("Cannot reply with sticker - chat ID or client is not available")
 
     @smart_method
     async def reply_location(
@@ -411,7 +428,7 @@ class Message:
         Returns:
             Message: The sent location message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_location(
                 self.chat.id,
                 latitude=latitude,
@@ -421,6 +438,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with location - chat ID or client is not available")
 
     @smart_method
     async def reply_contact(
@@ -439,7 +457,7 @@ class Message:
         Returns:
             Message: The sent contact message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_contact(
                 self.chat.id,
                 phone_number=phone_number,
@@ -448,6 +466,7 @@ class Message:
                 reply_markup=reply_markup,
             )
             return message
+        raise ValueError("Cannot reply with contact - chat ID or client is not available")
 
     @smart_method
     async def reply_invoice(
@@ -472,7 +491,7 @@ class Message:
         Returns:
             Message: The sent invoice message object
         """
-        if self.chat and self.chat.id:
+        if self.chat and self.chat.id and self.client:
             message = await self.client.send_invoice(
                 self.chat.id,
                 title=title,
@@ -484,3 +503,4 @@ class Message:
                 reply_markup=reply_markup
             )
             return message
+        raise ValueError("Cannot reply with invoice - chat ID or client is not available")
