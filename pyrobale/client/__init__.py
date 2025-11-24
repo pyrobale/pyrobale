@@ -1332,7 +1332,6 @@ class Client:
             chat_id: Union[int, str],
             message_id: int,
             text: str,
-            reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> Message:
         """Edits a message in a specified chat
 
@@ -1340,7 +1339,6 @@ class Client:
             chat_id (int): The chat to get.
             message_id (int): The message to get.
             text (str): The text to edit.
-            reply_markup (InlineKeyboardMarkup, optional): the reply markup to use. Defaults to None.
 
         Returns:
             Message: The edited message.
@@ -1351,11 +1349,40 @@ class Client:
                 "chat_id": chat_id,
                 "message_id": message_id,
                 "text": text,
-                "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
         result = pythonize(data["result"])
         return Message(**result, client=self)
+    @smart_method
+    async def edit_message_reply_markup(self, chat_id: int, message_id: int,
+                                        reply_markup: Union["InlineKeyboardMarkup", None] = None
+                                        ):
+        """
+        Edits a message's buttons without editing the content.
+
+        Args:
+            chat_id (int): The chat to get.
+            message_id (int): The message to get.
+            reply_markup (Union["InlineKeyboardMarkup", None]): The reply keyboard markup to use.
+
+        Returns:
+            Message: The edited message.
+        """
+
+        data = await make_post(
+            self.requests_base + "/editMessageReplyMarkup",
+            data={
+                "chat_id": chat_id,
+                "message_id": message_id,
+                "reply_markup": reply_markup
+            }
+        )
+
+        try:
+            result = pythonize(data["result"])
+            return Message(**result, client=self)
+        except KeyError as e:
+            raise KeyError(e)
 
     @smart_method
     async def create_chat_invite_link(self, chat_id: int) -> InviteLink:

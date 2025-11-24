@@ -1,7 +1,9 @@
 from typing import TYPE_CHECKING
 
+
 from typing import Optional, Union
 from .utils import smart_method
+from .. import PhotoSize
 
 if TYPE_CHECKING:
     from .utils import build_api_url
@@ -16,13 +18,12 @@ from .enums import ChatType, ChatAction, UpdatesTypes
 import asyncio
 
 
-
 class Chat:
     """Represents a chat in the Bale messenger.
 
     Parameters:
-        id (Optional[int]): Unique identifier for this chat
-        type (Optional[str]): Type of chat, can be either "private", "group", or "channel"
+        id (int): Unique identifier for this chat
+        type (str): Type of chat, can be either "private", "group", or "channel"
         title (Optional[str]): Title, for groups and channels
         username (Optional[str]): Username, for private chats and channels if available
         first_name (Optional[str]): First name of the other party in a private chat
@@ -45,14 +46,14 @@ class Chat:
     """
 
     def __init__(
-        self,
-        id: Optional[int] = None,
-        type: Optional[str] = None,
-        title: Optional[str] = None,
-        username: Optional[str] = None,
-        photo: Optional["ChatPhoto"] = None,
-        client: Optional["Client"] = None,
-        **kwargs
+            self,
+            id: int = None,
+            type: str = None,
+            title: Optional[str] = None,
+            username: Optional[str] = None,
+            photo: Optional["ChatPhoto"] = None,
+            client: Optional["Client"] = None,
+            **kwargs
     ):
         self.id = id
         self.type = type
@@ -64,11 +65,12 @@ class Chat:
         self.photo: "ChatPhoto" = photo
         self.client: "Client" = client
 
+    @smart_method
     async def send_message(
-        self,
-        text: str,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            text: str,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a message to the chat.
 
@@ -80,13 +82,14 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        await self.client.send_message(
+        return await self.client.send_message(
             chat_id=self.id,
             text=text,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def get_chat_member(self, user_id: int) -> "ChatMember":
         """Get information about a member of a chat.
 
@@ -98,6 +101,7 @@ class Chat:
         """
         return await self.client.get_chat_member(chat_id=self.id, user_id=user_id)
 
+    @smart_method
     async def get_administrators(self):
         """Gets a list of administrators of a specified chat.
 
@@ -106,6 +110,7 @@ class Chat:
         """
         return await self.client.get_chat_administrators(self.id)
 
+    @smart_method
     async def get_chat_members_count(self) -> int:
         """Get the number of members in the chat.
 
@@ -114,12 +119,13 @@ class Chat:
         """
         return await self.client.get_chat_members_count(chat_id=self.id)
 
+    @smart_method
     async def send_photo(
-        self,
-        photo: str,
-        caption: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            photo: str,
+            caption: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a photo to the chat.
 
@@ -132,7 +138,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        await self.client.send_photo(
+        return await self.client.send_photo(
             chat_id=self.id,
             photo=photo,
             caption=caption,
@@ -140,12 +146,13 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_video(
-        self,
-        video: str,
-        caption: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            video: str,
+            caption: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a video to the chat.
 
@@ -158,7 +165,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        await self.client.send_video(
+        return await self.client.send_video(
             chat_id=self.id,
             video=video,
             caption=caption,
@@ -166,12 +173,13 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_audio(
-        self,
-        audio: str,
-        caption: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            audio: str,
+            caption: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send an audio file to the chat.
 
@@ -184,7 +192,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_audio(
+        return await self.client.send_audio(
             chat_id=self.id,
             audio=audio,
             caption=caption,
@@ -192,12 +200,13 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_document(
-        self,
-        document: str,
-        caption: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            document: str,
+            caption: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a document to the chat.
 
@@ -210,7 +219,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_document(
+        return await self.client.send_document(
             chat_id=self.id,
             document=document,
             caption=caption,
@@ -218,11 +227,12 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_sticker(
-        self,
-        sticker: str,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            sticker: str,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a sticker to the chat.
 
@@ -234,19 +244,20 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_sticker(
+        return await self.client.send_sticker(
             chat_id=self.id,
             sticker=sticker,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_voice(
-        self,
-        voice: str,
-        caption: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            voice: str,
+            caption: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a voice message to the chat.
 
@@ -259,7 +270,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_voice(
+        return await self.client.send_voice(
             chat_id=self.id,
             voice=voice,
             caption=caption,
@@ -267,12 +278,13 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_location(
-        self,
-        latitude: float,
-        longitude: float,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            latitude: float,
+            longitude: float,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a location to the chat.
 
@@ -285,7 +297,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        self.client.send_location(
+        return await self.client.send_location(
             chat_id=self.id,
             latitude=latitude,
             longitude=longitude,
@@ -293,13 +305,14 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def send_contact(
-        self,
-        phone_number: str,
-        first_name: str,
-        last_name: Optional[str] = None,
-        reply_to_message_id: int = None,
-        reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            self,
+            phone_number: str,
+            first_name: str,
+            last_name: Optional[str] = None,
+            reply_to_message_id: int = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
     ) -> "Message":
         """Send a contact to the chat.
 
@@ -313,7 +326,7 @@ class Chat:
         Returns:
             Message: The sent message object
         """
-        await self.client.send_contact(
+        return await self.client.send_contact(
             chat_id=self.id,
             phone_number=phone_number,
             first_name=first_name,
@@ -322,6 +335,7 @@ class Chat:
             reply_markup=reply_markup,
         )
 
+    @smart_method
     async def ban(self, user_id: int) -> bool:
         """Bans a user from the chat.
 
@@ -333,7 +347,8 @@ class Chat:
             bool: True on success
         """
         return await self.client.ban_chat_member(chat_id=self.id, user_id=user_id)
-    
+
+    @smart_method
     async def kick(self, user_id: int) -> bool:
         """Kicks a user from the chat.
 
@@ -345,6 +360,7 @@ class Chat:
         """
         return await self.client.kick_chat_member(chat_id=self.id, user_id=user_id)
 
+    @smart_method
     async def unban(self, user_id: int) -> bool:
         """Unban a previously banned user in the chat.
 
@@ -356,14 +372,15 @@ class Chat:
         """
         return await self.client.unban_chat_member(chat_id=self.id, user_id=user_id)
 
+    @smart_method
     async def restrict(self,
-                                   user_id: int,
-                                   can_send_messages: Union[bool,None] = None,
-                                   can_send_media_messages: Union[bool,None] = None,
-                                   can_send_other_messages: Union[bool,None] = None,
-                                   can_add_web_page_previews: Union[bool,None] = None,
-                                   until_date: Union[int,None] = None
-    ) -> bool:
+                       user_id: int,
+                       can_send_messages: Union[bool, None] = None,
+                       can_send_media_messages: Union[bool, None] = None,
+                       can_send_other_messages: Union[bool, None] = None,
+                       can_add_web_page_previews: Union[bool, None] = None,
+                       until_date: Union[int, None] = None
+                       ) -> bool:
         """Restricts a user from a chat.
 
         Args:
@@ -377,7 +394,7 @@ class Chat:
         Returns:
             bool: Whether the ban was successful.
         """
-        data = await self.client.restrict_chat_member(
+        return await self.client.restrict_chat_member(
             chat_id=self.id,
             user_id=user_id,
             can_send_messages=can_send_messages,
@@ -386,20 +403,20 @@ class Chat:
             can_add_web_page_previews=can_add_web_page_previews,
             until_date=until_date
         )
-        return data
 
+    @smart_method
     async def promote(
-        self,
-        user_id: int,
-        can_change_info: Optional[bool] = None,
-        can_post_messages: Optional[bool] = None,
-        can_edit_messages: Optional[bool] = None,
-        can_delete_messages: Optional[bool] = None,
-        can_invite_users: Optional[bool] = None,
-        can_restrict_members: Optional[bool] = None,
-        can_pin_messages: Optional[bool] = None,
-        can_promote_members: Optional[bool] = None,
-    ):
+            self,
+            user_id: int,
+            can_change_info: Optional[bool] = None,
+            can_post_messages: Optional[bool] = None,
+            can_edit_messages: Optional[bool] = None,
+            can_delete_messages: Optional[bool] = None,
+            can_invite_users: Optional[bool] = None,
+            can_restrict_members: Optional[bool] = None,
+            can_pin_messages: Optional[bool] = None,
+            can_promote_members: Optional[bool] = None,
+    ) -> bool:
         """Promote or demote a user in a chat.
 
         Parameters:
@@ -429,6 +446,7 @@ class Chat:
             can_promote_members=can_promote_members,
         )
 
+    @smart_method
     async def leave(self) -> bool:
         """Leave the chat.
 
@@ -436,18 +454,62 @@ class Chat:
             bool: True on success
         """
         return await self.client.leave_chat(chat_id=self.id)
-    
+
+    @smart_method
+    async def delete_message(self, message_id: int) -> bool:
+        """Delete a message in a chat.
+
+        Args:
+            message_id (int): Unique identifier of the target message
+        Returns:
+            bool: True on success
+        """
+
+        return await self.client.delete_message(chat_id=self.id, message_id=message_id)
+
+    @smart_method
+    async def edit_message(self, message_id: int, text: str) -> Message:
+        """Edit a message in a chat.
+
+        Args:
+            message_id (int): Unique identifier of the target message
+            text (str): Text to edit.
+
+        Returns:
+            Message: The edited message.
+        """
+        return await self.client.edit_message(chat_id=self.id, message_id=message_id, text=text)
+
+    @smart_method
+    async def edit_message_reply_markup(self, message_id: int, reply_markup: Union["InlineKeyboardMarkup", None]) -> Message:
+        """Edit a message's reply markup without editing content.
+
+        Args:
+            message_id (int): Unique identifier of the target message.
+            reply_markup (Union["InlineKeyboardMarkup", None]): Reply markup without editing content.
+        Returns:
+            Message: The edited message.
+        """
+
+        return await self.client.edit_message_reply_markup(
+            chat_id=self.id,
+            message_id=message_id,
+            reply_markup=reply_markup
+        )
+
+    @smart_method
     async def is_joined(self, user_id: int) -> bool:
         """Check if a user is joined to the chat.
-        
+
         Parameters:
             user_id (int): Unique identifier of the target user
-        
+
         Returns:
             bool: True if the user is joined to the chat, False otherwise
         """
         return await self.client.is_joined(user_id, self.id)
 
+    @smart_method
     async def pin(self, message_id: int) -> bool:
         """Pin a message in the chat.
 
@@ -461,6 +523,7 @@ class Chat:
             chat_id=self.id, message_id=message_id
         )
 
+    @smart_method
     async def unpin(self, message_id: int) -> bool:
         """Unpin a message in the chat.
 
@@ -469,6 +532,7 @@ class Chat:
         """
         return await self.client.unpin_chat_message(chat_id=self.id, message_id=message_id)
 
+    @smart_method
     async def unpin_all(self) -> bool:
         """Unpin all messages in the chat.
 
@@ -477,6 +541,7 @@ class Chat:
         """
         return await self.client.unpin_all_chat_messages(chat_id=self.id)
 
+    @smart_method
     async def set_title(self, title: str) -> bool:
         """Change the title of a chat.
 
@@ -488,6 +553,7 @@ class Chat:
         """
         return await self.client.set_chat_title(chat_id=self.id, title=title)
 
+    @smart_method
     async def set_description(self, description: str) -> bool:
         """Change the description of a chat.
 
@@ -501,6 +567,7 @@ class Chat:
             chat_id=self.id, description=description
         )
 
+    @smart_method
     async def set_photo(self, photo: str) -> bool:
         """Set the photo of the chat.
 
@@ -512,6 +579,7 @@ class Chat:
         """
         return await self.client.set_chat_photo(chat_id=self.id, photo=photo)
 
+    @smart_method
     async def send_action(self, action: ChatAction) -> bool:
         """Send an action to the chat.
 
@@ -522,8 +590,9 @@ class Chat:
             bool: True on success
         """
         return await self.client.send_chat_action(chat_id=self.id, action=action)
-    
-    async def mute(self, user_id: int):
+
+    @smart_method
+    async def mute(self, user_id: int) -> bool:
         """
         Mutes a user in a chat by restricting.
 
@@ -533,16 +602,17 @@ class Chat:
         Returns:
             bool: True on success
         """
-        data = await self.restrict(user_id=user_id, can_send_messages=False)
-    
-    async def unmute(self, user_id: int):
+        return await self.restrict(user_id=user_id, can_send_messages=False)
+
+    @smart_method
+    async def unmute(self, user_id: int) -> bool:
         """
         Unmutes a user in a chat by restricting.
 
         Parameters:
             user_id (int): user id to unmute
-            
+
         Returns:
             bool: True on success
         """
-        data = await self.restrict(user_id=user_id, can_send_messages=True)
+        return await self.restrict(user_id=user_id, can_send_messages=True)

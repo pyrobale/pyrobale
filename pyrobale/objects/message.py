@@ -228,24 +228,42 @@ class Message:
     async def edit(
             self,
             text: str,
-            reply_markup: Optional[InlineKeyboardMarkup] = None,
     ) -> 'Message':
         """Edit the current message text.
 
         Args:
             text: The new text
-            reply_markup: Optional new keyboard markup
 
         Returns:
             Message: The edited message object
         """
         if self.chat and self.chat.id and self.id and self.client:
             message = await self.client.edit_message(
-                self.chat.id, self.id, text, reply_markup=reply_markup
+                self.chat.id, self.id, text
             )
             return message
         raise ValueError("Cannot edit - chat ID, message ID or client is not available")
 
+    @smart_method
+    async def edit_reply_markup(
+            self,
+            reply_markup: Union["InlineKeyboardMarkup", None] = None,
+    ):
+        """
+        Edits a message's reply markup without editing content.
+
+        Args:
+            reply_markup: Optional keyboard markup for the message
+        Returns:
+            Message: The edited message object
+
+        """
+
+        if self.chat and self.chat.id and self.id and self.client:
+            message = await self.client.edit_message_reply_markup(
+                self.chat.id, self.id, reply_markup=reply_markup
+            )
+            return message
     @smart_method
     async def delete(self) -> bool:
         """Delete the current message.
