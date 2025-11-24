@@ -494,7 +494,7 @@ class Chat:
         return await self.client.edit_message(chat_id=self.id, message_id=message_id, text=text)
 
     @smart_method
-    async def edit_message_reply_markup(self, message_id: int, reply_markup: Union["InlineKeyboardMarkup", None]) -> Message:
+    async def edit_message_reply_markup(self, message_id: int, reply_markup: Union["InlineKeyboardMarkup", None]) -> "Message":
         """Edit a message's reply markup without editing content.
 
         Args:
