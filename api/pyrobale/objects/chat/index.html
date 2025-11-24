@@ -379,8 +379,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Unique identifier for this chat</p></li>
-<li><p><strong>type</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Type of chat, can be either “private”, “group”, or “channel”</p></li>
+<li><p><strong>id</strong> (<em>int</em>) – Unique identifier for this chat</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Type of chat, can be either “private”, “group”, or “channel”</p></li>
 <li><p><strong>title</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Title, for groups and channels</p></li>
 <li><p><strong>username</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Username, for private chats and channels if available</p></li>
 <li><p><strong>first_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – First name of the other party in a private chat</p></li>
@@ -916,6 +916,63 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.delete_message">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.delete_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.delete_message" title="Link to this definition">¶</a></dt>
+<dd><p>Delete a message in a chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message_id</strong> (<em>int</em>) – Unique identifier of the target message</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True on success</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.edit_message">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.edit_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.edit_message" title="Link to this definition">¶</a></dt>
+<dd><p>Edit a message in a chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_id</strong> (<em>int</em>) – Unique identifier of the target message</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – Text to edit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The edited message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.edit_message_reply_markup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.edit_message_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.edit_message_reply_markup" title="Link to this definition">¶</a></dt>
+<dd><p>Edit a message’s reply markup without editing content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_id</strong> (<em>int</em>) – Unique identifier of the target message.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><em>&quot;InlineKeyboardMarkup&quot;</em><em>, </em><em>None</em><em>]</em>) – Reply markup without editing content.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The edited message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.is_joined">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_joined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.is_joined"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.is_joined" title="Link to this definition">¶</a></dt>
 <dd><p>Check if a user is joined to the chat.</p>
@@ -1191,6 +1248,9 @@
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.restrict"><code class="docutils literal notranslate"><span class="pre">Chat.restrict()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.promote"><code class="docutils literal notranslate"><span class="pre">Chat.promote()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.leave"><code class="docutils literal notranslate"><span class="pre">Chat.leave()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.delete_message"><code class="docutils literal notranslate"><span class="pre">Chat.delete_message()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.edit_message"><code class="docutils literal notranslate"><span class="pre">Chat.edit_message()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.edit_message_reply_markup"><code class="docutils literal notranslate"><span class="pre">Chat.edit_message_reply_markup()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.is_joined"><code class="docutils literal notranslate"><span class="pre">Chat.is_joined()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.pin"><code class="docutils literal notranslate"><span class="pre">Chat.pin()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.unpin"><code class="docutils literal notranslate"><span class="pre">Chat.unpin()</span></code></a></li>

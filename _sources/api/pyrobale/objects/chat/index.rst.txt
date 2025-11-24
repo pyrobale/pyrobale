@@ -20,9 +20,9 @@ Module Contents
    Represents a chat in the Bale messenger.
 
    :param id: Unique identifier for this chat
-   :type id: Optional[int]
+   :type id: int
    :param type: Type of chat, can be either "private", "group", or "channel"
-   :type type: Optional[str]
+   :type type: str
    :param title: Title, for groups and channels
    :type title: Optional[str]
    :param username: Username, for private chats and channels if available
@@ -461,6 +461,52 @@ Module Contents
 
       :returns: True on success
       :rtype: bool
+
+
+
+   .. py:method:: delete_message(message_id)
+      :async:
+
+
+      Delete a message in a chat.
+
+      :param message_id: Unique identifier of the target message
+      :type message_id: int
+
+      :returns: True on success
+      :rtype: bool
+
+
+
+   .. py:method:: edit_message(message_id, text)
+      :async:
+
+
+      Edit a message in a chat.
+
+      :param message_id: Unique identifier of the target message
+      :type message_id: int
+      :param text: Text to edit.
+      :type text: str
+
+      :returns: The edited message.
+      :rtype: Message
+
+
+
+   .. py:method:: edit_message_reply_markup(message_id, reply_markup)
+      :async:
+
+
+      Edit a message's reply markup without editing content.
+
+      :param message_id: Unique identifier of the target message.
+      :type message_id: int
+      :param reply_markup: Reply markup without editing content.
+      :type reply_markup: Union["InlineKeyboardMarkup", None]
+
+      :returns: The edited message.
+      :rtype: Message
 
 
 

@@ -361,14 +361,26 @@ Module Contents
 
 
 
-   .. py:method:: edit(text, reply_markup = None)
+   .. py:method:: edit(text)
       :async:
 
 
       Edit the current message text.
 
       :param text: The new text
-      :param reply_markup: Optional new keyboard markup
+
+      :returns: The edited message object
+      :rtype: Message
+
+
+
+   .. py:method:: edit_reply_markup(reply_markup = None)
+      :async:
+
+
+      Edits a message's reply markup without editing content.
+
+      :param reply_markup: Optional keyboard markup for the message
 
       :returns: The edited message object
       :rtype: Message

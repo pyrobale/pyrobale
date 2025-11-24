@@ -1338,7 +1338,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.edit_message">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message" title="Link to this definition">¶</a></dt>
 <dd><p>Edits a message in a specified chat</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1346,7 +1346,27 @@
 <li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
 <li><p><strong>message_id</strong> (<em>int</em>) – The message to get.</p></li>
 <li><p><strong>text</strong> (<em>str</em>) – The text to edit.</p></li>
-<li><p><strong>reply_markup</strong> (<a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><em>optional</em>) – the reply markup to use. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The edited message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.edit_message_reply_markup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message_reply_markup" title="Link to this definition">¶</a></dt>
+<dd><p>Edits a message’s buttons without editing the content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
+<li><p><strong>message_id</strong> (<em>int</em>) – The message to get.</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><em>&quot;InlineKeyboardMarkup&quot;</em><em>, </em><em>None</em><em>]</em>) – The reply keyboard markup to use.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1831,6 +1851,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.set_chat_description"><code class="docutils literal notranslate"><span class="pre">Client.set_chat_description()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.delete_chat_photo"><code class="docutils literal notranslate"><span class="pre">Client.delete_chat_photo()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.edit_message"><code class="docutils literal notranslate"><span class="pre">Client.edit_message()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.edit_message_reply_markup"><code class="docutils literal notranslate"><span class="pre">Client.edit_message_reply_markup()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.create_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.create_chat_invite_link()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.revoke_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.revoke_chat_invite_link()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.export_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.export_chat_invite_link()</span></code></a></li>

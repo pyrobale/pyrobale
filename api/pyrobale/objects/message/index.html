@@ -875,14 +875,28 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.objects.message.Message.edit">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit" title="Link to this definition">¶</a></dt>
 <dd><p>Edit the current message text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> (<em>str</em>) – The new text</p></li>
-<li><p><strong>reply_markup</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional new keyboard markup</p></li>
-</ul>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The new text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The edited message object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.message.Message.edit_reply_markup">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit_reply_markup" title="Link to this definition">¶</a></dt>
+<dd><p>Edits a message’s reply markup without editing content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup for the message</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The edited message object</p>
@@ -1222,6 +1236,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.is_admin"><code class="docutils literal notranslate"><span class="pre">Message.is_admin</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply"><code class="docutils literal notranslate"><span class="pre">Message.reply()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.edit"><code class="docutils literal notranslate"><span class="pre">Message.edit()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.message.Message.edit_reply_markup"><code class="docutils literal notranslate"><span class="pre">Message.edit_reply_markup()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.delete"><code class="docutils literal notranslate"><span class="pre">Message.delete()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.forward"><code class="docutils literal notranslate"><span class="pre">Message.forward()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_photo"><code class="docutils literal notranslate"><span class="pre">Message.reply_photo()</span></code></a></li>
