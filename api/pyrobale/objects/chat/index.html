@@ -374,13 +374,13 @@
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrobale.objects.chat.Chat">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.chat.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.chat.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat" title="Link to this definition">¶</a></dt>
 <dd><p>Represents a chat in the Bale messenger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<em>int</em>) – Unique identifier for this chat</p></li>
-<li><p><strong>type</strong> (<em>str</em>) – Type of chat, can be either “private”, “group”, or “channel”</p></li>
+<li><p><strong>chat_type</strong> (<em>str</em>) – Type of chat, can be either “private”, “group”, or “channel”</p></li>
 <li><p><strong>title</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Title, for groups and channels</p></li>
 <li><p><strong>username</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Username, for private chats and channels if available</p></li>
 <li><p><strong>first_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – First name of the other party in a private chat</p></li>
@@ -555,6 +555,26 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id8">
 <span class="sig-name descname"><span class="pre">client</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../client/index.html#pyrobale.client.Client" title="pyrobale.client.Client"><span class="pre">pyrobale.client.Client</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.private">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">private</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.private" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.group">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.group" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.channel">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">channel</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.channel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrobale.objects.chat.Chat.has_username">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_username</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/chat.html#Chat.has_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.chat.Chat.has_username" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1230,6 +1250,10 @@
 <li><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">Chat.username</span></code></a></li>
 <li><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">Chat.photo</span></code></a></li>
 <li><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">Chat.client</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.private"><code class="docutils literal notranslate"><span class="pre">Chat.private</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.group"><code class="docutils literal notranslate"><span class="pre">Chat.group</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.channel"><code class="docutils literal notranslate"><span class="pre">Chat.channel</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.chat.Chat.has_username"><code class="docutils literal notranslate"><span class="pre">Chat.has_username</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.send_message"><code class="docutils literal notranslate"><span class="pre">Chat.send_message()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.get_chat_member"><code class="docutils literal notranslate"><span class="pre">Chat.get_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.chat.Chat.get_administrators"><code class="docutils literal notranslate"><span class="pre">Chat.get_administrators()</span></code></a></li>

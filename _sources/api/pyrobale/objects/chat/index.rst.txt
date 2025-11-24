@@ -15,14 +15,14 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Chat(id = None, type = None, title = None, username = None, photo = None, client = None, **kwargs)
+.. py:class:: Chat(id = None, chat_type = None, title = None, username = None, photo = None, client = None, **kwargs)
 
    Represents a chat in the Bale messenger.
 
    :param id: Unique identifier for this chat
    :type id: int
-   :param type: Type of chat, can be either "private", "group", or "channel"
-   :type type: str
+   :param chat_type: Type of chat, can be either "private", "group", or "channel"
+   :type chat_type: str
    :param title: Title, for groups and channels
    :type title: Optional[str]
    :param username: Username, for private chats and channels if available
@@ -141,6 +141,18 @@ Module Contents
       :type:  pyrobale.client.Client
       :value: None
 
+
+
+   .. py:property:: private
+
+
+   .. py:property:: group
+
+
+   .. py:property:: channel
+
+
+   .. py:property:: has_username
 
 
    .. py:method:: send_message(text, reply_to_message_id = None, reply_markup = None)
