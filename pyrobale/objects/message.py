@@ -3,10 +3,8 @@ from ..objects.newchatmembers import NewChatMembers
 from ..objects.utils import pythonize
 
 if TYPE_CHECKING:
-    from .utils import build_api_url
     from ..objects.user import User
     from ..objects.chat import Chat
-    from ..objects.chatphoto import ChatPhoto
     from ..objects.animation import Animation
     from ..objects.audio import Audio
     from ..objects.document import Document
@@ -19,7 +17,6 @@ if TYPE_CHECKING:
     from ..objects.invoice import Invoice
     from ..objects.successfulpayment import SuccessfulPayment
     from ..objects.webappdata import WebAppData
-    from ..objects.webappinfo import WebAppInfo
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
     from ..client import Client

@@ -3,19 +3,15 @@ from typing import TYPE_CHECKING
 
 from typing import Optional, Union
 from .utils import smart_method
-from .. import PhotoSize
 
 if TYPE_CHECKING:
-    from .utils import build_api_url
     from .chatphoto import ChatPhoto
     from .message import Message
-    from .user import User
     from .chatmember import ChatMember
     from ..client import Client
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
-from .enums import ChatType, ChatAction, UpdatesTypes
-import asyncio
+from .enums import ChatAction
 
 
 class Chat:
@@ -23,7 +19,7 @@ class Chat:
 
     Parameters:
         id (int): Unique identifier for this chat
-        type (str): Type of chat, can be either "private", "group", or "channel"
+        chat_type (str): Type of chat, can be either "private", "group", or "channel"
         title (Optional[str]): Title, for groups and channels
         username (Optional[str]): Username, for private chats and channels if available
         first_name (Optional[str]): First name of the other party in a private chat
@@ -48,7 +44,7 @@ class Chat:
     def __init__(
             self,
             id: int = None,
-            type: str = None,
+            chat_type: str = None,
             title: Optional[str] = None,
             username: Optional[str] = None,
             photo: Optional["ChatPhoto"] = None,
@@ -56,7 +52,7 @@ class Chat:
             **kwargs
     ):
         self.id = id
-        self.type = type
+        self.type = chat_type
         self.PRIVATE = self.type == "private"
         self.GROUP = self.type == "group"
         self.CHANNEL = self.type == "channel"
@@ -64,6 +60,23 @@ class Chat:
         self.username = username
         self.photo: "ChatPhoto" = photo
         self.client: "Client" = client
+
+
+    @property
+    def private(self):
+        return self.type == "private"
+
+    @property
+    def group(self):
+        return self.type == "group"
+
+    @property
+    def channel(self):
+        return self.type == "channel"
+
+    @property
+    def has_username(self):
+        return self.username is not None
 
     @smart_method
     async def send_message(
@@ -468,7 +481,7 @@ class Chat:
         return await self.client.delete_message(chat_id=self.id, message_id=message_id)
 
     @smart_method
-    async def edit_message(self, message_id: int, text: str) -> Message:
+    async def edit_message(self, message_id: int, text: str):
         """Edit a message in a chat.
 
         Args:

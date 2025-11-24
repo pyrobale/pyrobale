@@ -64,8 +64,13 @@ def pythonize(dictionary: dict) -> dict:
     """Converts a dictionary with keys in snake_case to camelCase."""
     result = {}
     for key, value in dictionary.items():
-        if key == "from":
-            key = "from_user"
+        replacements = {
+            "from": "from_user",
+            "type": "chat_type"
+        }
+        if key in replacements.keys():
+            key = replacements.get(key)
+
         result[key] = value
     return result
 
