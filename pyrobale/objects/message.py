@@ -225,18 +225,20 @@ class Message:
     async def edit(
             self,
             text: str,
+            reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup] = None,
     ) -> 'Message':
         """Edit the current message text.
 
         Args:
             text: The new text
+            reply_markup: Optional new keyboard markup
 
         Returns:
             Message: The edited message object
         """
         if self.chat and self.chat.id and self.id and self.client:
             message = await self.client.edit_message(
-                self.chat.id, self.id, text
+                self.chat.id, self.id, text, reply_markup=reply_markup
             )
             return message
         raise ValueError("Cannot edit - chat ID, message ID or client is not available")

@@ -1332,6 +1332,7 @@ class Client:
             chat_id: Union[int, str],
             message_id: int,
             text: str,
+            reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup] = None,
     ) -> Message:
         """Edits a message in a specified chat
 
@@ -1339,6 +1340,7 @@ class Client:
             chat_id (int): The chat to get.
             message_id (int): The message to get.
             text (str): The text to edit.
+            reply_markup (InlineKeyboardMarkup, ReplyKeyboardMarkup, optional): the reply markup to use. Defaults to None.
 
         Returns:
             Message: The edited message.
@@ -1349,10 +1351,12 @@ class Client:
                 "chat_id": chat_id,
                 "message_id": message_id,
                 "text": text,
+                "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
         result = pythonize(data["result"])
         return Message(**result, client=self)
+
     @smart_method
     async def edit_message_reply_markup(self, chat_id: int, message_id: int,
                                         reply_markup: Union["InlineKeyboardMarkup", None] = None
