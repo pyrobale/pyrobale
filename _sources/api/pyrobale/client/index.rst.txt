@@ -843,7 +843,7 @@ Package Contents
 
 
 
-   .. py:method:: edit_message(chat_id, message_id, text)
+   .. py:method:: edit_message(chat_id, message_id, text, reply_markup = None)
       :async:
 
 
@@ -855,6 +855,8 @@ Package Contents
       :type message_id: int
       :param text: The text to edit.
       :type text: str
+      :param reply_markup: the reply markup to use. Defaults to None.
+      :type reply_markup: InlineKeyboardMarkup, ReplyKeyboardMarkup, optional
 
       :returns: The edited message.
       :rtype: Message

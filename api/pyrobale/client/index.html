@@ -1343,7 +1343,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.edit_message">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message" title="Link to this definition">¶</a></dt>
 <dd><p>Edits a message in a specified chat</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1351,6 +1351,7 @@
 <li><p><strong>chat_id</strong> (<em>int</em>) – The chat to get.</p></li>
 <li><p><strong>message_id</strong> (<em>int</em>) – The message to get.</p></li>
 <li><p><strong>text</strong> (<em>str</em>) – The text to edit.</p></li>
+<li><p><strong>reply_markup</strong> (<a class="reference internal" href="../objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>ReplyKeyboardMarkup</em></a><em>, </em><em>optional</em>) – the reply markup to use. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

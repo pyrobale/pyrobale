@@ -490,7 +490,7 @@ Module Contents
 
 
 
-   .. py:method:: edit_message(message_id, text)
+   .. py:method:: edit_message(message_id, text, reply_markup = None)
       :async:
 
 
@@ -500,6 +500,8 @@ Module Contents
       :type message_id: int
       :param text: Text to edit.
       :type text: str
+      :param reply_markup: Optional inline keyboard.
+      :type reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup]
 
       :returns: The edited message.
       :rtype: Message
