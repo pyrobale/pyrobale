@@ -1,5 +1,6 @@
 from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
 from concurrent.futures import ThreadPoolExecutor
+import traceback
 
 from ..objects.animation import Animation
 from ..objects.audio import Audio
@@ -1497,6 +1498,7 @@ class Client:
                     )
             except Exception as e:
                 print(f"Error processing defined message: {e}")
+                traceback.print_exc()
 
         waiters_to_remove = []
         for i, waiter in enumerate(self._waiters):
@@ -1548,6 +1550,7 @@ class Client:
                         waiters_to_remove.append(i)
                 except Exception as e:
                     print(f"Error in waiter check: {e}")
+                    traceback.print_exc()
 
                     if not future.done():
                         future.set_exception(e)
@@ -1568,6 +1571,7 @@ class Client:
                         event = self._convert_event(handler_type, message_data)
                     except Exception as e:
                         print(f"Error converting member joined event: {e}")
+                        traceback.print_exc()
                         continue
                 else:
                     continue
@@ -1579,6 +1583,7 @@ class Client:
                         event = self._convert_event(handler_type, message_data)
                     except Exception as e:
                         print(f"Error converting member left event: {e}")
+                        traceback.print_exc()
                         continue
                 else:
                     continue
@@ -1596,6 +1601,7 @@ class Client:
                                 event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
                             except Exception as e:
                                 print(f"Error converting command event: {e}")
+                                traceback.print_exc()
                                 continue
                 if event is None:
                     continue
@@ -1623,6 +1629,7 @@ class Client:
                             continue
                     except Exception as e:
                         print(f"[Filter Error] {e}")
+                        traceback.print_exc()
                         continue
                 elif isinstance(flt, Filters):
                     if not hasattr(event, flt.value):
@@ -1639,6 +1646,7 @@ class Client:
                             cb(evt)
                     except Exception as e:
                         print(f"Error in handler execution: {e}")
+                        traceback.print_exc()
 
                 return execute_handler
 
@@ -1646,6 +1654,7 @@ class Client:
                 self.handler_executor.submit(create_handler_task(callback, event))
             except Exception as e:
                 print(f"Error scheduling handler: {e}")
+                traceback.print_exc()
 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
@@ -1689,6 +1698,7 @@ class Client:
 
         except Exception as e:
             print(f"Error converting event {handler_type}: {e}")
+            traceback.print_exc()
             return event_data
 
     def base_handler_decorator(self, update_type: UpdatesTypes):
@@ -1811,6 +1821,7 @@ class Client:
 
             except Exception as e:
                 print(f"Error in polling: {e}")
+                traceback.print_exc()
                 await asyncio.sleep(1)
 
     @smart_method
