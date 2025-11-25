@@ -19,7 +19,7 @@ class Chat:
 
     Parameters:
         id (int): Unique identifier for this chat
-        chat_type (str): Type of chat, can be either "private", "group", or "channel"
+        type (str): Type of chat, can be either "private", "group", or "channel"
         title (Optional[str]): Title, for groups and channels
         username (Optional[str]): Username, for private chats and channels if available
         first_name (Optional[str]): First name of the other party in a private chat
@@ -44,7 +44,7 @@ class Chat:
     def __init__(
             self,
             id: int = None,
-            chat_type: str = None,
+            type: str = None,
             title: Optional[str] = None,
             username: Optional[str] = None,
             photo: Optional["ChatPhoto"] = None,
@@ -52,7 +52,7 @@ class Chat:
             **kwargs
     ):
         self.id = id
-        self.type = chat_type
+        self.type = type
         self.PRIVATE = self.type == "private"
         self.GROUP = self.type == "group"
         self.CHANNEL = self.type == "channel"
