@@ -355,7 +355,12 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+
+<div class="viewcode-block" id="typee">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.typee">[docs]</a>
+<span class="n">typee</span> <span class="o">=</span> <span class="nb">type</span></div>
 
 
 <div class="viewcode-block" id="ForwardOrigin">
@@ -366,6 +371,7 @@
                  <span class="n">date</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">message_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">chat</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;Chat&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">sender_user</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <div class="viewcode-block" id="ForwardOrigin.type">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.type">[docs]</a>
@@ -379,11 +385,25 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.client">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span></div>
 
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">chat</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="n">Chat</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">chat</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sender_user</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sender_user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">sender_user</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sender_user</span> <span class="o">=</span> <span class="n">sender_user</span>
+
+        <span class="k">if</span> <span class="n">sender_user</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">forwarded_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender_user</span>
+
+        <span class="k">if</span> <span class="n">chat</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">forwarded_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chat</span>
+
 <div class="viewcode-block" id="ForwardOrigin.message_id">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.message_id">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="n">message_id</span></div>

@@ -4,6 +4,14 @@ pyrobale.objects.forwardorigin
 .. py:module:: pyrobale.objects.forwardorigin
 
 
+Attributes
+----------
+
+.. autoapisummary::
+
+   pyrobale.objects.forwardorigin.typee
+
+
 Classes
 -------
 
@@ -15,7 +23,9 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ForwardOrigin(type = None, date = None, message_id = None, chat = None, **kwargs)
+.. py:data:: typee
+
+.. py:class:: ForwardOrigin(type = None, date = None, message_id = None, chat = None, sender_user = None, **kwargs)
 
    .. py:attribute:: type
       :value: None
