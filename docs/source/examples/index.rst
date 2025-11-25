@@ -39,6 +39,6 @@ have a conversation with your user! 💬
 ****
 add buttons under your message ✅
 
-`Edit Inline markup <./echo_bot>`_
+`Edit Inline markup <./edit_reply_markup>`_
 ****
 how to edit buttons after sending messages ✨
