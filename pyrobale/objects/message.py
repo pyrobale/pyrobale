@@ -1,4 +1,6 @@
 from typing import TYPE_CHECKING, Optional, Union
+
+from pyrobale.objects.forwardorigin import ForwardOrigin
 from ..objects.newchatmembers import NewChatMembers
 from ..objects.utils import pythonize
 
@@ -23,6 +25,7 @@ if TYPE_CHECKING:
 
 from ..objects.chat import Chat
 from ..objects.user import User
+from ..objects.forwardorigin import ForwardOrigin
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
 from .utils import smart_method
 
@@ -39,7 +42,7 @@ class Message:
         date (int): Date the message was sent in Unix time
         chat (Chat): Conversation the message belongs to
         text (str): Text content of the message
-        forward_from (User): Original sender of a forwarded message
+        forward_origin (User): Original sender of a forwarded message
         forward_from_chat (Chat): Original chat of a forwarded message
         forward_from_message_id (int): Message ID in the original chat
         forward_date (int): Date when message was forwarded
@@ -70,7 +73,7 @@ class Message:
             date: Optional[int] = None,
             chat: Optional["Chat"] = None,
             text: Optional[str] = None,
-            forward_from: Optional["User"] = None,
+            forward_origin: Union["ForwardOrigin",dict] = None,
             forward_from_chat: Optional["Chat"] = None,
             forward_from_message_id: Optional[int] = None,
             forward_date: Optional[int] = None,
@@ -103,7 +106,7 @@ class Message:
             date: Date the message was sent in Unix time
             chat: Conversation the message belongs to
             text: Text content of the message
-            forward_from: Original sender of a forwarded message
+            forward_origin: Original sender of a forwarded message
             forward_from_chat: Original chat of a forwarded message
             forward_from_message_id: Message ID in the original chat
             forward_date: Date when message was forwarded in Unix time
@@ -156,8 +159,10 @@ class Message:
             self.chat: Chat = Chat(**chat_data)
         else:
             self.chat: Chat = None
-
-        self.forward_from: Optional["User"] = forward_from
+        if forward_origin:
+            self.forward_origin: Optional["ForwardOrigin"] = ForwardOrigin(**forward_origin, client=self.client)
+        else:
+            self.forward_origin: Optional[Union["ForwardOrigin",dict]] = None
         self.forward_from_chat: Optional["Chat"] = forward_from_chat
         self.forward_from_message_id: Optional[int] = forward_from_message_id
         self.forward_date: Optional[int] = forward_date

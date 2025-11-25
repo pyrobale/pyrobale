@@ -65,8 +65,7 @@ def pythonize(dictionary: dict) -> dict:
     result = {}
     for key, value in dictionary.items():
         replacements = {
-            "from": "from_user",
-            "type": "chat_type"
+            "from": "from_user"
         }
         if key in replacements.keys():
             key = replacements.get(key)

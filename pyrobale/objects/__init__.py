@@ -2,6 +2,7 @@
 different types of data."""
 
 from .voice import Voice
+
 from .replykeyboardmarkup import ReplyKeyboardMarkup
 from .inputmedias import (
     InputMedia,
@@ -45,6 +46,7 @@ from .labeledprice import LabeledPrice
 from .update import Update
 from .enums import UpdatesTypes, ChatAction, ChatType
 from .newchatmembers import NewChatMembers
+from .forwardorigin import ForwardOrigin
 
 __all__ = [
     "UpdatesTypes",
@@ -89,5 +91,6 @@ __all__ = [
     "LabeledPrice",
     "Update",
     "InviteLink",
-    "NewChatMembers"
+    "NewChatMembers",
+    "ForwardOrigin"
 ]
