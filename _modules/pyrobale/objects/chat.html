@@ -369,7 +369,7 @@
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        id (int): Unique identifier for this chat</span>
-<span class="sd">        chat_type (str): Type of chat, can be either &quot;private&quot;, &quot;group&quot;, or &quot;channel&quot;</span>
+<span class="sd">        type (str): Type of chat, can be either &quot;private&quot;, &quot;group&quot;, or &quot;channel&quot;</span>
 <span class="sd">        title (Optional[str]): Title, for groups and channels</span>
 <span class="sd">        username (Optional[str]): Username, for private chats and channels if available</span>
 <span class="sd">        first_name (Optional[str]): First name of the other party in a private chat</span>
@@ -394,7 +394,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">chat_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;ChatPhoto&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -407,7 +407,7 @@
 
 <div class="viewcode-block" id="Chat.type">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.type">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">chat_type</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span></div>
 
 <div class="viewcode-block" id="Chat.PRIVATE">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.PRIVATE">[docs]</a>
