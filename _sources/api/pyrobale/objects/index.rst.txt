@@ -27,6 +27,7 @@ Submodules
    /api/pyrobale/objects/document/index
    /api/pyrobale/objects/enums/index
    /api/pyrobale/objects/file/index
+   /api/pyrobale/objects/forwardorigin/index
    /api/pyrobale/objects/inlinekeyboardbutton/index
    /api/pyrobale/objects/inlinekeyboardmarkup/index
    /api/pyrobale/objects/inputfile/index

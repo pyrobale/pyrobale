@@ -228,6 +228,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/document/index.html">pyrobale.objects.document</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/enums/index.html">pyrobale.objects.enums</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/file/index.html">pyrobale.objects.file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/forwardorigin/index.html">pyrobale.objects.forwardorigin</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/inlinekeyboardbutton/index.html">pyrobale.objects.inlinekeyboardbutton</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html">pyrobale.objects.inlinekeyboardmarkup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/pyrobale/objects/inputfile/index.html">pyrobale.objects.inputfile</a></li>
@@ -352,6 +353,8 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.message</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects.forwardorigin</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForwardOrigin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.newchatmembers</span><span class="w"> </span><span class="kn">import</span> <span class="n">NewChatMembers</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pythonize</span>
 
@@ -376,6 +379,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..objects.forwardorigin</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForwardOrigin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">smart_method</span>
 
@@ -394,7 +398,7 @@
 <span class="sd">        date (int): Date the message was sent in Unix time</span>
 <span class="sd">        chat (Chat): Conversation the message belongs to</span>
 <span class="sd">        text (str): Text content of the message</span>
-<span class="sd">        forward_from (User): Original sender of a forwarded message</span>
+<span class="sd">        forward_origin (User): Original sender of a forwarded message</span>
 <span class="sd">        forward_from_chat (Chat): Original chat of a forwarded message</span>
 <span class="sd">        forward_from_message_id (int): Message ID in the original chat</span>
 <span class="sd">        forward_date (int): Date when message was forwarded</span>
@@ -425,7 +429,7 @@
             <span class="n">date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">chat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Chat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">forward_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">forward_origin</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;ForwardOrigin&quot;</span><span class="p">,</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">forward_from_chat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Chat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">forward_from_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">forward_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -458,7 +462,7 @@
 <span class="sd">            date: Date the message was sent in Unix time</span>
 <span class="sd">            chat: Conversation the message belongs to</span>
 <span class="sd">            text: Text content of the message</span>
-<span class="sd">            forward_from: Original sender of a forwarded message</span>
+<span class="sd">            forward_origin: Original sender of a forwarded message</span>
 <span class="sd">            forward_from_chat: Original chat of a forwarded message</span>
 <span class="sd">            forward_from_message_id: Message ID in the original chat</span>
 <span class="sd">            forward_date: Date when message was forwarded in Unix time</span>
@@ -523,11 +527,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">chat_data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">chat</span><span class="p">:</span> <span class="n">Chat</span> <span class="o">=</span> <span class="kc">None</span>
-
-<div class="viewcode-block" id="Message.forward_from">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_from">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forward_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forward_from</span></div>
-
+        <span class="k">if</span> <span class="n">forward_origin</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">forward_origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;ForwardOrigin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ForwardOrigin</span><span class="p">(</span><span class="o">**</span><span class="n">forward_origin</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">forward_origin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;ForwardOrigin&quot;</span><span class="p">,</span><span class="nb">dict</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 <div class="viewcode-block" id="Message.forward_from_chat">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.forward_from_chat">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">forward_from_chat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Chat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forward_from_chat</span></div>

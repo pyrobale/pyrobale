@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/pyrobale.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyrobale.objects.inlinekeyboardmarkup - Pyrobale Documentation</title>
+        <title>pyrobale.objects.forwardorigin - Pyrobale Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -351,113 +351,42 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for pyrobale.objects.inlinekeyboardmarkup</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+          <h1>Source code for pyrobale.objects.forwardorigin</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.webappinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebAppInfo</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">.copytextbutton</span><span class="w"> </span><span class="kn">import</span> <span class="n">CopyTextButton</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
 
 
-<div class="viewcode-block" id="InlineKeyboardMarkup">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">InlineKeyboardMarkup</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<div class="viewcode-block" id="InlineKeyboardMarkup.inline_keyboard">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.inline_keyboard">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="ForwardOrigin">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ForwardOrigin</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="nb">type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">date</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">message_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">chat</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;Chat&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ForwardOrigin.type">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.type">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span></div>
 
+<div class="viewcode-block" id="ForwardOrigin.date">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.date">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span></div>
 
-<div class="viewcode-block" id="InlineKeyboardMarkup.add_button">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.add_button">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_button</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">callback_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">web_app</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;WebAppInfo&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">copy_text_button</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;CopyTextButton&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a button to the inline keyboard.</span>
+<div class="viewcode-block" id="ForwardOrigin.client">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.client">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">)</span></div>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            text (str): The text to display on the button.</span>
-<span class="sd">            callback_data (str, optional): The callback data to send when the button is clicked.</span>
-<span class="sd">            url (str, optional): The URL to open when the button is clicked.</span>
-<span class="sd">            web_app (WebAppInfo OR string, optional): The web app to open when the button is clicked.</span>
-<span class="sd">            copy_text_button (CopyTextButton OR string, optional): The copy text button to add to the button.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            InlineKeyboardMarkup: The updated InlineKeyboardMarkup object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">button</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">}</span>
-
-        <span class="n">field_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-            <span class="n">field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">[</span><span class="n">callback_data</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">web_app</span><span class="p">,</span> <span class="n">copy_text_button</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">field_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;At least one of callback_data, url, web_app, or copy_text must be provided.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">field_count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Only one of callback_data, url, web_app, or copy_text can be provided.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">callback_data</span><span class="p">:</span>
-            <span class="n">button</span><span class="p">[</span><span class="s2">&quot;callback_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">callback_data</span>
-        <span class="k">elif</span> <span class="n">url</span><span class="p">:</span>
-            <span class="n">button</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="k">elif</span> <span class="n">web_app</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">web_app</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">button</span><span class="p">[</span><span class="s2">&quot;web_app&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">web_app</span><span class="p">}</span>
-            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">web_app</span><span class="p">,</span> <span class="s2">&quot;to_dict&quot;</span><span class="p">):</span>
-                <span class="n">button</span><span class="p">[</span><span class="s2">&quot;web_app&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">web_app</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;web_app must be a string URL or an object with to_dict() method.&quot;</span>
-                <span class="p">)</span>
-        <span class="k">elif</span> <span class="n">copy_text_button</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">copy_text_button</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">button</span><span class="p">[</span><span class="s2">&quot;copy_text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">copy_text_button</span><span class="p">}</span>
-            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">copy_text_button</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">):</span>
-                <span class="n">button</span><span class="p">[</span><span class="s2">&quot;copy_text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">copy_text_button</span><span class="o">.</span><span class="n">text</span><span class="p">}</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;copy_text_button must be a string or an object with a &#39;text&#39; attribute.&quot;</span>
-                <span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
-
-
-<div class="viewcode-block" id="InlineKeyboardMarkup.add_row">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.add_row">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_row</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new row to the inline keyboard.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            InlineKeyboardMarkup: The updated InlineKeyboardMarkup object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
-
-
-<div class="viewcode-block" id="InlineKeyboardMarkup.to_dict">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.to_dict">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;inline_keyboard&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">inline_keyboard</span><span class="p">}</span></div>
-
-
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="InlineKeyboardMarkup.json">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup.json">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">Chat</span><span class="p">(</span><span class="o">**</span><span class="n">chat</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">chat</span> <span class="o">=</span> <span class="n">chat</span>
+<div class="viewcode-block" id="ForwardOrigin.message_id">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.message_id">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="n">message_id</span></div>
 </div>
 
 </pre></div>
