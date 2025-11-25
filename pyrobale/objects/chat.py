@@ -481,7 +481,7 @@ class Chat:
         return await self.client.delete_message(chat_id=self.id, message_id=message_id)
 
     @smart_method
-    async def edit_message(self, message_id: int, text: str, reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup] = None,):
+    async def edit_message(self, message_id: int, text: str, reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None):
         """Edit a message in a chat.
 
         Args:

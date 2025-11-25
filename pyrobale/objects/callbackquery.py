@@ -1,5 +1,8 @@
+import typing
 from typing import Optional
 
+if typing.TYPE_CHECKING:
+    from ..client import Client
 
 class CallbackQuery:
     """Represents a callback query from a user."""

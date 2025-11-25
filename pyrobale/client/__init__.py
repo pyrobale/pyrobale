@@ -1332,7 +1332,7 @@ class Client:
             chat_id: Union[int, str],
             message_id: int,
             text: str,
-            reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup] = None,
+            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None,
     ) -> Message:
         """Edits a message in a specified chat
 
@@ -1548,6 +1548,7 @@ class Client:
                         waiters_to_remove.append(i)
                 except Exception as e:
                     print(f"Error in waiter check: {e}")
+
                     if not future.done():
                         future.set_exception(e)
                     waiters_to_remove.append(i)
@@ -1671,7 +1672,9 @@ class Client:
                 return message
 
             elif handler_type == UpdatesTypes.CALLBACK_QUERY:
-                return CallbackQuery(**pythonize(event_data), **kwargs)
+                kwargs2 = kwargs
+                kwargs2["client"] = self
+                return CallbackQuery(**pythonize(event_data), kwargs=kwargs2)
 
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
                 return PreCheckoutQuery(**pythonize(event_data), **kwargs)

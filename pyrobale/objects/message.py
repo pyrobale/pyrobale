@@ -225,7 +225,7 @@ class Message:
     async def edit(
             self,
             text: str,
-            reply_markup: Optional[InlineKeyboardMarkup, ReplyKeyboardMarkup] = None,
+            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None,
     ) -> 'Message':
         """Edit the current message text.
 
