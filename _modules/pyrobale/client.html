@@ -1857,7 +1857,7 @@
             <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
             <span class="n">message_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
             <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">,</span> <span class="s2">&quot;ReplyKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Edits a message in a specified chat</span>
 
@@ -2094,6 +2094,7 @@
                         <span class="n">waiters_to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in waiter check: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
                         <span class="n">future</span><span class="o">.</span><span class="n">set_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
                     <span class="n">waiters_to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -2218,7 +2219,9 @@
                 <span class="k">return</span> <span class="n">message</span>
 
             <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">CALLBACK_QUERY</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">CallbackQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">kwargs2</span> <span class="o">=</span> <span class="n">kwargs</span>
+                <span class="n">kwargs2</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+                <span class="k">return</span> <span class="n">CallbackQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs2</span><span class="p">)</span>
 
             <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">PRE_CHECKOUT_QUERY</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">PreCheckoutQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

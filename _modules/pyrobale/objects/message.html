@@ -666,7 +666,7 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">edit</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">,</span> <span class="s2">&quot;ReplyKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Message&#39;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Edit the current message text.</span>
 
