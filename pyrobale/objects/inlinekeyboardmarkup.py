@@ -83,7 +83,6 @@ class InlineKeyboardMarkup:
         return self
 
     def to_dict(self) -> dict:
-        print(self.inline_keyboard)
         return {"inline_keyboard": self.inline_keyboard}
 
     @property

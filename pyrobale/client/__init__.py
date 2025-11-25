@@ -1374,7 +1374,7 @@ class Client:
             data={
                 "chat_id": chat_id,
                 "message_id": message_id,
-                "reply_markup": reply_markup
+                "reply_markup": reply_markup.json
             }
         )
 
