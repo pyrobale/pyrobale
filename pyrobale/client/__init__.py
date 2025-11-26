@@ -1471,13 +1471,34 @@ class Client:
         Raises:
             asyncio.TimeoutError: If the timeout is reached without a matching update.
         """
-        future = asyncio.get_running_loop().create_future()
-        self._waiters.append((update_type, check, future))
+        loop = asyncio.get_running_loop()
+        future = loop.create_future()
+
+        waiter_entry = (update_type, check, future)
+        self._waiters.append(waiter_entry)
 
         try:
-            return await asyncio.wait_for(future, timeout=timeout)
+            if timeout is None:
+                return await future
+            else:
+                done, pending = await asyncio.wait(
+                    [future],
+                    timeout=timeout,
+                    return_when=asyncio.FIRST_COMPLETED
+                )
+
+                if future in done:
+                    return future.result()
+                else:
+                    raise asyncio.TimeoutError(f"Wait for {update_type} timed out after {timeout} seconds")
+
         except asyncio.TimeoutError:
-            self._waiters = [w for w in self._waiters if w[2] != future]
+            if waiter_entry in self._waiters:
+                self._waiters.remove(waiter_entry)
+            raise
+        except Exception as e:
+            if waiter_entry in self._waiters:
+                self._waiters.remove(waiter_entry)
             raise
 
     @smart_method
@@ -1501,160 +1522,126 @@ class Client:
                 traceback.print_exc()
 
         waiters_to_remove = []
-        for i, waiter in enumerate(self._waiters):
+        for waiter in self._waiters[:]:
             w_type, check, future = waiter
+
             if future.done():
-                waiters_to_remove.append(i)
+                waiters_to_remove.append(waiter)
                 continue
 
-            is_match = False
             event = None
+            is_match = False
 
-            if w_type == UpdatesTypes.MESSAGE and "message" in update:
-                is_match = True
-                event = self._convert_event(w_type, update["message"])
-            elif w_type == UpdatesTypes.COMMAND and "message" in update:
-                message_text = update["message"].get("text", "")
-                if message_text.startswith("/"):
+            if "message" in update:
+                message_data = update["message"]
+
+                if w_type == UpdatesTypes.MESSAGE:
                     is_match = True
-                    event = self._convert_event(w_type, update["message"])
+                    event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+
+                elif w_type == UpdatesTypes.COMMAND and message_data.get("text", "").startswith("/"):
+                    is_match = True
+                    event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+
+                elif w_type == UpdatesTypes.PHOTO and "photo" in message_data:
+                    is_match = True
+                    event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+
+                elif w_type == UpdatesTypes.MEMBER_JOINED and "new_chat_members" in message_data:
+                    is_match = True
+                    event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+
+                elif w_type == UpdatesTypes.MEMBER_LEFT and "left_chat_member" in message_data:
+                    is_match = True
+                    event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+
             elif w_type == UpdatesTypes.CALLBACK_QUERY and "callback_query" in update:
                 is_match = True
                 event = self._convert_event(w_type, update["callback_query"])
-            elif w_type == UpdatesTypes.PHOTO and "message" in update and "photo" in update["message"]:
-                is_match = True
-                event = self._convert_event(w_type, update["message"])
+
             elif w_type == UpdatesTypes.MESSAGE_EDITED and "edited_message" in update:
                 is_match = True
                 event = self._convert_event(w_type, update["edited_message"])
-            elif w_type == UpdatesTypes.MEMBER_JOINED and "message" in update and "new_chat_members" in update[
-                "message"]:
-                is_match = True
-                event = self._convert_event(w_type, update["message"])
-            elif w_type == UpdatesTypes.MEMBER_LEFT and "message" in update and "left_chat_member" in update["message"]:
-                is_match = True
-                event = self._convert_event(w_type, update["message"])
+
             elif w_type == UpdatesTypes.PRE_CHECKOUT_QUERY and "pre_checkout_query" in update:
                 is_match = True
                 event = self._convert_event(w_type, update["pre_checkout_query"])
-            elif w_type == UpdatesTypes.SUCCESSFUL_PAYMENT and "message" in update and "successful_payment" in update[
-                "message"]:
-                is_match = True
-                event = self._convert_event(w_type, update["message"])
 
-            if is_match:
+            if is_match and event is not None:
                 try:
                     if check is None or check(event):
                         if not future.done():
                             future.set_result(event)
-                        waiters_to_remove.append(i)
+                            waiters_to_remove.append(waiter)
+                            print(f"Waiter fulfilled: {w_type}")
                 except Exception as e:
                     print(f"Error in waiter check: {e}")
-                    traceback.print_exc()
-
                     if not future.done():
                         future.set_exception(e)
-                    waiters_to_remove.append(i)
+                    waiters_to_remove.append(waiter)
 
-        for i in sorted(waiters_to_remove, reverse=True):
-            if i < len(self._waiters):
-                self._waiters.pop(i)
+        for waiter in waiters_to_remove:
+            if waiter in self._waiters:
+                self._waiters.remove(waiter)
 
-        for handler in self.handlers:
-            handler_type = handler.get("type")
-            event = None
+        if not waiters_to_remove:
+            for handler in self.handlers:
+                handler_type = handler.get("type")
+                event = None
 
-            if handler_type == UpdatesTypes.MEMBER_JOINED:
-                message_data = update.get("message", {})
-                if "new_chat_members" in message_data:
-                    try:
-                        event = self._convert_event(handler_type, message_data)
-                    except Exception as e:
-                        print(f"Error converting member joined event: {e}")
-                        traceback.print_exc()
-                        continue
-                else:
-                    continue
-
-            elif handler_type == UpdatesTypes.MEMBER_LEFT:
-                message_data = update.get("message", {})
-                if "left_chat_member" in message_data:
-                    try:
-                        event = self._convert_event(handler_type, message_data)
-                    except Exception as e:
-                        print(f"Error converting member left event: {e}")
-                        traceback.print_exc()
-                        continue
-                else:
-                    continue
-
-            elif handler_type == UpdatesTypes.COMMAND:
-                message_data = update.get("message", {})
-                message_text = message_data.get("text")
-                if message_text and message_text.startswith("/"):
-                    command_parts = message_text[1:].split()
-                    if command_parts:
-                        actual_command = command_parts[0].split('@')[0]
-                        expected_command = handler.get("command", "")
-                        if actual_command == expected_command:
-                            try:
+                if handler_type == UpdatesTypes.COMMAND:
+                    message_data = update.get("message", {})
+                    message_text = message_data.get("text", "")
+                    if message_text and message_text.startswith("/"):
+                        command_parts = message_text[1:].split()
+                        if command_parts:
+                            actual_command = command_parts[0].split('@')[0]
+                            expected_command = handler.get("command", "")
+                            if actual_command == expected_command:
                                 event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
-                            except Exception as e:
-                                print(f"Error converting command event: {e}")
-                                traceback.print_exc()
-                                continue
+
+                elif handler_type == UpdatesTypes.MEMBER_JOINED:
+                    message_data = update.get("message", {})
+                    if "new_chat_members" in message_data:
+                        event = self._convert_event(handler_type, message_data)
+
+                elif handler_type == UpdatesTypes.MEMBER_LEFT:
+                    message_data = update.get("message", {})
+                    if "left_chat_member" in message_data:
+                        event = self._convert_event(handler_type, message_data)
+
+                else:
+                    update_type_key = handler_type.value
+                    if update_type_key in update:
+                        raw_event = update[update_type_key]
+                        event = self._convert_event(handler_type, raw_event)
+
                 if event is None:
                     continue
 
-            else:
-                update_type_key = handler_type.value
-                if update_type_key in update:
-                    raw_event = update[update_type_key]
-                    try:
-                        event = self._convert_event(handler_type, raw_event)
-                    except Exception as e:
-                        print(f"Error converting event for handler {handler_type}: {e}")
-                        continue
-                else:
-                    continue
-
-            if event is None:
-                continue
-
-            flt = handler.get("filter")
-            if flt is not None:
-                if callable(flt):
-                    try:
-                        if not flt(event):
+                flt = handler.get("filter")
+                if flt is not None:
+                    if callable(flt):
+                        try:
+                            if not flt(event):
+                                continue
+                        except Exception as e:
+                            print(f"[Filter Error] {e}")
+                            traceback.print_exc()
                             continue
-                    except Exception as e:
-                        print(f"[Filter Error] {e}")
-                        traceback.print_exc()
-                        continue
-                elif isinstance(flt, Filters):
-                    if not hasattr(event, flt.value):
-                        continue
+                    elif isinstance(flt, Filters):
+                        if not hasattr(event, flt.value):
+                            continue
 
-            callback = handler["callback"]
-
-            def create_handler_task(cb, evt):
-                def execute_handler():
-                    try:
-                        if asyncio.iscoroutinefunction(cb):
-                            asyncio.run(cb(evt))
-                        else:
-                            cb(evt)
-                    except Exception as e:
-                        print(f"Error in handler execution: {e}")
-                        traceback.print_exc()
-
-                return execute_handler
-
-            try:
-                self.handler_executor.submit(create_handler_task(callback, event))
-            except Exception as e:
-                print(f"Error scheduling handler: {e}")
-                traceback.print_exc()
+                callback = handler["callback"]
+                try:
+                    if asyncio.iscoroutinefunction(callback):
+                        asyncio.create_task(callback(event))
+                    else:
+                        self.handler_executor.submit(callback, event)
+                except Exception as e:
+                    print(f"Error executing handler: {e}")
+                    traceback.print_exc()
 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
@@ -1667,12 +1654,12 @@ class Client:
                 message = Message(**pythonize(event_data), **kwargs)
 
                 if handler_type == UpdatesTypes.MEMBER_JOINED and "new_chat_members" in event_data:
-                    data = dict()
-                    data["inviter"] = User(**event_data["from"], client=self)
-                    data["date"] = event_data["date"]
-                    data["chat"] = Chat(**event_data["chat"], client=self)
-                    data["new_chat_members"] = [User(**pythonize(u), client=self) for u in
-                                                event_data["new_chat_members"]]
+                    data = {
+                        "inviter": User(**event_data["from"], client=self),
+                        "date": event_data["date"],
+                        "chat": Chat(**event_data["chat"], client=self),
+                        "new_chat_members": [User(**pythonize(u), client=self) for u in event_data["new_chat_members"]]
+                    }
                     message.new_chat_members = NewChatMembers(**data)
 
                 elif handler_type == UpdatesTypes.MEMBER_LEFT and "left_chat_member" in event_data:
@@ -1681,17 +1668,10 @@ class Client:
                 return message
 
             elif handler_type == UpdatesTypes.CALLBACK_QUERY:
-                kwargs2 = kwargs
-                kwargs2["client"] = self
-                return CallbackQuery(**pythonize(event_data), kwargs=kwargs2)
+                return CallbackQuery(**pythonize(event_data), client=self)
 
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
                 return PreCheckoutQuery(**pythonize(event_data), **kwargs)
-
-            elif handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
-                if "successful_payment" in event_data:
-                    return SuccessfulPayment(**pythonize(event_data["successful_payment"]), **kwargs)
-                return Message(**pythonize(event_data), **kwargs)
 
             else:
                 return event_data
