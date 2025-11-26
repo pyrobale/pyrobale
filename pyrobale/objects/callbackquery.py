@@ -20,7 +20,7 @@ class CallbackQuery:
         self.message = None
         self.chat = None
         self.data = data if data else None
-        self.bot = kwargs.get("kwargs", {}).get("client", None)
+        self.bot = kwargs.get("client", None)
 
         if from_user:
             from .user import User

@@ -1573,7 +1573,6 @@ class Client:
                         if not future.done():
                             future.set_result(event)
                             waiters_to_remove.append(waiter)
-                            print(f"Waiter fulfilled: {w_type}")
                 except Exception as e:
                     print(f"Error in waiter check: {e}")
                     if not future.done():
