@@ -1355,8 +1355,11 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        result = pythonize(data["result"])
-        return Message(**result, client=self)
+        try:
+            result = pythonize(data["result"])
+            return Message(**result, client=self)
+        except TypeError:
+            raise PyroBaleException("Error editing message")
 
     @smart_method
     async def edit_message_reply_markup(self, chat_id: int, message_id: int,
