@@ -1798,7 +1798,7 @@ class Client:
                 )
 
                 for update in updates:
-                    await self.process_upadate(update)
+                    await self.process_update(update)
 
             except Exception as e:
                 print(f"Error in polling: {e}")
