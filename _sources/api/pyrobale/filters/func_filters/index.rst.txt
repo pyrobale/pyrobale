@@ -10,6 +10,11 @@ Functions
 .. autoapisummary::
 
    pyrobale.filters.func_filters.equals
+   pyrobale.filters.func_filters.regex
+   pyrobale.filters.func_filters.private
+   pyrobale.filters.func_filters.group
+   pyrobale.filters.func_filters.channel
+   pyrobale.filters.func_filters.admin
 
 
 Module Contents
@@ -17,12 +22,43 @@ Module Contents
 
 .. py:function:: equals(expected_text)
 
-   Check if the event text or caption is equal to the expected text.
+   Check if the event text or caption or callbackQuery data is equal to the expected text.
 
    :param expected_text: The expected text to compare with.
    :type expected_text: str
 
-   :returns: A function that checks if the event text or caption is equal to the expected text.
+   :returns: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
    :rtype: Callable
+
+
+.. py:function:: regex(pattern)
+
+   checks the event text or caption with given pattern using regex
+
+   :param pattern: The pattern to check with text
+   :type pattern: str
+
+   :returns: A function that checks if the event text or caption is match with given pattern
+   :rtype: Callable
+
+
+.. py:function:: private()
+
+   checks if the event is happening in a private chat
+
+
+.. py:function:: group()
+
+   checks if the event is happening in a group chat
+
+
+.. py:function:: channel()
+
+   checks if the event is happening in a channel
+
+
+.. py:function:: admin()
+
+   Checks if the event sender is admin of chat or not
 
 

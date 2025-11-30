@@ -370,7 +370,22 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.equals" title="pyrobale.filters.func_filters.equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equals</span></code></a>(expected_text)</p></td>
-<td><p>Check if the event text or caption is equal to the expected text.</p></td>
+<td><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.regex" title="pyrobale.filters.func_filters.regex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regex</span></code></a>(pattern)</p></td>
+<td><p>checks the event text or caption with given pattern using regex</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.private" title="pyrobale.filters.func_filters.private"><code class="xref py py-obj docutils literal notranslate"><span class="pre">private</span></code></a>()</p></td>
+<td><p>checks if the event is happening in a private chat</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.group" title="pyrobale.filters.func_filters.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a>()</p></td>
+<td><p>checks if the event is happening in a group chat</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.channel" title="pyrobale.filters.func_filters.channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel</span></code></a>()</p></td>
+<td><p>checks if the event is happening in a channel</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.func_filters.admin" title="pyrobale.filters.func_filters.admin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">admin</span></code></a>()</p></td>
+<td><p>Checks if the event sender is admin of chat or not</p></td>
 </tr>
 </tbody>
 </table>
@@ -381,18 +396,59 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="pyrobale.filters.func_filters.equals">
 <span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.equals" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the event text or caption is equal to the expected text.</p>
+<dd><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>expected_text</strong> (<em>str</em>) – The expected text to compare with.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption is equal to the expected text.</p>
+<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery data is equal to the expected text.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Callable</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.func_filters.regex">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">regex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#regex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.regex" title="Link to this definition">¶</a></dt>
+<dd><p>checks the event text or caption with given pattern using regex</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – The pattern to check with text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that checks if the event text or caption is match with given pattern</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.func_filters.private">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">private</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#private"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.private" title="Link to this definition">¶</a></dt>
+<dd><p>checks if the event is happening in a private chat</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.func_filters.group">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.group" title="Link to this definition">¶</a></dt>
+<dd><p>checks if the event is happening in a group chat</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.func_filters.channel">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">channel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.channel" title="Link to this definition">¶</a></dt>
+<dd><p>checks if the event is happening in a channel</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.func_filters.admin">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.func_filters.</span></span><span class="sig-name descname"><span class="pre">admin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/filters/func_filters.html#admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.func_filters.admin" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if the event sender is admin of chat or not</p>
 </dd></dl>
 
 </section>
@@ -464,6 +520,11 @@
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#pyrobale.filters.func_filters.equals"><code class="docutils literal notranslate"><span class="pre">equals()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.func_filters.regex"><code class="docutils literal notranslate"><span class="pre">regex()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.func_filters.private"><code class="docutils literal notranslate"><span class="pre">private()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.func_filters.group"><code class="docutils literal notranslate"><span class="pre">group()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.func_filters.channel"><code class="docutils literal notranslate"><span class="pre">channel()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.func_filters.admin"><code class="docutils literal notranslate"><span class="pre">admin()</span></code></a></li>
 </ul>
 </li>
 </ul>
