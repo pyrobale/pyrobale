@@ -3,3 +3,4 @@ tests/*
 main.py
 test.py
 .idea
+.mypy_cache

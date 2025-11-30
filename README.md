@@ -13,7 +13,7 @@ A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Ba
 - 📁 **File Handling** - Easy upload and download of media files
 - 🛡️ **Error Handling** - Comprehensive exception handling
 - 📖 **Type Hints** - Full typing support for better development experience
-- ⚡ **Async Support** - asynchronous operations
+nc Support** - synchro
 
 ## Installation
 

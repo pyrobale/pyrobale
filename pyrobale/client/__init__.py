@@ -1504,6 +1504,8 @@ class Client:
     @smart_method
     async def process_update(self, update: Dict[str, Any]) -> None:
         """Process a single update and call registered handlers."""
+        if not update or not isinstance(update, dict):
+            return
         update_id = update.get("update_id")
         if update_id:
             self.last_update_id = update_id + 1
@@ -1796,7 +1798,7 @@ class Client:
                 )
 
                 for update in updates:
-                    await self.process_update(update)
+                    await self.process_upadate(update)
 
             except Exception as e:
                 print(f"Error in polling: {e}")
