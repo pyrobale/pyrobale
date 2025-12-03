@@ -57,3 +57,10 @@ class ButtonTypes(Enum):
     WEB_APP = "web_app"
     URL = "url"
     COPY_TEXT_BUTTON = "copy_text_button"
+
+class KeyboardTypes(Enum):
+    """Types of an kyeboard button"""
+    TEXT = "text"
+    REQUEST_CONTACT = "request_contact"
+    REQUEST_LOCATION = "request_location"
+    WEB_APP = "web_app"

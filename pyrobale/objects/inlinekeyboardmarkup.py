@@ -1,13 +1,48 @@
 from typing import TYPE_CHECKING, Union, Optional
-
+from .enums import ButtonTypes
+from ..exceptions.common import PyroBaleException
 if TYPE_CHECKING:
     from .webappinfo import WebAppInfo
     from .copytextbutton import CopyTextButton
 
 
 class InlineKeyboardMarkup:
-    def __init__(self) -> None:
+    def __init__(self, *args) -> None:
+        args = list(args)
         self.inline_keyboard: list[list[dict]] = []
+
+
+        for i, row in enumerate(args):
+            self.add_row()
+            for i2, item in enumerate(row):
+                item = list(item)
+                if len(item) <= 1:
+                    raise PyroBaleException(f"You cannot have a row with lower than two items! ({i}, {i2})")
+
+                elif len(item) == 2:
+                    self.add_button(item[0], callback_data=item[1])
+
+                elif len(item) == 3:
+                    if isinstance(item[2], ButtonTypes):
+                        item[2] = item[2].value
+                    if item[2] in ["callback", "url", "copy_text_button", "web_app"]:
+                        item_2 = item[2]
+                        if item_2 == "callback":
+                            self.add_button(item[0],callback_data=item[1])
+                        elif item_2 == "url":
+                            self.add_button(item[0],url=item[1])
+                        elif item_2 == "web_app":
+                            self.add_button(item[0],web_app=item[1])
+                        else:
+                            self.add_button(item[0],copy_text_button=item[1])
+
+                    else:
+                        raise PyroBaleException(f"You cannot have a button with type {item[2]}")
+                
+                else:
+                    raise PyroBaleException("length of your item should not be more than two!")
+
+
 
     def add_button(
         self,
