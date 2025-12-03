@@ -16,21 +16,41 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Extract version info
-      id: version
+    - name: Extract version info from pyproject.toml
+      id: get_version
       run: |
-        STABLE=$(python -c "from version import stable; print(str(stable).lower())")
-        VERSION=$(python -c "from version import version; print(version)")
-        echo "stable=$STABLE" >> $GITHUB_OUTPUT
+        VERSION=$(python -c "import tomli; with open('pyproject.toml', 'rb') as f: data = tomli.load(f); print(data['project']['version'])")
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Stable: $STABLE, Version: $VERSION"
+        echo "Current version: $VERSION"
 
-    - name: Build and publish
-      if: steps.version.outputs.stable == 'true'
+    - name: Get latest version from PyPI
+      id: check_pypi
       run: |
-        pip install build twine
+        PACKAGE_NAME=$(python -c "import tomli; with open('pyproject.toml', 'rb') as f: data = tomli.load(f); print(data['project']['name'])")
+        
+        if curl -s "https://pypi.org/pypi/$PACKAGE_NAME/json" | grep -q '"message":"Not Found"'; then
+          echo "Package doesn't exist on PyPI yet"
+          echo "should_publish=true" >> $GITHUB_OUTPUT
+        else
+          LATEST_VERSION=$(curl -s "https://pypi.org/pypi/$PACKAGE_NAME/json" | python -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
+          CURRENT_VERSION="${{ steps.get_version.outputs.version }}"
+          echo "Latest version on PyPI: $LATEST_VERSION"
+          echo "Current version: $CURRENT_VERSION"
+          
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_publish=false" >> $GITHUB_OUTPUT
+            echo "Version already exists on PyPI, skipping publish"
+          fi
+        fi
+
+    - name: Build and publish to PyPI
+      if: steps.check_pypi.outputs.should_publish == 'true'
+      run: |
+        pip install build twine tomli
         python -m build
-        twine upload dist/* --username __token__ --password ${{ secrets.PYPI }}
+        twine upload dist/* --username __token__ --password ${{ secrets.PYPI_TOKEN }}
       env:
         TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}

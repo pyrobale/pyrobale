@@ -1,0 +1,237 @@
+name: Create GitHub Release
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'pyproject.toml'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Extract version and package info
+        id: get_info
+        run: |
+          # Install tomli for Python < 3.11
+          pip install tomli 2>/dev/null || pip install tomli
+          
+          # Extract version from pyproject.toml
+          VERSION=$(python -c "
+          try:
+              import tomli
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomli.load(f)
+              print(data['project']['version'])
+          except:
+              # Fallback to tomllib for Python 3.11+
+              import tomllib
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomllib.load(f)
+              print(data['project']['version'])
+          ")
+          
+          # Extract package name
+          PACKAGE_NAME=$(python -c "
+          try:
+              import tomli
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomli.load(f)
+              print(data['project']['name'])
+          except:
+              import tomllib
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomllib.load(f)
+              print(data['project']['name'])
+          ")
+          
+          # Extract description
+          DESCRIPTION=$(python -c "
+          try:
+              import tomli
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomli.load(f)
+              desc = data['project'].get('description', '')
+              print(desc.replace('\"', '\"\"'))
+          except:
+              import tomllib
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomllib.load(f)
+              desc = data['project'].get('description', '')
+              print(desc.replace('\"', '\"\"'))
+          ")
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
+          echo "Extracted: Version=$VERSION, Package=$PACKAGE_NAME"
+
+      - name: Check if tag already exists
+        id: check_tag
+        run: |
+          VERSION="${{ steps.get_info.outputs.version }}"
+          
+          # Check if tag exists locally first
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "Tag v$VERSION already exists locally"
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+          else
+            # Check if tag exists on remote
+            if git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q "v$VERSION"; then
+              echo "Tag v$VERSION exists on remote"
+              echo "tag_exists=true" >> $GITHUB_OUTPUT
+            else
+              echo "Tag v$VERSION does not exist"
+              echo "tag_exists=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Get changelog from git commits
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        id: changelog
+        run: |
+          # Get all commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          if [ -z "$LAST_TAG" ]; then
+            # No previous tag, get all commits
+            COMMITS=$(git log --oneline --format="- %s" --reverse)
+          else
+            # Get commits since last tag
+            COMMITS=$(git log --oneline --format="- %s" --reverse "${LAST_TAG}..HEAD")
+          fi
+          
+          # Limit to 50 commits max
+          COMMITS=$(echo "$COMMITS" | tail -50)
+          
+          # Escape for JSON
+          COMMITS_JSON=$(echo "$COMMITS" | python3 -c "
+import sys, json
+lines = [line.rstrip() for line in sys.stdin if line.strip()]
+print(json.dumps(lines))
+")
+          
+          echo "changelog=$COMMITS_JSON" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        run: |
+          VERSION="${{ steps.get_info.outputs.version }}"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "v$VERSION" -m "Release version $VERSION"
+          git push origin "v$VERSION"
+          echo "✅ Created tag v$VERSION"
+
+      - name: Create GitHub Release
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_info.outputs.version }}
+          name: ${{ steps.get_info.outputs.package_name }} v${{ steps.get_info.outputs.version }}
+          body: |
+            ## ${{ steps.get_info.outputs.package_name }} v${{ steps.get_info.outputs.version }}
+            
+            ${{ steps.get_info.outputs.description }}
+            
+            ### 📦 Package Details
+            - **Version:** ${{ steps.get_info.outputs.version }}
+            - **Package Name:** `${{ steps.get_info.outputs.package_name }}`
+            - **Python Version:** ≥3.9
+            
+            ### 📝 تغییرات (Changelog)
+            
+            ${{ fromJSON(steps.changelog.outputs.changelog) && join(fromJSON(steps.changelog.outputs.changelog), '\n') || 'No commits found' }}
+            
+            ### 📄 نصب (Installation)
+            ```bash
+            pip install ${{ steps.get_info.outputs.package_name }}
+            ```
+            
+            ### 🔗 لینک‌ها
+            - [مستندات](https://docs.pyrobale.ir)
+            - [وبسایت](https://pyrobale.ir)
+            - [انجمن](https://forum.pyrobale.ir)
+            - [مخزن GitHub](https://github.com/pyrobale/pyrobale)
+            
+            ---
+            
+            *این انتشار به صورت خودکار توسط GitHub Actions ایجاد شده است.*
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send Bale notification for new release
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        run: |
+          python3 << 'EOF'
+          import requests
+          import os
+          
+          version = "${{ steps.get_info.outputs.version }}"
+          package_name = "${{ steps.get_info.outputs.package_name }}"
+          release_url = "https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_info.outputs.version }}"
+          pypi_url = "https://pypi.org/project/${{ steps.get_info.outputs.package_name }}/${{ steps.get_info.outputs.version }}/"
+          
+          message = f"""🎊 *انتشار جدید!*
+
+          *${{ steps.get_info.outputs.package_name }} v${{ steps.get_info.outputs.version }}* منتشر شد!
+          
+          📦 *نام پکیج:* `{package_name}`
+          🏷️ *نسخه:* `{version}`
+          
+          📥 *نصب با pip:*
+          ```bash
+          pip install {package_name}=={version}
+          ```
+          
+          یا برای آخرین نسخه:
+          ```bash
+          pip install {package_name}
+          ```
+          
+          *لینک‌های مرتبط:*
+          [🔗 مشاهده انتشار در GitHub]({release_url})
+          [📦 مشاهده در PyPI]({pypi_url})
+          [📚 مستندات](https://docs.pyrobale.ir)
+          
+          ---
+          این انتشار به صورت خودکار توسط GitHub Actions ایجاد شده است.
+          
+          🆔 @pyrobale"""
+          
+          bot_token = os.environ['BALE_BOT_TOKEN']
+          chat_id = os.environ['BALE_CHAT_ID']
+          
+          url = f"https://tapi.bale.ai/bot{bot_token}/sendMessage"
+          payload = {
+              "chat_id": chat_id,
+              "text": message,
+              "parse_mode": "Markdown"
+          }
+          
+          response = requests.post(url, json=payload)
+          if response.status_code == 200:
+              print("✅ پیام انتشار با موفقیت ارسال شد")
+          else:
+              print(f"❌ خطا در ارسال پیام انتشار: {response.status_code}")
+          EOF
+        env:
+          BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
+          BALE_CHAT_ID: ${{ secrets.BALE_CHAT_ID }}

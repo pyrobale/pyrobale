@@ -18,15 +18,15 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests tomli
 
       - name: Get info and send to Bale
         run: |
           python3 << 'EOF'
           import requests
           import subprocess
-          import re
           import os
+          import tomli
           
           try:
               result = subprocess.run(
@@ -38,19 +38,41 @@ jobs:
               changed_files = ["خطا در دریافت تغییرات"]
           
           version = "نامشخص"
-          stable = False
+          package_name = "نامشخص"
           
           try:
-              with open('version.py', 'r') as f:
-                  content = f.read()
-              
-              version_match = re.search(r'version\s*=\s*["\']([^"\']+)["\']', content)
-              stable_match = re.search(r'stable\s*=\s*(True|False)', content)
-              
-              version = version_match.group(1) if version_match else "نامشخص"
-              stable = stable_match.group(1) == "True" if stable_match else False
+              with open('pyproject.toml', 'rb') as f:
+                  data = tomli.load(f)
+              version = data['project']['version']
+              package_name = data['project']['name']
           except Exception as e:
-              print(f"Error reading version.py: {e}")
+              print(f"Error reading pyproject.toml: {e}")
+          
+          pypi_status = "در حال بررسی..."
+          try:
+              import json
+              import urllib.request
+              import urllib.error
+              
+              url = f"https://pypi.org/pypi/{package_name}/json"
+              req = urllib.request.Request(url)
+              
+              try:
+                  with urllib.request.urlopen(req) as response:
+                      pypi_data = json.load(response)
+                      latest_version = pypi_data['info']['version']
+                      
+                      if version == latest_version:
+                          pypi_status = "این نسخه قبلاً در pypi منتشر شده است."
+                      else:
+                          pypi_status = "این نسخه جدید است و در pypi منتشر خواهد شد."
+              except urllib.error.HTTPError as e:
+                  if e.code == 404:
+                      pypi_status = "این اولین انتشار این پکیج در pypi خواهد بود."
+                  else:
+                      pypi_status = f"خطا در بررسی pypi: {e}"
+          except Exception as e:
+              pypi_status = f"خطا در بررسی وضعیت pypi: {e}"
           
           try:
               commit_msg = subprocess.run(
@@ -61,20 +83,22 @@ jobs:
               commit_msg = "خطا در دریافت پیام کامیت"
           
           files_text = "\n".join([f"• {file}" for file in changed_files]) if changed_files else "بدون تغییرات فایل"
-          pypi_status = "در pypi منتشر شد!" if stable else "این نسخه هنوز در pypi منشر نشده."
+          
           github_url = f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/commit/{os.environ['GITHUB_SHA']}"
           
           message = f"""🎉 *تغییرات جدیدی در مخزن پایروبله ایجاد شد!*
 
-           ```[تغییرات در فایل‌های]
+          ```[تغییرات در فایل‌ها]
           {files_text}
           ```
+          
           ```[پیام کامیت]
           {commit_msg}
           ```
 
-          *نسخه فعلی کتابخانه:* {version}
-          *pypi:* {pypi_status}
+          *نام پکیج:* `{package_name}`
+          *نسخه فعلی:* `{version}`
+          *وضعیت انتشار در pypi:* {pypi_status}
 
           [*🔗 مشاهده در GitHub*]({github_url})
 

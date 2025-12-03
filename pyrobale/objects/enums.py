@@ -50,3 +50,10 @@ class ChatType(Enum):
     PRIVATE = "private"
     GROUP = "group"
     CHANNEL = "channel"
+
+class ButtonTypes(Enum):
+    """Types of an inline button"""
+    CALLBACK = "callback"
+    WEB_APP = "web_app"
+    URL = "url"
+    COPY_TEXT_BUTTON = "copy_text_button"
