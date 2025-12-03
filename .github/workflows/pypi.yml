@@ -16,24 +16,46 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Install tomli
+      run: pip install tomli
+
     - name: Extract version info from pyproject.toml
       id: get_version
       run: |
-        VERSION=$(python -c "import tomli; with open('pyproject.toml', 'rb') as f: data = tomli.load(f); print(data['project']['version'])")
+        python3 << 'EOF' > version.txt
+        import tomli
+        with open('pyproject.toml', 'rb') as f:
+            data = tomli.load(f)
+        print(data['project']['version'])
+        EOF
+        
+        python3 << 'EOF' > name.txt
+        import tomli
+        with open('pyproject.toml', 'rb') as f:
+            data = tomli.load(f)
+        print(data['project']['name'])
+        EOF
+        
+        VERSION=$(cat version.txt)
+        PACKAGE_NAME=$(cat name.txt)
+        
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Current version: $VERSION"
+        echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+        echo "Current version: $VERSION, Package: $PACKAGE_NAME"
 
     - name: Get latest version from PyPI
       id: check_pypi
       run: |
-        PACKAGE_NAME=$(python -c "import tomli; with open('pyproject.toml', 'rb') as f: data = tomli.load(f); print(data['project']['name'])")
+        PACKAGE_NAME="${{ steps.get_version.outputs.package_name }}"
+        CURRENT_VERSION="${{ steps.get_version.outputs.version }}"
+        
+        echo "Checking PyPI for package: $PACKAGE_NAME"
         
         if curl -s "https://pypi.org/pypi/$PACKAGE_NAME/json" | grep -q '"message":"Not Found"'; then
           echo "Package doesn't exist on PyPI yet"
           echo "should_publish=true" >> $GITHUB_OUTPUT
         else
-          LATEST_VERSION=$(curl -s "https://pypi.org/pypi/$PACKAGE_NAME/json" | python -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
-          CURRENT_VERSION="${{ steps.get_version.outputs.version }}"
+          LATEST_VERSION=$(curl -s "https://pypi.org/pypi/$PACKAGE_NAME/json" | python3 -c "import sys, json; print(json.load(sys.stdin)['info']['version'])")
           echo "Latest version on PyPI: $LATEST_VERSION"
           echo "Current version: $CURRENT_VERSION"
           
@@ -48,7 +70,7 @@ jobs:
     - name: Build and publish to PyPI
       if: steps.check_pypi.outputs.should_publish == 'true'
       run: |
-        pip install build twine tomli
+        pip install build twine
         python -m build
         twine upload dist/* --username __token__ --password ${{ secrets.PYPI_TOKEN }}
       env:
