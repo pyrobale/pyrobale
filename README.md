@@ -114,3 +114,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 [Documentation](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
+
