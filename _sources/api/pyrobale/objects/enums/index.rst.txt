@@ -13,6 +13,7 @@ Classes
    pyrobale.objects.enums.ChatPermissions
    pyrobale.objects.enums.ChatAction
    pyrobale.objects.enums.ChatType
+   pyrobale.objects.enums.ButtonTypes
 
 
 Module Contents
@@ -207,6 +208,34 @@ Module Contents
 
    .. py:attribute:: CHANNEL
       :value: 'channel'
+
+
+
+.. py:class:: ButtonTypes(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of an inline button
+
+
+   .. py:attribute:: CALLBACK
+      :value: 'callback'
+
+
+
+   .. py:attribute:: WEB_APP
+      :value: 'web_app'
+
+
+
+   .. py:attribute:: URL
+      :value: 'url'
+
+
+
+   .. py:attribute:: COPY_TEXT_BUTTON
+      :value: 'copy_text_button'
 
 
 
