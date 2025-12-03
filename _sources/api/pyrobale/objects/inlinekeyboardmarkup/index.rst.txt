@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: InlineKeyboardMarkup
+.. py:class:: InlineKeyboardMarkup(*args)
 
    .. py:attribute:: inline_keyboard
       :type:  list[list[dict]]

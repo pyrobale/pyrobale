@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ReplyKeyboardMarkup
+.. py:class:: ReplyKeyboardMarkup(*args)
 
    Represents a reply keyboard.
    .. attribute:: Each dictionary contains the following keys

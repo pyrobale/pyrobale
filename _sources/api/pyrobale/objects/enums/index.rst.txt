@@ -14,6 +14,7 @@ Classes
    pyrobale.objects.enums.ChatAction
    pyrobale.objects.enums.ChatType
    pyrobale.objects.enums.ButtonTypes
+   pyrobale.objects.enums.KeyboardTypes
 
 
 Module Contents
@@ -236,6 +237,34 @@ Module Contents
 
    .. py:attribute:: COPY_TEXT_BUTTON
       :value: 'copy_text_button'
+
+
+
+.. py:class:: KeyboardTypes(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of an kyeboard button
+
+
+   .. py:attribute:: TEXT
+      :value: 'text'
+
+
+
+   .. py:attribute:: REQUEST_CONTACT
+      :value: 'request_contact'
+
+
+
+   .. py:attribute:: REQUEST_LOCATION
+      :value: 'request_location'
+
+
+
+   .. py:attribute:: WEB_APP
+      :value: 'web_app'
 
 
 
