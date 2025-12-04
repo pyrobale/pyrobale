@@ -19,6 +19,10 @@ create a bot that can echo every message 🗣️
 ****
 create a bot that can echo every message 🗣️ (threaded)
 
+`Filters <./filters>`_
+****
+how to use filters in handlers 🔎
+
 `Defined messages <./defined_messages>`_
 ****
 define your messages and do nothing! pyrobale will answer all messages as your dictionary 📕

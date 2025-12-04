@@ -1623,19 +1623,25 @@ class Client:
                 if event is None:
                     continue
 
-                flt = handler.get("filter")
+                flt = handler.get("filters")
+                skip = False
                 if flt is not None:
-                    if callable(flt):
-                        try:
-                            if not flt(event):
-                                continue
-                        except Exception as e:
-                            print(f"[Filter Error] {e}")
-                            traceback.print_exc()
-                            continue
-                    elif isinstance(flt, Filters):
-                        if not hasattr(event, flt.value):
-                            continue
+                    for flitr in flt:
+                        if callable(flitr):
+                            try:
+                                ans = flitr(event)
+                                if not ans:
+                                    skip = True
+                            except Exception as e:
+                                print(f"[Filter Error] {e}")
+                                traceback.print_exc()
+                                skip = True
+                        elif isinstance(flitr, str):
+                            if not hasattr(event, flitr):
+                                skip = True
+                
+                if skip == True:
+                    continue
 
                 callback = handler["callback"]
                 try:
@@ -1695,63 +1701,63 @@ class Client:
             Callable: The decorated handler.
         """
 
-        def wrapper(filter: Optional[Filters] = None):
+        def wrapper(*filters: Any):
             def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
-                self.add_handler(update_type, callback, filter)
+                self.add_handler(update_type, callback, *filters)
                 return callback
 
             return decorator
 
         return wrapper
 
-    def on_command(self, command: str, filter: Optional[Filters] = None):
+    def on_command(self, command: str, *filters: Any, **kwargs):
         """Decorator for handling command updates."""
 
         def decorator(callback: Callable[[Any], Union[None, Awaitable[None]]]):
-            self.add_handler(UpdatesTypes.COMMAND, callback, filter, command=command)
+            self.add_handler(UpdatesTypes.COMMAND, callback, *filters, command=command)
             return callback
 
         return decorator
 
-    def on_message(self, filter: Optional[Filters] = None):
+    def on_message(self, *filters: Any, **kwargs):
         """Decorator for handling new message updates."""
-        return self.base_handler_decorator(UpdatesTypes.MESSAGE)(filter)
+        return self.base_handler_decorator(UpdatesTypes.MESSAGE)(*filters)
 
-    def on_edited_message(self, filter: Optional[Filters] = None):
+    def on_edited_message(self, *filters: Any, **kwargs):
         """Decorator for handling edited message updates."""
-        return self.base_handler_decorator(UpdatesTypes.MESSAGE_EDITED)(filter)
+        return self.base_handler_decorator(UpdatesTypes.MESSAGE_EDITED)(*filters)
 
-    def on_callback_query(self, filter: Optional[Filters] = None):
+    def on_callback_query(self, *filters: Any, **kwargs):
         """Decorator for handling callback query updates."""
-        return self.base_handler_decorator(UpdatesTypes.CALLBACK_QUERY)(filter)
+        return self.base_handler_decorator(UpdatesTypes.CALLBACK_QUERY)(*filters)
 
-    def on_new_members(self, filter: Optional[Filters] = None):
+    def on_new_members(self, *filters: Any, **kwargs):
         """Decorator for handling new chat members updates."""
-        return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)(filter)
+        return self.base_handler_decorator(UpdatesTypes.MEMBER_JOINED)(*filters)
 
-    def on_members_left(self, filter: Optional[Filters] = None):
+    def on_members_left(self, *filters: Any, **kwargs):
         """Decorator for handling members left updates."""
-        return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)(filter)
+        return self.base_handler_decorator(UpdatesTypes.MEMBER_LEFT)(*filters)
 
-    def on_pre_checkout_query(self, filter: Optional[Filters] = None):
+    def on_pre_checkout_query(self, *filters: Any, **kwargs):
         """Decorator for handling pre-checkout query updates."""
-        return self.base_handler_decorator(UpdatesTypes.PRE_CHECKOUT_QUERY)(filter)
+        return self.base_handler_decorator(UpdatesTypes.PRE_CHECKOUT_QUERY)(*filters)
 
-    def on_photo(self, filter: Optional[Filters] = None):
+    def on_photo(self, *filters: Any, **kwargs):
         """Decorator for handling photo updates."""
-        return self.base_handler_decorator(UpdatesTypes.PHOTO)(filter)
+        return self.base_handler_decorator(UpdatesTypes.PHOTO)(*filters)
 
-    def on_successful_payment(self, filter: Optional[Filters] = None):
+    def on_successful_payment(self, *filters: Any, **kwargs):
         """Decorator for handling successful payment updates."""
-        return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)(filter)
+        return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)(*filters)
 
-    def add_handler(self, update_type: UpdatesTypes, callback: Callable, filter: Optional[Filters] = None, **kwargs):
+    def add_handler(self, update_type: UpdatesTypes, callback: Callable, *filters: Any, **kwargs):
         """Register a handler for specific update type.
 
         Args:
             update_type (UpdatesTypes): The update to process.
             callback (Callable): The callback to handle.
-            filter (Optional[Filters]): The filter to handle.
+            filters (Any): The filter to handle.
             **kwargs: The kwargs to pass to the callback.
 
         Returns:
@@ -1760,7 +1766,7 @@ class Client:
         handler_data = {
             "type": update_type,
             "callback": callback,
-            "filter": filter,
+            "filters": filters,
         }
         handler_data.update(kwargs)
         self.handlers.append(handler_data)
