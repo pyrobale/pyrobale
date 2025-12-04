@@ -98,7 +98,6 @@ def _group():
 
     def check(event):
         try:
-            print(event)
             chat = getattr(event, "chat")
             type = getattr(chat, "type")
             return type == "group"

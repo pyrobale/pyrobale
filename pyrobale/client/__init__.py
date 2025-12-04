@@ -43,7 +43,6 @@ from ..objects.webappdata import WebAppData
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
-from ..objects.peerdata import PeerData
 from ..objects.transaction import Transaction
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
@@ -70,7 +69,7 @@ class Client:
     """
 
     def __init__(self, token: str, base_url: str = "https://tapi.bale.ai/bot",
-                 async_mode: bool = None, max_workers: int = 50):
+                 async_mode: Optional[bool] = None, max_workers: int = 50):
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
@@ -95,7 +94,7 @@ class Client:
         else:
             self._async_mode = async_mode
 
-        self.me: User = None
+        self.me: User|None = None
         self.check_defined_message = True
         self.defined_messages = {}
 
@@ -233,7 +232,7 @@ class Client:
                 "reply_markup": reply_markup.to_dict() if reply_markup else None,
             },
         )
-        result = pythonize(data.get("result"))
+        result = pythonize(data.get("result", {}))
         return Message(**result, client=self)
 
     @smart_method
@@ -958,7 +957,7 @@ class Client:
 
         if not data:
             raise ForbiddenException("You cannot get this chat member!")
-        temp = data.get("result")
+        temp = data.get("result", [])
         temp["chat"] = await self.get_chat(chat_id)
         temp["client"] = self
         data = temp
@@ -1115,104 +1114,10 @@ class Client:
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
 
-        temp = data.get("result")
+        temp = data.get("result", {})
         temp["client"] = self
         data = temp
         return Chat(**pythonize(data))
-
-    @staticmethod
-    @smart_method
-    async def get_ble_ir_page(username_or_phone_number: str) -> PeerData:
-        """Get BleIR user/group information.
-
-        Args:
-            username_or_phone_number (str): The username or phone number.
-
-        Returns:
-            PeerData: The BleIR user/group information.
-        """
-        url = f"https://ble.ir/{username_or_phone_number}"
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                req = await response.text()
-
-        if """<p class="__404_title__lxIKL">گفتگوی مورد نظر وجود ندارد.</p>""" in req:
-            return PeerData(
-                is_ok=False,
-                avatar=None,
-                description=None,
-                name=None,
-                is_bot=None,
-                is_verified=None,
-                is_private=None,
-                members=None,
-                last_message=None,
-                user_id=None,
-                username=None,
-            )
-
-        soup = BeautifulSoup(req, "html.parser")
-        json_data = {}
-
-        try:
-            json_script = soup.find("script", id="__NEXT_DATA__").text
-            json_data = loads(json_script)
-            page_props = json_data.get("props", {}).get("pageProps", {})
-            user_data = page_props.get("user", {})
-            group_data = page_props.get("group", {})
-            messages = page_props.get("messages", [])
-        except (AttributeError, KeyError, JSONDecodeError):
-            pass
-
-        try:
-            avatar = soup.find("img", class_="Avatar_img___C2_3")["src"]
-        except (AttributeError, KeyError):
-            avatar = None
-
-        try:
-            description = soup.find("div", class_="Profile_description__YTAr_").text
-        except AttributeError:
-            description = None
-
-        try:
-            name = soup.find("h1", class_="Profile_name__pQglx").text
-        except AttributeError:
-            name = None
-
-        is_bot = user_data.get("isBot", False)
-        is_verified = user_data.get("isVerified", group_data.get("isVerified", False))
-        is_private = user_data.get("isPrivate", group_data.get("isPrivate", False))
-        members = group_data.get("members")
-        username = user_data.get("nick")
-        user_id = page_props.get("peer", {}).get("id")
-
-        last_message = None
-        if messages:
-            try:
-                last_msg = messages[-1]["message"]
-                last_message = (
-                        last_msg.get("documentMessage", {}).get("caption", {}).get("text")
-                        or last_msg.get("textMessage", {}).get("text")
-                )
-                if last_message:
-                    last_message = last_message.replace("&zwnj;", "")
-            except (KeyError, IndexError):
-                pass
-
-        return PeerData(
-            True,
-            avatar,
-            description,
-            name,
-            is_bot,
-            is_verified,
-            is_private,
-            members,
-            last_message,
-            user_id,
-            username
-        )
 
     @smart_method
     async def get_chat_members_count(self, chat_id: int) -> int:
@@ -1332,7 +1237,7 @@ class Client:
             chat_id: Union[int, str],
             message_id: int,
             text: str,
-            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None,
+            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup", None] = None,
     ) -> Message:
         """Edits a message in a specified chat
 
@@ -1362,7 +1267,7 @@ class Client:
 
     @smart_method
     async def edit_message_reply_markup(self, chat_id: int, message_id: int,
-                                        reply_markup: Union["InlineKeyboardMarkup", None] = None
+                                        reply_markup: Union["InlineKeyboardMarkup"]
                                         ):
         """
         Edits a message's buttons without editing the content.
