@@ -45,7 +45,6 @@ from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.peerdata import PeerData
 from ..objects.transaction import Transaction
-from ..filters import Filters
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
 import time
