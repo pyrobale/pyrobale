@@ -4,13 +4,112 @@ pyrobale.filters
 .. py:module:: pyrobale.filters
 
 
-Submodules
+Attributes
 ----------
 
-.. toctree::
-   :maxdepth: 1
+.. autoapisummary::
 
-   /api/pyrobale/filters/enum_filters/index
-   /api/pyrobale/filters/func_filters/index
+   pyrobale.filters.TEXT
+   pyrobale.filters.PHOTO
+   pyrobale.filters.VIDEO
+   pyrobale.filters.AUDIO
+   pyrobale.filters.VOICE
+   pyrobale.filters.CONTACT
+   pyrobale.filters.LOCATION
+   pyrobale.filters.channel
+   pyrobale.filters.group
+   pyrobale.filters.digit
 
+
+Functions
+---------
+
+.. autoapisummary::
+
+   pyrobale.filters.equals
+   pyrobale.filters.startswith
+   pyrobale.filters.regex
+   pyrobale.filters.from_users
+
+
+Package Contents
+----------------
+
+.. py:function:: equals(expected_text)
+
+   Check if the event text or caption or callbackQuery data is equal to the expected text.
+
+   :param expected_text: The expected text to compare with.
+   :type expected_text: str
+
+   :returns: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
+   :rtype: Callable
+
+
+.. py:function:: startswith(expected_text)
+
+   Check if the event text or caption or callbackQuery data is started with to the expected text.
+
+   :param expected_text: The expected text to compare with.
+   :type expected_text: str
+
+   :returns: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.
+   :rtype: Callable
+
+
+.. py:function:: regex(pattern)
+
+   checks the event text or caption with given pattern using regex
+
+   :param pattern: The pattern to check with text
+   :type pattern: str
+
+   :returns: A function that checks if the event text or caption is match with given pattern
+   :rtype: Callable
+
+
+.. py:function:: from_users(allowed_users)
+
+   Check if the event text or caption or callbackQuery sender is in allowed user.
+
+   :param allowed_users: Allowed users to use this handler.
+   :type allowed_users: List[Union["User", int]]
+
+   :returns: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
+   :rtype: Callable
+
+
+.. py:data:: TEXT
+   :value: 'text'
+
+
+.. py:data:: PHOTO
+   :value: 'photo'
+
+
+.. py:data:: VIDEO
+   :value: 'video'
+
+
+.. py:data:: AUDIO
+   :value: 'audio'
+
+
+.. py:data:: VOICE
+   :value: 'voice'
+
+
+.. py:data:: CONTACT
+   :value: 'contact'
+
+
+.. py:data:: LOCATION
+   :value: 'location'
+
+
+.. py:data:: channel
+
+.. py:data:: group
+
+.. py:data:: digit
 

@@ -2,12 +2,11 @@
 <html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
         <link rel="prefetch" href="../../_static/pyrobale.png" as="image">
 
     <link rel="shortcut icon" href="../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>🎯 Custom handler - Pyrobale Documentation</title>
+        <title>pyrobale.filters - Pyrobale Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -335,17 +334,7 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/pyrobale/pyrobale/blob/main/docs/source/examples/handler_system/index.rst?plain=true" title="View this page">
-    <svg><use href="#svg-eye"></use></svg>
-    <span class="visually-hidden">View this page</span>
-  </a>
-</div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/pyrobale/pyrobale/edit/main/docs/source/examples/handler_system/index.rst" rel="edit" title="Edit this page">
-    <svg><use href="#svg-pencil"></use></svg>
-    <span class="visually-hidden">Edit this page</span>
-  </a>
-</div><div class="theme-toggle-container theme-toggle-content">
+          <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -358,25 +347,197 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="custom-handler">
-<h1>🎯 Custom handler<a class="headerlink" href="#custom-handler" title="Link to this heading">¶</a></h1>
-<p>how to add custom handler in pyrobale</p>
-<div class="toctree-wrapper compound">
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span>
+          <h1>Source code for pyrobale.filters</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
-    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="equals">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.equals">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">equals</span><span class="p">(</span><span class="n">expected_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the event text or caption or callbackQuery data is equal to the expected text.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        expected_text (str): The expected text to compare with.</span>
 
-<span class="n">client</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">,</span> <span class="n">message_handler</span><span class="p">)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span></div>
 
-<span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<div class="viewcode-block" id="startswith">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.startswith">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the event text or caption or callbackQuery data is started with to the expected text.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        expected_text (str): The expected text to compare with.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span></div>
+
+
+
+<div class="viewcode-block" id="regex">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.regex">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">regex</span><span class="p">(</span><span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    checks the event text or caption with given pattern using regex</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        pattern (str): The pattern to check with text</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption is match with given pattern</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span></div>
+
+
+<div class="viewcode-block" id="from_users">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.from_users">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_users</span><span class="p">(</span><span class="n">allowed_users</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the event text or caption or callbackQuery sender is in allowed user.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        allowed_users (List[Union[&quot;User&quot;, int]]): Allowed users to use this handler.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">euser</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">eid</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">euser</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">eid</span> <span class="ow">in</span> <span class="n">allowed_users</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_private</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    checks if the event is happening in a private chat</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_group</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    checks if the event is happening in a group chat</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;group&quot;</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_digit</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the event text or caption or callbackQuery data is digit.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is digit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_channel</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    checks if the event is happening in a channel</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;channel&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span>
+
+<div class="viewcode-block" id="TEXT">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.TEXT">[docs]</a>
+<span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span></div>
+
+<div class="viewcode-block" id="PHOTO">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.PHOTO">[docs]</a>
+<span class="n">PHOTO</span> <span class="o">=</span> <span class="s2">&quot;photo&quot;</span></div>
+
+<div class="viewcode-block" id="VIDEO">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.VIDEO">[docs]</a>
+<span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;video&quot;</span></div>
+
+<div class="viewcode-block" id="AUDIO">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.AUDIO">[docs]</a>
+<span class="n">AUDIO</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span></div>
+
+<div class="viewcode-block" id="VOICE">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.VOICE">[docs]</a>
+<span class="n">VOICE</span> <span class="o">=</span> <span class="s2">&quot;voice&quot;</span></div>
+
+<div class="viewcode-block" id="CONTACT">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.CONTACT">[docs]</a>
+<span class="n">CONTACT</span> <span class="o">=</span> <span class="s2">&quot;contact&quot;</span></div>
+
+<div class="viewcode-block" id="LOCATION">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.LOCATION">[docs]</a>
+<span class="n">LOCATION</span> <span class="o">=</span> <span class="s2">&quot;location&quot;</span></div>
+
+
+<span class="n">private</span> <span class="o">=</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">_private</span><span class="p">()</span>
+<div class="viewcode-block" id="channel">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.channel">[docs]</a>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">_channel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="group">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.group">[docs]</a>
+<span class="n">group</span> <span class="o">=</span> <span class="n">_group</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="digit">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.digit">[docs]</a>
+<span class="n">digit</span> <span class="o">=</span> <span class="n">_digit</span><span class="p">()</span></div>
+
 </pre></div>
-</div>
-</section>
-
         </article>
       </div>
       <footer>

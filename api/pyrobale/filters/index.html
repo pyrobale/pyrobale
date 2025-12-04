@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="pyrobale.filters.enum_filters" href="enum_filters/index.html"><link rel="prev" title="pyrobale.exceptions.common" href="../exceptions/common/index.html">
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="pyrobale.objects" href="../objects/index.html"><link rel="prev" title="pyrobale.exceptions.common" href="../exceptions/common/index.html">
         <link rel="prefetch" href="../../../_static/pyrobale.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
@@ -212,12 +212,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../exceptions/common/index.html">pyrobale.exceptions.common</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children current-page"><a class="current reference internal" href="#">pyrobale.filters</a><input aria-label="Toggle navigation of pyrobale.filters" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="enum_filters/index.html">pyrobale.filters.enum_filters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="func_filters/index.html">pyrobale.filters.func_filters</a></li>
-</ul>
-</li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../objects/index.html">pyrobale.objects</a><input aria-label="Toggle navigation of pyrobale.objects" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">pyrobale.filters</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../objects/index.html">pyrobale.objects</a><input aria-label="Toggle navigation of pyrobale.objects" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../objects/animation/index.html">pyrobale.objects.animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/audio/index.html">pyrobale.objects.audio</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/callbackquery/index.html">pyrobale.objects.callbackquery</a></li>
@@ -364,14 +360,186 @@
         <article role="main" id="furo-main-content">
           <section id="module-pyrobale.filters">
 <span id="pyrobale-filters"></span><h1>pyrobale.filters<a class="headerlink" href="#module-pyrobale.filters" title="Link to this heading">¶</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="enum_filters/index.html">pyrobale.filters.enum_filters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="func_filters/index.html">pyrobale.filters.func_filters</a></li>
-</ul>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.TEXT" title="pyrobale.filters.TEXT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TEXT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.PHOTO" title="pyrobale.filters.PHOTO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PHOTO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.VIDEO" title="pyrobale.filters.VIDEO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VIDEO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.AUDIO" title="pyrobale.filters.AUDIO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AUDIO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.VOICE" title="pyrobale.filters.VOICE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VOICE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.CONTACT" title="pyrobale.filters.CONTACT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONTACT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.LOCATION" title="pyrobale.filters.LOCATION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOCATION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.channel" title="pyrobale.filters.channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.group" title="pyrobale.filters.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.digit" title="pyrobale.filters.digit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">digit</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </div>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.equals" title="pyrobale.filters.equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equals</span></code></a>(expected_text)</p></td>
+<td><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.startswith" title="pyrobale.filters.startswith"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startswith</span></code></a>(expected_text)</p></td>
+<td><p>Check if the event text or caption or callbackQuery data is started with to the expected text.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.regex" title="pyrobale.filters.regex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regex</span></code></a>(pattern)</p></td>
+<td><p>checks the event text or caption with given pattern using regex</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.from_users" title="pyrobale.filters.from_users"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_users</span></code></a>(allowed_users)</p></td>
+<td><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.equals">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.equals" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>expected_text</strong> (<em>str</em>) – The expected text to compare with.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery data is equal to the expected text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.startswith">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#startswith"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.startswith" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the event text or caption or callbackQuery data is started with to the expected text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>expected_text</strong> (<em>str</em>) – The expected text to compare with.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery data is started with to the expected text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.regex">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">regex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#regex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.regex" title="Link to this definition">¶</a></dt>
+<dd><p>checks the event text or caption with given pattern using regex</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – The pattern to check with text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that checks if the event text or caption is match with given pattern</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrobale.filters.from_users">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">from_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allowed_users</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#from_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.from_users" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>allowed_users</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>&quot;User&quot;</em><em>, </em><em>int</em><em>]</em><em>]</em>) – Allowed users to use this handler.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery sender is in allowed user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.TEXT">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#TEXT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.TEXT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.PHOTO">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">PHOTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'photo'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#PHOTO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.PHOTO" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.VIDEO">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">VIDEO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'video'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#VIDEO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.VIDEO" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.AUDIO">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">AUDIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'audio'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#AUDIO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.AUDIO" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.VOICE">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">VOICE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'voice'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#VOICE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.VOICE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.CONTACT">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">CONTACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'contact'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#CONTACT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.CONTACT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.LOCATION">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">LOCATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'location'</span></em><a class="reference internal" href="../../../_modules/pyrobale/filters.html#LOCATION"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.LOCATION" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.channel">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">channel</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.channel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.group">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">group</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.group" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pyrobale.filters.digit">
+<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">digit</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#digit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.digit" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 </section>
 
@@ -380,12 +548,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="enum_filters/index.html">
+          <a class="next-page" href="../objects/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">pyrobale.filters.enum_filters</div>
+                <div class="title">pyrobale.objects</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -438,7 +606,25 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">pyrobale.filters</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#pyrobale.filters.equals"><code class="docutils literal notranslate"><span class="pre">equals()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.startswith"><code class="docutils literal notranslate"><span class="pre">startswith()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.regex"><code class="docutils literal notranslate"><span class="pre">regex()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.from_users"><code class="docutils literal notranslate"><span class="pre">from_users()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.TEXT"><code class="docutils literal notranslate"><span class="pre">TEXT</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.PHOTO"><code class="docutils literal notranslate"><span class="pre">PHOTO</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.VIDEO"><code class="docutils literal notranslate"><span class="pre">VIDEO</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.AUDIO"><code class="docutils literal notranslate"><span class="pre">AUDIO</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.VOICE"><code class="docutils literal notranslate"><span class="pre">VOICE</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.CONTACT"><code class="docutils literal notranslate"><span class="pre">CONTACT</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.LOCATION"><code class="docutils literal notranslate"><span class="pre">LOCATION</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.channel"><code class="docutils literal notranslate"><span class="pre">channel</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.group"><code class="docutils literal notranslate"><span class="pre">group</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.digit"><code class="docutils literal notranslate"><span class="pre">digit</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

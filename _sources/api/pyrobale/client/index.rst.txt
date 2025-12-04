@@ -980,61 +980,61 @@ Package Contents
 
 
 
-   .. py:method:: on_command(command, filter = None)
+   .. py:method:: on_command(command, *filters, **kwargs)
 
       Decorator for handling command updates.
 
 
 
-   .. py:method:: on_message(filter = None)
+   .. py:method:: on_message(*filters, **kwargs)
 
       Decorator for handling new message updates.
 
 
 
-   .. py:method:: on_edited_message(filter = None)
+   .. py:method:: on_edited_message(*filters, **kwargs)
 
       Decorator for handling edited message updates.
 
 
 
-   .. py:method:: on_callback_query(filter = None)
+   .. py:method:: on_callback_query(*filters, **kwargs)
 
       Decorator for handling callback query updates.
 
 
 
-   .. py:method:: on_new_members(filter = None)
+   .. py:method:: on_new_members(*filters, **kwargs)
 
       Decorator for handling new chat members updates.
 
 
 
-   .. py:method:: on_members_left(filter = None)
+   .. py:method:: on_members_left(*filters, **kwargs)
 
       Decorator for handling members left updates.
 
 
 
-   .. py:method:: on_pre_checkout_query(filter = None)
+   .. py:method:: on_pre_checkout_query(*filters, **kwargs)
 
       Decorator for handling pre-checkout query updates.
 
 
 
-   .. py:method:: on_photo(filter = None)
+   .. py:method:: on_photo(*filters, **kwargs)
 
       Decorator for handling photo updates.
 
 
 
-   .. py:method:: on_successful_payment(filter = None)
+   .. py:method:: on_successful_payment(*filters, **kwargs)
 
       Decorator for handling successful payment updates.
 
 
 
-   .. py:method:: add_handler(update_type, callback, filter = None, **kwargs)
+   .. py:method:: add_handler(update_type, callback, *filters, **kwargs)
 
       Register a handler for specific update type.
 
@@ -1042,8 +1042,8 @@ Package Contents
       :type update_type: UpdatesTypes
       :param callback: The callback to handle.
       :type callback: Callable
-      :param filter: The filter to handle.
-      :type filter: Optional[Filters]
+      :param filters: The filter to handle.
+      :type filters: Any
       :param \*\*kwargs: The kwargs to pass to the callback.
 
       :returns: The decorated handler.

@@ -212,12 +212,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../exceptions/common/index.html">pyrobale.exceptions.common</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../filters/index.html">pyrobale.filters</a><input aria-label="Toggle navigation of pyrobale.filters" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../filters/enum_filters/index.html">pyrobale.filters.enum_filters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../filters/func_filters/index.html">pyrobale.filters.func_filters</a></li>
-</ul>
-</li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../objects/index.html">pyrobale.objects</a><input aria-label="Toggle navigation of pyrobale.objects" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../filters/index.html">pyrobale.filters</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../objects/index.html">pyrobale.objects</a><input aria-label="Toggle navigation of pyrobale.objects" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../objects/animation/index.html">pyrobale.objects.animation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/audio/index.html">pyrobale.objects.audio</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/callbackquery/index.html">pyrobale.objects.callbackquery</a></li>
@@ -1513,13 +1509,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_command">
-<span class="sig-name descname"><span class="pre">on_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_command" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_command" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling command updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>command</strong> (<em>str</em>)</p></li>
-<li><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p></li>
+<li><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1527,102 +1523,102 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_message">
-<span class="sig-name descname"><span class="pre">on_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_message" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_message" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling new message updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_edited_message">
-<span class="sig-name descname"><span class="pre">on_edited_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_edited_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_edited_message" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_edited_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_edited_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_edited_message" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling edited message updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_callback_query">
-<span class="sig-name descname"><span class="pre">on_callback_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_callback_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_callback_query" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_callback_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_callback_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_callback_query" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling callback query updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_new_members">
-<span class="sig-name descname"><span class="pre">on_new_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_new_members"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_new_members" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_new_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_new_members"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_new_members" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling new chat members updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_members_left">
-<span class="sig-name descname"><span class="pre">on_members_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_members_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_members_left" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_members_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_members_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_members_left" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling members left updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_pre_checkout_query">
-<span class="sig-name descname"><span class="pre">on_pre_checkout_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_pre_checkout_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_pre_checkout_query" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_pre_checkout_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_pre_checkout_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_pre_checkout_query" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling pre-checkout query updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_photo">
-<span class="sig-name descname"><span class="pre">on_photo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_photo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_photo" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_photo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_photo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_photo" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling photo updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.on_successful_payment">
-<span class="sig-name descname"><span class="pre">on_successful_payment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_successful_payment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_successful_payment" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_successful_payment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_successful_payment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_successful_payment" title="Link to this definition">¶</a></dt>
 <dd><p>Decorator for handling successful payment updates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filter</strong> (<em>Optional</em><em>[</em><em>pyrobale.filters.Filters</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>filters</strong> (<em>pyrobale.objects.utils.Any</em>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.add_handler">
-<span class="sig-name descname"><span class="pre">add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.add_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.add_handler" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.add_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.add_handler" title="Link to this definition">¶</a></dt>
 <dd><p>Register a handler for specific update type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>update_type</strong> (<a class="reference internal" href="../objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes" title="pyrobale.objects.enums.UpdatesTypes"><em>UpdatesTypes</em></a>) – The update to process.</p></li>
 <li><p><strong>callback</strong> (<em>Callable</em>) – The callback to handle.</p></li>
-<li><p><strong>filter</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../filters/enum_filters/index.html#pyrobale.filters.enum_filters.Filters" title="pyrobale.filters.enum_filters.Filters"><em>Filters</em></a><em>]</em>) – The filter to handle.</p></li>
+<li><p><strong>filters</strong> (<em>Any</em>) – The filter to handle.</p></li>
 <li><p><strong>**kwargs</strong> – The kwargs to pass to the callback.</p></li>
 </ul>
 </dd>
