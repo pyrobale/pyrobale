@@ -65,7 +65,7 @@ Package Contents
 
 
    .. py:attribute:: me
-      :type:  pyrobale.objects.user.User
+      :type:  pyrobale.objects.user.User | None
       :value: None
 
 
@@ -721,22 +721,6 @@ Package Contents
 
 
 
-   .. py:method:: get_ble_ir_page(username_or_phone_number)
-      :staticmethod:
-
-      :async:
-
-
-      Get BleIR user/group information.
-
-      :param username_or_phone_number: The username or phone number.
-      :type username_or_phone_number: str
-
-      :returns: The BleIR user/group information.
-      :rtype: PeerData
-
-
-
    .. py:method:: get_chat_members_count(chat_id)
       :async:
 
@@ -863,7 +847,7 @@ Package Contents
 
 
 
-   .. py:method:: edit_message_reply_markup(chat_id, message_id, reply_markup = None)
+   .. py:method:: edit_message_reply_markup(chat_id, message_id, reply_markup)
       :async:
 
 

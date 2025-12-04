@@ -237,7 +237,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/message/index.html">pyrobale.objects.message</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/messageid/index.html">pyrobale.objects.messageid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/newchatmembers/index.html">pyrobale.objects.newchatmembers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/peerdata/index.html">pyrobale.objects.peerdata</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/photosize/index.html">pyrobale.objects.photosize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/precheckoutquery/index.html">pyrobale.objects.precheckoutquery</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/replykeyboardmarkup/index.html">pyrobale.objects.replykeyboardmarkup</a></li>
@@ -460,7 +459,6 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
             <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
             <span class="nb">type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;group&quot;</span>

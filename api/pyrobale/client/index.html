@@ -238,7 +238,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../objects/message/index.html">pyrobale.objects.message</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/messageid/index.html">pyrobale.objects.messageid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/newchatmembers/index.html">pyrobale.objects.newchatmembers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../objects/peerdata/index.html">pyrobale.objects.peerdata</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/photosize/index.html">pyrobale.objects.photosize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/precheckoutquery/index.html">pyrobale.objects.precheckoutquery</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/replykeyboardmarkup/index.html">pyrobale.objects.replykeyboardmarkup</a></li>
@@ -436,7 +435,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.me">
-<span class="sig-name descname"><span class="pre">me</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User"><span class="pre">pyrobale.objects.user.User</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.me"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.me" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">me</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User"><span class="pre">pyrobale.objects.user.User</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.me"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.me" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1181,33 +1180,6 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pyrobale.client.Client.get_ble_ir_page">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_ble_ir_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username_or_phone_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_ble_ir_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_ble_ir_page" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Async<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>username_or_phone_number</strong> (<em>str</em>)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData" title="pyrobale.objects.peerdata.PeerData">pyrobale.objects.peerdata.PeerData</a></p>
-</dd>
-</dl>
-<p>Get BleIR user/group information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>username_or_phone_number</strong> (<em>str</em>) – The username or phone number.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The BleIR user/group information.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../objects/peerdata/index.html#pyrobale.objects.peerdata.PeerData" title="pyrobale.objects.peerdata.PeerData">PeerData</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.get_chat_members_count">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_chat_members_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.get_chat_members_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.get_chat_members_count" title="Link to this definition">¶</a></dt>
 <dd><p>Get the number of members in a chat.</p>
@@ -1362,7 +1334,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.edit_message_reply_markup">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message_reply_markup" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_message_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.edit_message_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.edit_message_reply_markup" title="Link to this definition">¶</a></dt>
 <dd><p>Edits a message’s buttons without editing the content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1845,7 +1817,6 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.leave_chat"><code class="docutils literal notranslate"><span class="pre">Client.leave_chat()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.is_joined"><code class="docutils literal notranslate"><span class="pre">Client.is_joined()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_chat"><code class="docutils literal notranslate"><span class="pre">Client.get_chat()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.client.Client.get_ble_ir_page"><code class="docutils literal notranslate"><span class="pre">Client.get_ble_ir_page()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_chat_members_count"><code class="docutils literal notranslate"><span class="pre">Client.get_chat_members_count()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.pin_chat_message"><code class="docutils literal notranslate"><span class="pre">Client.pin_chat_message()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.unpin_chat_message"><code class="docutils literal notranslate"><span class="pre">Client.unpin_chat_message()</span></code></a></li>
