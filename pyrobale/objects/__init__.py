@@ -47,7 +47,6 @@ from .update import Update
 from .enums import UpdatesTypes, ChatAction, ChatType
 from .newchatmembers import NewChatMembers
 from .forwardorigin import ForwardOrigin
-from .jsonparser import PyroJsonBale
 
 __all__ = [
     "UpdatesTypes",
@@ -93,6 +92,5 @@ __all__ = [
     "Update",
     "InviteLink",
     "NewChatMembers",
-    "ForwardOrigin",
-    "PyroJsonBale"
+    "ForwardOrigin"
 ]
