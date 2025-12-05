@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e .
-          pip install sphinx furo sphinx-autoapi sphinx-copybutton sphinx-design sphinx-material
+          pip install sphinx furo sphinx-autoapi sphinx-copybutton sphinx-design sphinx-material jdatetime
 
       - name: Build documentation
         run: |
