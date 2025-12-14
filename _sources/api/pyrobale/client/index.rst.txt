@@ -574,6 +574,7 @@ Package Contents
       Gets a list of administrators of a specified chat.
 
       :param chat_id: Chat id of the chat to get administrators for.
+      :type chat_id: Union[int,str]
 
       :returns: A list of administrators.
 
@@ -586,7 +587,7 @@ Package Contents
       Get a chat member.
 
       :param chat_id: The chat to get.
-      :type chat_id: int
+      :type chat_id: Union[int,str]
       :param user_id: The user to get.
       :type user_id: int
 
@@ -714,7 +715,7 @@ Package Contents
       Get up to date information about the chat.
 
       :param chat_id: The chat to get.
-      :type chat_id: int
+      :type chat_id: Union[int,str]
 
       :returns: The chat.
       :rtype: Chat
@@ -728,7 +729,7 @@ Package Contents
       Get the number of members in a chat.
 
       :param chat_id: The chat to get.
-      :type chat_id: int
+      :type chat_id: Union[int,str]
 
       :returns: The number of members in a chat.
       :rtype: int
