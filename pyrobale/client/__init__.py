@@ -918,11 +918,11 @@ class Client:
             return False
 
     @smart_method
-    async def get_chat_administrators(self, chat_id: int) -> List[ChatMember]:
+    async def get_chat_administrators(self, chat_id: Union[int,str]) -> List[ChatMember]:
         """Gets a list of administrators of a specified chat.
 
         Args:
-            chat_id: Chat id of the chat to get administrators for.
+            chat_id (Union[int,str]): Chat id of the chat to get administrators for.
 
         Returns:
             A list of administrators.
@@ -940,11 +940,11 @@ class Client:
         return [ChatMember(**member) for member in res]
 
     @smart_method
-    async def get_chat_member(self, chat_id: int, user_id: int) -> ChatMember:
+    async def get_chat_member(self, chat_id: Union[int,str], user_id: int) -> ChatMember:
         """Get a chat member.
 
         Args:
-            chat_id (int): The chat to get.
+            chat_id (Union[int,str]): The chat to get.
             user_id (int): The user to get.
 
         Returns:
@@ -1101,15 +1101,18 @@ class Client:
         return data.get("result", {}).get("status") in ["member", "creator", "administrator"]
 
     @smart_method
-    async def get_chat(self, chat_id: int) -> Chat:
+    async def get_chat(self, chat_id: Union[int,str]) -> Chat:
         """Get up to date information about the chat.
 
         Args:
-            chat_id (int): The chat to get.
+            chat_id (Union[int,str]): The chat to get.
 
         Returns:
             Chat: The chat.
         """
+        if isinstance(chat_id, str) and chat_id.isdigit():
+            chat_id = int(chat_id)
+
         data = await make_post(
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
@@ -1120,11 +1123,11 @@ class Client:
         return Chat(**pythonize(data))
 
     @smart_method
-    async def get_chat_members_count(self, chat_id: int) -> int:
+    async def get_chat_members_count(self, chat_id: Union[int,str]) -> int:
         """Get the number of members in a chat.
 
         Args:
-            chat_id (int): The chat to get.
+            chat_id (Union[int,str]): The chat to get.
 
         Returns:
             int: The number of members in a chat.
@@ -1267,7 +1270,7 @@ class Client:
 
     @smart_method
     async def edit_message_reply_markup(self, chat_id: int, message_id: int,
-                                        reply_markup: Union["InlineKeyboardMarkup"]
+                                        reply_markup: "InlineKeyboardMarkup"
                                         ):
         """
         Edits a message's buttons without editing the content.
@@ -1309,8 +1312,10 @@ class Client:
         data = await make_post(
             self.requests_base + "/createChatInviteLink", data={"chat_id": chat_id}
         )
+        if data.get("result") == None:
+            raise ForbiddenException("you cannot access this chat")
         try:
-            return InviteLink(**pythonize(data.get("result")))
+            return InviteLink(**pythonize(data.get("result", {})))
         except AttributeError:
             raise ForbiddenException("you cannot access this chat")
 
@@ -1423,7 +1428,7 @@ class Client:
                 if update_raw.get("text") in self.defined_messages:
                     await self.send_message(
                         update_raw.get('chat', {}).get('id'),
-                        self.defined_messages.get(update_raw.get("text")),
+                        self.defined_messages.get(update_raw.get("text", {}), {}),
                         update_raw.get('message_id')
                     )
             except Exception as e:
@@ -1565,7 +1570,10 @@ class Client:
             if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND,
                                 UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT, UpdatesTypes.PHOTO]:
 
-                message = Message(**pythonize(event_data), **kwargs)
+                if event_data:
+                    message = Message(**pythonize(event_data), **kwargs)
+                else:
+                    return event_data
 
                 if handler_type == UpdatesTypes.MEMBER_JOINED and "new_chat_members" in event_data:
                     data = {
