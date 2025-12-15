@@ -1697,7 +1697,7 @@ class Client:
     def remove_all_handlers(self) -> None:
         """Remove all handlers from the list of handlers."""
         self.handlers = []
-
+    
     @smart_method
     async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
         """Start polling updates from the server.
@@ -1757,3 +1757,57 @@ class Client:
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
         """Process an update received via webhook."""
         await self.process_update(update_data)
+    
+    async def __aenter__(self):
+        self._is_async_context = True
+        await self._start()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self._cleanup()
+        if exc_type is not None:
+            return False
+        return True
+    
+    def __enter__(self):
+        self._is_async_context = False
+        if self._async_mode:
+            raise RuntimeError(
+                "Cannot use sync context manager in async mode. "
+                "Use 'async with' instead."
+            )
+        import asyncio
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        
+        loop.run_until_complete(self._start())
+        self._started = True
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._started:
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(self._cleanup())
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                loop.run_until_complete(self._cleanup())
+        
+        if exc_type is not None:
+            print(f"Exception in context manager: {exc_type.__name__}: {exc_val}")
+            return False
+        return True
+    
+    async def _start(self):
+        self.me = await self.get_me()
+        print(f"Bot started: @{self.me.username if self.me.username else self.me.first_name}")
+        
+    async def _cleanup(self):
+        if self.running:
+            await self.stop()
+        if hasattr(self, 'handler_executor'):
+            self.handler_executor.shutdown(wait=True)

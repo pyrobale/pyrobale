@@ -7,6 +7,7 @@ from ..objects.utils import pythonize
 if TYPE_CHECKING:
     from ..objects.user import User
     from ..objects.chat import Chat
+    from ..objects.chatmember import ChatMember
     from ..objects.animation import Animation
     from ..objects.audio import Audio
     from ..objects.document import Document
@@ -73,7 +74,7 @@ class Message:
             date: Optional[int] = None,
             chat: Optional["Chat"] = None,
             text: Optional[str] = None,
-            forward_origin: Union["ForwardOrigin",dict] = None,
+            forward_origin: Union["ForwardOrigin",dict, None] = None,
             forward_from_chat: Optional["Chat"] = None,
             forward_from_message_id: Optional[int] = None,
             forward_date: Optional[int] = None,
@@ -144,22 +145,20 @@ class Message:
             self.reply_to_message = Message(**pythonize(reply_to_message))
         else:
             self.reply_to_message = reply_to_message
-
-        self.id: int = message_id
-        self.user: "User" = (
-            User(**from_user, client=self.client) if from_user else None
-        )
-        self.date: int = date
+    
+        self.id = message_id
+        self.user: "User" = User(**from_user, client=self.client) if from_user else None
+        self.date = date
 
         if isinstance(chat, Chat):
             self.chat: Chat = chat
-        elif chat is not None:
+        elif chat != None:
             chat_data = chat.copy()
             chat_data['client'] = self.client
             self.chat: Chat = Chat(**chat_data)
         else:
-            self.chat: Chat = None
-        if forward_origin:
+            self.chat = None
+        if isinstance(forward_origin, dict):
             self.forward_origin: Optional["ForwardOrigin"] = ForwardOrigin(**forward_origin, client=self.client)
         else:
             self.forward_origin: Optional[Union["ForwardOrigin",dict]] = None
@@ -205,7 +204,7 @@ class Message:
     async def reply(
             self,
             text: str,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply to the current message with text.
 
@@ -227,10 +226,23 @@ class Message:
         raise ValueError("Cannot reply - chat ID or client is not available")
 
     @smart_method
+    async def get_chat_member(self) -> "ChatMember":
+        """
+        Gets ChatMember object of a user in chat.
+
+        Returns:
+            ChatMember: chat member object
+        """
+
+        chatmember = await self.chat.get_chat_member(self.user.id)
+        
+        return chatmember
+
+    @smart_method
     async def edit(
             self,
             text: str,
-            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None,
+            reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Edit the current message text.
 
@@ -251,7 +263,7 @@ class Message:
     @smart_method
     async def edit_reply_markup(
             self,
-            reply_markup: Union["InlineKeyboardMarkup", None] = None,
+            reply_markup: "InlineKeyboardMarkup"
     ):
         """
         Edits a message's reply markup without editing content.
@@ -299,7 +311,7 @@ class Message:
             self,
             photo: str,
             caption: Optional[str] = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with a photo to the current message.
 
@@ -327,7 +339,7 @@ class Message:
             self,
             video: str,
             caption: Optional[str] = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with a video to the current message.
 
@@ -355,7 +367,7 @@ class Message:
             self,
             audio: str,
             caption: Optional[str] = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with an audio file to the current message.
 
@@ -383,7 +395,7 @@ class Message:
             self,
             document: str,
             caption: Optional[str] = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with a document to the current message.
 
@@ -407,37 +419,12 @@ class Message:
         raise ValueError("Cannot reply with document - chat ID or client is not available")
 
     @smart_method
-    async def reply_sticker(
-            self,
-            sticker: str,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
-    ) -> 'Message':
-        """Reply with a sticker to the current message.
-
-        Args:
-            sticker: Sticker to send (file_id or URL)
-            reply_markup: Optional keyboard markup
-
-        Returns:
-            Message: The sent sticker message object
-        """
-        if self.chat and self.chat.id and self.client:
-            message = await self.client.send_sticker(
-                self.chat.id,
-                sticker=sticker,
-                reply_to_message_id=self.id,
-                reply_markup=reply_markup
-            )
-            return message
-        raise ValueError("Cannot reply with sticker - chat ID or client is not available")
-
-    @smart_method
     async def reply_location(
             self,
             latitude: float,
             longitude: float,
             horizontal_accuracy: Optional[float] = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with a location to the current message.
 
@@ -467,7 +454,7 @@ class Message:
             self,
             phone_number: str,
             first_name: str,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with a contact to the current message.
 
@@ -498,7 +485,7 @@ class Message:
             payload: str,
             provider_token: str,
             prices: list,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':
         """Reply with an invoice to the current message.
 
@@ -522,7 +509,6 @@ class Message:
                 provider_token=provider_token,
                 prices=prices,
                 reply_to_message_id=self.id,
-                reply_markup=reply_markup
             )
             return message
         raise ValueError("Cannot reply with invoice - chat ID or client is not available")
