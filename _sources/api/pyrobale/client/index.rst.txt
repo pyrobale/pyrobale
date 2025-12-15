@@ -1099,3 +1099,19 @@ Package Contents
 
 
 
+   .. py:method:: __aenter__()
+      :async:
+
+
+
+   .. py:method:: __aexit__(exc_type, exc_val, exc_tb)
+      :async:
+
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(exc_type, exc_val, exc_tb)
+
+

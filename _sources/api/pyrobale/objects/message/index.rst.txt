@@ -190,7 +190,6 @@ Module Contents
 
 
    .. py:attribute:: id
-      :type:  int
       :value: None
 
 
@@ -202,7 +201,6 @@ Module Contents
 
 
    .. py:attribute:: date
-      :type:  int
       :value: None
 
 
@@ -355,6 +353,17 @@ Module Contents
 
 
 
+   .. py:method:: get_chat_member()
+      :async:
+
+
+      Gets ChatMember object of a user in chat.
+
+      :returns: chat member object
+      :rtype: ChatMember
+
+
+
    .. py:method:: edit(text, reply_markup = None)
       :async:
 
@@ -369,7 +378,7 @@ Module Contents
 
 
 
-   .. py:method:: edit_reply_markup(reply_markup = None)
+   .. py:method:: edit_reply_markup(reply_markup)
       :async:
 
 
@@ -462,20 +471,6 @@ Module Contents
       :param reply_markup: Optional keyboard markup
 
       :returns: The sent document message object
-      :rtype: Message
-
-
-
-   .. py:method:: reply_sticker(sticker, reply_markup = None)
-      :async:
-
-
-      Reply with a sticker to the current message.
-
-      :param sticker: Sticker to send (file_id or URL)
-      :param reply_markup: Optional keyboard markup
-
-      :returns: The sent sticker message object
       :rtype: Message
 
 

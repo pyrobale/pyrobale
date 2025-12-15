@@ -387,7 +387,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><p><strong>date</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
 <li><p><strong>chat</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../chat/index.html#pyrobale.objects.chat.Chat" title="pyrobale.objects.chat.Chat"><em>pyrobale.objects.chat.Chat</em></a><em>]</em>)</p></li>
 <li><p><strong>text</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>)</p></li>
-<li><p><strong>forward_origin</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin" title="pyrobale.objects.forwardorigin.ForwardOrigin"><em>pyrobale.objects.forwardorigin.ForwardOrigin</em></a><em>, </em><em>dict</em><em>]</em>)</p></li>
+<li><p><strong>forward_origin</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin" title="pyrobale.objects.forwardorigin.ForwardOrigin"><em>pyrobale.objects.forwardorigin.ForwardOrigin</em></a><em>, </em><em>dict</em><em>, </em><em>None</em><em>]</em>)</p></li>
 <li><p><strong>forward_from_chat</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../chat/index.html#pyrobale.objects.chat.Chat" title="pyrobale.objects.chat.Chat"><em>pyrobale.objects.chat.Chat</em></a><em>]</em>)</p></li>
 <li><p><strong>forward_from_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
 <li><p><strong>forward_date</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>)</p></li>
@@ -717,7 +717,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -727,7 +727,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -857,7 +857,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – The text to send</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup for the message</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup for the message</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -870,6 +870,20 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.objects.message.Message.get_chat_member">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_chat_member</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.get_chat_member"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.get_chat_member" title="Link to this definition">¶</a></dt>
+<dd><p>Gets ChatMember object of a user in chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>chat member object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../chatmember/index.html#pyrobale.objects.chatmember.ChatMember" title="pyrobale.objects.chatmember.ChatMember">ChatMember</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.objects.message.Message.edit">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit" title="Link to this definition">¶</a></dt>
 <dd><p>Edit the current message text.</p>
@@ -877,7 +891,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – The new text</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>]</em>) – Optional new keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional new keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -891,11 +905,11 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.objects.message.Message.edit_reply_markup">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit_reply_markup" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">edit_reply_markup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.edit_reply_markup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.edit_reply_markup" title="Link to this definition">¶</a></dt>
 <dd><p>Edits a message’s reply markup without editing content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup for the message</p>
+<dd class="field-odd"><p><strong>reply_markup</strong> (<a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a>) – Optional keyboard markup for the message</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The edited message object</p>
@@ -946,7 +960,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>photo</strong> (<em>str</em>) – Photo to send (file_id or URL)</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Optional caption for the photo</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -967,7 +981,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>video</strong> (<em>str</em>) – Video to send (file_id or URL)</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Optional caption for the video</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -988,7 +1002,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>audio</strong> (<em>str</em>) – Audio to send (file_id or URL)</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Optional caption for the audio</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1009,31 +1023,11 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>document</strong> (<em>str</em>) – Document to send (file_id or URL)</p></li>
 <li><p><strong>caption</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Optional caption for the document</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The sent document message object</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyrobale.objects.message.Message.reply_sticker">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reply_sticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sticker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_markup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/message.html#Message.reply_sticker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.message.Message.reply_sticker" title="Link to this definition">¶</a></dt>
-<dd><p>Reply with a sticker to the current message.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sticker</strong> (<em>str</em>) – Sticker to send (file_id or URL)</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The sent sticker message object</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">Message</a></p>
@@ -1051,7 +1045,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><p><strong>latitude</strong> (<em>float</em>) – Latitude of the location</p></li>
 <li><p><strong>longitude</strong> (<em>float</em>) – Longitude of the location</p></li>
 <li><p><strong>horizontal_accuracy</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – The radius of uncertainty for the location</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1072,7 +1066,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>phone_number</strong> (<em>str</em>) – Contact’s phone number</p></li>
 <li><p><strong>first_name</strong> (<em>str</em>) – Contact’s first name</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1096,7 +1090,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><p><strong>payload</strong> (<em>str</em>) – Bot-defined invoice payload</p></li>
 <li><p><strong>provider_token</strong> (<em>str</em>) – Payment provider token</p></li>
 <li><p><strong>prices</strong> (<em>list</em>) – Price breakdown (amount in smallest units)</p></li>
-<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>]</em>) – Optional keyboard markup</p></li>
+<li><p><strong>reply_markup</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup" title="pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup"><em>pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup</em></a><em>, </em><a class="reference internal" href="../inlinekeyboardmarkup/index.html#pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup" title="pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup"><em>pyrobale.objects.inlinekeyboardmarkup.InlineKeyboardMarkup</em></a><em>, </em><em>None</em><em>]</em>) – Optional keyboard markup</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1233,6 +1227,7 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><a class="reference internal" href="#id24"><code class="docutils literal notranslate"><span class="pre">Message.reply_markup</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.is_admin"><code class="docutils literal notranslate"><span class="pre">Message.is_admin</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply"><code class="docutils literal notranslate"><span class="pre">Message.reply()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.message.Message.get_chat_member"><code class="docutils literal notranslate"><span class="pre">Message.get_chat_member()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.edit"><code class="docutils literal notranslate"><span class="pre">Message.edit()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.edit_reply_markup"><code class="docutils literal notranslate"><span class="pre">Message.edit_reply_markup()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.delete"><code class="docutils literal notranslate"><span class="pre">Message.delete()</span></code></a></li>
@@ -1241,7 +1236,6 @@ It also provides methods to reply, edit, delete, and forward messages.</p>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_video"><code class="docutils literal notranslate"><span class="pre">Message.reply_video()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_audio"><code class="docutils literal notranslate"><span class="pre">Message.reply_audio()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_document"><code class="docutils literal notranslate"><span class="pre">Message.reply_document()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_sticker"><code class="docutils literal notranslate"><span class="pre">Message.reply_sticker()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_location"><code class="docutils literal notranslate"><span class="pre">Message.reply_location()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_contact"><code class="docutils literal notranslate"><span class="pre">Message.reply_contact()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.message.Message.reply_invoice"><code class="docutils literal notranslate"><span class="pre">Message.reply_invoice()</span></code></a></li>

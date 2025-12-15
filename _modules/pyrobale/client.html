@@ -2276,7 +2276,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove all handlers from the list of handlers.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-
+    
     <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.start_polling">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.start_polling">[docs]</a>
@@ -2350,7 +2350,73 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_webhook_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Process an update received via webhook.&quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_update</span><span class="p">(</span><span class="n">update_data</span><span class="p">)</span></div>
-</div>
+
+    
+<div class="viewcode-block" id="Client.__aenter__">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.__aenter__">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__aenter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_async_context</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    
+<div class="viewcode-block" id="Client.__aexit__">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.__aexit__">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__aexit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exc_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Client.__enter__">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.__enter__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_async_context</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_mode</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot use sync context manager in async mode. &quot;</span>
+                <span class="s2">&quot;Use &#39;async with&#39; instead.&quot;</span>
+            <span class="p">)</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
+        
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_started</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    
+<div class="viewcode-block" id="Client.__exit__">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.__exit__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_started</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+                <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+                <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">())</span>
+        
+        <span class="k">if</span> <span class="n">exc_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception in context manager: </span><span class="si">{</span><span class="n">exc_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc_val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">me</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_me</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bot started: @</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">username</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">username</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;handler_executor&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handler_executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 </pre></div>
         </article>
