@@ -111,7 +111,6 @@ jobs:
           payload = {
               "chat_id": chat_id,
               "text": message,
-              "parse_mode": "Markdown"
           }
           
           response = requests.post(url, json=payload)

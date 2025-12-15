@@ -18,7 +18,6 @@ dependencies = ["aiohttp", "beautifulsoup4"]
 [project.urls]
 github = "https://github.com/pyrobale/pyrobale"
 website = "https://pyrobale.ir"
-forum = "https://forum.pyrobale.ir"
 documentation = "https://docs.pyrobale.ir"
 
 [build-system]
