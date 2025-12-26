@@ -866,6 +866,22 @@ Package Contents
 
 
 
+   .. py:method:: ask_review(user_id, delay_seconds)
+      :async:
+
+
+      Ask the user to give points to bot using Bale
+
+      :param user_id: The user to ask
+      :type user_id: int
+      :param delay_seconds: Delay before asking
+      :type delay_seconds: int
+
+      :returns: True in success
+      :rtype: bool
+
+
+
    .. py:method:: create_chat_invite_link(chat_id)
       :async:
 

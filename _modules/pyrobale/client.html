@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
         <link rel="prefetch" href="../../_static/pyrobale.png" as="image">
 
-    <link rel="shortcut icon" href="../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <link rel="shortcut icon" href="../../_static/pyrobale.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
         <title>pyrobale.client - Pyrobale Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -1819,6 +1819,26 @@
             <span class="k">return</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">result</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+        
+    <span class="nd">@smart_method</span>
+<div class="viewcode-block" id="Client.ask_review">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.ask_review">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">ask_review</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">delay_seconds</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ask the user to give points to bot using Bale</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id (int): The user to ask</span>
+<span class="sd">            delay_seconds (int): Delay before asking</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True in success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/askReview&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">&quot;delay_seconds&quot;</span><span class="p">:</span> <span class="n">delay_seconds</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span></div>
 
 
     <span class="nd">@smart_method</span>
