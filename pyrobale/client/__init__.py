@@ -1298,6 +1298,23 @@ class Client:
             return Message(**result, client=self)
         except KeyError as e:
             raise KeyError(e)
+        
+    @smart_method
+    async def ask_review(self, user_id: int, delay_seconds: int) -> bool:
+        """Ask the user to give points to bot using Bale
+
+        Args:
+            user_id (int): The user to ask
+            delay_seconds (int): Delay before asking
+        
+        Returns:
+            bool: True in success
+        """
+
+        data = await make_post(
+            self.requests_base + "/askReview", data={"user_id": user_id, "delay_seconds": delay_seconds}
+        )
+        return pythonize(data["result"])
 
     @smart_method
     async def create_chat_invite_link(self, chat_id: int) -> InviteLink:
