@@ -196,8 +196,6 @@ Module Contents
 
    .. py:attribute:: user
       :type:  pyrobale.objects.user.User
-      :value: None
-
 
 
    .. py:attribute:: date

@@ -41,8 +41,6 @@ Module Contents
 
 
    .. py:attribute:: data
-      :value: None
-
 
 
    .. py:attribute:: bot

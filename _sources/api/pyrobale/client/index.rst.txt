@@ -882,6 +882,24 @@ Package Contents
 
 
 
+   .. py:method:: answer_pre_checkout_query(PreCheckoutQuery, ok, error_message = None)
+      :async:
+
+
+      Answers to a 'PreCheckoutQuery' update
+
+      :param PreCheckoutQuery: The object of the update you want to answer to
+      :type PreCheckoutQuery: PreCheckoutQuery
+      :param ok: True for allowing the payment and False for showing the error message
+      :type ok: bool
+      :param error_message: Optional: An string to show the user if the `ok` argument is False
+      :type error_message: str
+
+      :returns: True in success
+      :rtype: bool
+
+
+
    .. py:method:: create_chat_invite_link(chat_id)
       :async:
 
