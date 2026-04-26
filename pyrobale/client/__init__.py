@@ -1315,6 +1315,24 @@ class Client:
             self.requests_base + "/askReview", data={"user_id": user_id, "delay_seconds": delay_seconds}
         )
         return pythonize(data["result"])
+    
+    @smart_method
+    async def answer_pre_checkout_query(self, PreCheckoutQuery: PreCheckoutQuery, ok: bool, error_message: Optional[str] = None) -> bool:
+        """Answers to a 'PreCheckoutQuery' update
+
+        Args:
+            PreCheckoutQuery (PreCheckoutQuery): The object of the update you want to answer to
+            ok (bool): True for allowing the payment and False for showing the error message
+            error_message (str): Optional: An string to show the user if the `ok` argument is False
+
+        Returns:
+            bool: True in success
+        """
+
+        data = await make_post(
+            self.requests_base + "/answerPreCheckoutQuery", data={"pre_checkout_query_id": PreCheckoutQuery.id, "ok": ok, "error_message": error_message}
+        )
+        return data['result']
 
     @smart_method
     async def create_chat_invite_link(self, chat_id: int) -> InviteLink:
