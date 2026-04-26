@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Transaction(id, status, userID, amount, createdAt)
+.. py:class:: Transaction(id, status, userID, amount, provider_payment_charge_id, createdAt)
 
    .. py:attribute:: id
 
@@ -27,6 +27,9 @@ Module Contents
 
 
    .. py:attribute:: amount
+
+
+   .. py:attribute:: provider_payment_charge_id
 
 
    .. py:attribute:: createdAt
