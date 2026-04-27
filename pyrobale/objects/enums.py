@@ -59,8 +59,15 @@ class ButtonTypes(Enum):
     COPY_TEXT_BUTTON = "copy_text_button"
 
 class KeyboardTypes(Enum):
-    """Types of an kyeboard button"""
+    """Types of an keyboard button"""
     TEXT = "text"
     REQUEST_CONTACT = "request_contact"
     REQUEST_LOCATION = "request_location"
     WEB_APP = "web_app"
+
+class TransactionStatus(Enum):
+    """Types of transaction status"""
+    PENDING = "pending"
+    PAID = "paid"
+    FAILED = "failed"
+    REJECTED = "rejected"
