@@ -15,6 +15,7 @@ Classes
    pyrobale.objects.enums.ChatType
    pyrobale.objects.enums.ButtonTypes
    pyrobale.objects.enums.KeyboardTypes
+   pyrobale.objects.enums.TransactionStatus
 
 
 Module Contents
@@ -245,7 +246,7 @@ Module Contents
    Bases: :py:obj:`enum.Enum`
 
 
-   Types of an kyeboard button
+   Types of an keyboard button
 
 
    .. py:attribute:: TEXT
@@ -265,6 +266,34 @@ Module Contents
 
    .. py:attribute:: WEB_APP
       :value: 'web_app'
+
+
+
+.. py:class:: TransactionStatus(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of transaction status
+
+
+   .. py:attribute:: PENDING
+      :value: 'pending'
+
+
+
+   .. py:attribute:: PAID
+      :value: 'paid'
+
+
+
+   .. py:attribute:: FAILED
+      :value: 'failed'
+
+
+
+   .. py:attribute:: REJECTED
+      :value: 'rejected'
 
 
 

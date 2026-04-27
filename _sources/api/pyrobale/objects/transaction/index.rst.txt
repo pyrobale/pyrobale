@@ -20,9 +20,6 @@ Module Contents
    .. py:attribute:: id
 
 
-   .. py:attribute:: status
-
-
    .. py:attribute:: userID
 
 

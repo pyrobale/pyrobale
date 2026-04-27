@@ -347,12 +347,16 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.transaction</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransactionStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyroBaleException</span>
+
 <div class="viewcode-block" id="Transaction">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction">[docs]</a>
-<span></span><span class="k">class</span><span class="w"> </span><span class="nc">Transaction</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Transaction</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TransactionStatus</span><span class="p">],</span>
     <span class="n">userID</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">provider_payment_charge_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -361,9 +365,14 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.id">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span></div>
 
-<div class="viewcode-block" id="Transaction.status">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.status">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span></div>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">TransactionStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
 
 <div class="viewcode-block" id="Transaction.userID">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.userID">[docs]</a>
