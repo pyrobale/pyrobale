@@ -1329,6 +1329,9 @@ class Client:
             bool: True in success
         """
 
+        if ok and error_message:
+            raise PyroBaleException("Can't give error_message when payment is allowed (ok=True)")
+
         data = await make_post(
             self.requests_base + "/answerPreCheckoutQuery", data={"pre_checkout_query_id": PreCheckoutQuery.id, "ok": ok, "error_message": error_message}
         )
@@ -1628,7 +1631,7 @@ class Client:
                 return CallbackQuery(**pythonize(event_data), client=self)
 
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
-                return PreCheckoutQuery(**pythonize(event_data), **kwargs)
+                return PreCheckoutQuery(**pythonize(event_data), client=self)
 
             else:
                 return event_data
