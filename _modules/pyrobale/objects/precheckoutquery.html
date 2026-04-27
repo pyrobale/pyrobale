@@ -348,9 +348,10 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.precheckoutquery</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">smart_method</span>
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
 
 
 <div class="viewcode-block" id="PreCheckoutQuery">
@@ -384,6 +385,27 @@
 <div class="viewcode-block" id="PreCheckoutQuery.invoice_payload">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.invoice_payload">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">invoice_payload</span> <span class="o">=</span> <span class="n">invoice_payload</span></div>
+
+<div class="viewcode-block" id="PreCheckoutQuery.client">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.client">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="nd">@smart_method</span>
+<div class="viewcode-block" id="PreCheckoutQuery.answer">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery.answer">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">answer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ok</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">error_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Answers to a &#39;PreCheckoutQuery&#39; update</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ok (bool): True for allowing the payment and False for showing the error message</span>
+<span class="sd">            error_message (str): Optional: An string to show the user if the `ok` argument is False</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True in success</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">answer_pre_checkout_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ok</span><span class="p">,</span> <span class="n">error_message</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

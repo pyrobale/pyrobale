@@ -32,3 +32,23 @@ Module Contents
    .. py:attribute:: invoice_payload
 
 
+   .. py:attribute:: client
+      :type:  pyrobale.client.Client
+
+
+   .. py:method:: answer(ok, error_message = None)
+      :async:
+
+
+      Answers to a 'PreCheckoutQuery' update
+
+      :param ok: True for allowing the payment and False for showing the error message
+      :type ok: bool
+      :param error_message: Optional: An string to show the user if the `ok` argument is False
+      :type error_message: str
+
+      :returns: True in success
+      :rtype: bool
+
+
+
