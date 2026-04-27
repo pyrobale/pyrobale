@@ -1314,7 +1314,7 @@ class Client:
         data = await make_post(
             self.requests_base + "/askReview", data={"user_id": user_id, "delay_seconds": delay_seconds}
         )
-        return pythonize(data["result"])
+        return data["result"]
     
     @smart_method
     async def answer_pre_checkout_query(self, PreCheckoutQuery: PreCheckoutQuery, ok: bool, error_message: Optional[str] = None) -> bool:
