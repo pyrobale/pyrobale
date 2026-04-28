@@ -15,7 +15,7 @@ async def digit_message(message: pyrobale.Message):
     await message.reply("Its digit!")
 
 # only if message was in private chat and text was "hi"
-@bot.on_message(pv, equal("hi"))
+@bot.on_message(pv, equals("hi"))
 async def pv_equals_message(message: pyrobale.Message):
     await message.reply("Hello in private!")
 
