@@ -44,6 +44,7 @@ Module Contents
 
 
    .. py:attribute:: bot
+      :type:  pyrobale.client.Client
 
 
    .. py:method:: answer(text = None, show_alert = False)
@@ -52,5 +53,16 @@ Module Contents
 
       Sends a response to the callback query.
 
+
+
+   .. py:method:: reply(text, reply_to_message_id = None, reply_markup = None)
+      :async:
+
+
+      Sends a message to the author of callback query
+
+
+
+   .. py:property:: is_answerable
 
 
