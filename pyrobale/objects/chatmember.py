@@ -134,8 +134,9 @@ class ChatMember:
         data = await self.chat.ban(self.user.id)
         data = await self.chat.unban(self.user.id)
         return data
-
-    async def is_admin(self) -> bool:
+    
+    @property
+    def is_admin(self) -> bool:
         """Checks if the user is an administrator.
 
         :return: True if the user is an administrator.
@@ -144,6 +145,14 @@ class ChatMember:
             return True
         else:
             return False
+        
+    @property
+    def is_restricted(self) -> bool:
+        """Checks if the chat member is restricted.
+        
+        :return: True if user is restricted.
+        """
+        return self.status == "restricted"
 
     async def unban(self) -> bool:
         """Unbans the chat member from the chat.
