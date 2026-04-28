@@ -179,7 +179,7 @@ jobs:
           
           یا برای آخرین نسخه:
           ```bash
-          pip install {package_name}
+          pip install {package_name} -U
           ```
           
           *لینک‌های مرتبط:*
@@ -198,8 +198,7 @@ jobs:
           url = f"https://tapi.bale.ai/bot{bot_token}/sendMessage"
           payload = {
               "chat_id": chat_id,
-              "text": message,
-              "parse_mode": "Markdown"
+              "text": message
           }
           
           response = requests.post(url, json=payload)
