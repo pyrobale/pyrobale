@@ -156,6 +156,8 @@ jobs:
       - name: Send Bale notification for new release
         if: steps.check_tag.outputs.tag_exists == 'false'
         run: |
+          pip install requests
+
           python3 << 'EOF'
           import requests
           import os
