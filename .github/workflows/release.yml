@@ -27,10 +27,8 @@ jobs:
       - name: Extract version and package info
         id: get_info
         run: |
-          # Install tomli for Python < 3.11
-          pip install tomli 2>/dev/null || pip install tomli
+          pip install tomli
           
-          # Extract version from pyproject.toml
           VERSION=$(python -c "
           try:
               import tomli
@@ -38,14 +36,12 @@ jobs:
                   data = tomli.load(f)
               print(data['project']['version'])
           except:
-              # Fallback to tomllib for Python 3.11+
               import tomllib
               with open('pyproject.toml', 'rb') as f:
                   data = tomllib.load(f)
               print(data['project']['version'])
           ")
           
-          # Extract package name
           PACKAGE_NAME=$(python -c "
           try:
               import tomli
@@ -59,73 +55,54 @@ jobs:
               print(data['project']['name'])
           ")
           
-          # Extract description
           DESCRIPTION=$(python -c "
           try:
               import tomli
               with open('pyproject.toml', 'rb') as f:
                   data = tomli.load(f)
-              desc = data['project'].get('description', '')
-              print(desc.replace('\"', '\"\"'))
+              print(data['project'].get('description', ''))
           except:
               import tomllib
               with open('pyproject.toml', 'rb') as f:
                   data = tomllib.load(f)
-              desc = data['project'].get('description', '')
-              print(desc.replace('\"', '\"\"'))
+              print(data['project'].get('description', ''))
           ")
           
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
           echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
-          echo "Extracted: Version=$VERSION, Package=$PACKAGE_NAME"
 
       - name: Check if tag already exists
         id: check_tag
         run: |
           VERSION="${{ steps.get_info.outputs.version }}"
           
-          # Check if tag exists locally first
           if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-            echo "Tag v$VERSION already exists locally"
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+          elif git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q "v$VERSION"; then
             echo "tag_exists=true" >> $GITHUB_OUTPUT
           else
-            # Check if tag exists on remote
-            if git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q "v$VERSION"; then
-              echo "Tag v$VERSION exists on remote"
-              echo "tag_exists=true" >> $GITHUB_OUTPUT
-            else
-              echo "Tag v$VERSION does not exist"
-              echo "tag_exists=false" >> $GITHUB_OUTPUT
-            fi
+            echo "tag_exists=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Get changelog from git commits
         if: steps.check_tag.outputs.tag_exists == 'false'
         id: changelog
         run: |
-          # Get all commits since last tag
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           
           if [ -z "$LAST_TAG" ]; then
-            # No previous tag, get all commits
             COMMITS=$(git log --oneline --format="- %s" --reverse)
           else
-            # Get commits since last tag
             COMMITS=$(git log --oneline --format="- %s" --reverse "${LAST_TAG}..HEAD")
           fi
           
-          # Limit to 50 commits max
           COMMITS=$(echo "$COMMITS" | tail -50)
           
-          # Escape for JSON
-          COMMITS_JSON=$(echo "$COMMITS" | python3 -c "
-import sys, json
-lines = [line.rstrip() for line in sys.stdin if line.strip()]
-print(json.dumps(lines))
-")
-          
-          echo "changelog=$COMMITS_JSON" >> $GITHUB_OUTPUT
+          # استفاده از heredoc برای ذخیره متن چندخطی
+          echo 'changelog<<EOF' >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Create Git tag
         if: steps.check_tag.outputs.tag_exists == 'false'
@@ -135,7 +112,6 @@ print(json.dumps(lines))
           git config user.email "actions@github.com"
           git tag -a "v$VERSION" -m "Release version $VERSION"
           git push origin "v$VERSION"
-          echo "✅ Created tag v$VERSION"
 
       - name: Create GitHub Release
         if: steps.check_tag.outputs.tag_exists == 'false'
@@ -155,7 +131,7 @@ print(json.dumps(lines))
             
             ### 📝 تغییرات (Changelog)
             
-            ${{ fromJSON(steps.changelog.outputs.changelog) && join(fromJSON(steps.changelog.outputs.changelog), '\n') || 'No commits found' }}
+            ${{ steps.changelog.outputs.changelog }}
             
             ### 📄 نصب (Installation)
             ```bash
@@ -187,11 +163,11 @@ print(json.dumps(lines))
           version = "${{ steps.get_info.outputs.version }}"
           package_name = "${{ steps.get_info.outputs.package_name }}"
           release_url = "https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_info.outputs.version }}"
-          pypi_url = "https://pypi.org/project/${{ steps.get_info.outputs.package_name }}/${{ steps.get_info.outputs.version }}/"
+          pypi_url = f"https://pypi.org/project/{package_name}/{version}/"
           
           message = f"""🎊 *انتشار جدید!*
 
-          *${{ steps.get_info.outputs.package_name }} v${{ steps.get_info.outputs.version }}* منتشر شد!
+          *{package_name} v{version}* منتشر شد!
           
           📦 *نام پکیج:* `{package_name}`
           🏷️ *نسخه:* `{version}`
@@ -231,6 +207,7 @@ print(json.dumps(lines))
               print("✅ پیام انتشار با موفقیت ارسال شد")
           else:
               print(f"❌ خطا در ارسال پیام انتشار: {response.status_code}")
+              print(response.text)
           EOF
         env:
           BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
