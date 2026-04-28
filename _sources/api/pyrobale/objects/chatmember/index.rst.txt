@@ -182,14 +182,22 @@ Module Contents
 
 
 
-   .. py:method:: is_admin()
-      :async:
+   .. py:property:: is_admin
+      :type: bool
 
 
       Checks if the user is an administrator.
 
       :return: True if the user is an administrator.
 
+
+   .. py:property:: is_restricted
+      :type: bool
+
+
+      Checks if the chat member is restricted.
+
+      :return: True if user is restricted.
 
 
    .. py:method:: unban()
