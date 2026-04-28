@@ -53,4 +53,4 @@ class CallbackQuery:
     
     @property
     def is_answerable(self):
-        return self.data.startswith("1")
+        return not self.data.startswith("1")
