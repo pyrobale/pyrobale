@@ -45,5 +45,6 @@ Module Contents
 
 .. py:function:: async_to_sync(func)
 
-.. py:function:: smart_method(func)
+.. py:function:: smart_method(func: Callable[Ellipsis, Awaitable[Any]]) -> Callable[Ellipsis, Awaitable[Any]]
+                 smart_method(func: Callable[Ellipsis, Any]) -> Callable[Ellipsis, Any]
 

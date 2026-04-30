@@ -9,13 +9,6 @@ Attributes
 
 .. autoapisummary::
 
-   pyrobale.filters.TEXT
-   pyrobale.filters.PHOTO
-   pyrobale.filters.VIDEO
-   pyrobale.filters.AUDIO
-   pyrobale.filters.VOICE
-   pyrobale.filters.CONTACT
-   pyrobale.filters.LOCATION
    pyrobale.filters.channel
    pyrobale.filters.group
    pyrobale.filters.digit
@@ -30,6 +23,7 @@ Functions
    pyrobale.filters.startswith
    pyrobale.filters.regex
    pyrobale.filters.from_users
+   pyrobale.filters.is_joined
 
 
 Package Contents
@@ -79,32 +73,15 @@ Package Contents
    :rtype: Callable
 
 
-.. py:data:: TEXT
-   :value: 'text'
+.. py:function:: is_joined(chat_ids)
 
+   Check if the event text or caption or callbackQuery sender is in allowed user.
 
-.. py:data:: PHOTO
-   :value: 'photo'
+   :param allowed_users: Allowed users to use this handler.
+   :type allowed_users: List[Union["User", int]]
 
-
-.. py:data:: VIDEO
-   :value: 'video'
-
-
-.. py:data:: AUDIO
-   :value: 'audio'
-
-
-.. py:data:: VOICE
-   :value: 'voice'
-
-
-.. py:data:: CONTACT
-   :value: 'contact'
-
-
-.. py:data:: LOCATION
-   :value: 'location'
+   :returns: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
+   :rtype: Callable
 
 
 .. py:data:: channel

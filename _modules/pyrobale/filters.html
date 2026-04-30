@@ -353,6 +353,7 @@
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
 
 <div class="viewcode-block" id="equals">
 <a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.equals">[docs]</a>
@@ -366,7 +367,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_text</span>
         <span class="k">except</span><span class="p">:</span>
@@ -386,7 +387,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">expected_text</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
@@ -407,7 +408,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Callable: A function that checks if the event text or caption is match with given pattern</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
         <span class="k">except</span><span class="p">:</span>
@@ -417,7 +418,7 @@
 
 <div class="viewcode-block" id="from_users">
 <a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.from_users">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">from_users</span><span class="p">(</span><span class="n">allowed_users</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_users</span><span class="p">(</span><span class="n">allowed_users</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the event text or caption or callbackQuery sender is in allowed user.</span>
 <span class="sd">    </span>
@@ -427,16 +428,53 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">allowed_users</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">euser</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">eid</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">euser</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">eid</span> <span class="ow">in</span> <span class="n">allowed_users</span><span class="p">:</span>
+            <span class="n">allowed_users</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">allowed_users</span><span class="p">)]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chat IDs can only be digits&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">event_user</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">event_user_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event_user</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">event_user_id</span> <span class="ow">in</span> <span class="n">allowed_users</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="n">check</span></div>
 
+
+<div class="viewcode-block" id="is_joined">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.is_joined">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_joined</span><span class="p">(</span><span class="n">chat_ids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the event text or caption or callbackQuery sender is in allowed user.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        allowed_users (List[Union[&quot;User&quot;, int]]): Allowed users to use this handler.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">chat_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chat_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">chat_ids</span><span class="p">)]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Chat IDs can only be digits&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="s1">&#39;Client&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">event_user</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">event_user_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event_user</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">chat</span> <span class="ow">in</span> <span class="n">chat_ids</span><span class="p">:</span>
+                <span class="n">joined</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">is_joined</span><span class="p">(</span><span class="n">event_user_id</span><span class="p">,</span> <span class="n">chat</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">joined</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+            
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">check</span></div>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_private</span><span class="p">():</span>
@@ -444,7 +482,7 @@
 <span class="sd">    checks if the event is happening in a private chat</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;private&quot;</span><span class="p">)</span>
@@ -457,7 +495,7 @@
 <span class="sd">    checks if the event is happening in a group chat</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
             <span class="nb">type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">)</span>
@@ -473,7 +511,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Callable: A function that checks if the event text or caption or callbackQuery data is digit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;caption&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
@@ -485,7 +523,7 @@
 <span class="sd">    checks if the event is happening in a channel</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">chat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;chat&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="s2">&quot;channel&quot;</span><span class="p">)</span>
@@ -493,34 +531,13 @@
             <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="n">check</span>
 
-<div class="viewcode-block" id="TEXT">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.TEXT">[docs]</a>
-<span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span></div>
-
-<div class="viewcode-block" id="PHOTO">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.PHOTO">[docs]</a>
-<span class="n">PHOTO</span> <span class="o">=</span> <span class="s2">&quot;photo&quot;</span></div>
-
-<div class="viewcode-block" id="VIDEO">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.VIDEO">[docs]</a>
-<span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;video&quot;</span></div>
-
-<div class="viewcode-block" id="AUDIO">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.AUDIO">[docs]</a>
-<span class="n">AUDIO</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span></div>
-
-<div class="viewcode-block" id="VOICE">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.VOICE">[docs]</a>
-<span class="n">VOICE</span> <span class="o">=</span> <span class="s2">&quot;voice&quot;</span></div>
-
-<div class="viewcode-block" id="CONTACT">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.CONTACT">[docs]</a>
-<span class="n">CONTACT</span> <span class="o">=</span> <span class="s2">&quot;contact&quot;</span></div>
-
-<div class="viewcode-block" id="LOCATION">
-<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.LOCATION">[docs]</a>
-<span class="n">LOCATION</span> <span class="o">=</span> <span class="s2">&quot;location&quot;</span></div>
-
+<span class="n">text</span> <span class="o">=</span> <span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span>
+<span class="n">photo</span> <span class="o">=</span> <span class="n">PHOTO</span> <span class="o">=</span> <span class="s2">&quot;photo&quot;</span>
+<span class="n">video</span> <span class="o">=</span> <span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;video&quot;</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">AUDIO</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span>
+<span class="n">voice</span> <span class="o">=</span> <span class="n">VOICE</span> <span class="o">=</span> <span class="s2">&quot;voice&quot;</span>
+<span class="n">contact</span> <span class="o">=</span> <span class="n">CONTACT</span> <span class="o">=</span> <span class="s2">&quot;contact&quot;</span>
+<span class="n">location</span> <span class="o">=</span> <span class="n">LOCATION</span> <span class="o">=</span> <span class="s2">&quot;location&quot;</span>
 
 <span class="n">private</span> <span class="o">=</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">_private</span><span class="p">()</span>
 <div class="viewcode-block" id="channel">
@@ -556,7 +573,7 @@
           </div>
           <div class="right-details">
             <div class="icons">
-              <a class="muted-link " href="https://github.com/yourusername/pyrobale" aria-label="GitHub">
+              <a class="muted-link " href="https://github.com/pyrobale/pyrobale" aria-label="GitHub">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
                 </svg>
