@@ -4,7 +4,7 @@ import asyncio
 import inspect
 from functools import wraps
 import functools
-from typing import Any, Callable, Union
+from typing import Any, Callable, Union, TypeVar, Awaitable, overload
 import aiohttp
 
 
@@ -72,6 +72,7 @@ def pythonize(dictionary: dict) -> dict:
         result[key] = value
     return result
 
+# F = TypeVar('F', bound=Callable[..., Any])
 
 def sync_to_async(func: Callable) -> Callable:
     if inspect.iscoroutinefunction(func):
@@ -87,43 +88,35 @@ def sync_to_async(func: Callable) -> Callable:
     return wrapper
 
 
-def async_to_sync(func: Callable) -> Callable:
-    if not inspect.iscoroutinefunction(func):
-        return func
-
+def async_to_sync(func: Callable[..., Awaitable[Any]]) -> Callable[..., Any]:
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         try:
             loop = asyncio.get_event_loop()
             if loop.is_running():
-                raise RuntimeError(
-                    "Cannot call async function from running event loop. "
-                    "Use await directly."
-                )
+                raise RuntimeError("Cannot call async function from running event loop.")
         except RuntimeError:
             pass
-
         return asyncio.run(func(*args, **kwargs))
-
     return wrapper
 
+@overload
+def smart_method(func: Callable[..., Awaitable[Any]]) -> Callable[..., Awaitable[Any]]: ...
+@overload
+def smart_method(func: Callable[..., Any]) -> Callable[..., Any]: ...
 
-def smart_method(func):
-
+def smart_method(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         if inspect.iscoroutinefunction(func):
             try:
                 loop = asyncio.get_event_loop()
                 if loop.is_running():
-                    return func(self, *args, **kwargs)
+                    return func(*args, **kwargs)
                 else:
-                    result = async_to_sync(func)(self, *args, **kwargs)
-                    return result
+                    return async_to_sync(func)(*args, **kwargs)
             except RuntimeError:
-                result = async_to_sync(func)(self, *args, **kwargs)
-                return result
+                return async_to_sync(func)(*args, **kwargs)
         else:
-            return func(self, *args, **kwargs)
-
+            return func(*args, **kwargs)
     return wrapper

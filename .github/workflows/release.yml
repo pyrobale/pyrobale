@@ -141,7 +141,6 @@ jobs:
             ### 🔗 لینک‌ها
             - [مستندات](https://docs.pyrobale.ir)
             - [وبسایت](https://pyrobale.ir)
-            - [انجمن](https://forum.pyrobale.ir)
             - [مخزن GitHub](https://github.com/pyrobale/pyrobale)
             
             ---
@@ -189,7 +188,6 @@ jobs:
           [📦 مشاهده در PyPI]({pypi_url})
           [📚 مستندات](https://docs.pyrobale.ir)
           
-          ---
           این انتشار به صورت خودکار توسط GitHub Actions ایجاد شده است.
           
           🆔 @pyrobale"""

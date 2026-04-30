@@ -4,6 +4,7 @@ from typing import List, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ..objects.user import User
+    from ..client import Client
 
 def equals(expected_text: str):
     """
@@ -15,7 +16,7 @@ def equals(expected_text: str):
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
     """
-    def check(event):
+    def check(event, *args):
         try:
             return getattr(event, "text", None) == expected_text or getattr(event, "caption", None) == expected_text or getattr(event, "data", None) == expected_text
         except:
@@ -32,7 +33,7 @@ def startswith(expected_text: str):
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.
     """
-    def check(event):
+    def check(event, *args):
         try:
             return getattr(event, "text", "").startswith(expected_text) or getattr(event, "caption", "").startswith(expected_text) or getattr(event, "data", "").startswith(expected_text)
         except:
@@ -50,14 +51,14 @@ def regex(pattern: str):
     Returns:
         Callable: A function that checks if the event text or caption is match with given pattern
     """
-    def check(event):
+    def check(event, *args):
         try:
             return re.search(pattern, getattr(event, "text", "")) or re.search(pattern, getattr(event, "caption", ""))
         except:
             return False
     return check
 
-def from_users(allowed_users: List[Union["User", int]]):
+def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
     """
     Check if the event text or caption or callbackQuery sender is in allowed user.
     
@@ -67,23 +68,57 @@ def from_users(allowed_users: List[Union["User", int]]):
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
     """
-    def check(event):
+    if type(allowed_users) in [str, int]:
         try:
-            euser = getattr(event, "user", None)
-            eid = getattr(euser, "id")
-            if eid in allowed_users:
+            allowed_users = [int(allowed_users)]
+        except:
+            raise ValueError("Chat IDs can only be digits")
+    def check(event, *args):
+        try:
+            event_user = getattr(event, "user", None)
+            event_user_id = getattr(event_user, "id")
+            if event_user_id in allowed_users:
                 return True
         except:
             return False
     return check
 
+def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
+    """
+    Check if the event text or caption or callbackQuery sender is in allowed user.
+    
+    Args:
+        allowed_users (List[Union["User", int]]): Allowed users to use this handler.
+
+    Returns:
+        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
+    """
+    if type(chat_ids) in [str, int]:
+        try:
+            chat_ids = [int(chat_ids)]
+        except:
+            raise ValueError("Chat IDs can only be digits")
+
+    def check(event, client: 'Client', *args):
+        try:
+            event_user = getattr(event, "user", None)
+            event_user_id = getattr(event_user, "id")
+            for chat in chat_ids:
+                joined = client.is_joined(event_user_id, chat)
+                if not joined:
+                    return False
+            return True
+            
+        except:
+            return False
+    return check
 
 def _private():
     """
     checks if the event is happening in a private chat
     """
 
-    def check(event):
+    def check(event, *args):
         try:
             chat = getattr(event, "chat")
             return getattr(chat, "private")
@@ -96,7 +131,7 @@ def _group():
     checks if the event is happening in a group chat
     """
 
-    def check(event):
+    def check(event, *args):
         try:
             chat = getattr(event, "chat")
             type = getattr(chat, "type")
@@ -112,7 +147,7 @@ def _digit():
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is digit.
     """
-    def check(event):
+    def check(event, *args):
         try:
             return getattr(event, "text", "").isdigit() or getattr(event, "caption", "").isdigit() or getattr(event, "data", "").isdigit()
         except:
@@ -124,7 +159,7 @@ def _channel():
     checks if the event is happening in a channel
     """
 
-    def check(event):
+    def check(event, args):
         try:
             chat = getattr(event, "chat")
             return getattr(chat, "channel")
@@ -132,13 +167,13 @@ def _channel():
             return False
     return check
 
-TEXT = "text"
-PHOTO = "photo"
-VIDEO = "video"
-AUDIO = "audio"
-VOICE = "voice"
-CONTACT = "contact"
-LOCATION = "location"
+text = TEXT = "text"
+photo = PHOTO = "photo"
+video = VIDEO = "video"
+audio = AUDIO = "audio"
+voice = VOICE = "voice"
+contact = CONTACT = "contact"
+location = LOCATION = "location"
 
 private = pv = _private()
 channel = _channel()

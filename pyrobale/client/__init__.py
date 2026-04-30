@@ -1576,7 +1576,7 @@ class Client:
                     for flitr in flt:
                         if callable(flitr):
                             try:
-                                ans = flitr(event)
+                                ans = flitr(event, self)
                                 if not ans:
                                     skip = True
                             except Exception as e:
