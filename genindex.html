@@ -216,6 +216,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/audio/index.html">pyrobale.objects.audio</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/callbackquery/index.html">pyrobale.objects.callbackquery</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chat/index.html">pyrobale.objects.chat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chatfullinfo/index.html">pyrobale.objects.chatfullinfo</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chatmember/index.html">pyrobale.objects.chatmember</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/chatphoto/index.html">pyrobale.objects.chatphoto</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/pyrobale/objects/contact/index.html">pyrobale.objects.contact</a></li>
@@ -431,6 +432,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.ban">ban() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.ban">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.ban">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -445,6 +448,8 @@
         <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.big_file_id">big_file_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.big_file_unique_id">big_file_unique_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id6">bio (pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.bio">[1]</a>
 </li>
         <li><a href="api/pyrobale/objects/callbackquery/index.html#pyrobale.objects.callbackquery.CallbackQuery.bot">bot (pyrobale.objects.callbackquery.CallbackQuery attribute)</a>
 </li>
@@ -549,11 +554,11 @@
 </li>
         </ul></li>
         <li><a href="api/pyrobale/filters/index.html#pyrobale.filters.channel">channel (in module pyrobale.filters)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.channel">(pyrobale.objects.chat.Chat property)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id4">CHANNEL (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.CHANNEL">[1]</a>
-</li>
-        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.channel">channel (pyrobale.objects.chat.Chat property)</a>
-</li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.CHANNEL">CHANNEL (pyrobale.objects.enums.ChatType attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat">Chat (class in pyrobale.objects.chat)</a>
@@ -570,6 +575,8 @@
         </ul></li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction">ChatAction (class in pyrobale.objects.enums)</a>
 </li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo">ChatFullInfo (class in pyrobale.objects.chatfullinfo)</a>
+</li>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember">ChatMember (class in pyrobale.objects.chatmember)</a>
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatPermissions">ChatPermissions (class in pyrobale.objects.enums)</a>
@@ -582,9 +589,11 @@
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client">Client (class in pyrobale.client)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id8">client (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.client">[1]</a>
+        <li><a href="api/pyrobale/objects/chat/index.html#id5">client (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.client">[1]</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id10">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.client">[1]</a>
+</li>
           <li><a href="api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.client">(pyrobale.objects.forwardorigin.ForwardOrigin attribute)</a>
 </li>
           <li><a href="api/pyrobale/objects/message/index.html#id0">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.client">[1]</a>
@@ -667,11 +676,17 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.delete_message">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.delete_message">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.description">description (pyrobale.objects.invoice.Invoice attribute)</a>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id7">description (pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.description">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/invoice/index.html#pyrobale.objects.invoice.Invoice.description">(pyrobale.objects.invoice.Invoice attribute)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/filters/index.html#pyrobale.filters.digit">digit (in module pyrobale.filters)</a>
 </li>
         <li><a href="api/pyrobale/objects/document/index.html#pyrobale.objects.document.Document">Document (class in pyrobale.objects.document)</a>
@@ -709,11 +724,15 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.edit_message">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.edit_message">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.edit_message_reply_markup">edit_message_reply_markup() (pyrobale.client.Client method)</a>
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.edit_message_reply_markup">(pyrobale.objects.chat.Chat method)</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.edit_message_reply_markup">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -815,6 +834,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.first_name">first_name (pyrobale.objects.chat.Chat attribute)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id3">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.first_name">[1]</a>
+</li>
           <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.first_name">(pyrobale.objects.contact.Contact attribute)</a>
 </li>
           <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.first_name">(pyrobale.objects.user.User attribute)</a>
@@ -840,6 +861,12 @@
 </li>
         <li><a href="api/pyrobale/filters/index.html#pyrobale.filters.from_users">from_users() (in module pyrobale.filters)</a>
 </li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.full_name">full_name (pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id11">(pyrobale.objects.chatfullinfo.ChatFullInfo property)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -849,7 +876,11 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_administrators">get_administrators() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.get_administrators">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_chat">get_chat() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_chat_administrators">get_chat_administrators() (pyrobale.client.Client method)</a>
@@ -859,6 +890,8 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_chat_member">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.get_chat_member">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.get_chat_member">(pyrobale.objects.message.Message method)</a>
 </li>
         </ul></li>
@@ -866,6 +899,8 @@
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.get_chat_members_count">(pyrobale.objects.chat.Chat method)</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.get_chat_members_count">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -881,11 +916,11 @@
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.get_webhook_info">get_webhook_info() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/filters/index.html#pyrobale.filters.group">group (in module pyrobale.filters)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.group">(pyrobale.objects.chat.Chat property)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id3">GROUP (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.GROUP">[1]</a>
-</li>
-        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.group">group (pyrobale.objects.chat.Chat property)</a>
-</li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.GROUP">GROUP (pyrobale.objects.enums.ChatType attribute)</a>
 </li>
     </ul></td>
@@ -902,8 +937,12 @@
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.handlers">handlers (pyrobale.client.Client attribute)</a>
 </li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.has_linked_group">has_linked_group (pyrobale.objects.chatfullinfo.ChatFullInfo property)</a>
+</li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.has_username">has_username (pyrobale.objects.chat.Chat property)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/animation/index.html#pyrobale.objects.animation.Animation.height">height (pyrobale.objects.animation.Animation attribute)</a>
 
         <ul>
@@ -930,6 +969,8 @@
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#id0">(pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.id">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id0">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.id">[1]</a>
 </li>
           <li><a href="api/pyrobale/objects/message/index.html#id1">(pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.id">[1]</a>
 </li>
@@ -968,10 +1009,14 @@
 </li>
         <li><a href="api/pyrobale/exceptions/common/index.html#pyrobale.exceptions.common.InvalidTokenException">InvalidTokenException</a>
 </li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id8">invite_link (pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.invite_link">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">(pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.invite_link">invite_link (pyrobale.objects.invitelink.InviteLink attribute)</a>
-</li>
         <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink">InviteLink (class in pyrobale.objects.invitelink)</a>
 </li>
         <li><a href="api/pyrobale/objects/newchatmembers/index.html#pyrobale.objects.newchatmembers.NewChatMembers.inviter">inviter (pyrobale.objects.newchatmembers.NewChatMembers attribute)</a>
@@ -998,6 +1043,10 @@
 </li>
         <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.is_bot">is_bot (pyrobale.objects.user.User attribute)</a>
 </li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.is_channel">is_channel (pyrobale.objects.chatfullinfo.ChatFullInfo property)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.is_group">is_group (pyrobale.objects.chatfullinfo.ChatFullInfo property)</a>
+</li>
         <li><a href="api/pyrobale/filters/index.html#pyrobale.filters.is_joined">is_joined() (in module pyrobale.filters)</a>
 
         <ul>
@@ -1005,10 +1054,14 @@
 </li>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.is_joined">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.is_joined">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.is_member">is_member (pyrobale.objects.chatmember.ChatMember attribute)</a>
 </li>
         <li><a href="api/pyrobale/objects/invitelink/index.html#pyrobale.objects.invitelink.InviteLink.is_primary">is_primary (pyrobale.objects.invitelink.InviteLink attribute)</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.is_private">is_private (pyrobale.objects.chatfullinfo.ChatFullInfo property)</a>
 </li>
         <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.is_restricted">is_restricted (pyrobale.objects.chatmember.ChatMember property)</a>
 </li>
@@ -1051,6 +1104,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.kick">kick() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.kick">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.kick">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -1071,6 +1126,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.last_name">last_name (pyrobale.objects.chat.Chat attribute)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id4">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.last_name">[1]</a>
+</li>
           <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.last_name">(pyrobale.objects.contact.Contact attribute)</a>
 </li>
           <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.last_name">(pyrobale.objects.user.User attribute)</a>
@@ -1080,13 +1137,19 @@
 </li>
         <li><a href="api/pyrobale/objects/location/index.html#pyrobale.objects.location.Location.latitude">latitude (pyrobale.objects.location.Location attribute)</a>
 </li>
+        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.leave">leave() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.leave">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.leave">leave() (pyrobale.objects.chat.Chat method)</a>
-</li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.leave_chat">leave_chat() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/objects/message/index.html#id20">left_chat_member (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.left_chat_member">[1]</a>
+</li>
+        <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id9">linked_chat_id (pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.linked_chat_id">[1]</a>
 </li>
         <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.load_local">load_local() (pyrobale.StateMachine.StateMachine method)</a>
 </li>
@@ -1174,6 +1237,8 @@
 </li>
           <li><a href="api/pyrobale/objects/chat/index.html#module-pyrobale.objects.chat">pyrobale.objects.chat</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#module-pyrobale.objects.chatfullinfo">pyrobale.objects.chatfullinfo</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#module-pyrobale.objects.chatmember">pyrobale.objects.chatmember</a>
 </li>
           <li><a href="api/pyrobale/objects/chatphoto/index.html#module-pyrobale.objects.chatphoto">pyrobale.objects.chatphoto</a>
@@ -1250,6 +1315,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.mute">mute() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.mute">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.mute">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -1319,8 +1386,12 @@
 </li>
         <li><a href="api/pyrobale/objects/contact/index.html#pyrobale.objects.contact.Contact.phone_number">phone_number (pyrobale.objects.contact.Contact attribute)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id7">photo (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.photo">[1]</a>
+        <li><a href="api/pyrobale/objects/chat/index.html#id4">photo (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.photo">[1]</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id5">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.photo">[1]</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatAction.PHOTO">PHOTO (pyrobale.objects.enums.ChatAction attribute)</a>
 
         <ul>
@@ -1332,7 +1403,11 @@
         <li><a href="api/pyrobale/objects/photosize/index.html#pyrobale.objects.photosize.PhotoSize">PhotoSize (class in pyrobale.objects.photosize)</a>
 </li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.pin">pin() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.pin">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.pin_chat_message">pin_chat_message() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.ping">ping() (pyrobale.client.Client method)</a>
@@ -1343,8 +1418,6 @@
 </li>
         <li><a href="api/pyrobale/objects/precheckoutquery/index.html#pyrobale.objects.precheckoutquery.PreCheckoutQuery">PreCheckoutQuery (class in pyrobale.objects.precheckoutquery)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id2">PRIVATE (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.PRIVATE">[1]</a>
-</li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.private">private (pyrobale.objects.chat.Chat property)</a>
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ChatType.PRIVATE">PRIVATE (pyrobale.objects.enums.ChatType attribute)</a>
@@ -1354,6 +1427,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.promote">promote() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.promote">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.promote">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -1436,6 +1511,13 @@
 </li>
         </ul></li>
         <li>
+    pyrobale.objects.chatfullinfo
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#module-pyrobale.objects.chatfullinfo">module</a>
+</li>
+        </ul></li>
+        <li>
     pyrobale.objects.chatmember
 
         <ul>
@@ -1477,6 +1559,8 @@
           <li><a href="api/pyrobale/objects/enums/index.html#module-pyrobale.objects.enums">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     pyrobale.objects.file
 
@@ -1484,8 +1568,6 @@
           <li><a href="api/pyrobale/objects/file/index.html#module-pyrobale.objects.file">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     pyrobale.objects.forwardorigin
 
@@ -1722,10 +1804,10 @@
 </li>
         <li><a href="api/pyrobale/objects/message/index.html#id24">reply_markup (pyrobale.objects.message.Message attribute)</a>, <a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_markup">[1]</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_photo">reply_photo() (pyrobale.objects.message.Message method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_video">reply_video() (pyrobale.objects.message.Message method)</a>
 </li>
         <li><a href="api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup">ReplyKeyboardMarkup (class in pyrobale.objects.replykeyboardmarkup)</a>
@@ -1743,6 +1825,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.restrict">restrict() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.restrict">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.restrict">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -1765,13 +1849,19 @@
         <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.save_local">save_local() (pyrobale.StateMachine.StateMachine method)</a>
 </li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_action">send_action() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_action">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_animation">send_animation() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_audio">send_audio() (pyrobale.client.Client method)</a>
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_audio">(pyrobale.objects.chat.Chat method)</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_audio">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_chat_action">send_chat_action() (pyrobale.client.Client method)</a>
@@ -1781,11 +1871,15 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_contact">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_contact">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_document">send_document() (pyrobale.client.Client method)</a>
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_document">(pyrobale.objects.chat.Chat method)</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_document">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_invoice">send_invoice() (pyrobale.client.Client method)</a>
@@ -1795,6 +1889,8 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_location">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_location">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_media_group">send_media_group() (pyrobale.client.Client method)</a>
 </li>
@@ -1803,19 +1899,29 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_message">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_message">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_photo">send_photo() (pyrobale.client.Client method)</a>
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_photo">(pyrobale.objects.chat.Chat method)</a>
 </li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_photo">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_sticker">send_sticker() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_sticker">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_video">send_video() (pyrobale.client.Client method)</a>
 
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_video">(pyrobale.objects.chat.Chat method)</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_video">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
         </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.send_voice">send_voice() (pyrobale.client.Client method)</a>
@@ -1823,23 +1929,37 @@
         <ul>
           <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.send_voice">(pyrobale.objects.chat.Chat method)</a>
 </li>
-        </ul></li>
-        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_description">set_chat_description() (pyrobale.client.Client method)</a>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.send_voice">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_description">set_chat_description() (pyrobale.client.Client method)</a>
+</li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_photo">set_chat_photo() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_chat_title">set_chat_title() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_description">set_description() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.set_description">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_photo">set_photo() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.set_photo">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/StateMachine/index.html#pyrobale.StateMachine.StateMachine.set_state">set_state() (pyrobale.StateMachine.StateMachine method)</a>
 </li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.set_title">set_title() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.set_title">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.set_webhook">set_webhook() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/objects/chatphoto/index.html#pyrobale.objects.chatphoto.ChatPhoto.small_file_id">small_file_id (pyrobale.objects.chatphoto.ChatPhoto attribute)</a>
@@ -1917,7 +2037,9 @@
         <li><a href="api/pyrobale/objects/audio/index.html#pyrobale.objects.audio.Audio.title">title (pyrobale.objects.audio.Audio attribute)</a>
 
         <ul>
-          <li><a href="api/pyrobale/objects/chat/index.html#id5">(pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.title">[1]</a>
+          <li><a href="api/pyrobale/objects/chat/index.html#id2">(pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.title">[1]</a>
+</li>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id1">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.title">[1]</a>
 </li>
           <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAudio.title">(pyrobale.objects.inputmedias.InputMediaAudio attribute)</a>
 </li>
@@ -1953,6 +2075,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#id1">type (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.type">[1]</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.type">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>
+</li>
           <li><a href="api/pyrobale/objects/forwardorigin/index.html#pyrobale.objects.forwardorigin.ForwardOrigin.type">(pyrobale.objects.forwardorigin.ForwardOrigin attribute)</a>
 </li>
           <li><a href="api/pyrobale/objects/inputmedias/index.html#pyrobale.objects.inputmedias.InputMediaAnimation.type">(pyrobale.objects.inputmedias.InputMediaAnimation attribute)</a>
@@ -1983,6 +2107,8 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unban">unban() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.unban">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.unban">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
@@ -1991,13 +2117,23 @@
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unmute">unmute() (pyrobale.objects.chat.Chat method)</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.unmute">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
+</li>
           <li><a href="api/pyrobale/objects/chatmember/index.html#pyrobale.objects.chatmember.ChatMember.unmute">(pyrobale.objects.chatmember.ChatMember method)</a>
 </li>
         </ul></li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unpin">unpin() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.unpin">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.unpin_all">unpin_all() (pyrobale.objects.chat.Chat method)</a>
+
+        <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.unpin_all">(pyrobale.objects.chatfullinfo.ChatFullInfo method)</a>
 </li>
+        </ul></li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.unpin_all_chat_messages">unpin_all_chat_messages() (pyrobale.client.Client method)</a>
 </li>
         <li><a href="api/pyrobale/client/index.html#pyrobale.client.Client.unpin_chat_message">unpin_chat_message() (pyrobale.client.Client method)</a>
@@ -2006,10 +2142,10 @@
 </li>
         <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update">Update (class in pyrobale.objects.update)</a>
 </li>
-        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.update_id">update_id (pyrobale.objects.update.Update attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyrobale/objects/update/index.html#pyrobale.objects.update.Update.update_id">update_id (pyrobale.objects.update.Update attribute)</a>
+</li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.UpdatesTypes">UpdatesTypes (class in pyrobale.objects.enums)</a>
 </li>
         <li><a href="api/pyrobale/objects/enums/index.html#pyrobale.objects.enums.ButtonTypes.URL">URL (pyrobale.objects.enums.ButtonTypes attribute)</a>
@@ -2036,9 +2172,11 @@
 </li>
         <li><a href="api/pyrobale/objects/transaction/index.html#pyrobale.objects.transaction.Transaction.userID">userID (pyrobale.objects.transaction.Transaction attribute)</a>
 </li>
-        <li><a href="api/pyrobale/objects/chat/index.html#id6">username (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.username">[1]</a>
+        <li><a href="api/pyrobale/objects/chat/index.html#id3">username (pyrobale.objects.chat.Chat attribute)</a>, <a href="api/pyrobale/objects/chat/index.html#pyrobale.objects.chat.Chat.username">[1]</a>
 
         <ul>
+          <li><a href="api/pyrobale/objects/chatfullinfo/index.html#id2">(pyrobale.objects.chatfullinfo.ChatFullInfo attribute)</a>, <a href="api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.username">[1]</a>
+</li>
           <li><a href="api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.username">(pyrobale.objects.user.User attribute)</a>
 </li>
         </ul></li>

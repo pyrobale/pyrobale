@@ -20,6 +20,7 @@ Submodules
    /api/pyrobale/objects/audio/index
    /api/pyrobale/objects/callbackquery/index
    /api/pyrobale/objects/chat/index
+   /api/pyrobale/objects/chatfullinfo/index
    /api/pyrobale/objects/chatmember/index
    /api/pyrobale/objects/chatphoto/index
    /api/pyrobale/objects/contact/index

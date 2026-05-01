@@ -1,7 +1,7 @@
-pyrobale.objects.chat
-=====================
+pyrobale.objects.chatfullinfo
+=============================
 
-.. py:module:: pyrobale.objects.chat
+.. py:module:: pyrobale.objects.chatfullinfo
 
 
 Classes
@@ -9,73 +9,111 @@ Classes
 
 .. autoapisummary::
 
-   pyrobale.objects.chat.Chat
+   pyrobale.objects.chatfullinfo.ChatFullInfo
 
 
 Module Contents
 ---------------
 
-.. py:class:: Chat(id = None, type = None, title = None, username = None, photo = None, client = None, **kwargs)
+.. py:class:: ChatFullInfo(id, type, title = None, username = None, first_name = None, last_name = None, photo = None, bio = None, description = None, invite_link = None, linked_chat_id = None, client = None)
 
-   Represents a chat in the Bale messenger.
+   Represents full info of a chat, usually returns in `get_chat`
 
-   :param id: Unique identifier for this chat
+   :param id: Unique id of the chat.
    :type id: int
-   :param type: Type of chat, can be either "private", "group", or "channel"
-   :type type: str
-   :param title: Title, for groups and channels
-   :type title: Optional[str]
-   :param username: Username, for private chats and channels if available
-   :type username: Optional[str]
-   :param first_name: First name of the other party in a private chat
-   :type first_name: Optional[str]
-   :param last_name: Last name of the other party in a private chat
-   :type last_name: Optional[str]
-   :param photo: Chat photo object
+   :param type: The type of the chat that can be private, group or channel.
+   :type type: String or enums.ChatType
+   :param title: The title of chat in groups and channels.
+   :type title: Optional[Str]
+   :param username: The username of chat (if exists).
+   :type username: Optional[Str]
+   :param first_name: The first name of user in a private chat.
+   :type first_name: Optional[Str]
+   :param last_name: The last name of user in a private chat.
+   :type last_name: Optional[Str]
+   :param photo: The photo of chat or the profile of the user. (if exists)
    :type photo: Optional[ChatPhoto]
+   :param bio: The biography of user. (if exists)
+   :type bio: Optional[Str]
+   :param description: The description of chat. (if exists)
+   :type description: Optional[Str]
+   :param invite_link: The invite link of chat or channel. (if the bot has permission to make one)
+   :type invite_link: Optional[Str]
+   :param linked_chat_id: The chat id of the linked comment group to a channel. (if exists)
+   :type linked_chat_id: Optional[Str]
    :param \*\*kwargs: Additional keyword arguments
 
    .. attribute:: id
 
-      Unique identifier for this chat
+      Unique id of the chat.
 
       :type: int
 
    .. attribute:: type
 
-      Type of chat
+      The type of the chat that can be private, group or channel.
 
       :type: ChatType
 
    .. attribute:: title
 
-      Chat title
+      The title of chat in groups and channels.
 
-      :type: str
+      :type: Str
 
    .. attribute:: username
 
-      Chat username
+      The username of chat (if exists).
 
-      :type: str
+      :type: Str
 
    .. attribute:: first_name
 
-      First name
+      The first name of user in a private chat.
 
-      :type: str
+      :type: Str
 
    .. attribute:: last_name
 
-      Last name
+      The last name of user in a private chat.
 
-      :type: str
+      :type: Str
+
+   .. attribute:: full_name
+
+      The property that returns the first_name and last_name together
+
+      :type: Str
 
    .. attribute:: photo
 
-      Chat photo
+      The photo of chat or the profile of the user. (if exists)
 
       :type: ChatPhoto
+
+   .. attribute:: bio
+
+      The biography of user. (if exists)
+
+      :type: Str
+
+   .. attribute:: description
+
+      The description of chat. (if exists)
+
+      :type: Str
+
+   .. attribute:: invite_link
+
+      The invite link of chat or channel. (if the bot has permission to make one)
+
+      :type: Str
+
+   .. attribute:: linked_chat_id
+
+      The chat id of the linked comment group to a channel. (if exists)
+
+      :type: Str
 
    .. attribute:: client
 
@@ -85,11 +123,6 @@ Module Contents
 
 
    .. py:attribute:: id
-      :value: None
-
-
-
-   .. py:attribute:: type
 
 
    .. py:attribute:: title
@@ -102,8 +135,38 @@ Module Contents
 
 
 
+   .. py:attribute:: first_name
+      :value: None
+
+
+
+   .. py:attribute:: last_name
+      :value: None
+
+
+
    .. py:attribute:: photo
       :type:  pyrobale.objects.chatphoto.ChatPhoto
+      :value: None
+
+
+
+   .. py:attribute:: bio
+      :value: None
+
+
+
+   .. py:attribute:: description
+      :value: None
+
+
+
+   .. py:attribute:: invite_link
+      :value: None
+
+
+
+   .. py:attribute:: linked_chat_id
       :value: None
 
 
@@ -114,16 +177,19 @@ Module Contents
 
 
 
-   .. py:property:: private
+   .. py:property:: full_name
 
 
-   .. py:property:: group
+   .. py:property:: is_private
 
 
-   .. py:property:: channel
+   .. py:property:: is_group
 
 
-   .. py:property:: has_username
+   .. py:property:: is_channel
+
+
+   .. py:property:: has_linked_group
 
 
    .. py:method:: send_message(text, reply_to_message_id = None, reply_markup = None)
