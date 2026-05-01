@@ -70,3 +70,9 @@ class TransactionStatus(Enum):
     PAID = "paid"
     FAILED = "failed"
     REJECTED = "rejected"
+
+class MessageEntityType(Enum):
+    """Types of a "MessageEntity" """
+    MENTION = "mention"
+    COMMAND = "bot_command"
+    
