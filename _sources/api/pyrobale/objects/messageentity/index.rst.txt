@@ -1,0 +1,53 @@
+pyrobale.objects.messageentity
+==============================
+
+.. py:module:: pyrobale.objects.messageentity
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.messageentity.MessageEntity
+
+
+Module Contents
+---------------
+
+.. py:class:: MessageEntity(type, offset, length)
+
+   An object that represents a certain part of message text, like mentions or commands
+
+   :param type: The certain part of message type.
+   :type type: str or MessageEntityType
+   :param offset: Location of that part in message text.
+   :type offset: int
+   :param length: the length of that part in message text.
+   :type length: int
+
+   .. attribute:: type
+
+      The certain part of message type.
+
+      :type: MessageEntityType
+
+   .. attribute:: offset
+
+      Location of that part in message text.
+
+      :type: int
+
+   .. attribute:: length
+
+      the length of that part in message text.
+
+      :type: int
+
+
+   .. py:attribute:: offset
+
+
+   .. py:attribute:: length
+
+

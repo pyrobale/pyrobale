@@ -237,6 +237,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../labeledprice/index.html">pyrobale.objects.labeledprice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../location/index.html">pyrobale.objects.location</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../message/index.html">pyrobale.objects.message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../messageentity/index.html">pyrobale.objects.messageentity</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../messageid/index.html">pyrobale.objects.messageid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../newchatmembers/index.html">pyrobale.objects.newchatmembers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../photosize/index.html">pyrobale.objects.photosize</a></li>
@@ -385,6 +386,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.objects.enums.TransactionStatus" title="pyrobale.objects.enums.TransactionStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransactionStatus</span></code></a></p></td>
 <td><p>Types of transaction status</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.objects.enums.MessageEntityType" title="pyrobale.objects.enums.MessageEntityType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageEntityType</span></code></a></p></td>
+<td><p>Types of a &quot;MessageEntity&quot;</p></td>
 </tr>
 </tbody>
 </table>
@@ -661,6 +665,23 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrobale.objects.enums.MessageEntityType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrobale.objects.enums.</span></span><span class="sig-name descname"><span class="pre">MessageEntityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pyrobale/objects/enums.html#MessageEntityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.enums.MessageEntityType" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Types of a “MessageEntity”</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.objects.enums.MessageEntityType.MENTION">
+<span class="sig-name descname"><span class="pre">MENTION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mention'</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/enums.html#MessageEntityType.MENTION"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.enums.MessageEntityType.MENTION" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.objects.enums.MessageEntityType.COMMAND">
+<span class="sig-name descname"><span class="pre">COMMAND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bot_command'</span></span><a class="reference internal" href="../../../../_modules/pyrobale/objects/enums.html#MessageEntityType.COMMAND"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.objects.enums.MessageEntityType.COMMAND" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -792,6 +813,11 @@
 <li><a class="reference internal" href="#pyrobale.objects.enums.TransactionStatus.PAID"><code class="docutils literal notranslate"><span class="pre">TransactionStatus.PAID</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.enums.TransactionStatus.FAILED"><code class="docutils literal notranslate"><span class="pre">TransactionStatus.FAILED</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.objects.enums.TransactionStatus.REJECTED"><code class="docutils literal notranslate"><span class="pre">TransactionStatus.REJECTED</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrobale.objects.enums.MessageEntityType"><code class="docutils literal notranslate"><span class="pre">MessageEntityType</span></code></a><ul>
+<li><a class="reference internal" href="#pyrobale.objects.enums.MessageEntityType.MENTION"><code class="docutils literal notranslate"><span class="pre">MessageEntityType.MENTION</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.objects.enums.MessageEntityType.COMMAND"><code class="docutils literal notranslate"><span class="pre">MessageEntityType.COMMAND</span></code></a></li>
 </ul>
 </li>
 </ul>

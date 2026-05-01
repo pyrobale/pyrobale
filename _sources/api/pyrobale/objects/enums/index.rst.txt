@@ -16,6 +16,7 @@ Classes
    pyrobale.objects.enums.ButtonTypes
    pyrobale.objects.enums.KeyboardTypes
    pyrobale.objects.enums.TransactionStatus
+   pyrobale.objects.enums.MessageEntityType
 
 
 Module Contents
@@ -294,6 +295,24 @@ Module Contents
 
    .. py:attribute:: REJECTED
       :value: 'rejected'
+
+
+
+.. py:class:: MessageEntityType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Types of a "MessageEntity"
+
+
+   .. py:attribute:: MENTION
+      :value: 'mention'
+
+
+
+   .. py:attribute:: COMMAND
+      :value: 'bot_command'
 
 
 
