@@ -56,7 +56,7 @@ class ChatFullInfo:
         description: Optional[str] = None,
         invite_link: Optional[str] = None,
         linked_chat_id: Optional[str] = None,
-        client: Optional[Client] = None
+        client: Optional["Client"] = None
     ):
         self.id = id
         if isinstance(type, str):
