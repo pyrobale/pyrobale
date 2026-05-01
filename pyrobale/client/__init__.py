@@ -8,6 +8,7 @@ from ..objects.callbackquery import CallbackQuery
 from ..objects.chatmember import ChatMember
 from ..objects.chatphoto import ChatPhoto
 from ..objects.chat import Chat
+from ..objects.chatfullinfo import ChatFullInfo
 from ..objects.contact import Contact
 from ..objects.copytextbutton import CopyTextButton
 from ..objects.document import Document
@@ -1120,7 +1121,7 @@ class Client:
         temp = data.get("result", {})
         temp["client"] = self
         data = temp
-        return Chat(**pythonize(data))
+        return ChatFullInfo(**pythonize(data))
 
     @smart_method
     async def get_chat_members_count(self, chat_id: Union[int,str]) -> int:

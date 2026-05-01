@@ -46,7 +46,6 @@ class ChatAction(Enum):
 
 class ChatType(Enum):
     """Types of chats."""
-
     PRIVATE = "private"
     GROUP = "group"
     CHANNEL = "channel"
