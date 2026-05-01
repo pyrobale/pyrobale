@@ -379,6 +379,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.forwardorigin</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForwardOrigin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.messageentity</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageEntity</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">smart_method</span>
 
 
@@ -417,6 +418,7 @@
 <span class="sd">        successful_payment (SuccessfulPayment): Message is a service message about successful payment</span>
 <span class="sd">        web_app_data (WebAppData): Data from a Web App</span>
 <span class="sd">        reply_markup (InlineKeyboardMarkup): Inline keyboard attached to the message</span>
+<span class="sd">        entities (MessageEntity): A certain part of message</span>
 <span class="sd">        client (Client): Client instance associated with this message</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -449,6 +451,7 @@
             <span class="n">web_app_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;WebAppData&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">entities</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="s2">&quot;MessageEntity&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -482,6 +485,7 @@
 <span class="sd">            web_app_data: Web App data</span>
 <span class="sd">            reply_markup: Inline keyboard markup</span>
 <span class="sd">            reply_to_message: Reply to message object</span>
+<span class="sd">            entities: A certain part of message like mentions or commands</span>
 <span class="sd">            client: Client instance associated with this message</span>
 <span class="sd">            **kwargs: Additional keyword arguments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -611,6 +615,10 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_markup">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reply_markup</span></div>
 
+        <span class="k">if</span> <span class="n">entities</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entities</span> <span class="o">=</span> <span class="p">[</span><span class="n">MessageEntity</span><span class="p">(</span><span class="o">**</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entities</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Message.is_admin">
