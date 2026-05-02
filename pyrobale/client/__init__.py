@@ -46,7 +46,7 @@ from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.transaction import Transaction
 from ..StateMachine import StateMachine
-from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
+from ..exceptions import *
 import time
 from enum import Enum, member
 import asyncio
@@ -1447,11 +1447,11 @@ class Client:
 
     async def _fetch_token(self) -> None:
         """Fetch authentication token from API"""
-        url = f"{self.base_url}/api/v2/auth/token"
+        url = f"{self.OTPbase_url}/api/v2/auth/token"
         data = {
             "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,
+            "client_id": self.OTPclient_id,
+            "client_secret": self.OTPclient_secret,
             "scope": "read"
         }
 
@@ -1470,10 +1470,7 @@ class Client:
                             seconds=expires_in - 30
                         )
                         self._token_fetched = True
-                        logger.info(
-                            "Token acquired, expires at %s",
-                            self.token_expiry
-                        )
+                        
                         return
 
                     if resp.status == 401:
@@ -1507,8 +1504,8 @@ class Client:
         """Ensure we have a valid token, fetching a new one if needed"""
         if (
                 not self._token_fetched
-                or not self.token
-                or datetime.now() >= self.token_expiry
+                or not self.OTPtoken
+                or datetime.now() >= self.OTPtoken_expiry
         ):
             await self._fetch_token()
 
@@ -1540,9 +1537,9 @@ class Client:
         elif isinstance(otp, str):
             otp = int(otp)
 
-        url = f"{self.base_url}/api/v2/send_otp"
+        url = f"{self.OTPbase_url}/api/v2/send_otp"
         headers = {
-            "Authorization": f"Bearer {self.token}",
+            "Authorization": f"Bearer {self.OTPtoken}",
             "Content-Type": "application/json"
         }
         json_data = {
@@ -1602,6 +1599,10 @@ class Client:
             return asyncio.ensure_future(self._send_otp_async(phone, otp))
         except RuntimeError:
             return asyncio.run(self._send_otp_async(phone, otp))
+
+
+
+
 
     @smart_method
     async def wait_for(self, update_type: UpdatesTypes, check=None, timeout: Optional[float] = None):
