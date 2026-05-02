@@ -45,6 +45,9 @@ from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
 from ..objects.transaction import Transaction
+
+from ..objects.otp import OTPResult
+
 from ..StateMachine import StateMachine
 from ..exceptions import *
 import time
