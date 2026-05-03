@@ -68,7 +68,6 @@ jobs:
             import os
 
             ULINK = os.environ['ULINK']
-            CHANNEL_ID = os.environ['BALE_CHAT_ID']
             FILE_PATH = "pyrobale-docs.zip"
             
             with open(FILE_PATH, "rb") as f:
