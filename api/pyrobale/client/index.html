@@ -431,6 +431,16 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.client.Client.tick_handlers">
+<span class="sig-name descname"><span class="pre">tick_handlers</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.tick_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.tick_handlers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.client.Client.ready_handlers">
+<span class="sig-name descname"><span class="pre">ready_handlers</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.ready_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.ready_handlers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.handler_executor">
 <span class="sig-name descname"><span class="pre">handler_executor</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.handler_executor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.handler_executor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1625,6 +1635,22 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.on_ready">
+<span class="sig-name descname"><span class="pre">on_ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_ready"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_ready" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.on_tick">
+<span class="sig-name descname"><span class="pre">on_tick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.on_tick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.on_tick" title="Link to this definition">¶</a></dt>
+<dd><p>Decorator for repeating a function every n seconds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>float</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.add_handler">
 <span class="sig-name descname"><span class="pre">add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.add_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.add_handler" title="Link to this definition">¶</a></dt>
 <dd><p>Register a handler for specific update type.</p>
@@ -1839,6 +1865,8 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.running"><code class="docutils literal notranslate"><span class="pre">Client.running</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.last_update_id"><code class="docutils literal notranslate"><span class="pre">Client.last_update_id</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.state_machine"><code class="docutils literal notranslate"><span class="pre">Client.state_machine</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.tick_handlers"><code class="docutils literal notranslate"><span class="pre">Client.tick_handlers</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.ready_handlers"><code class="docutils literal notranslate"><span class="pre">Client.ready_handlers</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.handler_executor"><code class="docutils literal notranslate"><span class="pre">Client.handler_executor</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.me"><code class="docutils literal notranslate"><span class="pre">Client.me</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.check_defined_message"><code class="docutils literal notranslate"><span class="pre">Client.check_defined_message</span></code></a></li>
@@ -1907,6 +1935,8 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.on_pre_checkout_query"><code class="docutils literal notranslate"><span class="pre">Client.on_pre_checkout_query()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.on_photo"><code class="docutils literal notranslate"><span class="pre">Client.on_photo()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.on_successful_payment"><code class="docutils literal notranslate"><span class="pre">Client.on_successful_payment()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.on_ready"><code class="docutils literal notranslate"><span class="pre">Client.on_ready()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.on_tick"><code class="docutils literal notranslate"><span class="pre">Client.on_tick()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.add_handler"><code class="docutils literal notranslate"><span class="pre">Client.add_handler()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.remove_handler"><code class="docutils literal notranslate"><span class="pre">Client.remove_handler()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.remove_all_handlers"><code class="docutils literal notranslate"><span class="pre">Client.remove_all_handlers()</span></code></a></li>

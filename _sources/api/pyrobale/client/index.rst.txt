@@ -61,6 +61,16 @@ Package Contents
    .. py:attribute:: state_machine
 
 
+   .. py:attribute:: tick_handlers
+      :value: []
+
+
+
+   .. py:attribute:: ready_handlers
+      :value: []
+
+
+
    .. py:attribute:: handler_executor
 
 
@@ -1050,6 +1060,15 @@ Package Contents
    .. py:method:: on_successful_payment(*filters, **kwargs)
 
       Decorator for handling successful payment updates.
+
+
+
+   .. py:method:: on_ready()
+
+
+   .. py:method:: on_tick(interval)
+
+      Decorator for repeating a function every n seconds
 
 
 
