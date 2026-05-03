@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -354,161 +354,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="module-pyrobale.filters">
 <span id="pyrobale-filters"></span><h1>pyrobale.filters<a class="headerlink" href="#module-pyrobale.filters" title="Link to this heading">¶</a></h1>
-<section id="attributes">
-<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.channel" title="pyrobale.filters.channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.group" title="pyrobale.filters.group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.digit" title="pyrobale.filters.digit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">digit</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.equals" title="pyrobale.filters.equals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equals</span></code></a>(expected_text)</p></td>
-<td><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.startswith" title="pyrobale.filters.startswith"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startswith</span></code></a>(expected_text)</p></td>
-<td><p>Check if the event text or caption or callbackQuery data is started with to the expected text.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.regex" title="pyrobale.filters.regex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regex</span></code></a>(pattern)</p></td>
-<td><p>checks the event text or caption with given pattern using regex</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyrobale.filters.from_users" title="pyrobale.filters.from_users"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_users</span></code></a>(allowed_users)</p></td>
-<td><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.is_joined" title="pyrobale.filters.is_joined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_joined</span></code></a>(chat_ids)</p></td>
-<td><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="package-contents">
-<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="pyrobale.filters.equals">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.equals" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the event text or caption or callbackQuery data is equal to the expected text.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>expected_text</strong> (<em>str</em>) – The expected text to compare with.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery data is equal to the expected text.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyrobale.filters.startswith">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#startswith"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.startswith" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the event text or caption or callbackQuery data is started with to the expected text.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>expected_text</strong> (<em>str</em>) – The expected text to compare with.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery data is started with to the expected text.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyrobale.filters.regex">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">regex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#regex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.regex" title="Link to this definition">¶</a></dt>
-<dd><p>checks the event text or caption with given pattern using regex</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – The pattern to check with text</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption is match with given pattern</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyrobale.filters.from_users">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">from_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allowed_users</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#from_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.from_users" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>allowed_users</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>&quot;User&quot;</em><em>, </em><em>int</em><em>]</em><em>]</em>) – Allowed users to use this handler.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery sender is in allowed user.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyrobale.filters.is_joined">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">is_joined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#is_joined"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.is_joined" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the event text or caption or callbackQuery sender is in allowed user.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>allowed_users</strong> (<em>List</em><em>[</em><em>Union</em><em>[</em><em>&quot;User&quot;</em><em>, </em><em>int</em><em>]</em><em>]</em>) – Allowed users to use this handler.</p></li>
-<li><p><strong>chat_ids</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../objects/user/index.html#pyrobale.objects.user.User" title="pyrobale.objects.user.User"><em>pyrobale.objects.user.User</em></a><em>, </em><em>int</em><em>, </em><em>str</em><em>]</em><em>]</em><em>, </em><em>int</em><em>, </em><em>str</em><em>]</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function that checks if the event text or caption or callbackQuery sender is in allowed user.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="pyrobale.filters.channel">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">channel</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.channel" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="pyrobale.filters.group">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">group</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#group"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.group" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="pyrobale.filters.digit">
-<span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">digit</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#digit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.digit" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
 </section>
 
         </article>
@@ -561,39 +413,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">pyrobale.filters</a><ul>
-<li><a class="reference internal" href="#attributes">Attributes</a></li>
-<li><a class="reference internal" href="#functions">Functions</a></li>
-<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
-<li><a class="reference internal" href="#pyrobale.filters.equals"><code class="docutils literal notranslate"><span class="pre">equals()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.startswith"><code class="docutils literal notranslate"><span class="pre">startswith()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.regex"><code class="docutils literal notranslate"><span class="pre">regex()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.from_users"><code class="docutils literal notranslate"><span class="pre">from_users()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.is_joined"><code class="docutils literal notranslate"><span class="pre">is_joined()</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.channel"><code class="docutils literal notranslate"><span class="pre">channel</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.group"><code class="docutils literal notranslate"><span class="pre">group</span></code></a></li>
-<li><a class="reference internal" href="#pyrobale.filters.digit"><code class="docutils literal notranslate"><span class="pre">digit</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
