@@ -59,3 +59,21 @@ jobs:
         env:
           BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
           BALE_CHAT_ID: ${{ secrets.BALE_DCHAT_ID }}
+      
+      - name: Deploy docs to Iran host
+        run: |
+            zip -r pyrobale-docs.zip ./docs/build/html
+            python3 << 'EOF'
+            import requests
+            import os
+
+            ULINK = os.environ['ULINK']
+            CHANNEL_ID = os.environ['BALE_CHAT_ID']
+            FILE_PATH = "pyrobale-docs.zip"
+            
+            with open(FILE_PATH, "rb") as f:
+                requests.post(f"{ULINK}",
+                              files={"zip_file": f})
+            EOF
+        env:
+          ULINK: ${{ secrets.ULINK }}
