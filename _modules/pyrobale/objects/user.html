@@ -360,11 +360,12 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">is_bot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">is_bot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">last_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <div class="viewcode-block" id="User.id">
@@ -386,6 +387,10 @@
 <div class="viewcode-block" id="User.username">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.username">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span></div>
+
+<div class="viewcode-block" id="User.language_code">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.language_code">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language_code</span> <span class="o">=</span> <span class="n">language_code</span></div>
 
 <div class="viewcode-block" id="User.client">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/user/index.html#pyrobale.objects.user.User.client">[docs]</a>

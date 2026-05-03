@@ -483,7 +483,7 @@
 
 <div class="viewcode-block" id="Client.me">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.me">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="p">:</span> <span class="n">User</span><span class="o">|</span><span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="p">:</span> <span class="n">User</span></div>
 
 <div class="viewcode-block" id="Client.check_defined_message">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.check_defined_message">[docs]</a>
@@ -1607,7 +1607,7 @@
     <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.get_chat">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.get_chat">[docs]</a>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Chat</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ChatFullInfo</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get up to date information about the chat.</span>
 
 <span class="sd">        Args:</span>
@@ -2167,7 +2167,8 @@
                                 <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MEMBER_JOINED</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MEMBER_LEFT</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">PHOTO</span><span class="p">]:</span>
 
                 <span class="k">if</span> <span class="n">event_data</span><span class="p">:</span>
-                    <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="n">event_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pythonize</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">event_data</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">event_data</span>
 
@@ -2381,7 +2382,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span></div>
 
     
-    <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.start_polling">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.start_polling">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start_polling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

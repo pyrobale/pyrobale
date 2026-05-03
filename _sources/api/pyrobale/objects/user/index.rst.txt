@@ -15,21 +15,15 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: User(id = None, is_bot = None, first_name = None, last_name = None, username = None, **kwargs)
+.. py:class:: User(id, is_bot, first_name, last_name = None, username = None, language_code = None, **kwargs)
 
    .. py:attribute:: id
-      :value: None
-
 
 
    .. py:attribute:: is_bot
-      :value: None
-
 
 
    .. py:attribute:: first_name
-      :value: None
-
 
 
    .. py:attribute:: last_name
@@ -38,6 +32,11 @@ Module Contents
 
 
    .. py:attribute:: username
+      :value: None
+
+
+
+   .. py:attribute:: language_code
       :value: None
 
 

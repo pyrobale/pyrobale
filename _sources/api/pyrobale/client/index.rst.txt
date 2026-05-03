@@ -75,9 +75,7 @@ Package Contents
 
 
    .. py:attribute:: me
-      :type:  pyrobale.objects.user.User | None
-      :value: None
-
+      :type:  pyrobale.objects.user.User
 
 
    .. py:attribute:: check_defined_message
