@@ -39,3 +39,23 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./docs/build/html
+
+      - name: Zip docs and send to Bale
+        run: |
+            zip -r pyrobale-docs.zip ./docs/build/html
+            python3 << 'EOF'
+            import requests
+            import os
+
+            TOKEN = os.environ['BALE_BOT_TOKEN']
+            CHANNEL_ID = os.environ['BALE_CHAT_ID']
+            FILE_PATH = "pyrobale-docs.zip"
+            
+            with open(FILE_PATH, "rb") as f:
+                requests.post(f"https://tapi.bale.ai/bot{TOKEN}/sendDocument",
+                              data={"chat_id": CHANNEL_ID},
+                              files={"document": f})
+            EOF
+        env:
+          BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
+          BALE_CHAT_ID: ${{ secrets.BALE_DCHAT_ID }}

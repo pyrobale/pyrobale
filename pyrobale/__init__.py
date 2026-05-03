@@ -12,3 +12,4 @@ from .objects.utils import *
 from .exceptions import *
 from .objects import *
 from .client import Client
+from . import filters

@@ -1,6 +1,7 @@
 from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
 from concurrent.futures import ThreadPoolExecutor
 import traceback
+import inspect
 
 from ..objects.animation import Animation
 from ..objects.audio import Audio
@@ -1587,12 +1588,12 @@ class Client:
                             if not hasattr(event, flitr):
                                 skip = True
                 
-                if skip == True:
+                if skip:
                     continue
 
                 callback = handler["callback"]
                 try:
-                    if asyncio.iscoroutinefunction(callback):
+                    if inspect.iscoroutinefunction(callback):
                         asyncio.create_task(callback(event))
                     else:
                         self.handler_executor.submit(callback, event)
