@@ -98,7 +98,7 @@ class Client:
         else:
             self._async_mode = async_mode
 
-        self.me: User|None = None
+        self.me: User
         self.check_defined_message = True
         self.defined_messages = {}
 
@@ -1105,7 +1105,7 @@ class Client:
         return data.get("result", {}).get("status") in ["member", "creator", "administrator"]
 
     @smart_method
-    async def get_chat(self, chat_id: Union[int,str]) -> Chat:
+    async def get_chat(self, chat_id: Union[int,str]) -> ChatFullInfo:
         """Get up to date information about the chat.
 
         Args:
@@ -1613,7 +1613,8 @@ class Client:
                                 UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT, UpdatesTypes.PHOTO]:
 
                 if event_data:
-                    message = Message(**pythonize(event_data), **kwargs)
+                    event_data.update(pythonize(kwargs))
+                    message = Message(**event_data)
                 else:
                     return event_data
 
@@ -1782,7 +1783,6 @@ class Client:
         """Remove all handlers from the list of handlers."""
         self.handlers = []
     
-    @smart_method
     async def start_polling(self, timeout: int = 30, limit: int = 100) -> None:
         """Start polling updates from the server.
 

@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 from typing import Optional, Union
+
+from pyrobale.exceptions.common import PyroBaleException
 from .utils import smart_method
 from .enums import ChatAction, ChatType
 
@@ -67,16 +69,17 @@ class ChatFullInfo:
         self.username = username
         self.first_name = first_name
         self.last_name = last_name
-        self.photo: "ChatPhoto" = photo
+        self.photo: Optional["ChatPhoto"] = photo
         self.bio = bio
         self.description = description
         self.invite_link = invite_link
         self.linked_chat_id = linked_chat_id
-        self.client: "Client" = client
+        self.client: Optional["Client"] = client
 
     @property
     def full_name(self):
-        return self.first_name + self.last_name
+        if self.first_name and self.last_name:
+            return self.first_name + self.last_name
     
     @property
     def is_private(self):
@@ -92,15 +95,14 @@ class ChatFullInfo:
     
     @property
     def has_linked_group(self):
-        if self.linked_chat_id: return True 
-        else: return False
+        return bool(self.linked_chat_id)
     
     @smart_method
     async def send_message(
             self,
             text: str,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a message to the chat.
 
@@ -112,13 +114,15 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_message(
+        if isinstance(self.client, Client):
+            return await self.client.send_message(
             chat_id=self.id,
             text=text,
             reply_to_message_id=reply_to_message_id,
-            reply_markup=reply_markup,
+            reply_markup=reply_markup
         )
-    
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def get_chat_member(self, user_id: int) -> "ChatMember":
         """Get information about a member of a chat.
@@ -129,8 +133,10 @@ class ChatFullInfo:
         Returns:
             ChatMember: Information about the chat member
         """
-        return await self.client.get_chat_member(chat_id=self.id, user_id=user_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.get_chat_member(chat_id=self.id, user_id=user_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def get_administrators(self):
         """Gets a list of administrators of a specified chat.
@@ -138,8 +144,10 @@ class ChatFullInfo:
         Returns:
             A list of administrators.
         """
-        return await self.client.get_chat_administrators(self.id)
-
+        if isinstance(self.client, Client):
+            return await self.client.get_chat_administrators(self.id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def get_chat_members_count(self) -> int:
         """Get the number of members in the chat.
@@ -147,15 +155,17 @@ class ChatFullInfo:
         Returns:
             int: Number of members in the chat
         """
-        return await self.client.get_chat_members_count(chat_id=self.id)
-
+        if isinstance(self.client, Client):
+            return await self.client.get_chat_members_count(chat_id=self.id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_photo(
             self,
             photo: str,
             caption: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a photo to the chat.
 
@@ -168,21 +178,23 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_photo(
+        if isinstance(self.client, Client):
+            return await self.client.send_photo(
             chat_id=self.id,
             photo=photo,
             caption=caption,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_video(
             self,
             video: str,
             caption: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a video to the chat.
 
@@ -195,21 +207,23 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_video(
+        if isinstance(self.client, Client):
+            return await self.client.send_video(
             chat_id=self.id,
             video=video,
             caption=caption,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_audio(
             self,
             audio: str,
             caption: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send an audio file to the chat.
 
@@ -222,21 +236,23 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_audio(
+        if isinstance(self.client, Client):
+            return await self.client.send_audio(
             chat_id=self.id,
             audio=audio,
             caption=caption,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_document(
             self,
             document: str,
             caption: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a document to the chat.
 
@@ -249,20 +265,22 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_document(
+        if isinstance(self.client, Client):
+            return await self.client.send_document(
             chat_id=self.id,
             document=document,
             caption=caption,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_sticker(
             self,
             sticker: str,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a sticker to the chat.
 
@@ -274,20 +292,22 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_sticker(
+        if isinstance(self.client, Client):
+            return await self.client.send_sticker(
             chat_id=self.id,
             sticker=sticker,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_voice(
             self,
             voice: str,
             caption: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a voice message to the chat.
 
@@ -300,21 +320,23 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_voice(
+        if isinstance(self.client, Client):
+            return await self.client.send_voice(
             chat_id=self.id,
             voice=voice,
             caption=caption,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_location(
             self,
             latitude: float,
             longitude: float,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a location to the chat.
 
@@ -327,22 +349,24 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_location(
+        if isinstance(self.client, Client):
+            return await self.client.send_location(
             chat_id=self.id,
             latitude=latitude,
             longitude=longitude,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_contact(
             self,
             phone_number: str,
             first_name: str,
             last_name: Optional[str] = None,
-            reply_to_message_id: int = None,
-            reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"] = None,
+            reply_to_message_id: Optional[int] = None,
+            reply_markup: Optional[Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup"]] = None,
     ) -> "Message":
         """Send a contact to the chat.
 
@@ -356,7 +380,8 @@ class ChatFullInfo:
         Returns:
             Message: The sent message object
         """
-        return await self.client.send_contact(
+        if isinstance(self.client, Client):
+            return await self.client.send_contact(
             chat_id=self.id,
             phone_number=phone_number,
             first_name=first_name,
@@ -364,7 +389,8 @@ class ChatFullInfo:
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def ban(self, user_id: int) -> bool:
         """Bans a user from the chat.
@@ -376,8 +402,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.ban_chat_member(chat_id=self.id, user_id=user_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.ban_chat_member(chat_id=self.id, user_id=user_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def kick(self, user_id: int) -> bool:
         """Kicks a user from the chat.
@@ -388,8 +416,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.kick_chat_member(chat_id=self.id, user_id=user_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.kick_chat_member(chat_id=self.id, user_id=user_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def unban(self, user_id: int) -> bool:
         """Unban a previously banned user in the chat.
@@ -400,8 +430,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.unban_chat_member(chat_id=self.id, user_id=user_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.unban_chat_member(chat_id=self.id, user_id=user_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def restrict(self,
                        user_id: int,
@@ -424,7 +456,8 @@ class ChatFullInfo:
         Returns:
             bool: Whether the ban was successful.
         """
-        return await self.client.restrict_chat_member(
+        if isinstance(self.client, Client):
+            return await self.client.restrict_chat_member(
             chat_id=self.id,
             user_id=user_id,
             can_send_messages=can_send_messages,
@@ -433,7 +466,8 @@ class ChatFullInfo:
             can_add_web_page_previews=can_add_web_page_previews,
             until_date=until_date
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def promote(
             self,
@@ -463,7 +497,8 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.promote_chat_member(
+        if isinstance(self.client, Client):
+            return await self.client.promote_chat_member(
             chat_id=self.id,
             user_id=user_id,
             can_change_info=can_change_info,
@@ -475,7 +510,8 @@ class ChatFullInfo:
             can_pin_messages=can_pin_messages,
             can_promote_members=can_promote_members,
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def leave(self) -> bool:
         """Leave the chat.
@@ -483,8 +519,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.leave_chat(chat_id=self.id)
-
+        if isinstance(self.client, Client):
+            return await self.client.leave_chat(chat_id=self.id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def delete_message(self, message_id: int) -> bool:
         """Delete a message in a chat.
@@ -495,10 +533,12 @@ class ChatFullInfo:
             bool: True on success
         """
 
-        return await self.client.delete_message(chat_id=self.id, message_id=message_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.delete_message(chat_id=self.id, message_id=message_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
-    async def edit_message(self, message_id: int, text: str, reply_markup: Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"] = None):
+    async def edit_message(self, message_id: int, text: str, reply_markup: Optional[Union["InlineKeyboardMarkup", "ReplyKeyboardMarkup"]] = None):
         """Edit a message in a chat.
 
         Args:
@@ -509,8 +549,10 @@ class ChatFullInfo:
         Returns:
             Message: The edited message.
         """
-        return await self.client.edit_message(chat_id=self.id, message_id=message_id, text=text, reply_markup=reply_markup)
-
+        if isinstance(self.client, Client):
+            return await self.client.edit_message(chat_id=self.id, message_id=message_id, text=text, reply_markup=reply_markup)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def edit_message_reply_markup(self, message_id: int, reply_markup: Union["InlineKeyboardMarkup", None]) -> "Message":
         """Edit a message's reply markup without editing content.
@@ -522,12 +564,14 @@ class ChatFullInfo:
             Message: The edited message.
         """
 
-        return await self.client.edit_message_reply_markup(
+        if isinstance(self.client, Client):
+            return await self.client.edit_message_reply_markup(
             chat_id=self.id,
             message_id=message_id,
             reply_markup=reply_markup
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def is_joined(self, user_id: int) -> bool:
         """Check if a user is joined to the chat.
@@ -538,8 +582,10 @@ class ChatFullInfo:
         Returns:
             bool: True if the user is joined to the chat, False otherwise
         """
-        return await self.client.is_joined(user_id, self.id)
-
+        if isinstance(self.client, Client):
+            return await self.client.is_joined(user_id, self.id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def pin(self, message_id: int) -> bool:
         """Pin a message in the chat.
@@ -550,10 +596,12 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.pin_chat_message(
+        if isinstance(self.client, Client):
+            return await self.client.pin_chat_message(
             chat_id=self.id, message_id=message_id
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def unpin(self, message_id: int) -> bool:
         """Unpin a message in the chat.
@@ -561,8 +609,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.unpin_chat_message(chat_id=self.id, message_id=message_id)
-
+        if isinstance(self.client, Client):
+            return await self.client.unpin_chat_message(chat_id=self.id, message_id=message_id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def unpin_all(self) -> bool:
         """Unpin all messages in the chat.
@@ -570,8 +620,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.unpin_all_chat_messages(chat_id=self.id)
-
+        if isinstance(self.client, Client):
+            return await self.client.unpin_all_chat_messages(chat_id=self.id)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def set_title(self, title: str) -> bool:
         """Change the title of a chat.
@@ -582,8 +634,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.set_chat_title(chat_id=self.id, title=title)
-
+        if isinstance(self.client, Client):
+            return await self.client.set_chat_title(chat_id=self.id, title=title)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def set_description(self, description: str) -> bool:
         """Change the description of a chat.
@@ -594,10 +648,12 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.set_chat_description(
+        if isinstance(self.client, Client):
+            return await self.client.set_chat_description(
             chat_id=self.id, description=description
         )
-
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def set_photo(self, photo: str) -> bool:
         """Set the photo of the chat.
@@ -608,8 +664,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.set_chat_photo(chat_id=self.id, photo=photo)
-
+        if isinstance(self.client, Client):
+            return await self.client.set_chat_photo(chat_id=self.id, photo=photo)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def send_action(self, action: ChatAction) -> bool:
         """Send an action to the chat.
@@ -620,8 +678,10 @@ class ChatFullInfo:
         Returns:
             bool: True on success
         """
-        return await self.client.send_chat_action(chat_id=self.id, action=action)
-
+        if isinstance(self.client, Client):
+            return await self.client.send_chat_action(chat_id=self.id, action=action)
+        else:
+            raise PyroBaleException("You cannot use client functions without a valid client object")
     @smart_method
     async def mute(self, user_id: int) -> bool:
         """

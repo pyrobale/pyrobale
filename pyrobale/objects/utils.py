@@ -4,7 +4,7 @@ import asyncio
 import inspect
 from functools import wraps
 import functools
-from typing import Any, Callable, Union, TypeVar, Awaitable, overload
+from typing import Any, Callable, Optional, TypeVar, Awaitable, overload
 import aiohttp
 
 
@@ -12,7 +12,7 @@ def build_api_url(base: str, endpoint: str) -> str:
     return f"{base}/{endpoint}"
 
 
-async def make_post(url: str, data: dict = None, headers: dict = None) -> dict:
+async def make_post(url: str, data: Optional[dict] = None, headers: Optional[dict] = None) -> dict:
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=data, headers=headers) as response:
             json = await response.json()
@@ -27,7 +27,7 @@ async def make_post(url: str, data: dict = None, headers: dict = None) -> dict:
                     raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description!'}")
 
 
-async def make_get(url: str, headers: dict = None) -> dict:
+async def make_get(url: str, headers: Optional[dict] = None) -> dict:
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=headers) as response:
             json = await response.json()
@@ -41,6 +41,8 @@ async def make_get(url: str, headers: dict = None) -> dict:
                         raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else 'No description returned in error'}")
                     else:
                         raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
+            else:
+                raise PyroBaleException("Unexcepted Error")
 
 async def make_via_multipart(url: str, data: aiohttp.FormData) -> dict:
     async with aiohttp.ClientSession() as session:
@@ -97,7 +99,10 @@ def async_to_sync(func: Callable[..., Awaitable[Any]]) -> Callable[..., Any]:
                 raise RuntimeError("Cannot call async function from running event loop.")
         except RuntimeError:
             pass
-        return asyncio.run(func(*args, **kwargs))
+        if inspect.iscoroutinefunction(func):
+            return asyncio.run(func(*args, **kwargs))
+        else:
+            return func(*args, **kwargs)
     return wrapper
 
 @overload

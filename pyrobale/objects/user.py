@@ -7,11 +7,12 @@ if TYPE_CHECKING:
 class User:
     def __init__(
         self,
-        id: int = None,
-        is_bot: bool = None,
-        first_name: str = None,
+        id: int,
+        is_bot: bool,
+        first_name: str,
         last_name: Optional[str] = None,
         username: Optional[str] = None,
+        language_code: Optional[str] = None,
         **kwargs
     ):
         self.id = id
@@ -19,4 +20,5 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
+        self.language_code = language_code
         self.client: Optional["Client"] = kwargs.get("client", None)
