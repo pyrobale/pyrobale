@@ -81,6 +81,8 @@ class Client:
         self.running = False
         self.last_update_id = 0
         self.state_machine = StateMachine()
+        self.tick_handlers = []
+        self.ready_handlers = []
 
         self.handler_executor = ThreadPoolExecutor(
             max_workers=max_workers,
@@ -1703,6 +1705,48 @@ class Client:
         """Decorator for handling successful payment updates."""
         return self.base_handler_decorator(UpdatesTypes.SUCCESSFUL_PAYMENT)(*filters)
 
+    def on_ready(self):
+        def decorator(callback):
+            self.ready_handlers.append(callback)
+        return decorator
+
+    def on_tick(self, interval: float):
+        """Decorator for repeating a function every n seconds"""
+        def decorator(callback: Callable):
+            async def tick_loop():
+                while self.running:
+                    try:
+                        if inspect.iscoroutinefunction(callback):
+                            await callback()
+                        else:
+                            loop = asyncio.get_event_loop()
+                            await loop.run_in_executor(self.handler_executor, callback)
+                    except Exception as e:
+                        print(f"Error in tick handler: {e}")
+                        traceback.print_exc()
+                    await asyncio.sleep(interval)
+            
+            ticker_task = None
+            
+            def start_ticker():
+                nonlocal ticker_task
+                if ticker_task is None or ticker_task.done():
+                    ticker_task = asyncio.create_task(tick_loop())
+            
+            self.tick_handlers.append({
+                "interval": interval,
+                "callback": callback,
+                "start": start_ticker,
+                "task": lambda: ticker_task
+            })
+            
+            if self.running:
+                start_ticker()
+            
+            return callback
+        return decorator
+
+
     def add_handler(self, update_type: UpdatesTypes, callback: Callable, *filters: Any, **kwargs):
         """Register a handler for specific update type.
 
@@ -1752,6 +1796,17 @@ class Client:
         self.me = await self.get_me()
 
         self.running = True
+        for tick_handler in self.tick_handlers:
+            if "start" in tick_handler:
+                tick_handler["start"]()
+        
+        for ready_handler in self.ready_handlers:
+            if inspect.iscoroutinefunction(ready_handler):
+                await ready_handler()
+            else:
+                loop = asyncio.get_event_loop()
+                await loop.run_in_executor(self.handler_executor, ready_handler)
+
         while self.running:
             try:
                 updates = await self.get_updates(
