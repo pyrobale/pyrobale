@@ -28,6 +28,7 @@ from ..objects.chat import Chat
 from ..objects.user import User
 from ..objects.forwardorigin import ForwardOrigin
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
+from .messageentity import MessageEntity
 from .utils import smart_method
 
 
@@ -64,6 +65,7 @@ class Message:
         successful_payment (SuccessfulPayment): Message is a service message about successful payment
         web_app_data (WebAppData): Data from a Web App
         reply_markup (InlineKeyboardMarkup): Inline keyboard attached to the message
+        entities (MessageEntity): A certain part of message
         client (Client): Client instance associated with this message
     """
 
@@ -96,6 +98,7 @@ class Message:
             web_app_data: Optional["WebAppData"] = None,
             reply_markup: Optional["InlineKeyboardMarkup"] = None,
             reply_to_message: Optional["Message"] = None,
+            entities: Optional[list["MessageEntity"]] = None,
             client: Optional["Client"] = None,
             **kwargs
     ):
@@ -129,6 +132,7 @@ class Message:
             web_app_data: Web App data
             reply_markup: Inline keyboard markup
             reply_to_message: Reply to message object
+            entities: A certain part of message like mentions or commands
             client: Client instance associated with this message
             **kwargs: Additional keyword arguments
         """
@@ -183,6 +187,10 @@ class Message:
         self.successful_payment: Optional["SuccessfulPayment"] = successful_payment
         self.web_app_data: Optional["WebAppData"] = web_app_data
         self.reply_markup: Optional["InlineKeyboardMarkup"] = reply_markup
+        if entities:
+            self.entities = [MessageEntity(**e) for e in entities]
+        else:
+            self.entities = []
 
     @property
     async def is_admin(self):

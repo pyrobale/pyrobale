@@ -1,77 +1,100 @@
 from typing import TYPE_CHECKING
-
-
 from typing import Optional, Union
 from .utils import smart_method
+from .enums import ChatAction, ChatType
 
 if TYPE_CHECKING:
     from .chatphoto import ChatPhoto
+    from ..client import Client
     from .message import Message
     from .chatmember import ChatMember
-    from ..client import Client
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
-from .enums import ChatAction, ChatType
 
-
-class Chat:
-    """Represents a chat in the Bale messenger.
-
+class ChatFullInfo:
+    """Represents full info of a chat, usually returns in `get_chat`
+    
     Parameters:
-        id (int): Unique identifier for this chat
-        type (str): Type of chat, can be either "private", "group", or "channel"
-        title (Optional[str]): Title, for groups and channels
-        username (Optional[str]): Username, for private chats and channels if available
-        first_name (Optional[str]): First name of the other party in a private chat
-        last_name (Optional[str]): Last name of the other party in a private chat
-        photo (Optional[ChatPhoto]): Chat photo object
+        id (int): Unique id of the chat.
+        type (String or enums.ChatType): The type of the chat that can be private, group or channel.
+        title (Optional[Str]): The title of chat in groups and channels.
+        username (Optional[Str]): The username of chat (if exists).
+        first_name (Optional[Str]): The first name of user in a private chat.
+        last_name (Optional[Str]): The last name of user in a private chat.
+        photo (Optional[ChatPhoto]): The photo of chat or the profile of the user. (if exists)
+        bio (Optional[Str]): The biography of user. (if exists)
+        description (Optional[Str]): The description of chat. (if exists)
+        invite_link (Optional[Str]): The invite link of chat or channel. (if the bot has permission to make one)
+        linked_chat_id (Optional[Str]): The chat id of the linked comment group to a channel. (if exists)
         **kwargs: Additional keyword arguments
-
+    
     Attributes:
-        id (int): Unique identifier for this chat
-        type (ChatType): Type of chat
-        title (str): Chat title
-        username (str): Chat username
-        first_name (str): First name
-        last_name (str): Last name
-        photo (ChatPhoto): Chat photo
+        id (int): Unique id of the chat.
+        type (ChatType): The type of the chat that can be private, group or channel.
+        title (Str): The title of chat in groups and channels.
+        username (Str): The username of chat (if exists).
+        first_name (Str): The first name of user in a private chat.
+        last_name (Str): The last name of user in a private chat.
+        full_name (Str): The property that returns the first_name and last_name together
+        photo (ChatPhoto): The photo of chat or the profile of the user. (if exists)
+        bio (Str): The biography of user. (if exists)
+        description (Str): The description of chat. (if exists)
+        invite_link (Str): The invite link of chat or channel. (if the bot has permission to make one)
+        linked_chat_id (Str): The chat id of the linked comment group to a channel. (if exists)
         client (Client): Client instance
     """
 
-    def __init__(
-            self,
-            id: int = None,
-            type: str = None,
-            title: Optional[str] = None,
-            username: Optional[str] = None,
-            photo: Optional["ChatPhoto"] = None,
-            client: Optional["Client"] = None,
-            **kwargs
+    def __init__(self,
+        id: int,
+        type: Union[str, ChatType],
+        title: Optional[str] = None,
+        username: Optional[str] = None,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        photo: Optional["ChatPhoto"] = None,
+        bio: Optional[str] = None,
+        description: Optional[str] = None,
+        invite_link: Optional[str] = None,
+        linked_chat_id: Optional[str] = None,
+        client: Optional["Client"] = None
     ):
         self.id = id
-        self.type = ChatType(type)
+        if isinstance(type, str):
+            self.type = ChatType(type)
+        else:
+            self.type = type
         self.title = title
         self.username = username
+        self.first_name = first_name
+        self.last_name = last_name
         self.photo: "ChatPhoto" = photo
+        self.bio = bio
+        self.description = description
+        self.invite_link = invite_link
+        self.linked_chat_id = linked_chat_id
         self.client: "Client" = client
 
-
     @property
-    def private(self):
+    def full_name(self):
+        return self.first_name + self.last_name
+    
+    @property
+    def is_private(self):
         return self.type == ChatType.PRIVATE
-
+    
     @property
-    def group(self):
+    def is_group(self):
         return self.type == ChatType.GROUP
-
+    
     @property
-    def channel(self):
+    def is_channel(self):
         return self.type == ChatType.CHANNEL
-
+    
     @property
-    def has_username(self):
-        return self.username is not None
-
+    def has_linked_group(self):
+        if self.linked_chat_id: return True 
+        else: return False
+    
     @smart_method
     async def send_message(
             self,
@@ -95,7 +118,7 @@ class Chat:
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup,
         )
-
+    
     @smart_method
     async def get_chat_member(self, user_id: int) -> "ChatMember":
         """Get information about a member of a chat.
