@@ -7,7 +7,7 @@
 
     <style>
     @font-face {
-        src: url("https://pyrobale.ir/arad.ttf") format("truetype");
+        src: url("https://pyrobale.ir/Arad.ttf") format("truetype");
         font-family: "Arad";
     }
 
