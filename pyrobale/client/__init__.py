@@ -1390,7 +1390,7 @@ class Client:
             url = self.requests_base + handler
             data = await make_via_multipart(url, form)
         else:
-            query = self.requests_base + handler + f'?chat_id={chat_id}&sticker={sticker.file_id if isinstance(sticker, Sticker) else sticker}{f'&reply_to_message_id={reply_to_message_id}' if reply_to_message_id else ''}'
+            query = self.requests_base + handler + f"?chat_id={chat_id}&sticker={sticker.file_id if isinstance(sticker, Sticker) else sticker}{f'&reply_to_message_id={reply_to_message_id}' if reply_to_message_id else ''}"
             data = await make_get(
                 query
             )
