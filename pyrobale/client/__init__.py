@@ -1360,6 +1360,65 @@ class Client:
             return InviteLink(**pythonize(data.get("result", {})))
         except AttributeError:
             raise ForbiddenException("you cannot access this chat")
+        
+    @smart_method
+    async def send_sticker(
+            self,
+            chat_id: Union[int, str],
+            sticker: Union[InputFile, Sticker, str],
+            reply_to_message_id: Optional[int] = None
+    ) -> Message:
+        """Sends a sticer to a chat.
+        
+        Args:
+            chat_id (Union[int, str]): The chat to send the message to.
+            sticker (Union[InputFile, Sticker, str]): The sticker to send.
+            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
+        """
+
+        handler = "/sendSticker"
+        if isinstance(sticker, InputFile):
+            form = aiohttp.FormData()
+            form.add_field("chat_id", str(chat_id))
+    
+            if sticker.file_name:
+                form.add_field("sticker", sticker.file_input, filename=sticker.file_name or "sticker.webp")
+    
+            if reply_to_message_id:
+                form.add_field("reply_to_message_id", str(reply_to_message_id))
+    
+            url = self.requests_base + handler
+            data = await make_via_multipart(url, form)
+        else:
+            query = self.requests_base + handler + f'?chat_id={chat_id}&sticker={sticker.file_id if isinstance(sticker, Sticker) else sticker}{f'&reply_to_message_id={reply_to_message_id}' if reply_to_message_id else ''}'
+            data = await make_get(
+                query
+            )
+        result = pythonize(data["result"])
+        return Message(**result, client=self)
+
+
+    @smart_method
+    async def upload_sticker_file(self,
+        user_id: int,
+        sticker: InputFile
+        ):
+        """A method that will be used for uploading stickers to use in `create_new_sticker_pack` and `add_sticker_to_set`.
+
+        Args:
+            user_id (int): The user id of owner of the sticker.
+            sticker (InputFile): The file to be uploaded as a sticker (allowed formats are .TGS, .PNG, .WEBP, .WEBM)
+        
+        Returns:
+            Sticker: The uploaded file
+        """
+        
+        form = aiohttp.FormData()
+        form.add_field("user_id", user_id)
+        form.add_field("sticker", sticker.file_input, filename=sticker.file_name or "Sticker.webp")
+        data = await make_via_multipart(self.requests_base + '/uploadStickerFile', form)
+        result = pythonize(data['result'])
+        print(result)
 
     @smart_method
     async def revoke_chat_invite_link(self, chat_id: int, invite_link: str) -> str:
