@@ -1899,6 +1899,71 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="s2">&quot;you cannot access this chat&quot;</span><span class="p">)</span></div>
 
+        
+    <span class="nd">@smart_method</span>
+<div class="viewcode-block" id="Client.send_sticker">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.send_sticker">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_sticker</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+            <span class="n">sticker</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="n">Sticker</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+            <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Message</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a sticer to a chat.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
+<span class="sd">            sticker (Union[InputFile, Sticker, str]): The sticker to send.</span>
+<span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendSticker&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sticker</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+    
+            <span class="k">if</span> <span class="n">sticker</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;sticker&quot;</span><span class="p">,</span> <span class="n">sticker</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">sticker</span><span class="o">.</span><span class="n">file_name</span> <span class="ow">or</span> <span class="s2">&quot;sticker.webp&quot;</span><span class="p">)</span>
+    
+            <span class="k">if</span> <span class="n">reply_to_message_id</span><span class="p">:</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
+    
+            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;?chat_id=</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&amp;sticker=</span><span class="si">{</span><span class="n">sticker</span><span class="o">.</span><span class="n">file_id</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">sticker</span><span class="p">,</span><span class="w"> </span><span class="n">Sticker</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">sticker</span><span class="si">}{</span><span class="sa">f</span><span class="s1">&#39;&amp;reply_to_message_id=</span><span class="si">{</span><span class="n">reply_to_message_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">reply_to_message_id</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span>
+                <span class="n">query</span>
+            <span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">result</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+
+    <span class="nd">@smart_method</span>
+<div class="viewcode-block" id="Client.upload_sticker_file">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.upload_sticker_file">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">upload_sticker_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">sticker</span><span class="p">:</span> <span class="n">InputFile</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that will be used for uploading stickers to use in `create_new_sticker_pack` and `add_sticker_to_set`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id (int): The user id of owner of the sticker.</span>
+<span class="sd">            sticker (InputFile): The file to be uploaded as a sticker (allowed formats are .TGS, .PNG, .WEBP, .WEBM)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Sticker: The uploaded file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;sticker&quot;</span><span class="p">,</span> <span class="n">sticker</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">sticker</span><span class="o">.</span><span class="n">file_name</span> <span class="ow">or</span> <span class="s2">&quot;Sticker.webp&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s1">&#39;/uploadStickerFile&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
 
     <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.revoke_chat_invite_link">

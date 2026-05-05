@@ -1424,6 +1424,44 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.send_sticker">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">send_sticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sticker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_to_message_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.send_sticker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.send_sticker" title="Link to this definition">¶</a></dt>
+<dd><p>Sends a sticer to a chat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chat_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The chat to send the message to.</p></li>
+<li><p><strong>sticker</strong> (<em>Union</em><em>[</em><a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a><em>, </em><a class="reference internal" href="../objects/sticker/index.html#pyrobale.objects.sticker.Sticker" title="pyrobale.objects.sticker.Sticker"><em>Sticker</em></a><em>, </em><em>str</em><em>]</em>) – The sticker to send.</p></li>
+<li><p><strong>reply_to_message_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – The message ID to reply to. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../objects/message/index.html#pyrobale.objects.message.Message" title="pyrobale.objects.message.Message">pyrobale.objects.message.Message</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.upload_sticker_file">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">upload_sticker_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sticker</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.upload_sticker_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.upload_sticker_file" title="Link to this definition">¶</a></dt>
+<dd><p>A method that will be used for uploading stickers to use in <cite>create_new_sticker_pack</cite> and <cite>add_sticker_to_set</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>int</em>) – The user id of owner of the sticker.</p></li>
+<li><p><strong>sticker</strong> (<a class="reference internal" href="../objects/inputfile/index.html#pyrobale.objects.inputfile.InputFile" title="pyrobale.objects.inputfile.InputFile"><em>InputFile</em></a>) – The file to be uploaded as a sticker (allowed formats are .TGS, .PNG, .WEBP, .WEBM)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The uploaded file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../objects/sticker/index.html#pyrobale.objects.sticker.Sticker" title="pyrobale.objects.sticker.Sticker">Sticker</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.revoke_chat_invite_link">
 <span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">revoke_chat_invite_link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invite_link</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.revoke_chat_invite_link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.revoke_chat_invite_link" title="Link to this definition">¶</a></dt>
 <dd><p>Revoke an invite link created by the bot.</p>
@@ -1920,6 +1958,8 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.ask_review"><code class="docutils literal notranslate"><span class="pre">Client.ask_review()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.answer_pre_checkout_query"><code class="docutils literal notranslate"><span class="pre">Client.answer_pre_checkout_query()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.create_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.create_chat_invite_link()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.send_sticker"><code class="docutils literal notranslate"><span class="pre">Client.send_sticker()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.upload_sticker_file"><code class="docutils literal notranslate"><span class="pre">Client.upload_sticker_file()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.revoke_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.revoke_chat_invite_link()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.export_chat_invite_link"><code class="docutils literal notranslate"><span class="pre">Client.export_chat_invite_link()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.send_chat_action"><code class="docutils literal notranslate"><span class="pre">Client.send_chat_action()</span></code></a></li>

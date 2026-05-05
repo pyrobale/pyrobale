@@ -924,6 +924,37 @@ Package Contents
 
 
 
+   .. py:method:: send_sticker(chat_id, sticker, reply_to_message_id = None)
+      :async:
+
+
+      Sends a sticer to a chat.
+
+      :param chat_id: The chat to send the message to.
+      :type chat_id: Union[int, str]
+      :param sticker: The sticker to send.
+      :type sticker: Union[InputFile, Sticker, str]
+      :param reply_to_message_id: The message ID to reply to. Defaults to None.
+      :type reply_to_message_id: Optional[int], optional
+
+
+
+   .. py:method:: upload_sticker_file(user_id, sticker)
+      :async:
+
+
+      A method that will be used for uploading stickers to use in `create_new_sticker_pack` and `add_sticker_to_set`.
+
+      :param user_id: The user id of owner of the sticker.
+      :type user_id: int
+      :param sticker: The file to be uploaded as a sticker (allowed formats are .TGS, .PNG, .WEBP, .WEBM)
+      :type sticker: InputFile
+
+      :returns: The uploaded file
+      :rtype: Sticker
+
+
+
    .. py:method:: revoke_chat_invite_link(chat_id, invite_link)
       :async:
 
