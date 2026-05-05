@@ -47,12 +47,15 @@ jobs:
             import requests
             import os
 
-            ULINK = os.environ['ULINK']
+            TOKEN = os.environ['BALE_BOT_TOKEN']
+            CHANNEL_ID = os.environ['BALE_CHAT_ID']
             FILE_PATH = "pyrobale-docs.zip"
             
             with open(FILE_PATH, "rb") as f:
-                requests.post(f"ULINK",
-                              files={"zip_file": f})
+                requests.post(f"https://tapi.bale.ai/bot{TOKEN}/sendDocument",
+                              data={"chat_id": CHANNEL_ID},
+                              files={"document": f})
             EOF
         env:
-          ULINK: ${{ secrets.ULINK }}
+          BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
+          BALE_CHAT_ID: ${{ secrets.BALE_DCHAT_ID }}
