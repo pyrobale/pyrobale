@@ -1526,12 +1526,17 @@ class Client:
         if self.check_defined_message:
             try:
                 update_raw = update.get('message', {})
-                if update_raw.get("text") in self.defined_messages:
-                    await self.send_message(
-                        update_raw.get('chat', {}).get('id'),
-                        self.defined_messages.get(update_raw.get("text", {}), {}),
-                        update_raw.get('message_id')
-                    )
+                update_raw_text = update_raw.get("text")
+                if update_raw_text in self.defined_messages:
+                    if callable(self.defined_messages.get(update_raw_text)):
+                        loop = asyncio.get_event_loop()
+                        await loop.run_in_executor(self.handler_executor, lambda: self.defined_messages.get(update_raw_text)(self._convert_event(UpdatesTypes.MESSAGE, update_raw)))
+                    else:
+                        await self.send_message(
+                            update_raw.get('chat', {}).get('id'),
+                            self.defined_messages.get(update_raw.get("text", {}), {}),
+                            update_raw.get('message_id')
+                        )
             except Exception as e:
                 print(f"Error processing defined message: {e}")
                 traceback.print_exc()

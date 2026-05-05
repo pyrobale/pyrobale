@@ -85,13 +85,13 @@ def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
 
 def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
     """
-    Check if the event text or caption or callbackQuery sender is in allowed user.
+    Checks if the event User is joined in specified chats.
     
     Args:
         allowed_users (List[Union["User", int]]): Allowed users to use this handler.
 
     Returns:
-        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
+        Callable: A function that checks if the event User is joined in specified chats
     """
     if type(chat_ids) in [str, int]:
         try:
