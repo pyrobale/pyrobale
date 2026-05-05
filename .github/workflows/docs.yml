@@ -42,7 +42,8 @@ jobs:
 
       - name: Zip docs and send to Bale
         run: |
-            zip -r pyrobale-docs.zip ./docs/build/html
+            cd ./docs/build/html
+            zip -r pyrobale-docs.zip .
             python3 << 'EOF'
             import requests
             import os
