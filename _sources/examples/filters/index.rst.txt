@@ -37,3 +37,65 @@ how to use filters in handlers
 
 
     bot.run()
+
+List of all filters:
+
+- `equals(excepted_text: str)` 
+  - **Usable in Message & CallbackQuery**
+  - Checks if message text/caption or callback data is equal with given text
+
+- `startswith(excepted_text: str)`
+  - **Usable in Message & CallbackQuery**
+  - Checks if message text/caption or callback data is starting with given text
+
+- `regex(pattern: str)`
+  - **Usable in Message & CallbackQuery**
+  - Checks the event text or caption with given pattern using regex
+
+- `from_users(allowed_users: Union[List[Union["User", int, str]], int, str])`
+  - **Usable in All types of events**
+  - Check if the event text or caption or callbackQuery sender is in allowed user.
+
+- `is_joined(chat_ids: Union[List[Union["User", int, str]], int, str])`
+  - **Usable in All types of events**
+  - Check if the event User is joined in specified chats
+
+- `pv`
+  - **Usable in All types of events**
+  - checks if the event is happening in a private chat
+
+- `group`
+  - **Usable in All types of events**
+  - checks if the event is happening in a group chat
+
+- `digit`
+  - **Usable in All types of events**
+  - Check if the event text or caption or callbackQuery data is digit
+
+- `text`
+  - **Usable in All types of events**
+  - Checks if the event is having text
+
+- `photo`
+  - **Usable in All types of events**
+  - Checks if the event is having photo
+
+- `video`
+  - **Usable in All types of events**
+  - Checks if the event is having video
+
+- `audio`
+  - **Usable in All types of events**
+  - Checks if the event is having audio
+
+- `voice`
+  - **Usable in All types of events**
+  - Checks if the event is having voice
+
+- `contact`
+  - **Usable in All types of events**
+  - Checks if the event is having contact
+
+- `location`
+  - **Usable in All types of events**
+  - Checks if the event is having location

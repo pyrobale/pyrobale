@@ -399,6 +399,54 @@
 <span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>List of all filters:</p>
+<ul class="simple">
+<li><p><cite>equals(excepted_text: str)</cite>
+- <strong>Usable in Message &amp; CallbackQuery</strong>
+- Checks if message text/caption or callback data is equal with given text</p></li>
+<li><p><cite>startswith(excepted_text: str)</cite>
+- <strong>Usable in Message &amp; CallbackQuery</strong>
+- Checks if message text/caption or callback data is starting with given text</p></li>
+<li><p><cite>regex(pattern: str)</cite>
+- <strong>Usable in Message &amp; CallbackQuery</strong>
+- Checks the event text or caption with given pattern using regex</p></li>
+<li><p><cite>from_users(allowed_users: Union[List[Union[“User”, int, str]], int, str])</cite>
+- <strong>Usable in All types of events</strong>
+- Check if the event text or caption or callbackQuery sender is in allowed user.</p></li>
+<li><p><cite>is_joined(chat_ids: Union[List[Union[“User”, int, str]], int, str])</cite>
+- <strong>Usable in All types of events</strong>
+- Check if the event User is joined in specified chats</p></li>
+<li><p><cite>pv</cite>
+- <strong>Usable in All types of events</strong>
+- checks if the event is happening in a private chat</p></li>
+<li><p><cite>group</cite>
+- <strong>Usable in All types of events</strong>
+- checks if the event is happening in a group chat</p></li>
+<li><p><cite>digit</cite>
+- <strong>Usable in All types of events</strong>
+- Check if the event text or caption or callbackQuery data is digit</p></li>
+<li><p><cite>text</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having text</p></li>
+<li><p><cite>photo</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having photo</p></li>
+<li><p><cite>video</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having video</p></li>
+<li><p><cite>audio</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having audio</p></li>
+<li><p><cite>voice</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having voice</p></li>
+<li><p><cite>contact</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having contact</p></li>
+<li><p><cite>location</cite>
+- <strong>Usable in All types of events</strong>
+- Checks if the event is having location</p></li>
+</ul>
 </section>
 
         </article>
