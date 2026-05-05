@@ -49,7 +49,7 @@ html_theme_options = {
     "source_branch": "main",
     "source_directory": "docs/source/",
     "navigation_with_keys": True,
-    "announcement": "<strong>🚀 Pyrobale Beta!</strong> - Modern library for Bale bot API",
+    "announcement": "<strong>🚀 Pyrobale Beta V6!</strong> - Join our <a href='https://ble.ir/pyrobale'>Bale Channel</a>",
     "footer_icons": [
         {
             "name": "GitHub",
