@@ -122,4 +122,4 @@ jobs:
           EOF
         env:
           BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
-          BALE_CHAT_ID: ${{ secrets.BALE_CHAT_ID }}
+          BALE_CHAT_ID: ${{ secrets.BALE_COMMITS_CHAT_ID }}

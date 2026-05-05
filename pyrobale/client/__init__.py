@@ -1105,7 +1105,7 @@ class Client:
         return data.get("result", {}).get("status") in ["member", "creator", "administrator"]
 
     @smart_method
-    async def get_chat(self, chat_id: Union[int,str]) -> Chat:
+    async def get_chat(self, chat_id: Union[int,str]) -> ChatFullInfo:
         """Get up to date information about the chat.
 
         Args:
@@ -1528,9 +1528,10 @@ class Client:
                 update_raw = update.get('message', {})
                 update_raw_text = update_raw.get("text")
                 if update_raw_text in self.defined_messages:
-                    if callable(self.defined_messages.get(update_raw_text)):
+                    cb = self.defined_messages.get(update_raw_text)
+                    if callable(cb) and cb:
                         loop = asyncio.get_event_loop()
-                        await loop.run_in_executor(self.handler_executor, lambda: self.defined_messages.get(update_raw_text)(self._convert_event(UpdatesTypes.MESSAGE, update_raw)))
+                        await loop.run_in_executor(self.handler_executor, lambda: cb(self._convert_event(UpdatesTypes.MESSAGE, update_raw)))
                     else:
                         await self.send_message(
                             update_raw.get('chat', {}).get('id'),
