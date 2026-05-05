@@ -146,7 +146,7 @@ Module Contents
 
 
    .. py:attribute:: photo
-      :type:  Optional[pyrobale.objects.chatphoto.ChatPhoto]
+      :type:  pyrobale.objects.chatphoto.ChatPhoto
       :value: None
 
 
@@ -172,7 +172,7 @@ Module Contents
 
 
    .. py:attribute:: client
-      :type:  Optional[pyrobale.client.Client]
+      :type:  pyrobale.client.Client
       :value: None
 
 
