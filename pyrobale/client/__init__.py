@@ -1907,6 +1907,27 @@ class Client:
         finally:
             self.handler_executor.shutdown(wait=True)
 
+    def set_state(self, user: Union[User, int, str], state: str):
+        if isinstance(user, User):
+            uid = user.id
+        if isinstance(user, str) and user.isdigit():
+            uid = int(user)
+        self.state_machine.set_state(uid, state)
+    
+    def del_state(self, user: Union[User, int, str]):
+        if isinstance(user, User):
+            uid = user.id
+        if isinstance(user, str) and user.isdigit():
+            uid = int(user)
+        self.state_machine.del_state(uid)
+    
+    def get_state(self, user: Union[User, int, str]):
+        if isinstance(user, User):
+            uid = user.id
+        if isinstance(user, str) and user.isdigit():
+            uid = int(user)
+        self.state_machine.get_state(uid)
+
     @smart_method
     async def stop(self) -> None:
         """Stop the client."""

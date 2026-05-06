@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from typing import List, Union, TYPE_CHECKING
+from typing import List, Optional, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ..objects.user import User
@@ -109,6 +109,27 @@ def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
                     return False
             return True
             
+        except:
+            return False
+    return check
+
+def at_state(state: Optional[str] = None):
+    """
+    Checks if the event User is at specified state.
+    
+    Args:
+        state (Optional[str]): state condition
+
+    Returns:
+        Callable: A function that checks if the event User is at specified state.
+    
+    """
+
+    def check(event, client: 'Client', *args):
+        try:
+            event_user = getattr(event, "user", None)
+            event_user_id = getattr(event_user, "id")
+            return client.state_machine.get_state(event_user_id) == state
         except:
             return False
     return check
