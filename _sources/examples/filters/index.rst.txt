@@ -60,6 +60,10 @@ List of all filters:
   - **Usable in All types of events**
   - Check if the event User is joined in specified chats
 
+- `at_state(state: str)`
+  - **Usable in All types of events**
+  - Check if the event User is at specified state
+
 - `pv`
   - **Usable in All types of events**
   - checks if the event is happening in a private chat
