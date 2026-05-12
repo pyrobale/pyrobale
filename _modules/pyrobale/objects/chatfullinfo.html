@@ -354,7 +354,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.chatfullinfo</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">smart_method</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAction</span><span class="p">,</span> <span class="n">ChatType</span>
@@ -414,7 +414,10 @@
         <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">invite_link</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">linked_chat_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">accent_color_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_reaction_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Client&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <div class="viewcode-block" id="ChatFullInfo.id">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.id">[docs]</a>
@@ -463,6 +466,14 @@
 <div class="viewcode-block" id="ChatFullInfo.client">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.client">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span> <span class="s2">&quot;Client&quot;</span> <span class="o">=</span> <span class="n">client</span></div>
+
+<div class="viewcode-block" id="ChatFullInfo.accent_color_id">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.accent_color_id">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accent_color_id</span> <span class="o">=</span> <span class="n">accent_color_id</span></div>
+
+<div class="viewcode-block" id="ChatFullInfo.max_reaction_count">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/chatfullinfo/index.html#pyrobale.objects.chatfullinfo.ChatFullInfo.max_reaction_count">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_reaction_count</span> <span class="o">=</span> <span class="n">max_reaction_count</span></div>
 
 
     <span class="nd">@property</span>

@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ChatFullInfo(id, type, title = None, username = None, first_name = None, last_name = None, photo = None, bio = None, description = None, invite_link = None, linked_chat_id = None, client = None)
+.. py:class:: ChatFullInfo(id, type, title = None, username = None, first_name = None, last_name = None, photo = None, bio = None, description = None, invite_link = None, linked_chat_id = None, accent_color_id = None, max_reaction_count = None, client = None, *args, **kwargs)
 
    Represents full info of a chat, usually returns in `get_chat`
 
@@ -173,6 +173,16 @@ Module Contents
 
    .. py:attribute:: client
       :type:  pyrobale.client.Client
+      :value: None
+
+
+
+   .. py:attribute:: accent_color_id
+      :value: None
+
+
+
+   .. py:attribute:: max_reaction_count
       :value: None
 
 

@@ -335,12 +335,15 @@ Module Contents
 
 
 
-   .. py:property:: is_admin
+   .. py:method:: is_admin()
+      :async:
+
 
       Check if the message sender is an admin in the chat.
 
       :returns: True if user is admin or creator, False otherwise
       :rtype: bool
+
 
 
    .. py:method:: reply(text, reply_markup = None)
