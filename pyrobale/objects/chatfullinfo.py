@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from typing import Optional, Union
 from .utils import smart_method
 from .enums import ChatAction, ChatType
@@ -56,7 +56,10 @@ class ChatFullInfo:
         description: Optional[str] = None,
         invite_link: Optional[str] = None,
         linked_chat_id: Optional[str] = None,
-        client: Optional["Client"] = None
+        accent_color_id: Optional[Any] = None,
+        max_reaction_count: Optional[Any] = None,
+        client: Optional["Client"] = None,
+        *args, **kwargs
     ):
         self.id = id
         if isinstance(type, str):
@@ -73,6 +76,8 @@ class ChatFullInfo:
         self.invite_link = invite_link
         self.linked_chat_id = linked_chat_id
         self.client: "Client" = client
+        self.accent_color_id = accent_color_id
+        self.max_reaction_count = max_reaction_count
 
     @property
     def full_name(self):

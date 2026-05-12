@@ -192,7 +192,7 @@ class Message:
         else:
             self.entities = []
 
-    @property
+    @smart_method
     async def is_admin(self):
         """Check if the message sender is an admin in the chat.
 
@@ -205,7 +205,7 @@ class Message:
         try:
             member = await self.client.get_chat_member(self.chat.id, self.user.id)
             return member.status in ['administrator', 'creator']
-        except Exception:
+        except Exception as e:
             return False
 
     @smart_method
