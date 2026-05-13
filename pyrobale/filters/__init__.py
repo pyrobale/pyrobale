@@ -155,8 +155,7 @@ def _group():
     def check(event, *args):
         try:
             chat = getattr(event, "chat")
-            type = getattr(chat, "type")
-            return type == "group"
+            return chat.type == chat.type.GROUP
         except:
             return False
     return check
