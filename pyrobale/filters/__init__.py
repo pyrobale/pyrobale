@@ -1,5 +1,4 @@
 import re
-from enum import Enum
 from typing import List, Optional, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -155,8 +154,43 @@ def _group():
     def check(event, *args):
         try:
             chat = getattr(event, "chat")
-            type = getattr(chat, "type")
-            return type == "group"
+            return chat.type == chat.type.GROUP
+        except:
+            return False
+    return check
+
+def _reply():
+    """
+    Checks if the event is a reply to a message.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "reply_to_message") is not None
+        except:
+            return False
+    return check
+
+def _forward():
+    """
+    Checks if the event is a forwarded message.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "forward_from") is not None
+        except:
+            return False
+    return check
+
+def _gif():
+    """
+    Checks if the event has a gif media.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "animation") is not None
         except:
             return False
     return check
@@ -200,7 +234,10 @@ private = pv = _private()
 channel = _channel()
 group = _group()
 digit = _digit()
+reply = _reply()
+forward = _forward()
+gif = _gif()
 
-__all__ = [
+# __all__ = [
     
-]
+# ]
