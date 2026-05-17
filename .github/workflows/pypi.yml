@@ -1,8 +1,12 @@
 name: Publish to PyPI
 
 on:
-  push:
-    branches: [ main, master ]
+  pull_request:
+    types: [closed]
+    branches: [ main ]
+    paths:
+      - 'pyproject.toml'
+
 
 jobs:
   deploy:
