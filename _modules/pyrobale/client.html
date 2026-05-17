@@ -354,7 +354,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.client</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Awaitable</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Awaitable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
@@ -442,6 +442,10 @@
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.requests_base">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="n">token</span></div>
 
+<div class="viewcode-block" id="Client.clientsession">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.clientsession">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="Client.handlers">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.handlers">[docs]</a>
@@ -499,6 +503,71 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">defined_messages</span> <span class="o">=</span> <span class="p">{}</span></div>
 
 
+<div class="viewcode-block" id="Client.build_api_url">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.build_api_url">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_api_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Client.make_post">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_post">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">json</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="n">json</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;error_code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">NotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error not found 404 : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description returned in error&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;error_code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error Forbidden 403 : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description returned in error&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown error : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description!&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Client.make_get">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_get">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="s2">&quot;Unwanted Error from bale: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+                <span class="n">json</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="s1">&#39;result&#39;</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">return</span> <span class="n">json</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;error_code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">NotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error not found 404 : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description returned in error&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;error_code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error Forbidden 403 : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description returned in error&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown error : </span><span class="si">{</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No description&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Client.make_via_multipart">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_via_multipart">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_via_multipart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+                <span class="n">json_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">json_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ok&#39;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">json_response</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">error_code</span> <span class="o">=</span> <span class="n">json_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error_code&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">description</span> <span class="o">=</span> <span class="n">json_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;No description&#39;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">error_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">NotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error not found 404 : </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">error_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">ForbiddenException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error Forbidden 403 : </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown error </span><span class="si">{</span><span class="n">error_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
     <span class="nd">@smart_method</span>
 <div class="viewcode-block" id="Client.ping">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.ping">[docs]</a>
@@ -544,12 +613,16 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List[Dict]: The updates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/getUpdates?offset=</span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&amp;timeout=</span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/getUpdates&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;offset&#39;</span><span class="p">:</span><span class="n">offset</span><span class="p">,</span>
+                <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+                <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="n">timeout</span>
+            <span class="p">}</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ok&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="s1">&#39;result&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error_code&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">InvalidTokenException</span><span class="p">(</span><span class="s2">&quot;Forbidden 403 : --ENTERED TOKEN IS NOT VALID--&quot;</span><span class="p">)</span>
@@ -568,7 +641,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the webhook was set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setWebhook&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setWebhook&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
@@ -581,7 +654,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Dict: The webhook information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getWebhookInfo&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getWebhookInfo&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="p">{})</span></div>
 
 
@@ -594,7 +667,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            User: The bot.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getMe&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getMe&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">InvalidTokenException</span><span class="p">(</span><span class="s2">&quot;Token is invalid&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span></div>
@@ -609,7 +682,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the bot was logged out.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/logOut&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/logOut&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
@@ -622,7 +695,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the bot was closed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/close&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/close&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
@@ -647,7 +720,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -677,7 +750,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the message was deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/deleteMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -703,7 +776,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/forwardMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -731,7 +804,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/copyMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -781,9 +854,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -835,9 +908,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -889,9 +962,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -943,9 +1016,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -997,9 +1070,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1051,9 +1124,9 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_markup&quot;</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">reply_markup</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
 
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1088,7 +1161,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List[Message]: The list of messages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendMediaGroup&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1125,7 +1198,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendLocation&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1165,7 +1238,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendContact&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1210,7 +1283,7 @@
 <span class="sd">            Message: The message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">new_prices</span> <span class="o">=</span> <span class="p">[</span><span class="n">price</span><span class="o">.</span><span class="n">json</span> <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">]</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendInvoice&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1239,7 +1312,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Transaction: The transaction details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/inquireTransaction&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;transaction_id&quot;</span><span class="p">:</span> <span class="n">transaction_id</span><span class="p">}</span>
         <span class="p">)</span>
@@ -1258,7 +1331,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            File: The file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getFile&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file_id&quot;</span><span class="p">:</span> <span class="n">file_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">File</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]))</span></div>
@@ -1283,7 +1356,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the answer was shown.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/answerCallbackQuery&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;callback_query_id&quot;</span><span class="p">:</span> <span class="n">callback_query_id</span><span class="p">,</span>
@@ -1307,7 +1380,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the ban was successful.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/banChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1343,7 +1416,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the ban was successful.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/restrictChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
                   <span class="s2">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1374,7 +1447,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the unban was successful.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unbanChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1415,7 +1488,7 @@
 <span class="sd">            A list of administrators.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatAdministrators&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1440,7 +1513,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            ChatMember: The chat member.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1533,7 +1606,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the user has a specified permission.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/promoteChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1564,7 +1637,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the photo was set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatPhoto&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;photo&quot;</span><span class="p">:</span> <span class="n">photo</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1583,7 +1656,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the chat was leaved.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/leaveChat&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
@@ -1602,7 +1675,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the user is joined to a chat.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMember&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1624,7 +1697,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chat_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chat_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
             <span class="n">chat_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chat_id</span><span class="p">)</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChat&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
 
@@ -1646,7 +1719,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            int: The number of members in a chat.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/getChatMembersCount&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
@@ -1665,7 +1738,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the message was pinned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/pinChatMessage&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;message_id&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1685,7 +1758,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the message was unpinned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unpinChatMessage&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;message_id&quot;</span><span class="p">:</span> <span class="n">message_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
@@ -1703,7 +1776,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the message was unpinned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/unpinAllChatMessages&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
@@ -1722,7 +1795,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the title was changed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatTitle&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1742,7 +1815,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the description was changed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/setChatDescription&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">},</span>
         <span class="p">)</span>
@@ -1761,7 +1834,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the photo was deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/deleteChatPhoto&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
@@ -1788,7 +1861,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Message: The edited message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/editMessageText&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1822,7 +1895,7 @@
 <span class="sd">            Message: The edited message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/editMessageReplyMarkup&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span>
@@ -1852,7 +1925,7 @@
 <span class="sd">            bool: True in success</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/askReview&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">&quot;delay_seconds&quot;</span><span class="p">:</span> <span class="n">delay_seconds</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]</span></div>
@@ -1876,7 +1949,7 @@
         <span class="k">if</span> <span class="n">ok</span> <span class="ow">and</span> <span class="n">error_message</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="s2">&quot;Can&#39;t give error_message when payment is allowed (ok=True)&quot;</span><span class="p">)</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/answerPreCheckoutQuery&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pre_checkout_query_id&quot;</span><span class="p">:</span> <span class="n">PreCheckoutQuery</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="n">ok</span><span class="p">,</span> <span class="s2">&quot;error_message&quot;</span><span class="p">:</span> <span class="n">error_message</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]</span></div>
@@ -1894,7 +1967,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The invite link.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/createChatInviteLink&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
@@ -1934,10 +2007,10 @@
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;reply_to_message_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reply_to_message_id</span><span class="p">))</span>
     
             <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="n">handler</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;?chat_id=</span><span class="si">{</span><span class="n">chat_id</span><span class="si">}</span><span class="s2">&amp;sticker=</span><span class="si">{</span><span class="n">sticker</span><span class="o">.</span><span class="n">file_id</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">sticker</span><span class="p">,</span><span class="w"> </span><span class="n">Sticker</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">sticker</span><span class="si">}{</span><span class="sa">f</span><span class="s1">&#39;&amp;reply_to_message_id=</span><span class="si">{</span><span class="n">reply_to_message_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">reply_to_message_id</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_get</span><span class="p">(</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_get</span><span class="p">(</span>
                 <span class="n">query</span>
             <span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">])</span>
@@ -1965,7 +2038,7 @@
         <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
         <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;sticker&quot;</span><span class="p">,</span> <span class="n">sticker</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">sticker</span><span class="o">.</span><span class="n">file_name</span> <span class="ow">or</span> <span class="s2">&quot;Sticker.webp&quot;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_via_multipart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s1">&#39;/uploadStickerFile&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_via_multipart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s1">&#39;/uploadStickerFile&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">pythonize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">])</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
@@ -1983,7 +2056,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The revoked invite link.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/revokeChatInviteLink&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">,</span> <span class="s2">&quot;invite_link&quot;</span><span class="p">:</span> <span class="n">invite_link</span><span class="p">},</span>
         <span class="p">)</span>
@@ -2002,7 +2075,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The invite link.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/exportChatInviteLink&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="n">chat_id</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
@@ -2021,7 +2094,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the action was sent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">make_post</span><span class="p">(</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_post</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">+</span> <span class="s2">&quot;/sendChatAction&quot;</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;chat_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">),</span> <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">value</span><span class="p">},</span>
         <span class="p">)</span>
@@ -2203,21 +2276,22 @@
                 <span class="k">if</span> <span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">continue</span>
 
-                <span class="n">flt</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filters&quot;</span><span class="p">)</span>
+                <span class="n">event_filters</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filters&quot;</span><span class="p">)</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="k">if</span> <span class="n">flt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">flitr</span> <span class="ow">in</span> <span class="n">flt</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">flitr</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">event_filters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">event_filter</span> <span class="ow">in</span> <span class="n">event_filters</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">event_filter</span><span class="p">):</span>
                             <span class="k">try</span><span class="p">:</span>
-                                <span class="n">ans</span> <span class="o">=</span> <span class="n">flitr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-                                <span class="k">if</span> <span class="ow">not</span> <span class="n">ans</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">event_filter</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="p">):</span>
                                     <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
                             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Filter Error] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                                 <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
                                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
-                        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">flitr</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">flitr</span><span class="p">):</span>
+                        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_filter</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event_filter</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event_filter</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
+                            <span class="k">else</span><span class="p">:</span>
                                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
                 
                 <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>

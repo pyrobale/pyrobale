@@ -9,10 +9,6 @@ Functions
 
 .. autoapisummary::
 
-   pyrobale.objects.utils.build_api_url
-   pyrobale.objects.utils.make_post
-   pyrobale.objects.utils.make_get
-   pyrobale.objects.utils.make_via_multipart
    pyrobale.objects.utils.pythonize
    pyrobale.objects.utils.sync_to_async
    pyrobale.objects.utils.async_to_sync
@@ -21,20 +17,6 @@ Functions
 
 Module Contents
 ---------------
-
-.. py:function:: build_api_url(base, endpoint)
-
-.. py:function:: make_post(url, data = None, headers = None)
-   :async:
-
-
-.. py:function:: make_get(url, headers = None)
-   :async:
-
-
-.. py:function:: make_via_multipart(url, data)
-   :async:
-
 
 .. py:function:: pythonize(dictionary)
 

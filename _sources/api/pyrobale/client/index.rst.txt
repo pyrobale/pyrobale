@@ -43,6 +43,9 @@ Package Contents
    .. py:attribute:: requests_base
 
 
+   .. py:attribute:: clientsession
+
+
    .. py:attribute:: handlers
       :value: []
 
@@ -86,6 +89,24 @@ Package Contents
 
 
    .. py:attribute:: defined_messages
+
+
+   .. py:method:: build_api_url(base, endpoint)
+
+
+   .. py:method:: make_post(url, data = None, headers = None)
+      :async:
+
+
+
+   .. py:method:: make_get(url, headers = None)
+      :async:
+
+
+
+   .. py:method:: make_via_multipart(url, data)
+      :async:
+
 
 
    .. py:method:: ping(round_it=False)

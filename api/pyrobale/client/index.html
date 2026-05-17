@@ -416,6 +416,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.client.Client.clientsession">
+<span class="sig-name descname"><span class="pre">clientsession</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.clientsession"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.clientsession" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.handlers">
 <span class="sig-name descname"><span class="pre">handlers</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.handlers" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -464,6 +469,71 @@
 <dt class="sig sig-object py" id="pyrobale.client.Client.defined_messages">
 <span class="sig-name descname"><span class="pre">defined_messages</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.defined_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.defined_messages" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.build_api_url">
+<span class="sig-name descname"><span class="pre">build_api_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.build_api_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.build_api_url" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base</strong> (<em>str</em>)</p></li>
+<li><p><strong>endpoint</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.make_post">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">make_post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.make_post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.make_post" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>)</p></li>
+<li><p><strong>data</strong> (<em>dict</em>)</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.make_get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">make_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.make_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.make_get" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>)</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.client.Client.make_via_multipart">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">make_via_multipart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.make_via_multipart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.make_via_multipart" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>)</p></li>
+<li><p><strong>data</strong> (<em>aiohttp.FormData</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrobale.client.Client.ping">
@@ -1937,6 +2007,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.token"><code class="docutils literal notranslate"><span class="pre">Client.token</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.base_url"><code class="docutils literal notranslate"><span class="pre">Client.base_url</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.requests_base"><code class="docutils literal notranslate"><span class="pre">Client.requests_base</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.clientsession"><code class="docutils literal notranslate"><span class="pre">Client.clientsession</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.handlers"><code class="docutils literal notranslate"><span class="pre">Client.handlers</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.running"><code class="docutils literal notranslate"><span class="pre">Client.running</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.last_update_id"><code class="docutils literal notranslate"><span class="pre">Client.last_update_id</span></code></a></li>
@@ -1947,6 +2018,10 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.me"><code class="docutils literal notranslate"><span class="pre">Client.me</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.check_defined_message"><code class="docutils literal notranslate"><span class="pre">Client.check_defined_message</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.defined_messages"><code class="docutils literal notranslate"><span class="pre">Client.defined_messages</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.build_api_url"><code class="docutils literal notranslate"><span class="pre">Client.build_api_url()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.make_post"><code class="docutils literal notranslate"><span class="pre">Client.make_post()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.make_get"><code class="docutils literal notranslate"><span class="pre">Client.make_get()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.make_via_multipart"><code class="docutils literal notranslate"><span class="pre">Client.make_via_multipart()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.ping"><code class="docutils literal notranslate"><span class="pre">Client.ping()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.get_updates"><code class="docutils literal notranslate"><span class="pre">Client.get_updates()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.set_webhook"><code class="docutils literal notranslate"><span class="pre">Client.set_webhook()</span></code></a></li>
