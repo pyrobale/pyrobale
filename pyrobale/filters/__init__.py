@@ -160,6 +160,42 @@ def _group():
             return False
     return check
 
+def _reply():
+    """
+    Checks if the event is a reply to a message.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "reply_to_message") is not None
+        except:
+            return False
+    return check
+
+def _forward():
+    """
+    Checks if the event is a forwarded message.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "forward_from") is not None
+        except:
+            return False
+    return check
+
+def _gif():
+    """
+    Checks if the event has a gif media.
+    """
+
+    def check(event, *args):
+        try:
+            return getattr(event, "animation") is not None
+        except:
+            return False
+    return check
+
 def _digit():
     """
     Check if the event text or caption or callbackQuery data is digit.
@@ -199,6 +235,9 @@ private = pv = _private()
 channel = _channel()
 group = _group()
 digit = _digit()
+reply = _reply()
+forward = _forward()
+gif = _gif()
 
 __all__ = [
     
