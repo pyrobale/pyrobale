@@ -1,4 +1,4 @@
-from typing import Optional, Union, List, Dict, Any, Callable, Awaitable
+from typing import Optional, TypeAlias, Union, List, Dict, Any, Callable, Awaitable
 from concurrent.futures import ThreadPoolExecutor
 import traceback
 import inspect
@@ -75,6 +75,7 @@ class Client:
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
+        self.clientsession = aiohttp.ClientSession()
 
         self.handlers = []
         self._waiters = []
@@ -101,6 +102,59 @@ class Client:
         self.me: User|None = None
         self.check_defined_message = True
         self.defined_messages = {}
+
+    def build_api_url(self, base: str, endpoint: str) -> str:
+        return f"{base}/{endpoint}"
+
+
+    async def make_post(self, url: str, data: dict = None, headers: dict = None) -> dict:
+        async with self.clientsession as session:
+            async with session.post(url, json=data, headers=headers) as response:
+                json = await response.json()
+                if json['ok']:
+                    return json
+                else:
+                    if json['error_code'] == 404:
+                        raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else 'No description returned in error'}")
+                    elif json['error_code'] == 403:
+                        raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else 'No description returned in error'}")
+                    else:
+                        raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description!'}")
+
+
+    async def make_get(self, url: str, headers: dict = None) -> dict:
+        async with self.clientsession as session:
+            async with session.get(url, headers=headers) as response:
+                if not response.status == 200:
+                    raise PyroBaleException("Unwanted Error from bale: "+str(response.status))
+                json = await response.json()
+                if json['ok']:
+                    if 'result' in json.keys():
+                        return json
+                    else:
+                        if json['error_code'] == 404:
+                            raise NotFoundException(f"Error not found 404 : {json['description'] if json['description'] else 'No description returned in error'}")
+                        elif json['error_code'] == 403:
+                            raise ForbiddenException(f"Error Forbidden 403 : {json['description'] if json['description'] else 'No description returned in error'}")
+                        else:
+                            raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
+
+    async def make_via_multipart(self, url: str, data: aiohttp.FormData) -> dict:
+        async with self.clientsession as session:
+            async with session.post(url, data=data) as resp:
+                json_response = await resp.json()
+                if json_response.get('ok'):
+                    return json_response
+                else:
+                    error_code = json_response.get('error_code', 0)
+                    description = json_response.get('description', 'No description')
+
+                    if error_code == 404:
+                        raise NotFoundException(f"Error not found 404 : {description}")
+                    elif error_code == 403:
+                        raise ForbiddenException(f"Error Forbidden 403 : {description}")
+                    else:
+                        raise PyroBaleException(f"Unknown error {error_code}: {description}")
 
     @smart_method
     async def ping(self, round_it=False) -> float:
@@ -142,12 +196,16 @@ class Client:
         Returns:
             List[Dict]: The updates.
         """
-        data = await make_get(
-            self.requests_base + f"/getUpdates?offset={offset}&limit={limit}&timeout={timeout}"
+        data = await self.make_post(
+            self.requests_base + f"/getUpdates", data={
+                'offset':offset,
+                'limit': limit,
+                'timeout': timeout
+            }
         )
-        if data['ok']:
+        if data.get('ok'):
             if 'result' in data:
-                return data["result"]
+                return data.get("result")
             else:
                 if data.get('error_code') == 403:
                     raise InvalidTokenException("Forbidden 403 : --ENTERED TOKEN IS NOT VALID--")
@@ -163,7 +221,7 @@ class Client:
         Returns:
             bool: True if the webhook was set.
         """
-        data = await make_post(self.requests_base + "/setWebhook", data={"url": url})
+        data = await self.make_post(self.requests_base + "/setWebhook", data={"url": url})
         return data.get("ok", False)
 
     @smart_method
@@ -173,7 +231,7 @@ class Client:
         Returns:
             Dict: The webhook information.
         """
-        data = await make_get(self.requests_base + "/getWebhookInfo")
+        data = await self.make_get(self.requests_base + "/getWebhookInfo")
         return data.get("result", {})
 
     @smart_method
@@ -183,7 +241,7 @@ class Client:
         Returns:
             User: The bot.
         """
-        data = await make_get(self.requests_base + "/getMe")
+        data = await self.make_get(self.requests_base + "/getMe")
         if not data:
             raise InvalidTokenException("Token is invalid")
         return User(**data["result"])
@@ -195,7 +253,7 @@ class Client:
         Returns:
             bool: True if the bot was logged out.
         """
-        data = await make_get(self.requests_base + "/logOut")
+        data = await self.make_get(self.requests_base + "/logOut")
         return data.get("ok", False)
 
     @smart_method
@@ -205,7 +263,7 @@ class Client:
         Returns:
             bool: True if the bot was closed.
         """
-        data = await make_get(self.requests_base + "/close")
+        data = await self.make_get(self.requests_base + "/close")
         return data.get("ok", False)
 
     @smart_method
@@ -227,7 +285,7 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendMessage",
             data={
                 "chat_id": chat_id,
@@ -254,7 +312,7 @@ class Client:
         Returns:
             bool: True if the message was deleted.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/deleteMessage",
             data={
                 "chat_id": chat_id,
@@ -277,7 +335,7 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/forwardMessage",
             data={
                 "chat_id": chat_id,
@@ -302,7 +360,7 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/copyMessage",
             data={
                 "chat_id": chat_id,
@@ -349,9 +407,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -400,9 +458,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -451,9 +509,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -502,9 +560,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -553,9 +611,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -604,9 +662,9 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
-            data = await make_post(
+            data = await self.make_post(
                 self.requests_base + handler,
                 data={
                     "chat_id": chat_id,
@@ -638,7 +696,7 @@ class Client:
         Returns:
             List[Message]: The list of messages.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendMediaGroup",
             data={
                 "chat_id": chat_id,
@@ -672,7 +730,7 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendLocation",
             data={
                 "chat_id": chat_id,
@@ -709,7 +767,7 @@ class Client:
         Returns:
             Message: The message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendContact",
             data={
                 "chat_id": chat_id,
@@ -751,7 +809,7 @@ class Client:
             Message: The message.
         """
         new_prices = [price.json for price in prices]
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendInvoice",
             data={
                 "chat_id": chat_id,
@@ -777,7 +835,7 @@ class Client:
         Returns:
             Transaction: The transaction details.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/inquireTransaction",
             data={"transaction_id": transaction_id}
         )
@@ -793,7 +851,7 @@ class Client:
         Returns:
             File: The file.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getFile", data={"file_id": file_id}
         )
         return File(**pythonize(data["result"]))
@@ -815,7 +873,7 @@ class Client:
         Returns:
             bool: Whether the answer was shown.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/answerCallbackQuery",
             data={
                 "callback_query_id": callback_query_id,
@@ -836,7 +894,7 @@ class Client:
         Returns:
             bool: Whether the ban was successful.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/banChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
@@ -869,7 +927,7 @@ class Client:
         Returns:
             bool: Whether the ban was successful.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/restrictChatMember",
             data={"chat_id": chat_id, "user_id": user_id,
                   "permissions": {
@@ -897,7 +955,7 @@ class Client:
         Returns:
             bool: Whether the unban was successful.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/unbanChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
@@ -932,7 +990,7 @@ class Client:
             A list of administrators.
         """
 
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getChatAdministrators",
             data={"chat_id": chat_id},
         )
@@ -954,7 +1012,7 @@ class Client:
         Returns:
             ChatMember: The chat member.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
@@ -1038,7 +1096,7 @@ class Client:
         Returns:
             bool: Whether the user has a specified permission.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/promoteChatMember",
             data={
                 "chat_id": chat_id,
@@ -1066,7 +1124,7 @@ class Client:
         Returns:
             bool: Whether the photo was set.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/setChatPhoto",
             data={"chat_id": chat_id, "photo": photo},
         )
@@ -1082,7 +1140,7 @@ class Client:
         Returns:
             bool: Whether the chat was leaved.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/leaveChat", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
@@ -1098,7 +1156,7 @@ class Client:
         Returns:
             bool: Whether the user is joined to a chat.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getChatMember",
             data={"chat_id": chat_id, "user_id": user_id},
         )
@@ -1117,7 +1175,7 @@ class Client:
         if isinstance(chat_id, str) and chat_id.isdigit():
             chat_id = int(chat_id)
 
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getChat", data={"chat_id": chat_id}
         )
 
@@ -1136,7 +1194,7 @@ class Client:
         Returns:
             int: The number of members in a chat.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/getChatMembersCount", data={"chat_id": chat_id}
         )
         return data.get("result", 0)
@@ -1152,7 +1210,7 @@ class Client:
         Returns:
             bool: Whether the message was pinned.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/pinChatMessage",
             data={"chat_id": chat_id, "message_id": message_id},
         )
@@ -1169,7 +1227,7 @@ class Client:
         Returns:
             bool: Whether the message was unpinned.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/unpinChatMessage", data={"chat_id": chat_id, "message_id": message_id}
         )
         return data.get("ok", False)
@@ -1184,7 +1242,7 @@ class Client:
         Returns:
             bool: Whether the message was unpinned.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/unpinAllChatMessages", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
@@ -1200,7 +1258,7 @@ class Client:
         Returns:
             bool: Whether the title was changed.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/setChatTitle",
             data={"chat_id": chat_id, "title": title},
         )
@@ -1217,7 +1275,7 @@ class Client:
         Returns:
             bool: Whether the description was changed.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/setChatDescription",
             data={"chat_id": chat_id, "description": description},
         )
@@ -1233,7 +1291,7 @@ class Client:
         Returns:
             bool: Whether the photo was deleted.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/deleteChatPhoto", data={"chat_id": chat_id}
         )
         return data.get("ok", False)
@@ -1257,7 +1315,7 @@ class Client:
         Returns:
             Message: The edited message.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/editMessageText",
             data={
                 "chat_id": chat_id,
@@ -1288,7 +1346,7 @@ class Client:
             Message: The edited message.
         """
 
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/editMessageReplyMarkup",
             data={
                 "chat_id": chat_id,
@@ -1315,7 +1373,7 @@ class Client:
             bool: True in success
         """
 
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/askReview", data={"user_id": user_id, "delay_seconds": delay_seconds}
         )
         return data["result"]
@@ -1336,7 +1394,7 @@ class Client:
         if ok and error_message:
             raise PyroBaleException("Can't give error_message when payment is allowed (ok=True)")
 
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/answerPreCheckoutQuery", data={"pre_checkout_query_id": PreCheckoutQuery.id, "ok": ok, "error_message": error_message}
         )
         return data['result']
@@ -1351,7 +1409,7 @@ class Client:
         Returns:
             str: The invite link.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/createChatInviteLink", data={"chat_id": chat_id}
         )
         if data.get("result") == None:
@@ -1388,10 +1446,10 @@ class Client:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
     
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             query = self.requests_base + handler + f"?chat_id={chat_id}&sticker={sticker.file_id if isinstance(sticker, Sticker) else sticker}{f'&reply_to_message_id={reply_to_message_id}' if reply_to_message_id else ''}"
-            data = await make_get(
+            data = await self.make_get(
                 query
             )
         result = pythonize(data["result"])
@@ -1416,7 +1474,7 @@ class Client:
         form = aiohttp.FormData()
         form.add_field("user_id", user_id)
         form.add_field("sticker", sticker.file_input, filename=sticker.file_name or "Sticker.webp")
-        data = await make_via_multipart(self.requests_base + '/uploadStickerFile', form)
+        data = await self.make_via_multipart(self.requests_base + '/uploadStickerFile', form)
         result = pythonize(data['result'])
         print(result)
 
@@ -1431,7 +1489,7 @@ class Client:
         Returns:
             str: The revoked invite link.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/revokeChatInviteLink",
             data={"chat_id": chat_id, "invite_link": invite_link},
         )
@@ -1447,7 +1505,7 @@ class Client:
         Returns:
             str: The invite link.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/exportChatInviteLink", data={"chat_id": chat_id}
         )
         return data.get("result", "")
@@ -1463,7 +1521,7 @@ class Client:
         Returns:
             bool: Whether the action was sent.
         """
-        data = await make_post(
+        data = await self.make_post(
             self.requests_base + "/sendChatAction",
             data={"chat_id": str(chat_id), "action": action.value},
         )
@@ -1639,21 +1697,22 @@ class Client:
                 if event is None:
                     continue
 
-                flt = handler.get("filters")
+                event_filters = handler.get("filters")
                 skip = False
-                if flt is not None:
-                    for flitr in flt:
-                        if callable(flitr):
+                if event_filters is not None:
+                    for event_filter in event_filters:
+                        if callable(event_filter):
                             try:
-                                ans = flitr(event, self)
-                                if not ans:
+                                if not event_filter(event, self):
                                     skip = True
                             except Exception as e:
                                 print(f"[Filter Error] {e}")
                                 traceback.print_exc()
                                 skip = True
-                        elif isinstance(flitr, str):
-                            if not hasattr(event, flitr):
+                        elif isinstance(event_filter, str):
+                            if hasattr(event, event_filter) and getattr(event, event_filter) != None:
+                                skip = False
+                            else:
                                 skip = True
                 
                 if skip:
