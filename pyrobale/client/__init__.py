@@ -407,7 +407,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -458,7 +458,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -509,7 +509,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -560,7 +560,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -611,7 +611,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -662,7 +662,7 @@ class Client:
                 form.add_field("reply_markup", dumps(reply_markup.to_dict()))
 
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             data = await self.make_post(
                 self.requests_base + handler,
@@ -1446,7 +1446,7 @@ class Client:
                 form.add_field("reply_to_message_id", str(reply_to_message_id))
     
             url = self.requests_base + handler
-            data = await make_via_multipart(url, form)
+            data = await self.make_via_multipart(url, form)
         else:
             query = self.requests_base + handler + f"?chat_id={chat_id}&sticker={sticker.file_id if isinstance(sticker, Sticker) else sticker}{f'&reply_to_message_id={reply_to_message_id}' if reply_to_message_id else ''}"
             data = await self.make_get(
@@ -1474,7 +1474,7 @@ class Client:
         form = aiohttp.FormData()
         form.add_field("user_id", user_id)
         form.add_field("sticker", sticker.file_input, filename=sticker.file_name or "Sticker.webp")
-        data = await make_via_multipart(self.requests_base + '/uploadStickerFile', form)
+        data = await self.make_via_multipart(self.requests_base + '/uploadStickerFile', form)
         result = pythonize(data['result'])
         print(result)
 
