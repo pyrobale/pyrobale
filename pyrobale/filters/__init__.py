@@ -1,5 +1,5 @@
 import re
-from typing import List, Optional, Union, TYPE_CHECKING
+from typing import Callable, List, Optional, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from ..objects.user import User
@@ -218,6 +218,14 @@ def _channel():
         try:
             chat = getattr(event, "chat")
             return getattr(chat, "channel")
+        except:
+            return False
+    return check
+
+def func(function: Callable):
+    def check(event, *args):
+        try:
+            return function(event)
         except:
             return False
     return check

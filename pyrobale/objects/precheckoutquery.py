@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from .utils import smart_method
 if TYPE_CHECKING:
     from .user import User
@@ -8,11 +8,11 @@ if TYPE_CHECKING:
 class PreCheckoutQuery:
     def __init__(
         self,
-        id: str,
-        from_user: "User",
-        currency: str,
-        total_amount: int,
-        invoice_payload: str,
+        id: Optional[str] = None,
+        from_user: Optional["User"] = None,
+        currency: Optional[str] = None,
+        total_amount: Optional[int] = None,
+        invoice_payload: Optional[str] = None,
         **kwargs
     ) -> None:
         self.id = id
@@ -20,7 +20,7 @@ class PreCheckoutQuery:
         self.currency = currency
         self.total_amount = total_amount
         self.invoice_payload = invoice_payload
-        self.client: Client = kwargs.get("client", None)
+        self.client = kwargs.get("client", None)
 
     @smart_method
     async def answer(self, ok: bool, error_message: str = None) -> bool:

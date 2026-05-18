@@ -42,6 +42,7 @@ from ..objects.user import User
 from ..objects.video import Video
 from ..objects.voice import Voice
 from ..objects.webappdata import WebAppData
+from ..objects.update import Update
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
@@ -1666,7 +1667,10 @@ class Client:
                 handler_type = handler.get("type")
                 event = None
 
-                if handler_type == UpdatesTypes.COMMAND:
+                if handler_type == UpdatesTypes.UPDATE:
+                    event = self._convert_event(UpdatesTypes.UPDATE, update)
+
+                elif handler_type == UpdatesTypes.COMMAND:
                     message_data = update.get("message", {})
                     message_text = message_data.get("text", "")
                     if message_text and message_text.startswith("/"):
@@ -1732,6 +1736,7 @@ class Client:
         try:
             kwargs = {"client": self}
 
+
             if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND,
                                 UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT, UpdatesTypes.PHOTO]:
 
@@ -1760,6 +1765,14 @@ class Client:
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
                 return PreCheckoutQuery(**pythonize(event_data), client=self)
 
+            elif handler_type == UpdatesTypes.UPDATE:
+                return Update(
+                    event_data.get('id', -1),
+                    Message(**pythonize(event_data.get('message', {})), client=self),
+                    Message(**pythonize(event_data.get('edited_message', {})), client=self),
+                    CallbackQuery(**pythonize(event_data.get('callback_query', {})), client=self),
+                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self)
+                )
             else:
                 return event_data
 
@@ -1832,6 +1845,10 @@ class Client:
         def decorator(callback):
             self.ready_handlers.append(callback)
         return decorator
+    
+    def on_update(self, *filters: Any, **kwargs):
+        """Decorator for handling photo updates."""
+        return self.base_handler_decorator(UpdatesTypes.UPDATE)(*filters)
 
     def on_tick(self, interval: float):
         """Decorator for repeating a function every n seconds"""
