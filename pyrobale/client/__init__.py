@@ -42,6 +42,7 @@ from ..objects.user import User
 from ..objects.video import Video
 from ..objects.voice import Voice
 from ..objects.webappdata import WebAppData
+from ..objects.update import Update
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
 from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
@@ -75,7 +76,6 @@ class Client:
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
-        self.clientsession = aiohttp.ClientSession()
 
         self.handlers = []
         self._waiters = []
@@ -108,7 +108,7 @@ class Client:
 
 
     async def make_post(self, url: str, data: dict = None, headers: dict = None) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.post(url, json=data, headers=headers) as response:
                 json = await response.json()
                 if json['ok']:
@@ -123,7 +123,7 @@ class Client:
 
 
     async def make_get(self, url: str, headers: dict = None) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
                 if not response.status == 200:
                     raise PyroBaleException("Unwanted Error from bale: "+str(response.status))
@@ -140,7 +140,7 @@ class Client:
                             raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
 
     async def make_via_multipart(self, url: str, data: aiohttp.FormData) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.post(url, data=data) as resp:
                 json_response = await resp.json()
                 if json_response.get('ok'):
@@ -1667,7 +1667,10 @@ class Client:
                 handler_type = handler.get("type")
                 event = None
 
-                if handler_type == UpdatesTypes.COMMAND:
+                if handler_type == UpdatesTypes.UPDATE:
+                    event = self._convert_event(UpdatesTypes.UPDATE, update)
+
+                elif handler_type == UpdatesTypes.COMMAND:
                     message_data = update.get("message", {})
                     message_text = message_data.get("text", "")
                     if message_text and message_text.startswith("/"):
@@ -1733,6 +1736,7 @@ class Client:
         try:
             kwargs = {"client": self}
 
+
             if handler_type in [UpdatesTypes.MESSAGE, UpdatesTypes.MESSAGE_EDITED, UpdatesTypes.COMMAND,
                                 UpdatesTypes.MEMBER_JOINED, UpdatesTypes.MEMBER_LEFT, UpdatesTypes.PHOTO]:
 
@@ -1761,6 +1765,14 @@ class Client:
             elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
                 return PreCheckoutQuery(**pythonize(event_data), client=self)
 
+            elif handler_type == UpdatesTypes.UPDATE:
+                return Update(
+                    event_data.get('id', -1),
+                    Message(**pythonize(event_data.get('message', {})), client=self),
+                    Message(**pythonize(event_data.get('edited_message', {})), client=self),
+                    CallbackQuery(**pythonize(event_data.get('callback_query', {})), client=self),
+                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self)
+                )
             else:
                 return event_data
 
@@ -1833,6 +1845,10 @@ class Client:
         def decorator(callback):
             self.ready_handlers.append(callback)
         return decorator
+    
+    def on_update(self, *filters: Any, **kwargs):
+        """Decorator for handling photo updates."""
+        return self.base_handler_decorator(UpdatesTypes.UPDATE)(*filters)
 
     def on_tick(self, interval: float):
         """Decorator for repeating a function every n seconds"""

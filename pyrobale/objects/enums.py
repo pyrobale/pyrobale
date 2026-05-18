@@ -12,6 +12,7 @@ class UpdatesTypes(Enum):
     SUCCESSFUL_PAYMENT = "successful_payment"
     COMMAND = "command"
     PHOTO = "photo"
+    UPDATE = "update"
 
 
 class ChatPermissions(Enum):
