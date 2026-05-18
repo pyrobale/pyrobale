@@ -75,7 +75,6 @@ class Client:
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
-        self.clientsession = aiohttp.ClientSession()
 
         self.handlers = []
         self._waiters = []
@@ -108,7 +107,7 @@ class Client:
 
 
     async def make_post(self, url: str, data: dict = None, headers: dict = None) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.post(url, json=data, headers=headers) as response:
                 json = await response.json()
                 if json['ok']:
@@ -123,7 +122,7 @@ class Client:
 
 
     async def make_get(self, url: str, headers: dict = None) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as response:
                 if not response.status == 200:
                     raise PyroBaleException("Unwanted Error from bale: "+str(response.status))
@@ -140,7 +139,7 @@ class Client:
                             raise PyroBaleException(f"unknown error : {json['description'] if json['description'] else 'No description'}")
 
     async def make_via_multipart(self, url: str, data: aiohttp.FormData) -> dict:
-        async with self.clientsession as session:
+        async with aiohttp.ClientSession() as session:
             async with session.post(url, data=data) as resp:
                 json_response = await resp.json()
                 if json_response.get('ok'):
