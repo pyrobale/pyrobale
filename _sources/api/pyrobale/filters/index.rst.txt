@@ -28,6 +28,7 @@ Functions
    pyrobale.filters.from_users
    pyrobale.filters.is_joined
    pyrobale.filters.at_state
+   pyrobale.filters.func
 
 
 Package Contents
@@ -98,6 +99,8 @@ Package Contents
    :returns: A function that checks if the event User is at specified state.
    :rtype: Callable
 
+
+.. py:function:: func(function)
 
 .. py:data:: channel
 

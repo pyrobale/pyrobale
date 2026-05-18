@@ -75,6 +75,11 @@ Module Contents
 
 
 
+   .. py:attribute:: UPDATE
+      :value: 'update'
+
+
+
 .. py:class:: ChatPermissions(*args, **kwds)
 
    Bases: :py:obj:`enum.Enum`

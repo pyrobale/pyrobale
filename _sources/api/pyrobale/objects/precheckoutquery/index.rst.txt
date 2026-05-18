@@ -15,25 +15,34 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: PreCheckoutQuery(id, from_user, currency, total_amount, invoice_payload, **kwargs)
+.. py:class:: PreCheckoutQuery(id = None, from_user = None, currency = None, total_amount = None, invoice_payload = None, **kwargs)
 
    .. py:attribute:: id
+      :value: None
+
 
 
    .. py:attribute:: from_user
+      :value: None
+
 
 
    .. py:attribute:: currency
+      :value: None
+
 
 
    .. py:attribute:: total_amount
+      :value: None
+
 
 
    .. py:attribute:: invoice_payload
+      :value: None
+
 
 
    .. py:attribute:: client
-      :type:  pyrobale.client.Client
 
 
    .. py:method:: answer(ok, error_message = None)

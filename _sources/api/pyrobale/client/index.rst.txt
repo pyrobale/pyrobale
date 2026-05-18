@@ -43,9 +43,6 @@ Package Contents
    .. py:attribute:: requests_base
 
 
-   .. py:attribute:: clientsession
-
-
    .. py:attribute:: handlers
       :value: []
 
@@ -1116,6 +1113,12 @@ Package Contents
 
 
    .. py:method:: on_ready()
+
+
+   .. py:method:: on_update(*filters, **kwargs)
+
+      Decorator for handling photo updates.
+
 
 
    .. py:method:: on_tick(interval)

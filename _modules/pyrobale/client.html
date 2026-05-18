@@ -398,6 +398,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.video</span><span class="w"> </span><span class="kn">import</span> <span class="n">Video</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.voice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Voice</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.webappdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebAppData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..objects.update</span><span class="w"> </span><span class="kn">import</span> <span class="n">Update</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.webappinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebAppInfo</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">ChatAction</span><span class="p">,</span> <span class="n">ChatType</span><span class="p">,</span> <span class="n">ChatPermissions</span>
@@ -441,10 +442,6 @@
 <div class="viewcode-block" id="Client.requests_base">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.requests_base">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">requests_base</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="n">token</span></div>
-
-<div class="viewcode-block" id="Client.clientsession">
-<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.clientsession">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Client.handlers">
@@ -513,7 +510,7 @@
 <div class="viewcode-block" id="Client.make_post">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_post">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
                 <span class="n">json</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]:</span>
@@ -531,7 +528,7 @@
 <div class="viewcode-block" id="Client.make_get">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_get">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">PyroBaleException</span><span class="p">(</span><span class="s2">&quot;Unwanted Error from bale: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
@@ -551,7 +548,7 @@
 <div class="viewcode-block" id="Client.make_via_multipart">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.make_via_multipart">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">make_via_multipart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientsession</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
                 <span class="n">json_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">json_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ok&#39;</span><span class="p">):</span>
@@ -2246,7 +2243,10 @@
                 <span class="n">handler_type</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
                 <span class="n">event</span> <span class="o">=</span> <span class="kc">None</span>
 
-                <span class="k">if</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">UPDATE</span><span class="p">:</span>
+                    <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_event</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">UPDATE</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
                     <span class="n">message_data</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="p">{})</span>
                     <span class="n">message_text</span> <span class="o">=</span> <span class="n">message_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">message_text</span> <span class="ow">and</span> <span class="n">message_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
@@ -2313,6 +2313,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="p">}</span>
 
+
             <span class="k">if</span> <span class="n">handler_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE_EDITED</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">,</span>
                                 <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MEMBER_JOINED</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MEMBER_LEFT</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">PHOTO</span><span class="p">]:</span>
 
@@ -2341,6 +2342,14 @@
             <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">PRE_CHECKOUT_QUERY</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">PreCheckoutQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="p">),</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
+            <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">UPDATE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Update</span><span class="p">(</span>
+                    <span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="p">{})),</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">Message</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;edited_message&#39;</span><span class="p">,</span> <span class="p">{})),</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">CallbackQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;callback_query&#39;</span><span class="p">,</span> <span class="p">{})),</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">PreCheckoutQuery</span><span class="p">(</span><span class="o">**</span><span class="n">pythonize</span><span class="p">(</span><span class="n">event_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pre_checkout_query&#39;</span><span class="p">,</span> <span class="p">{})),</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">event_data</span>
 
@@ -2445,6 +2454,13 @@
         <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ready_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">decorator</span></div>
+
+    
+<div class="viewcode-block" id="Client.on_update">
+<a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.on_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">filters</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decorator for handling photo updates.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_handler_decorator</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">UPDATE</span><span class="p">)(</span><span class="o">*</span><span class="n">filters</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Client.on_tick">
