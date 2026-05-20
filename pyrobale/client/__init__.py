@@ -1527,7 +1527,7 @@ class Client:
         )
         return data.get("ok", False)
 
-    @smart_method
+
     async def wait_for(self, update_type: UpdatesTypes, check=None, timeout: Optional[float] = None):
         """Wait until a specified update
 
