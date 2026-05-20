@@ -366,7 +366,6 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chatmember</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatMember</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animation</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.document</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.photosize</span><span class="w"> </span><span class="kn">import</span> <span class="n">PhotoSize</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.sticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sticker</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.video</span><span class="w"> </span><span class="kn">import</span> <span class="n">Video</span>
@@ -378,10 +377,12 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.webappdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebAppData</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.replykeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReplyKeyboardMarkup</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inputfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputFile</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">..client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.chat</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..objects.document</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.forwardorigin</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForwardOrigin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..objects.inlinekeyboardmarkup</span><span class="w"> </span><span class="kn">import</span> <span class="n">InlineKeyboardMarkup</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.messageentity</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageEntity</span>
@@ -564,10 +565,8 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.audio">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">audio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">audio</span></div>
 
-<div class="viewcode-block" id="Message.document">
-<a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.document">[docs]</a>
-        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Document&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span></div>
-
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Document&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="o">**</span><span class="n">document</span><span class="p">)</span>
 <div class="viewcode-block" id="Message.photo">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.photo">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="s2">&quot;PhotoSize&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photo</span></div>
@@ -835,7 +834,7 @@
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.reply_audio">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">reply_audio</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">audio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">audio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;InputFile&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;ReplyKeyboardMarkup&quot;</span><span class="p">,</span> <span class="s2">&quot;InlineKeyboardMarkup&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Message&#39;</span><span class="p">:</span>

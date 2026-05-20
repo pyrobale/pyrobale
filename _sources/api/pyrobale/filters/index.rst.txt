@@ -9,12 +9,22 @@ Attributes
 
 .. autoapisummary::
 
-   pyrobale.filters.channel
    pyrobale.filters.group
+   pyrobale.filters.channel
    pyrobale.filters.digit
    pyrobale.filters.reply
    pyrobale.filters.forward
    pyrobale.filters.gif
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.filters.Filter
+   pyrobale.filters.NegatedFilter
+   pyrobale.filters.CombinedFilter
 
 
 Functions
@@ -34,77 +44,83 @@ Functions
 Package Contents
 ----------------
 
+.. py:class:: Filter(check_func, num_params = None)
+
+   .. py:attribute:: __slots__
+      :value: ('check_func', '_num_params')
+
+
+
+   .. py:attribute:: check_func
+
+
+   .. py:method:: __call__(event, client=None, *args, **kwargs)
+
+
+   .. py:method:: __and__(other)
+
+
+   .. py:method:: __or__(other)
+
+
+   .. py:method:: __invert__()
+
+
+.. py:class:: NegatedFilter(original)
+
+   Bases: :py:obj:`Filter`
+
+
+   .. py:attribute:: __slots__
+      :value: ('original',)
+
+
+
+   .. py:attribute:: original
+
+
+   .. py:method:: __call__(event, client=None, *args, **kwargs)
+
+
+.. py:class:: CombinedFilter(left, right, operator)
+
+   Bases: :py:obj:`Filter`
+
+
+   .. py:attribute:: __slots__
+      :value: ('left', 'right', 'operator')
+
+
+
+   .. py:attribute:: left
+
+
+   .. py:attribute:: right
+
+
+   .. py:attribute:: operator
+
+
+   .. py:method:: __call__(event, client=None, *args, **kwargs)
+
+
 .. py:function:: equals(expected_text)
-
-   Check if the event text or caption or callbackQuery data is equal to the expected text.
-
-   :param expected_text: The expected text to compare with.
-   :type expected_text: str
-
-   :returns: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
-   :rtype: Callable
-
 
 .. py:function:: startswith(expected_text)
 
-   Check if the event text or caption or callbackQuery data is started with to the expected text.
-
-   :param expected_text: The expected text to compare with.
-   :type expected_text: str
-
-   :returns: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.
-   :rtype: Callable
-
-
 .. py:function:: regex(pattern)
-
-   checks the event text or caption with given pattern using regex
-
-   :param pattern: The pattern to check with text
-   :type pattern: str
-
-   :returns: A function that checks if the event text or caption is match with given pattern
-   :rtype: Callable
-
 
 .. py:function:: from_users(allowed_users)
 
-   Check if the event text or caption or callbackQuery sender is in allowed user.
-
-   :param allowed_users: Allowed users to use this handler.
-   :type allowed_users: List[Union["User", int]]
-
-   :returns: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
-   :rtype: Callable
-
-
 .. py:function:: is_joined(chat_ids)
-
-   Checks if the event User is joined in specified chats.
-
-   :param allowed_users: Allowed users to use this handler.
-   :type allowed_users: List[Union["User", int]]
-
-   :returns: A function that checks if the event User is joined in specified chats
-   :rtype: Callable
-
 
 .. py:function:: at_state(state = None)
 
-   Checks if the event User is at specified state.
-
-   :param state: state condition
-   :type state: Optional[str]
-
-   :returns: A function that checks if the event User is at specified state.
-   :rtype: Callable
-
-
 .. py:function:: func(function)
 
-.. py:data:: channel
-
 .. py:data:: group
+
+.. py:data:: channel
 
 .. py:data:: digit
 
