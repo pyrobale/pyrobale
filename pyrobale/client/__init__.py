@@ -426,7 +426,7 @@ class Client:
     async def send_audio(
             self,
             chat_id: Union[int, str],
-            audio: Union[InputFile, str],
+            audio: Union[InputFile, str, bytes],
             caption: Optional[str] = None,
             reply_to_message_id: Optional[int] = None,
             reply_markup: Optional[Union[InlineKeyboardMarkup, ReplyKeyboardMarkup]] = None,
@@ -435,15 +435,18 @@ class Client:
 
         Args:
             chat_id (Union[int, str]): The chat to send the message to.
-            audio (Union[InputFile, str]): The audio file to send.
+            audio (Union[InputFile, str, bytes]): The audio file to send.
             caption (Optional[str], optional): The caption of the audio. Defaults to None.
             reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.
             reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.
         """
         handler = "/sendAudio"
-        if isinstance(audio, InputFile):
+        if isinstance(audio, InputFile) or isinstance(audio, bytes):
             form = aiohttp.FormData()
             form.add_field("chat_id", str(chat_id))
+            
+            if isinstance(audio, bytes):
+                audio = InputFile(audio)
 
             if audio.file_name:
                 form.add_field("audio", audio.file_input, filename=audio.file_name)
@@ -1527,7 +1530,7 @@ class Client:
         )
         return data.get("ok", False)
 
-    @smart_method
+
     async def wait_for(self, update_type: UpdatesTypes, check=None, timeout: Optional[float] = None):
         """Wait until a specified update
 
@@ -1646,7 +1649,7 @@ class Client:
                 is_match = True
                 event = self._convert_event(w_type, update["pre_checkout_query"])
 
-            if is_match and event is not None:
+            if is_match and bool(event):
                 try:
                     if check is None or check(event):
                         if not future.done():
@@ -1702,7 +1705,7 @@ class Client:
 
                 event_filters = handler.get("filters")
                 skip = False
-                if event_filters is not None:
+                if isinstance(event_filters, list) and len(event_filters)>0 and not isinstance(event_filters[0], tuple):
                     for event_filter in event_filters:
                         if callable(event_filter):
                             try:
@@ -1717,6 +1720,15 @@ class Client:
                                 skip = False
                             else:
                                 skip = True
+                else:
+                    for event_filter in event_filters:
+                        try:
+                            if not event_filter(event, self):
+                                skip = True
+                        except Exception as e:
+                            print(f"[Filter Error] {e}")
+                            traceback.print_exc()
+                            skip = True
                 
                 if skip:
                     continue

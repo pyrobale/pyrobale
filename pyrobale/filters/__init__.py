@@ -5,247 +5,304 @@ if TYPE_CHECKING:
     from ..objects.user import User
     from ..client import Client
 
-def equals(expected_text: str):
-    """
-    Check if the event text or caption or callbackQuery data is equal to the expected text.
+class Filter:
+    def __init__(self, check_func: Callable) -> None:
+        self.check = check_func
+        self.lst = [check_func]
+        self.inv = False
     
-    Args:
-        expected_text (str): The expected text to compare with.
-
-    Returns:
-        Callable: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
-    """
-    def check(event, *args):
-        try:
-            return getattr(event, "text", None) == expected_text or getattr(event, "caption", None) == expected_text or getattr(event, "data", None) == expected_text
-        except:
-            return False
-    return check
-
-def startswith(expected_text: str):
-    """
-    Check if the event text or caption or callbackQuery data is started with to the expected text.
+    def __invert__(self):
+        new_filter = Filter(self.check)
+        new_filter.inv = True
+        new_filter.lst = self.lst.copy()
+        return new_filter
     
-    Args:
-        expected_text (str): The expected text to compare with.
-
-    Returns:
-        Callable: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.
-    """
-    def check(event, *args):
-        try:
-            return getattr(event, "text", "").startswith(expected_text) or getattr(event, "caption", "").startswith(expected_text) or getattr(event, "data", "").startswith(expected_text)
-        except:
-            return False
-    return check
-
-
-def regex(pattern: str):
-    """
-    checks the event text or caption with given pattern using regex
-    
-    Args:
-        pattern (str): The pattern to check with text
-    
-    Returns:
-        Callable: A function that checks if the event text or caption is match with given pattern
-    """
-    def check(event, *args):
-        try:
-            return re.search(pattern, getattr(event, "text", "")) or re.search(pattern, getattr(event, "caption", ""))
-        except:
-            return False
-    return check
-
-def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
-    """
-    Check if the event text or caption or callbackQuery sender is in allowed user.
-    
-    Args:
-        allowed_users (List[Union["User", int]]): Allowed users to use this handler.
-
-    Returns:
-        Callable: A function that checks if the event text or caption or callbackQuery sender is in allowed user.
-    """
-    if type(allowed_users) in [str, int]:
-        try:
-            allowed_users = [int(allowed_users)]
-        except:
-            raise ValueError("Chat IDs can only be digits")
-    def check(event, *args):
-        try:
-            event_user = getattr(event, "user", None)
-            event_user_id = getattr(event_user, "id")
-            if event_user_id in allowed_users:
-                return True
-        except:
-            return False
-    return check
-
-def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
-    """
-    Checks if the event User is joined in specified chats.
-    
-    Args:
-        allowed_users (List[Union["User", int]]): Allowed users to use this handler.
-
-    Returns:
-        Callable: A function that checks if the event User is joined in specified chats
-    """
-    if type(chat_ids) in [str, int]:
-        try:
-            chat_ids = [int(chat_ids)]
-        except:
-            raise ValueError("Chat IDs can only be digits")
-
-    def check(event, client: 'Client', *args):
-        try:
-            event_user = getattr(event, "user", None)
-            event_user_id = getattr(event_user, "id")
-            for chat in chat_ids:
-                joined = client.is_joined(event_user_id, chat)
-                if not joined:
-                    return False
-            return True
+    def __and__(self, other):
+        if not isinstance(other, Filter):
+            raise TypeError(f"Cannot combine Filter with {type(other)}")
+        
+        def combined_check(event, client=None, *args):
+            if self.inv:
+                result1 = not self.check(event, client, *args)
+            else:
+                result1 = self.check(event, client, *args)
             
-        except:
-            return False
-    return check
-
-def at_state(state: Optional[str] = None):
-    """
-    Checks if the event User is at specified state.
+            if other.inv:
+                result2 = not other.check(event, client, *args)
+            else:
+                result2 = other.check(event, client, *args)
+            
+            return result1 and result2
+        
+        new = Filter(combined_check)
+        new.lst = self.lst + other.lst
+        return new
     
-    Args:
-        state (Optional[str]): state condition
+    def __call__(self, event, client=None, *args):
+        if self.inv:
+            return not self.check(event, client, *args)
+        return self.check(event, client, *args)
 
-    Returns:
-        Callable: A function that checks if the event User is at specified state.
-    
-    """
 
-    def check(event, client: 'Client', *args):
-        try:
-            event_user = getattr(event, "user", None)
-            event_user_id = getattr(event_user, "id")
-            return client.state_machine.get_state(event_user_id) == state
-        except:
-            return False
-    return check
+class equals(Filter):
+    def __init__(self, expected_text: str):
+        def check(event, *args):
+            try:
+                return (getattr(event, "text", None) == expected_text or 
+                       getattr(event, "caption", None) == expected_text or 
+                       getattr(event, "data", None) == expected_text)
+            except:
+                return False
+        super().__init__(check)
 
-def _private():
-    """
-    checks if the event is happening in a private chat
-    """
 
-    def check(event, *args):
-        try:
-            chat = getattr(event, "chat")
-            return getattr(chat, "private")
-        except:
-            return False
-    return check
+class startswith(Filter):
+    def __init__(self, expected_text: str):
+        def check(event, *args):
+            try:
+                return (getattr(event, "text", "").startswith(expected_text) or 
+                       getattr(event, "caption", "").startswith(expected_text) or 
+                       getattr(event, "data", "").startswith(expected_text))
+            except:
+                return False
+        super().__init__(check)
 
-def _group():
-    """
-    checks if the event is happening in a group chat
-    """
 
-    def check(event, *args):
-        try:
-            chat = getattr(event, "chat")
-            return chat.type == chat.type.GROUP
-        except:
-            return False
-    return check
+class regex(Filter):
+    def __init__(self, pattern: str):
+        def check(event, *args):
+            try:
+                return (re.search(pattern, getattr(event, "text", "")) or 
+                       re.search(pattern, getattr(event, "caption", "")))
+            except:
+                return False
+        super().__init__(check)
 
-def _reply():
-    """
-    Checks if the event is a reply to a message.
-    """
 
-    def check(event, *args):
-        try:
-            return getattr(event, "reply_to_message") is not None
-        except:
-            return False
-    return check
+class from_users(Filter):
+    def __init__(self, allowed_users: Union[List[Union["User", int, str]], int, str]):
+        if type(allowed_users) in [str, int]:
+            try:
+                allowed_users = [int(allowed_users)]
+            except:
+                raise ValueError("Chat IDs can only be digits")
+        
+        def check(event, *args):
+            try:
+                event_user = getattr(event, "user", None)
+                event_user_id = getattr(event_user, "id") if event_user else None
+                return event_user_id in allowed_users if event_user_id else False
+            except:
+                return False
+        super().__init__(check)
 
-def _forward():
-    """
-    Checks if the event is a forwarded message.
-    """
 
-    def check(event, *args):
-        try:
-            return getattr(event, "forward_from") is not None
-        except:
-            return False
-    return check
+class is_joined(Filter):
+    def __init__(self, chat_ids: Union[List[Union["User", int, str]], int, str]):
+        if type(chat_ids) in [str, int]:
+            try:
+                chat_ids = [int(chat_ids)]
+            except:
+                raise ValueError("Chat IDs can only be digits")
+        
+        def check(event, client: 'Client', *args):
+            try:
+                event_user = getattr(event, "user", None)
+                event_user_id = getattr(event_user, "id") if event_user else None
+                if not event_user_id:
+                    return False
+                
+                for chat in chat_ids:
+                    joined = client.is_joined(event_user_id, chat)
+                    if not joined:
+                        return False
+                return True
+            except:
+                return False
+        super().__init__(check)
 
-def _gif():
-    """
-    Checks if the event has a gif media.
-    """
 
-    def check(event, *args):
-        try:
-            return getattr(event, "animation") is not None
-        except:
-            return False
-    return check
+class at_state(Filter):
+    def __init__(self, state: Optional[str] = None):
+        def check(event, client: 'Client', *args):
+            try:
+                event_user = getattr(event, "user", None)
+                event_user_id = getattr(event_user, "id") if event_user else None
+                if not event_user_id:
+                    return False
+                return client.state_machine.get_state(event_user_id) == state
+            except:
+                return False
+        super().__init__(check)
 
-def _digit():
-    """
-    Check if the event text or caption or callbackQuery data is digit.
-    
-    Returns:
-        Callable: A function that checks if the event text or caption or callbackQuery data is digit.
-    """
-    def check(event, *args):
-        try:
-            return getattr(event, "text", "").isdigit() or getattr(event, "caption", "").isdigit() or getattr(event, "data", "").isdigit()
-        except:
-            return False
-    return check
 
-def _channel():
-    """
-    checks if the event is happening in a channel
-    """
+class private(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                chat = getattr(event, "chat")
+                return getattr(chat, "private", False)
+            except:
+                return False
+        super().__init__(check)
 
-    def check(event, args):
-        try:
-            chat = getattr(event, "chat")
-            return getattr(chat, "channel")
-        except:
-            return False
-    return check
 
-def func(function: Callable):
-    def check(event, *args):
-        try:
-            return function(event)
-        except:
-            return False
-    return check
+class group(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                chat = getattr(event, "chat")
+                return chat.type == chat.type.GROUP if hasattr(chat, 'type') else False
+            except:
+                return False
+        super().__init__(check)
 
-text = TEXT = "text"
-photo = PHOTO = "photo"
-video = VIDEO = "video"
-audio = AUDIO = "audio"
-voice = VOICE = "voice"
-contact = CONTACT = "contact"
-location = LOCATION = "location"
 
-private = pv = _private()
-channel = _channel()
-group = _group()
-digit = _digit()
-reply = _reply()
-forward = _forward()
-gif = _gif()
+class reply(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "reply_to_message") is not None
+            except:
+                return False
+        super().__init__(check)
 
-# __all__ = [
-    
-# ]
+
+class forward(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "forward_from") is not None
+            except:
+                return False
+        super().__init__(check)
+
+
+class gif(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "animation") is not None
+            except:
+                return False
+        super().__init__(check)
+
+
+class digit(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return (getattr(event, "text", "").isdigit() or 
+                       getattr(event, "caption", "").isdigit() or 
+                       getattr(event, "data", "").isdigit())
+            except:
+                return False
+        super().__init__(check)
+
+
+class channel(Filter):
+    def __init__(self):
+        def check(event, args):
+            try:
+                chat = getattr(event, "chat")
+                return getattr(chat, "channel", False)
+            except:
+                return False
+        super().__init__(check)
+
+
+class func(Filter):
+    def __init__(self, function: Callable):
+        def check(event, *args):
+            try:
+                return function(event)
+            except:
+                return False
+        super().__init__(check)
+
+
+class text(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "text") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class photo(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "photo") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class video(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "video") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class audio(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "audio") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class voice(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "voice") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class contact(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "contact") is not None
+            except:
+                return False
+        super().__init__(check)
+
+class location(Filter):
+    def __init__(self):
+        def check(event, *args):
+            try:
+                return getattr(event, "location") is not None
+            except:
+                return False
+        super().__init__(check)
+
+pv= private = private()  # type: ignore
+group = group()# type: ignore
+reply = reply()# type: ignore
+forward = forward()# type: ignore
+gif = gif()# type: ignore
+digit = digit()# type: ignore
+channel = channel()# type: ignore
+text = text()# type: ignore
+photo = photo()# type: ignore
+video = video()# type: ignore
+audio = audio()# type: ignore
+voice = voice()# type: ignore
+contact = contact()# type: ignore
+location = location()# type: ignore
+TEXT = text
+PHOTO = photo
+VIDEO = video
+AUDIO = audio
+VOICE = voice
+CONTACT = contact
+LOCATION = location
+
