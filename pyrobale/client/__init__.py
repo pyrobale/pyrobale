@@ -1800,7 +1800,8 @@ class Client:
                     Message(**pythonize(event_data.get('message', {})), client=self),
                     Message(**pythonize(event_data.get('edited_message', {})), client=self),
                     CallbackQuery(**pythonize(event_data.get('callback_query', {})), client=self),
-                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self)
+                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self),
+                    json=event_data
                 )
             else:
                 return event_data

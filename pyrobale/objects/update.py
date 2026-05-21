@@ -21,3 +21,5 @@ class Update:
         self.edited_message = edited_message
         self.callback_query = callback_query
         self.pre_checkout_query = pre_checkout_query
+        print(kwargs)
+        self.json = kwargs.get("json")

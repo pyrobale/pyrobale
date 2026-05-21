@@ -29,6 +29,7 @@ from ..objects.user import User
 from ..objects.document import Document
 from ..objects.forwardorigin import ForwardOrigin
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
+from ..objects.poll import Poll
 from .messageentity import MessageEntity
 from .utils import smart_method
 
@@ -60,6 +61,7 @@ class Message:
         caption (str): Caption for media messages
         contact (Contact): Message is a shared contact
         location (Location): Message is a shared location
+        poll (Poll): Message is a poll
         new_chat_members (list[User]): New members added to the chat
         left_chat_member (User): Member removed from the chat
         invoice (Invoice): Message is an invoice for payment
@@ -92,6 +94,7 @@ class Message:
             caption: Optional[str] = None,
             contact: Optional["Contact"] = None,
             location: Optional["Location"] = None,
+            poll: Optional["Poll"] = None,
             new_chat_members: Optional[list["User"]] = None,
             left_chat_member: Optional["User"] = None,
             invoice: Optional["Invoice"] = None,
@@ -126,6 +129,7 @@ class Message:
             caption: Caption for media messages
             contact: Contact content
             location: Location content
+            poll: Poll content
             new_chat_members: New members added to the chat
             left_chat_member: Member removed from the chat
             invoice: Invoice content
@@ -183,6 +187,8 @@ class Message:
         self.caption: Optional[str] = caption
         self.contact: Optional["Contact"] = contact
         self.location: Optional["Location"] = location
+        if poll and isinstance(poll, dict):
+            self.poll = Poll(**poll)
         self.new_chat_members: Optional["NewChatMembers"] = new_chat_members
         self.left_chat_member: Optional["User"] = left_chat_member
         self.invoice: Optional["Invoice"] = invoice
