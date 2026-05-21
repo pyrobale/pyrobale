@@ -272,31 +272,38 @@ def func(function: Callable):
             return False
     return Filter(check)
 
-def text():
+
+def _text():
     async def check(event, *args):
         return hasattr(event, "text")
     return Filter(check)
-def photo():
+
+def _photo():
     async def check(event, *args):
         return hasattr(event, "photo")
     return Filter(check)
-def video():
+
+def _video():
     async def check(event, *args):
         return hasattr(event, "video")
     return Filter(check)
-def audio():
+
+def _audio():
     async def check(event, *args):
         return hasattr(event, "audio")
     return Filter(check)
-def voice():
+
+def _voice():
     async def check(event, *args):
         return hasattr(event, "voice")
     return Filter(check)
-def contact():
+
+def _contact():
     async def check(event, *args):
         return hasattr(event, "contact")
     return Filter(check)
-def location():
+
+def _location():
     async def check(event, *args):
         return hasattr(event, "location")
     return Filter(check)
@@ -308,3 +315,10 @@ digit = _digit()
 reply = _reply()
 forward = _forward()
 gif = _gif()
+text = _text()
+photo = _photo()
+video = _video()
+audio = _audio()
+voice = _voice()
+contact = _contact()
+location = _location()
