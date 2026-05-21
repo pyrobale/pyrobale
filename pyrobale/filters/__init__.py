@@ -275,37 +275,37 @@ def func(function: Callable):
 
 def _text():
     async def check(event, *args):
-        return hasattr(event, "text")
+        return hasattr(event, "text") and bool(getattr(event, "text"))
     return Filter(check)
 
 def _photo():
     async def check(event, *args):
-        return hasattr(event, "photo")
+        return hasattr(event, "photo") and bool(getattr(event, "photo"))
     return Filter(check)
 
 def _video():
     async def check(event, *args):
-        return hasattr(event, "video")
+        return hasattr(event, "video") and bool(getattr(event, "video"))
     return Filter(check)
 
 def _audio():
     async def check(event, *args):
-        return hasattr(event, "audio")
+        return hasattr(event, "audio") and bool(getattr(event, "audio"))
     return Filter(check)
 
 def _voice():
     async def check(event, *args):
-        return hasattr(event, "voice")
+        return hasattr(event, "voice") and bool(getattr(event, "voice"))
     return Filter(check)
 
 def _contact():
     async def check(event, *args):
-        return hasattr(event, "contact")
+        return hasattr(event, "contact") and bool(getattr(event, "contact"))
     return Filter(check)
 
 def _location():
     async def check(event, *args):
-        return hasattr(event, "location")
+        return hasattr(event, "location") and bool(getattr(event, "location"))
     return Filter(check)
 
 private = pv = _private()
