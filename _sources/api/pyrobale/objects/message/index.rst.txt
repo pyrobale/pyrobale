@@ -251,6 +251,12 @@ Module Contents
 
 
 
+   .. py:attribute:: document
+      :type:  Optional[pyrobale.objects.document.Document]
+      :value: None
+
+
+
    .. py:attribute:: photo
       :type:  Optional[list[pyrobale.objects.photosize.PhotoSize]]
       :value: None

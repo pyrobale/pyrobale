@@ -15,7 +15,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Document(file_id, file_unique_id, thumbnail = None, file_name = None, mime_type = None, file_size = None, **kwargs)
+.. py:class:: Document(file_id, file_unique_id, thumbnail, file_name, mime_type, file_size, **kwargs)
 
    Represents a general file to be sent without any special properties.
 
@@ -27,22 +27,14 @@ Module Contents
 
 
    .. py:attribute:: thumbnail
-      :value: None
-
 
 
    .. py:attribute:: file_name
-      :value: None
-
 
 
    .. py:attribute:: mime_type
-      :value: None
-
 
 
    .. py:attribute:: file_size
-      :value: None
-
 
 
