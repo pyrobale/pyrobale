@@ -189,6 +189,8 @@ class Message:
         self.location: Optional["Location"] = location
         if poll and isinstance(poll, dict):
             self.poll = Poll(**poll)
+        else:
+            self.poll = None
         self.new_chat_members: Optional["NewChatMembers"] = new_chat_members
         self.left_chat_member: Optional["User"] = left_chat_member
         self.invoice: Optional["Invoice"] = invoice
