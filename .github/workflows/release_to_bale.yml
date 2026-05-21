@@ -1,0 +1,42 @@
+name: Deploy Sphinx Documentation
+
+on:
+  push:
+    branches: [ main, beta ]
+
+  pull_request:
+    types: [closed]
+    branches: [ main ]
+    paths:
+      - 'pyproject.toml'
+
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip items and send to Bale
+        run: |
+            zip -r pyrobale-release.zip .
+            python3 << 'EOF'
+            import requests
+            import os
+
+            TOKEN = os.environ['BALE_BOT_TOKEN']
+            CHANNEL_ID = 4894158153
+            FILE_PATH = "pyrobale-release.zip"
+            
+            with open(FILE_PATH, "rb") as f:
+                requests.post(f"https://tapi.bale.ai/bot{TOKEN}/sendDocument",
+                              data={"chat_id": CHANNEL_ID},
+                              files={"document": f})
+            EOF
+        env:
+          BALE_BOT_TOKEN: ${{ secrets.BALE_BOT_TOKEN }}
+          BALE_CHAT_ID: ${{ secrets.BALE_DCHAT_ID }}
