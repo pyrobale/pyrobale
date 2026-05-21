@@ -1683,6 +1683,11 @@ class Client:
                             expected_command = handler.get("command", "")
                             if actual_command == expected_command:
                                 event = self._convert_event(UpdatesTypes.MESSAGE, message_data)
+                
+                elif handler_type == UpdatesTypes.MESSAGE_EDITED:
+                    message_data = update
+                    if "edited_message" in message_data:
+                        event = self._convert_event(handler_type, message_data.get('edited_message'))
 
                 elif handler_type == UpdatesTypes.MEMBER_JOINED:
                     message_data = update.get("message", {})
@@ -1693,6 +1698,7 @@ class Client:
                     message_data = update.get("message", {})
                     if "left_chat_member" in message_data:
                         event = self._convert_event(handler_type, message_data)
+                
 
                 else:
                     update_type_key = handler_type.value
@@ -1709,7 +1715,7 @@ class Client:
                     for event_filter in event_filters:
                         if callable(event_filter):
                             try:
-                                if not event_filter(event, self):
+                                if not await event_filter(event, self):
                                     skip = True
                             except Exception as e:
                                 print(f"[Filter Error] {e}")
@@ -1721,14 +1727,25 @@ class Client:
                             else:
                                 skip = True
                 else:
-                    for event_filter in event_filters:
-                        try:
-                            if not event_filter(event, self):
+                    try:
+                        event_filters = event_filters[0].lst
+                        for event_filter in event_filters:
+                            try:
+                                do_event_filter = await event_filter[0](event, self)
+                                if not do_event_filter:
+                                    skip = True
+                            except Exception as e:
+                                print(f"[Filter Error] {e}")
+                                traceback.print_exc()
                                 skip = True
-                        except Exception as e:
-                            print(f"[Filter Error] {e}")
-                            traceback.print_exc()
-                            skip = True
+                            
+                            if event_filter[1]:
+                                skip = not skip
+
+                            if skip:
+                                break
+                    except Exception as e:
+                        pass
                 
                 if skip:
                     continue
