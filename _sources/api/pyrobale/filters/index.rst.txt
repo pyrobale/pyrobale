@@ -17,6 +17,14 @@ Attributes
    pyrobale.filters.gif
 
 
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.filters.Filter
+
+
 Functions
 ---------
 
@@ -33,6 +41,23 @@ Functions
 
 Package Contents
 ----------------
+
+.. py:class:: Filter(check_func, inv = False)
+
+   .. py:attribute:: state
+
+
+   .. py:attribute:: lst
+
+
+   .. py:method:: __invert__()
+
+
+   .. py:method:: __and__(other)
+
+
+   .. py:method:: __call__(event, client=None, *args)
+
 
 .. py:function:: equals(expected_text)
 

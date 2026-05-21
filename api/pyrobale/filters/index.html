@@ -393,6 +393,18 @@
 </table>
 </div>
 </section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrobale.filters.Filter" title="pyrobale.filters.Filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Filter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper autosummary longtable docutils container">
@@ -425,6 +437,44 @@
 </section>
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">Filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>check_func</strong> (<em>Callable</em>)</p></li>
+<li><p><strong>inv</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter.state">
+<span class="sig-name descname"><span class="pre">state</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter.state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter.state" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter.lst">
+<span class="sig-name descname"><span class="pre">lst</span></span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter.lst"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter.lst" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter.__invert__">
+<span class="sig-name descname"><span class="pre">__invert__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter.__invert__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter.__invert__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter.__and__">
+<span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter.__and__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter.__and__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrobale.filters.Filter.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#Filter.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.Filter.__call__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="pyrobale.filters.equals">
 <span class="sig-prename descclassname"><span class="pre">pyrobale.filters.</span></span><span class="sig-name descname"><span class="pre">equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expected_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/filters.html#equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.filters.equals" title="Link to this definition">¶</a></dt>
@@ -637,8 +687,17 @@
             <ul>
 <li><a class="reference internal" href="#">pyrobale.filters</a><ul>
 <li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#pyrobale.filters.Filter"><code class="docutils literal notranslate"><span class="pre">Filter</span></code></a><ul>
+<li><a class="reference internal" href="#pyrobale.filters.Filter.state"><code class="docutils literal notranslate"><span class="pre">Filter.state</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.Filter.lst"><code class="docutils literal notranslate"><span class="pre">Filter.lst</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.Filter.__invert__"><code class="docutils literal notranslate"><span class="pre">Filter.__invert__()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.Filter.__and__"><code class="docutils literal notranslate"><span class="pre">Filter.__and__()</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.filters.Filter.__call__"><code class="docutils literal notranslate"><span class="pre">Filter.__call__()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pyrobale.filters.equals"><code class="docutils literal notranslate"><span class="pre">equals()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.filters.startswith"><code class="docutils literal notranslate"><span class="pre">startswith()</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.filters.regex"><code class="docutils literal notranslate"><span class="pre">regex()</span></code></a></li>

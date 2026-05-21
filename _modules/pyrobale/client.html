@@ -873,7 +873,7 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_audio</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">chat_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-            <span class="n">audio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+            <span class="n">audio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">InputFile</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span>
             <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_to_message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reply_markup</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">ReplyKeyboardMarkup</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -882,15 +882,18 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            chat_id (Union[int, str]): The chat to send the message to.</span>
-<span class="sd">            audio (Union[InputFile, str]): The audio file to send.</span>
+<span class="sd">            audio (Union[InputFile, str, bytes]): The audio file to send.</span>
 <span class="sd">            caption (Optional[str], optional): The caption of the audio. Defaults to None.</span>
 <span class="sd">            reply_to_message_id (Optional[int], optional): The message ID to reply to. Defaults to None.</span>
 <span class="sd">            reply_markup (Optional[InlineKeyboardMarkup], optional): The reply keyboard markup. Defaults to None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="s2">&quot;/sendAudio&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">InputFile</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
             <span class="n">form</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">FormData</span><span class="p">()</span>
             <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;chat_id&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chat_id</span><span class="p">))</span>
+            
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="n">audio</span> <span class="o">=</span> <span class="n">InputFile</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span>
                 <span class="n">form</span><span class="o">.</span><span class="n">add_field</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">audio</span><span class="o">.</span><span class="n">file_input</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">audio</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
@@ -2098,7 +2101,7 @@
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
-    <span class="nd">@smart_method</span>
+
 <div class="viewcode-block" id="Client.wait_for">
 <a class="viewcode-back" href="../../api/pyrobale/client/index.html#pyrobale.client.Client.wait_for">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wait_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_type</span><span class="p">:</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -2222,7 +2225,7 @@
                 <span class="n">is_match</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_event</span><span class="p">(</span><span class="n">w_type</span><span class="p">,</span> <span class="n">update</span><span class="p">[</span><span class="s2">&quot;pre_checkout_query&quot;</span><span class="p">])</span>
 
-            <span class="k">if</span> <span class="n">is_match</span> <span class="ow">and</span> <span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_match</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">check</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">check</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
@@ -2256,6 +2259,11 @@
                             <span class="n">expected_command</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                             <span class="k">if</span> <span class="n">actual_command</span> <span class="o">==</span> <span class="n">expected_command</span><span class="p">:</span>
                                 <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_event</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">,</span> <span class="n">message_data</span><span class="p">)</span>
+                
+                <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE_EDITED</span><span class="p">:</span>
+                    <span class="n">message_data</span> <span class="o">=</span> <span class="n">update</span>
+                    <span class="k">if</span> <span class="s2">&quot;edited_message&quot;</span> <span class="ow">in</span> <span class="n">message_data</span><span class="p">:</span>
+                        <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_event</span><span class="p">(</span><span class="n">handler_type</span><span class="p">,</span> <span class="n">message_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;edited_message&#39;</span><span class="p">))</span>
 
                 <span class="k">elif</span> <span class="n">handler_type</span> <span class="o">==</span> <span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MEMBER_JOINED</span><span class="p">:</span>
                     <span class="n">message_data</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="p">{})</span>
@@ -2266,6 +2274,7 @@
                     <span class="n">message_data</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="p">{})</span>
                     <span class="k">if</span> <span class="s2">&quot;left_chat_member&quot;</span> <span class="ow">in</span> <span class="n">message_data</span><span class="p">:</span>
                         <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_event</span><span class="p">(</span><span class="n">handler_type</span><span class="p">,</span> <span class="n">message_data</span><span class="p">)</span>
+                
 
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">update_type_key</span> <span class="o">=</span> <span class="n">handler_type</span><span class="o">.</span><span class="n">value</span>
@@ -2278,11 +2287,11 @@
 
                 <span class="n">event_filters</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filters&quot;</span><span class="p">)</span>
                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="k">if</span> <span class="n">event_filters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_filters</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">event_filters</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">event_filter</span> <span class="ow">in</span> <span class="n">event_filters</span><span class="p">:</span>
                         <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">event_filter</span><span class="p">):</span>
                             <span class="k">try</span><span class="p">:</span>
-                                <span class="k">if</span> <span class="ow">not</span> <span class="n">event_filter</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="p">):</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">event_filter</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="p">):</span>
                                     <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
                             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Filter Error] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -2293,6 +2302,26 @@
                                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
                             <span class="k">else</span><span class="p">:</span>
                                 <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">event_filters</span> <span class="o">=</span> <span class="n">event_filters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lst</span>
+                        <span class="k">for</span> <span class="n">event_filter</span> <span class="ow">in</span> <span class="n">event_filters</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="n">do_event_filter</span> <span class="o">=</span> <span class="k">await</span> <span class="n">event_filter</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">do_event_filter</span><span class="p">:</span>
+                                    <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Filter Error] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                                <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+                            
+                            <span class="k">if</span> <span class="n">event_filter</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                                <span class="n">skip</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">skip</span>
+
+                            <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
+                                <span class="k">break</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">pass</span>
                 
                 <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
                     <span class="k">continue</span>

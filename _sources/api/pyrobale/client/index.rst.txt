@@ -294,7 +294,7 @@ Package Contents
       :param chat_id: The chat to send the message to.
       :type chat_id: Union[int, str]
       :param audio: The audio file to send.
-      :type audio: Union[InputFile, str]
+      :type audio: Union[InputFile, str, bytes]
       :param caption: The caption of the audio. Defaults to None.
       :type caption: Optional[str], optional
       :param reply_to_message_id: The message ID to reply to. Defaults to None.
