@@ -10,7 +10,6 @@ if TYPE_CHECKING:
     from ..objects.chatmember import ChatMember
     from ..objects.animation import Animation
     from ..objects.audio import Audio
-    from ..objects.document import Document
     from ..objects.photosize import PhotoSize
     from ..objects.sticker import Sticker
     from ..objects.video import Video
@@ -22,10 +21,12 @@ if TYPE_CHECKING:
     from ..objects.webappdata import WebAppData
     from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
     from ..objects.replykeyboardmarkup import ReplyKeyboardMarkup
+    from ..objects.inputfile import InputFile
     from ..client import Client
 
 from ..objects.chat import Chat
 from ..objects.user import User
+from ..objects.document import Document
 from ..objects.forwardorigin import ForwardOrigin
 from ..objects.inlinekeyboardmarkup import InlineKeyboardMarkup
 from .messageentity import MessageEntity
@@ -173,7 +174,8 @@ class Message:
         self.text: Optional[str] = text
         self.animation: Optional["Animation"] = animation
         self.audio: Optional["Audio"] = audio
-        self.document: Optional["Document"] = document
+        if isinstance(document, dict):
+            self.document: Optional["Document"] = Document(**document)
         self.photo: Optional[list["PhotoSize"]] = photo
         self.sticker: Optional["Sticker"] = sticker
         self.video: Optional["Video"] = video
@@ -373,7 +375,7 @@ class Message:
     @smart_method
     async def reply_audio(
             self,
-            audio: str,
+            audio: Union["InputFile", str, bytes],
             caption: Optional[str] = None,
             reply_markup: Union["ReplyKeyboardMarkup", "InlineKeyboardMarkup", None] = None,
     ) -> 'Message':

@@ -1,9 +1,47 @@
 import re
 from typing import Callable, List, Optional, Union, TYPE_CHECKING
+import asyncio
 
 if TYPE_CHECKING:
     from ..objects.user import User
     from ..client import Client
+
+class Filter:
+    def __init__(self, check_func: Callable, inv: bool = False) -> None:
+        self.state = (check_func, inv)
+        self.lst = [self.state]
+
+    def __invert__(self):
+        self.state = (self.state[0], not self.state[1])
+        self.lst = [self.state]
+        return self
+
+    def __and__(self, other):
+        if not isinstance(other, Filter):
+            raise TypeError(f"Cannot combine Filter with {type(other)}")
+
+        def combined_check(event, client=None, *args):
+            if self.state[1]:
+                res1 = not self.state[0](event, client, *args)
+            else:
+                res1 = self.state[0](event, client, *args)
+
+            if other.state[1]:
+                res2 = not other.state[0](event, client, *args)
+            else:
+                res2 = other.state[0](event, client, *args)
+
+            return res1 and res2
+
+        new_filter = Filter(self.state[0], self.state[1])
+        new_filter.lst = self.lst + other.lst
+        new_filter.state = (combined_check, False)
+        return new_filter
+
+    def __call__(self, event, client=None, *args):
+        if self.state[1]:
+            return not self.state[0](event, client, *args)
+        return self.state[0](event, client, *args)
 
 def equals(expected_text: str):
     """
@@ -15,12 +53,12 @@ def equals(expected_text: str):
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is equal to the expected text.
     """
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "text", None) == expected_text or getattr(event, "caption", None) == expected_text or getattr(event, "data", None) == expected_text
         except:
             return False
-    return check
+    return Filter(check)
 
 def startswith(expected_text: str):
     """
@@ -32,12 +70,12 @@ def startswith(expected_text: str):
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is started with to the expected text.
     """
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "text", "").startswith(expected_text) or getattr(event, "caption", "").startswith(expected_text) or getattr(event, "data", "").startswith(expected_text)
         except:
             return False
-    return check
+    return Filter(check)
 
 
 def regex(pattern: str):
@@ -50,12 +88,12 @@ def regex(pattern: str):
     Returns:
         Callable: A function that checks if the event text or caption is match with given pattern
     """
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return re.search(pattern, getattr(event, "text", "")) or re.search(pattern, getattr(event, "caption", ""))
         except:
             return False
-    return check
+    return Filter(check)
 
 def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
     """
@@ -72,7 +110,7 @@ def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
             allowed_users = [int(allowed_users)]
         except:
             raise ValueError("Chat IDs can only be digits")
-    def check(event, *args):
+    async def check(event, *args):
         try:
             event_user = getattr(event, "user", None)
             event_user_id = getattr(event_user, "id")
@@ -80,7 +118,7 @@ def from_users(allowed_users: Union[List[Union["User", int, str]], int, str]):
                 return True
         except:
             return False
-    return check
+    return Filter(check)
 
 def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
     """
@@ -98,19 +136,23 @@ def is_joined(chat_ids: Union[List[Union["User", int, str]], int, str]):
         except:
             raise ValueError("Chat IDs can only be digits")
 
-    def check(event, client: 'Client', *args):
+    async def check(event, client: 'Client', *args):
         try:
             event_user = getattr(event, "user", None)
             event_user_id = getattr(event_user, "id")
             for chat in chat_ids:
-                joined = client.is_joined(event_user_id, chat)
+                data = await client.make_post(
+                    client.requests_base + "/getChatMember",
+                    data={"chat_id": chat, "user_id": event_user_id},
+                )
+                joined = data.get("result", {}).get("status") in ["member", "creator", "administrator"]
                 if not joined:
                     return False
             return True
             
         except:
             return False
-    return check
+    return Filter(check)
 
 def at_state(state: Optional[str] = None):
     """
@@ -124,76 +166,76 @@ def at_state(state: Optional[str] = None):
     
     """
 
-    def check(event, client: 'Client', *args):
+    async def check(event, client: 'Client', *args):
         try:
             event_user = getattr(event, "user", None)
             event_user_id = getattr(event_user, "id")
             return client.state_machine.get_state(event_user_id) == state
         except:
             return False
-    return check
+    return Filter(check)
 
 def _private():
     """
     checks if the event is happening in a private chat
     """
 
-    def check(event, *args):
+    async def check(event, *args):
         try:
             chat = getattr(event, "chat")
             return getattr(chat, "private")
         except:
             return False
-    return check
+    return Filter(check)
 
 def _group():
     """
     checks if the event is happening in a group chat
     """
 
-    def check(event, *args):
+    async def check(event, *args):
         try:
             chat = getattr(event, "chat")
             return chat.type == chat.type.GROUP
         except:
             return False
-    return check
+    return Filter(check)
 
 def _reply():
     """
     Checks if the event is a reply to a message.
     """
 
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "reply_to_message") is not None
         except:
             return False
-    return check
+    return Filter(check)
 
 def _forward():
     """
     Checks if the event is a forwarded message.
     """
 
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "forward_from") is not None
         except:
             return False
-    return check
+    return Filter(check)
 
 def _gif():
     """
     Checks if the event has a gif media.
     """
 
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "animation") is not None
         except:
             return False
-    return check
+    return Filter(check)
 
 def _digit():
     """
@@ -202,33 +244,33 @@ def _digit():
     Returns:
         Callable: A function that checks if the event text or caption or callbackQuery data is digit.
     """
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return getattr(event, "text", "").isdigit() or getattr(event, "caption", "").isdigit() or getattr(event, "data", "").isdigit()
         except:
             return False
-    return check
+    return Filter(check)
 
 def _channel():
     """
     checks if the event is happening in a channel
     """
 
-    def check(event, args):
+    async def check(event, args):
         try:
             chat = getattr(event, "chat")
             return getattr(chat, "channel")
         except:
             return False
-    return check
+    return Filter(check)
 
 def func(function: Callable):
-    def check(event, *args):
+    async def check(event, *args):
         try:
             return function(event)
         except:
             return False
-    return check
+    return Filter(check)
 
 text = TEXT = "text"
 photo = PHOTO = "photo"
@@ -245,7 +287,3 @@ digit = _digit()
 reply = _reply()
 forward = _forward()
 gif = _gif()
-
-# __all__ = [
-    
-# ]

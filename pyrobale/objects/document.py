@@ -12,10 +12,10 @@ class Document:
         self,
         file_id: str,
         file_unique_id: str,
-        thumbnail: "PhotoSize",
-        file_name: str,
-        mime_type: str,
-        file_size: int,
+        thumbnail: Optional["PhotoSize"] = None,
+        file_name: Optional[str] = None,
+        mime_type: Optional[str] = None,
+        file_size: Optional[int] = None,
         **kwargs
     ):
         self.file_id = file_id
