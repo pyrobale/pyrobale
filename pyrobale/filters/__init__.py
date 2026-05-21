@@ -272,13 +272,34 @@ def func(function: Callable):
             return False
     return Filter(check)
 
-text = TEXT = "text"
-photo = PHOTO = "photo"
-video = VIDEO = "video"
-audio = AUDIO = "audio"
-voice = VOICE = "voice"
-contact = CONTACT = "contact"
-location = LOCATION = "location"
+def text():
+    async def check(event, *args):
+        return hasattr(event, "text")
+    return Filter(check)
+def photo():
+    async def check(event, *args):
+        return hasattr(event, "photo")
+    return Filter(check)
+def video():
+    async def check(event, *args):
+        return hasattr(event, "video")
+    return Filter(check)
+def audio():
+    async def check(event, *args):
+        return hasattr(event, "audio")
+    return Filter(check)
+def voice():
+    async def check(event, *args):
+        return hasattr(event, "voice")
+    return Filter(check)
+def contact():
+    async def check(event, *args):
+        return hasattr(event, "contact")
+    return Filter(check)
+def location():
+    async def check(event, *args):
+        return hasattr(event, "location")
+    return Filter(check)
 
 private = pv = _private()
 channel = _channel()
