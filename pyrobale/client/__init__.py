@@ -1685,11 +1685,12 @@ class Client:
                 handler_type = handler.get("type")
                 event = None
 
-                if success_payment:
-                    event = success_payment
-
                 if handler_type == UpdatesTypes.UPDATE:
                     event = self._convert_event(UpdatesTypes.UPDATE, update)
+
+                if handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
+                    if success_payment:
+                        event = success_payment
 
                 elif handler_type == UpdatesTypes.COMMAND:
                     message_data = update.get("message", {})
