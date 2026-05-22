@@ -15,7 +15,7 @@ Classes
 Package Contents
 ----------------
 
-.. py:class:: Client(token, base_url = 'https://tapi.bale.ai/bot', async_mode = None, max_workers = 50)
+.. py:class:: Client(token, base_url = 'https://tapi.bale.ai/bot', async_mode = None, max_workers = 50, handle_pre_checkout_query = False)
 
    A client for interacting with the Bale messenger API.
 
@@ -41,6 +41,11 @@ Package Contents
 
 
    .. py:attribute:: requests_base
+
+
+   .. py:attribute:: handle_pre_checkout_query
+      :value: False
+
 
 
    .. py:attribute:: handlers

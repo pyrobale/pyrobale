@@ -1,0 +1,28 @@
+pyrobale.objects.polloption
+===========================
+
+.. py:module:: pyrobale.objects.polloption
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pyrobale.objects.polloption.PollOption
+
+
+Module Contents
+---------------
+
+.. py:class:: PollOption(persistent_id, text, voter_count, **kwargs)
+
+   .. py:attribute:: persistent_id
+
+
+   .. py:attribute:: text
+
+
+   .. py:attribute:: voter_count
+
+

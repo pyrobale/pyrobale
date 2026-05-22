@@ -241,6 +241,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../objects/messageid/index.html">pyrobale.objects.messageid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/newchatmembers/index.html">pyrobale.objects.newchatmembers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/photosize/index.html">pyrobale.objects.photosize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../objects/poll/index.html">pyrobale.objects.poll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../objects/polloption/index.html">pyrobale.objects.polloption</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/precheckoutquery/index.html">pyrobale.objects.precheckoutquery</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/replykeyboardmarkup/index.html">pyrobale.objects.replykeyboardmarkup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../objects/sticker/index.html">pyrobale.objects.sticker</a></li>
@@ -382,7 +384,7 @@
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrobale.client.Client">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrobale.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://tapi.bale.ai/bot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">async_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrobale.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://tapi.bale.ai/bot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">async_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle_pre_checkout_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client" title="Link to this definition">¶</a></dt>
 <dd><p>A client for interacting with the Bale messenger API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -391,6 +393,7 @@
 <li><p><strong>base_url</strong> (<em>str</em><em>, </em><em>optional</em>) – The base URL for the API. Defaults to “<a class="reference external" href="https://tapi.bale.ai/bot">https://tapi.bale.ai/bot</a>”.</p></li>
 <li><p><strong>async_mode</strong> (<em>bool</em><em>, </em><em>optional</em>) – Force async mode. If None, auto-detected.</p></li>
 <li><p><strong>max_workers</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of worker threads for handlers. Defaults to 50.</p></li>
+<li><p><strong>handle_pre_checkout_query</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -413,6 +416,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyrobale.client.Client.requests_base">
 <span class="sig-name descname"><span class="pre">requests_base</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.requests_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.requests_base" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrobale.client.Client.handle_pre_checkout_query">
+<span class="sig-name descname"><span class="pre">handle_pre_checkout_query</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="reference internal" href="../../../_modules/pyrobale/client.html#Client.handle_pre_checkout_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrobale.client.Client.handle_pre_checkout_query" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2013,6 +2021,7 @@
 <li><a class="reference internal" href="#pyrobale.client.Client.token"><code class="docutils literal notranslate"><span class="pre">Client.token</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.base_url"><code class="docutils literal notranslate"><span class="pre">Client.base_url</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.requests_base"><code class="docutils literal notranslate"><span class="pre">Client.requests_base</span></code></a></li>
+<li><a class="reference internal" href="#pyrobale.client.Client.handle_pre_checkout_query"><code class="docutils literal notranslate"><span class="pre">Client.handle_pre_checkout_query</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.handlers"><code class="docutils literal notranslate"><span class="pre">Client.handlers</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.running"><code class="docutils literal notranslate"><span class="pre">Client.running</span></code></a></li>
 <li><a class="reference internal" href="#pyrobale.client.Client.last_update_id"><code class="docutils literal notranslate"><span class="pre">Client.last_update_id</span></code></a></li>

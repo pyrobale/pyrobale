@@ -15,6 +15,13 @@ Attributes
    pyrobale.filters.reply
    pyrobale.filters.forward
    pyrobale.filters.gif
+   pyrobale.filters.text
+   pyrobale.filters.photo
+   pyrobale.filters.video
+   pyrobale.filters.audio
+   pyrobale.filters.voice
+   pyrobale.filters.contact
+   pyrobale.filters.location
 
 
 Classes
@@ -138,4 +145,18 @@ Package Contents
 .. py:data:: forward
 
 .. py:data:: gif
+
+.. py:data:: text
+
+.. py:data:: photo
+
+.. py:data:: video
+
+.. py:data:: audio
+
+.. py:data:: voice
+
+.. py:data:: contact
+
+.. py:data:: location
 

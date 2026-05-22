@@ -240,6 +240,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/messageid/index.html">pyrobale.objects.messageid</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/newchatmembers/index.html">pyrobale.objects.newchatmembers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/photosize/index.html">pyrobale.objects.photosize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/poll/index.html">pyrobale.objects.poll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/polloption/index.html">pyrobale.objects.polloption</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/precheckoutquery/index.html">pyrobale.objects.precheckoutquery</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/replykeyboardmarkup/index.html">pyrobale.objects.replykeyboardmarkup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/pyrobale/objects/sticker/index.html">pyrobale.objects.sticker</a></li>
@@ -667,13 +669,41 @@
     <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span></div>
 
 
-<span class="n">text</span> <span class="o">=</span> <span class="n">TEXT</span> <span class="o">=</span> <span class="s2">&quot;text&quot;</span>
-<span class="n">photo</span> <span class="o">=</span> <span class="n">PHOTO</span> <span class="o">=</span> <span class="s2">&quot;photo&quot;</span>
-<span class="n">video</span> <span class="o">=</span> <span class="n">VIDEO</span> <span class="o">=</span> <span class="s2">&quot;video&quot;</span>
-<span class="n">audio</span> <span class="o">=</span> <span class="n">AUDIO</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span>
-<span class="n">voice</span> <span class="o">=</span> <span class="n">VOICE</span> <span class="o">=</span> <span class="s2">&quot;voice&quot;</span>
-<span class="n">contact</span> <span class="o">=</span> <span class="n">CONTACT</span> <span class="o">=</span> <span class="s2">&quot;contact&quot;</span>
-<span class="n">location</span> <span class="o">=</span> <span class="n">LOCATION</span> <span class="o">=</span> <span class="s2">&quot;location&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_text</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_photo</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;photo&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;photo&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_video</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_audio</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;audio&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;audio&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_voice</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;voice&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;voice&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_contact</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;contact&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;contact&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_location</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;location&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;location&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
 
 <span class="n">private</span> <span class="o">=</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">_private</span><span class="p">()</span>
 <div class="viewcode-block" id="channel">
@@ -699,6 +729,34 @@
 <div class="viewcode-block" id="gif">
 <a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.gif">[docs]</a>
 <span class="n">gif</span> <span class="o">=</span> <span class="n">_gif</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="text">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.text">[docs]</a>
+<span class="n">text</span> <span class="o">=</span> <span class="n">_text</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="photo">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.photo">[docs]</a>
+<span class="n">photo</span> <span class="o">=</span> <span class="n">_photo</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="video">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.video">[docs]</a>
+<span class="n">video</span> <span class="o">=</span> <span class="n">_video</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="audio">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.audio">[docs]</a>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">_audio</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="voice">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.voice">[docs]</a>
+<span class="n">voice</span> <span class="o">=</span> <span class="n">_voice</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="contact">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.contact">[docs]</a>
+<span class="n">contact</span> <span class="o">=</span> <span class="n">_contact</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="location">
+<a class="viewcode-back" href="../../api/pyrobale/filters/index.html#pyrobale.filters.location">[docs]</a>
+<span class="n">location</span> <span class="o">=</span> <span class="n">_location</span><span class="p">()</span></div>
 
 </pre></div>
         </article>
