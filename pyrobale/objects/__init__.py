@@ -47,6 +47,8 @@ from .update import Update
 from .enums import UpdatesTypes, ChatAction, ChatType
 from .newchatmembers import NewChatMembers
 from .forwardorigin import ForwardOrigin
+from .poll import Poll
+from .polloption import PollOption
 
 __all__ = [
     "UpdatesTypes",
@@ -92,5 +94,7 @@ __all__ = [
     "Update",
     "InviteLink",
     "NewChatMembers",
-    "ForwardOrigin"
+    "ForwardOrigin",
+    "Poll",
+    "PollOption"
 ]

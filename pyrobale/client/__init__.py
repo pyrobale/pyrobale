@@ -72,10 +72,12 @@ class Client:
     """
 
     def __init__(self, token: str, base_url: str = "https://tapi.bale.ai/bot",
-                 async_mode: Optional[bool] = None, max_workers: int = 50):
+                 async_mode: Optional[bool] = None, max_workers: int = 50,
+                 handle_pre_checkout_query: Optional[bool] = False):
         self.token = token
         self.base_url = base_url
         self.requests_base = base_url + token
+        self.handle_pre_checkout_query = handle_pre_checkout_query
 
         self.handlers = []
         self._waiters = []
@@ -1698,6 +1700,11 @@ class Client:
                     message_data = update.get("message", {})
                     if "left_chat_member" in message_data:
                         event = self._convert_event(handler_type, message_data)
+
+                elif handler_type == UpdatesTypes.PRE_CHECKOUT_QUERY:
+                    if "pre_checkout_query" in update:
+                        event = self._convert_event(handler_type, update["pre_checkout_query"])
+
                 
 
                 else:
@@ -1759,6 +1766,10 @@ class Client:
                 except Exception as e:
                     print(f"Error executing handler: {e}")
                     traceback.print_exc()
+            
+            if self.handle_pre_checkout_query:
+                if "pre_checkout_query" in update:
+                    await self.answer_pre_checkout_query(PreCheckoutQuery(**pythonize(update["pre_checkout_query"]), client=self), ok=True)
 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
@@ -1800,7 +1811,8 @@ class Client:
                     Message(**pythonize(event_data.get('message', {})), client=self),
                     Message(**pythonize(event_data.get('edited_message', {})), client=self),
                     CallbackQuery(**pythonize(event_data.get('callback_query', {})), client=self),
-                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self)
+                    PreCheckoutQuery(**pythonize(event_data.get('pre_checkout_query', {})), client=self),
+                    json=event_data
                 )
             else:
                 return event_data

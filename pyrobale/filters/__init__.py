@@ -272,13 +272,41 @@ def func(function: Callable):
             return False
     return Filter(check)
 
-text = TEXT = "text"
-photo = PHOTO = "photo"
-video = VIDEO = "video"
-audio = AUDIO = "audio"
-voice = VOICE = "voice"
-contact = CONTACT = "contact"
-location = LOCATION = "location"
+
+def _text():
+    async def check(event, *args):
+        return hasattr(event, "text") and bool(getattr(event, "text"))
+    return Filter(check)
+
+def _photo():
+    async def check(event, *args):
+        return hasattr(event, "photo") and bool(getattr(event, "photo"))
+    return Filter(check)
+
+def _video():
+    async def check(event, *args):
+        return hasattr(event, "video") and bool(getattr(event, "video"))
+    return Filter(check)
+
+def _audio():
+    async def check(event, *args):
+        return hasattr(event, "audio") and bool(getattr(event, "audio"))
+    return Filter(check)
+
+def _voice():
+    async def check(event, *args):
+        return hasattr(event, "voice") and bool(getattr(event, "voice"))
+    return Filter(check)
+
+def _contact():
+    async def check(event, *args):
+        return hasattr(event, "contact") and bool(getattr(event, "contact"))
+    return Filter(check)
+
+def _location():
+    async def check(event, *args):
+        return hasattr(event, "location") and bool(getattr(event, "location"))
+    return Filter(check)
 
 private = pv = _private()
 channel = _channel()
@@ -287,3 +315,10 @@ digit = _digit()
 reply = _reply()
 forward = _forward()
 gif = _gif()
+text = _text()
+photo = _photo()
+video = _video()
+audio = _audio()
+voice = _voice()
+contact = _contact()
+location = _location()
