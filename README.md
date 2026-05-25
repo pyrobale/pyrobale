@@ -70,6 +70,21 @@ async def message_handler(message: Message):
 bot.run()
 ```
 
+### Echo Bot (sync)
+You can also use sync handlers! We handle it automatically
+```python
+from pyrobale.client import Client
+from pyrobale.objects import Message, UpdatesTypes
+
+bot = Client("YOUR_BOT_TOKEN")
+
+@bot.on_message()
+def message_handler(message: Message):
+    message.reply(message.text)
+
+bot.run()
+```
+
 ### Inline Keyboard
 ```python
 from pyrobale.client import Client
@@ -78,10 +93,10 @@ from pyrobale.objects import Message, UpdatesTypes, InlineKeyboardButton, Inline
 bot = Client("YOUR_BOT_TOKEN")
 async def message_handler(message: Message):
     buttons = InlineKeyboardMarkup()
-    buttons.add_button("URL", url="https://google.com")
+    buttons.add_button("URL", url="https://pyrobale.ir")
     buttons.add_button("Callback", callback_data="callback")
     buttons.add_row()
-    buttons.add_button("WebApp", web_app="https://daradege.ir")
+    buttons.add_button("WebApp", web_app="https://pyrobale.ir")
     buttons.add_button("Copy", copy_text_button=CopyTextButton("TEXT"))
     await message.reply("Hello, world!", reply_markup=buttons)
 ```
@@ -111,7 +126,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📖 [Documentation](https://pyrobale.readthedocs.io)
+- 📖 [Docs (IR Server)](https://docs.pyrobale.ir) [Docs (Global)](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
 
