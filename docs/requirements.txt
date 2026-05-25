@@ -1,0 +1,7 @@
+sphinx
+furo
+sphinx-autoapi
+sphinx-copybutton
+sphinx-design
+sphinx-material
+sphinx-rtd-theme

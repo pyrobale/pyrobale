@@ -45,7 +45,7 @@ from ..objects.webappdata import WebAppData
 from ..objects.update import Update
 from ..objects.webappinfo import WebAppInfo
 from ..objects.utils import *
-from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions
+from ..objects.enums import UpdatesTypes, ChatAction, ChatType, ChatPermissions, TransactionStatus
 from ..objects.transaction import Transaction
 from ..StateMachine import StateMachine
 from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleException, ForbiddenException
@@ -1666,14 +1666,31 @@ class Client:
         for waiter in waiters_to_remove:
             if waiter in self._waiters:
                 self._waiters.remove(waiter)
-
+        
+        success_payment = None
         if not waiters_to_remove:
+            if self.handle_pre_checkout_query:
+                if "pre_checkout_query" in update:
+                    preCheckout = PreCheckoutQuery(**pythonize(update["pre_checkout_query"]), client=self)
+                    await self.answer_pre_checkout_query(preCheckout, ok=True)
+                    await asyncio.sleep(2)
+                    trans = await self.inquire_transaction(preCheckout.id)
+                    while trans.status not in [TransactionStatus.PAID, TransactionStatus.FAILED]:
+                        await asyncio.sleep(2)
+                        trans = await self.inquire_transaction(preCheckout.id)
+                    if trans.status == TransactionStatus.PAID: 
+                        success_payment = SuccessfulPayment(preCheckout.currency, preCheckout.total_amount, preCheckout.invoice_payload, telegram_payment_charge_id=preCheckout.id, provider_payment_charge_id=preCheckout.id)
+                        
             for handler in self.handlers:
                 handler_type = handler.get("type")
                 event = None
 
                 if handler_type == UpdatesTypes.UPDATE:
                     event = self._convert_event(UpdatesTypes.UPDATE, update)
+
+                if handler_type == UpdatesTypes.SUCCESSFUL_PAYMENT:
+                    if success_payment:
+                        event = success_payment
 
                 elif handler_type == UpdatesTypes.COMMAND:
                     message_data = update.get("message", {})
@@ -1766,10 +1783,6 @@ class Client:
                 except Exception as e:
                     print(f"Error executing handler: {e}")
                     traceback.print_exc()
-            
-            if self.handle_pre_checkout_query:
-                if "pre_checkout_query" in update:
-                    await self.answer_pre_checkout_query(PreCheckoutQuery(**pythonize(update["pre_checkout_query"]), client=self), ok=True)
 
     def _convert_event(self, handler_type: UpdatesTypes, event_data: Dict[str, Any]) -> Any:
         """Convert raw event data to appropriate object type."""
