@@ -126,7 +126,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📖 [Documentation](https://pyrobale.readthedocs.io)
+- 📖 [Docs (IR Server)](https://docs.pyrobale.ir) [Docs (Global)](https://pyrobale.readthedocs.io)
 - 🐛 [Issue Tracker](https://github.com/pyrobale/pyrobale/issues)
 - 💬 [Discussions](https://github.com/pyrobale/pyrobale/discussions)
 
