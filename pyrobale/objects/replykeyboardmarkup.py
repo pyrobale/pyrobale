@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Union, Optional
 
 from pyrobale.exceptions.common import PyroBaleException
 
@@ -12,6 +12,10 @@ from .enums import KeyboardTypes
 class ReplyKeyboardMarkup:
     """
     Represents a reply keyboard.
+
+    Args:
+        remove_keyboard (bool, optional): If True, the keyboard will be removed. Defaults to False.
+    
     Attributes:
         Each dictionary contains the following keys:
             - keyboard (list): A list of lists of dictionaries representing the buttons in the keyboard.
@@ -21,8 +25,9 @@ class ReplyKeyboardMarkup:
             - web_app (WebApp, optional): The web app associated with the button.
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args, remove_keyboard: Optional[bool] = False):
         args = list(args)
+        self.remove_keyboard = remove_keyboard
         self.keyboard = []
 
 
@@ -84,11 +89,13 @@ class ReplyKeyboardMarkup:
         """Convert to a dictionary."""
         return {
             "keyboard": self.keyboard,
-        }
+        } if len(self.keyboard) > 0 and not self.remove_keyboard else {"remove_keyboard": True}
 
     @property
     def json(self):
-        return {"keyboard": self.keyboard}
+        return {
+            "keyboard": self.keyboard,
+        } if len(self.keyboard) > 0 and not self.remove_keyboard else {"remove_keyboard": True}
 
     def __str__(self):
         return str(self.json)
