@@ -19,7 +19,7 @@ how to create inline keyboard in pyrobale
     @client.on_message()
     async def message_handler(message: Message):
         buttons = pishnahad_inline = InlineKeyboardMarkup(
-      [("Link Button 🚀", "https://google.com", ButtonTypes.URL), ("Web App",https://google.com", ButtonTypes.WEB_APP)],
+      [("Link Button 🚀", "https://google.com", ButtonTypes.URL), ("Web App", "https://google.com", ButtonTypes.WEB_APP)],
       [("Callback", "callback_data"), ("Copy TEXT", "This Text Copied", ButtonTypes.COPY_TEXT_BUTTON)])
 
     @client.on_callback_query()
