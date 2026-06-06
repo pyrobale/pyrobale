@@ -15,9 +15,13 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: ReplyKeyboardMarkup(*args)
+.. py:class:: ReplyKeyboardMarkup(*args, remove_keyboard = False)
 
    Represents a reply keyboard.
+
+   :param remove_keyboard: If True, the keyboard will be removed. Defaults to False.
+   :type remove_keyboard: bool, optional
+
    .. attribute:: Each dictionary contains the following keys
 
       
@@ -27,6 +31,11 @@ Module Contents
       - request_contact (bool, optional): If True, the user's phone number will be sent.
       - request_location (bool, optional): If True, the user's location will be sent.
       - web_app (WebApp, optional): The web app associated with the button.
+
+
+   .. py:attribute:: remove_keyboard
+      :value: False
+
 
 
    .. py:attribute:: keyboard

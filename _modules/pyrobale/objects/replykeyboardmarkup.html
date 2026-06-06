@@ -356,7 +356,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for pyrobale.objects.replykeyboardmarkup</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.exceptions.common</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyroBaleException</span>
 
@@ -372,6 +372,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">ReplyKeyboardMarkup</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a reply keyboard.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        remove_keyboard (bool, optional): If True, the keyboard will be removed. Defaults to False.</span>
+<span class="sd">    </span>
 <span class="sd">    Attributes:</span>
 <span class="sd">        Each dictionary contains the following keys:</span>
 <span class="sd">            - keyboard (list): A list of lists of dictionaries representing the buttons in the keyboard.</span>
@@ -381,8 +385,12 @@
 <span class="sd">            - web_app (WebApp, optional): The web app associated with the button.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">remove_keyboard</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<div class="viewcode-block" id="ReplyKeyboardMarkup.remove_keyboard">
+<a class="viewcode-back" href="../../../api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.remove_keyboard">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_keyboard</span> <span class="o">=</span> <span class="n">remove_keyboard</span></div>
+
 <div class="viewcode-block" id="ReplyKeyboardMarkup.keyboard">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.keyboard">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span> <span class="o">=</span> <span class="p">[]</span></div>
@@ -455,14 +463,16 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to a dictionary.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;keyboard&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">,</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_keyboard</span> <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;remove_keyboard&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
 
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="ReplyKeyboardMarkup.json">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/replykeyboardmarkup/index.html#pyrobale.objects.replykeyboardmarkup.ReplyKeyboardMarkup.json">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;keyboard&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;keyboard&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">,</span>
+        <span class="p">}</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_keyboard</span> <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;remove_keyboard&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="ReplyKeyboardMarkup.__str__">

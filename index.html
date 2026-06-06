@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -361,14 +361,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="pyrobale-documentation">
 <h1>Pyrobale Documentation<a class="headerlink" href="#pyrobale-documentation" title="Link to this heading">¶</a></h1>
-<p>A new python library designed to be modern, fast and useful.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API Documents</span></p>
 <ul>
@@ -378,28 +377,154 @@
 </li>
 </ul>
 </div>
-<section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
-<p>install stable release:</p>
+<img alt="pyrobale text" class="align-center" src="https://raw.githubusercontent.com/pyrobale/pyrobale/refs/heads/main/pyrobaletext.png" />
+</section>
+<section id="bale-bot-api-python-library">
+<h1>Bale Bot API Python Library<a class="headerlink" href="#bale-bot-api-python-library" title="Link to this heading">¶</a></h1>
+<p>A modern, easy-to-use Python wrapper for the Bale Bot API that makes building Bale bots simple and intuitive.</p>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>🚀 <strong>Simple &amp; Intuitive</strong> – Clean, Pythonic API design</p></li>
+<li><p>📨 <strong>Full Message Support</strong> – Text, photos, videos, documents, and more</p></li>
+<li><p>⌨️ <strong>Interactive Elements</strong> – Inline keyboards, reply keyboards, and buttons</p></li>
+<li><p>🔄 <strong>Real-time Updates</strong> – Webhook and polling support</p></li>
+<li><p>📁 <strong>File Handling</strong> – Easy upload and download of media files</p></li>
+<li><p>🛡️ <strong>Error Handling</strong> – Comprehensive exception handling</p></li>
+<li><p>📖 <strong>Type Hints</strong> – Full typing support for better development experience</p></li>
+<li><p>🔁 <strong>Async &amp; Sync Support</strong> – Works with both asynchronous and synchronous handlers</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyrobale
 </pre></div>
 </div>
-<p>Simple use:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyrobale</span>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span>
 
-<span class="n">bot</span> <span class="o">=</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+<span class="n">bot</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
 
-<span class="nd">@bot</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">command</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">pyrobale</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
-    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+<span class="nd">@bot</span><span class="o">.</span><span class="n">on_message</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
 
 <span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<section id="conversation-bot">
+<h3>Conversation Bot<a class="headerlink" href="#conversation-bot" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_message</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;/start&quot;</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Hi! I&#39;m a pyrobale RoBot!&quot;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Okay! wait_for test completed&quot;</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">UpdatesTypes</span><span class="o">.</span><span class="n">MESSAGE</span><span class="p">,</span> <span class="n">handle_message</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
 </section>
-<section id="index-tables">
-<h1>Index &amp; tables<a class="headerlink" href="#index-tables" title="Link to this heading">¶</a></h1>
+<section id="echo-bot-async">
+<h3>Echo Bot (Async)<a class="headerlink" href="#echo-bot-async" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span>
+
+<span class="n">bot</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+
+<span class="nd">@bot</span><span class="o">.</span><span class="n">on_message</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="echo-bot-sync">
+<h3>Echo Bot (Sync)<a class="headerlink" href="#echo-bot-sync" title="Link to this heading">¶</a></h3>
+<p>You can also use synchronous handlers – the library handles them automatically.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span>
+
+<span class="n">bot</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+
+<span class="nd">@bot</span><span class="o">.</span><span class="n">on_message</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
+    <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="inline-keyboard">
+<h3>Inline Keyboard<a class="headerlink" href="#inline-keyboard" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyrobale.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">UpdatesTypes</span><span class="p">,</span> <span class="n">InlineKeyboardButton</span><span class="p">,</span> <span class="n">InlineKeyboardMarkup</span><span class="p">,</span> <span class="n">CopyTextButton</span>
+
+<span class="n">bot</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;YOUR_BOT_TOKEN&quot;</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">message_handler</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">):</span>
+    <span class="n">buttons</span> <span class="o">=</span> <span class="n">InlineKeyboardMarkup</span><span class="p">()</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">add_button</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://pyrobale.ir&quot;</span><span class="p">)</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">add_button</span><span class="p">(</span><span class="s2">&quot;Callback&quot;</span><span class="p">,</span> <span class="n">callback_data</span><span class="o">=</span><span class="s2">&quot;callback&quot;</span><span class="p">)</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">add_row</span><span class="p">()</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">add_button</span><span class="p">(</span><span class="s2">&quot;WebApp&quot;</span><span class="p">,</span> <span class="n">web_app</span><span class="o">=</span><span class="s2">&quot;https://pyrobale.ir&quot;</span><span class="p">)</span>
+    <span class="n">buttons</span><span class="o">.</span><span class="n">add_button</span><span class="p">(</span><span class="s2">&quot;Copy&quot;</span><span class="p">,</span> <span class="n">copy_text_button</span><span class="o">=</span><span class="n">CopyTextButton</span><span class="p">(</span><span class="s2">&quot;TEXT&quot;</span><span class="p">))</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span> <span class="n">reply_markup</span><span class="o">=</span><span class="n">buttons</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="core-abilities">
+<h2>Core Abilities<a class="headerlink" href="#core-abilities" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Message Handling</strong> – Process text, commands, and media messages</p></li>
+<li><p><strong>Callback Queries</strong> – Handle inline keyboard interactions</p></li>
+<li><p><strong>File Operations</strong> – Send and receive photos, videos, documents</p></li>
+<li><p><strong>Chat Management</strong> – Get chat info, member management</p></li>
+<li><p><strong>Custom Keyboards</strong> – Create interactive user interfaces</p></li>
+<li><p><strong>Webhook Support</strong> – Production-ready webhook handling</p></li>
+<li><p><strong>Middleware Support</strong> – Add custom processing layers</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
+<p>For detailed documentation and advanced usage, visit our documentation site:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pyrobale.readthedocs.io">pyrobale.readthedocs.io</a> (Global)</p></li>
+<li><p><a class="reference external" href="https://docs.pyrobale.ir">docs.pyrobale.ir</a> (IR Server)</p></li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
+<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>This project is licensed under the MIT License – see the <a class="reference external" href="LICENSE">LICENSE</a> file for details.</p>
+</section>
+<section id="support">
+<h2>Support<a class="headerlink" href="#support" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>📖 <a class="reference external" href="https://docs.pyrobale.ir">Docs (IR Server)</a> – <a class="reference external" href="https://pyrobale.readthedocs.io">Docs (Global)</a></p></li>
+<li><p>🐛 <a class="reference external" href="https://github.com/pyrobale/pyrobale/issues">Issue Tracker</a></p></li>
+<li><p>💬 <a class="reference external" href="https://github.com/pyrobale/pyrobale/discussions">Discussions</a></p></li>
+</ul>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -447,28 +572,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Pyrobale Documentation</a><ul>
-<li><a class="reference internal" href="#examples">Examples</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#index-tables">Index &amp; tables</a></li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
