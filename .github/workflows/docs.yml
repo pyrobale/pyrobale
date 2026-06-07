@@ -2,7 +2,7 @@ name: Deploy Sphinx Documentation
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, beta ]
 
 permissions:
   contents: write

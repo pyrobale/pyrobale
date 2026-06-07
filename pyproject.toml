@@ -3,7 +3,6 @@ name = "pyrobale"
 version = "0.6.5"
 authors = [
     { name = "Ali Safamanesh", email = "daradege@proton.me" },
-    { name = "Aydin Rahbaran", email = "codewizaard9@gmail.com"}
 ]
 description = "A python wrapper for bale api"
 readme = "README.md"
@@ -14,7 +13,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = { file = "LICENSE" }
-dependencies = ["aiohttp", "beautifulsoup4"]
+dependencies = ["aiohttp"]
 [project.urls]
 github = "https://github.com/pyrobale/pyrobale"
 website = "https://pyrobale.ir"
