@@ -44,7 +44,8 @@ class Message:
         id (int): Unique message identifier
         user (User): Sender of the message
         date (int): Date the message was sent in Unix time
-        chat (Chat): Conversation the message belongs to
+        chat (Chat): Conversation the message belongs to, None if the message is sent in a channel
+        sender_chat (Chat): the information of the sender when the sender is hidden from users (like channels)
         text (str): Text content of the message
         forward_origin (User): Original sender of a forwarded message
         forward_from_chat (Chat): Original chat of a forwarded message
@@ -78,6 +79,7 @@ class Message:
             from_user: Optional["User"] = None,
             date: Optional[int] = None,
             chat: Optional["Chat"] = None,
+            sender_chat: Optional["Chat"] = None,
             text: Optional[str] = None,
             forward_origin: Union["ForwardOrigin",dict, None] = None,
             forward_from_chat: Optional["Chat"] = None,
@@ -113,6 +115,7 @@ class Message:
             from_user: Sender of the message
             date: Date the message was sent in Unix time
             chat: Conversation the message belongs to
+            sender_chat: the information of the sender when the sender is hidden from users (like channels)
             text: Text content of the message
             forward_origin: Original sender of a forwarded message
             forward_from_chat: Original chat of a forwarded message
