@@ -170,6 +170,9 @@ class Message:
             self.chat: Chat = Chat(**chat_data)
         else:
             self.chat = None
+        
+        self.sender_chat = sender_chat
+
         if isinstance(forward_origin, dict):
             self.forward_origin: Optional["ForwardOrigin"] = ForwardOrigin(**forward_origin, client=self.client)
         else:
