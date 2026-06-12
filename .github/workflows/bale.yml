@@ -1,7 +1,8 @@
 name: Send Bale Notification on Commit
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, beta ]
+  
 
 jobs:
   send-bale-notification:

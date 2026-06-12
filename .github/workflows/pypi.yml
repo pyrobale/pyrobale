@@ -1,6 +1,8 @@
 name: Publish to PyPI
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     types: [closed]
     branches: [ main ]
@@ -76,7 +78,7 @@ jobs:
       run: |
         pip install build twine
         python -m build
-        twine upload dist/* --username __token__ --password ${{ secrets.PYPI }}
+        twine upload dist/* --username __token__ --password ${{ secrets.PYPI }} --verbose
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}

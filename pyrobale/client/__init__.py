@@ -52,7 +52,6 @@ from ..exceptions import NotFoundException, InvalidTokenException, PyroBaleExcep
 import time
 from enum import Enum, member
 import asyncio
-from bs4 import BeautifulSoup
 from json import loads, JSONDecodeError, dumps
 import aiohttp
 import functools

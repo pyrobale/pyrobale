@@ -35,8 +35,8 @@ napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
 
 project = 'Pyrobale'
-copyright = '2025, Ali Safamanesh & Aydin Rahbaran'
-author = 'Ali Safamanesh & Aydin Rahbaran'
+copyright = '2026, Ali Safamanesh'
+author = 'Ali Safamanesh'
 
 
 html_theme = 'furo'
