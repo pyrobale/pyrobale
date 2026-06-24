@@ -194,6 +194,8 @@ class Message:
         self.audio: Optional["Audio"] = audio
         if isinstance(document, dict):
             self.document: Optional["Document"] = Document(**document)
+        elif isinstance(document, Document):
+            self.document = document
         self.photo: Optional[list["PhotoSize"]] = photo
         self.sticker: Optional["Sticker"] = sticker
         self.video: Optional["Video"] = video

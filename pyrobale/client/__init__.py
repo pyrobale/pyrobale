@@ -85,6 +85,9 @@ class Client:
         self.state_machine = StateMachine()
         self.tick_handlers = []
         self.ready_handlers = []
+        self.dc_handlers = []
+
+        self._stopped = False
 
         self.handler_executor = ThreadPoolExecutor(
             max_workers=max_workers,
@@ -1899,21 +1902,29 @@ class Client:
             self.ready_handlers.append(callback)
         return decorator
     
+    def on_disconnect(self):
+        def decorator(callback):
+            self.dc_handlers.append(callback)
+        return decorator
+    
     def on_update(self, *filters: Any, **kwargs):
         """Decorator for handling photo updates."""
         return self.base_handler_decorator(UpdatesTypes.UPDATE)(*filters)
 
     def on_tick(self, interval: float):
-        """Decorator for repeating a function every n seconds"""
         def decorator(callback: Callable):
             async def tick_loop():
                 while self.running:
+                    if not self.running:
+                        break
                     try:
                         if inspect.iscoroutinefunction(callback):
                             await callback()
                         else:
                             loop = asyncio.get_event_loop()
                             await loop.run_in_executor(self.handler_executor, callback)
+                    except asyncio.CancelledError:
+                        break
                     except Exception as e:
                         print(f"Error in tick handler: {e}")
                         traceback.print_exc()
@@ -1925,20 +1936,22 @@ class Client:
                 nonlocal ticker_task
                 if ticker_task is None or ticker_task.done():
                     ticker_task = asyncio.create_task(tick_loop())
+                    if self.tick_handlers:
+                        self.tick_handlers[-1]["task"] = ticker_task
             
-            self.tick_handlers.append({
+            handler_entry = {
                 "interval": interval,
                 "callback": callback,
                 "start": start_ticker,
-                "task": lambda: ticker_task
-            })
+                "task": None
+            }
+            self.tick_handlers.append(handler_entry)
             
             if self.running:
                 start_ticker()
             
             return callback
         return decorator
-
 
     def add_handler(self, update_type: UpdatesTypes, callback: Callable, *filters: Any, **kwargs):
         """Register a handler for specific update type.
@@ -2003,10 +2016,11 @@ class Client:
         while self.running:
             try:
                 updates = await self.get_updates(
-                    offset=self.last_update_id, limit=limit, timeout=timeout
+                    offset=self.last_update_id+1, limit=limit, timeout=timeout
                 )
 
                 for update in updates:
+                    self.last_update_id = update.get("update_id", self.last_update_id)
                     await self.process_update(update)
 
             except Exception as e:
@@ -2017,23 +2031,42 @@ class Client:
     @smart_method
     async def stop_polling(self) -> None:
         """Stop polling updates."""
+        for dc_handler in self.dc_handlers:
+            if inspect.iscoroutinefunction(dc_handler):
+                await dc_handler()
+            else:
+                loop = asyncio.get_event_loop()
+                await loop.run_in_executor(self.handler_executor, dc_handler)
+
         self.running = False
-        self.handler_executor.shutdown(wait=False)
+        
+        for handler in self.tick_handlers:
+            task = handler.get("task")
+            if task and not task.done():
+                task.cancel()
+                try:
+                    await task
+                except asyncio.CancelledError:
+                    pass
 
     def run(self, timeout: int = 30, limit: int = 100) -> None:
-        """Run the client.
-
-        Args:
-            timeout (int): Time to wait for updates.
-            limit (int): Number of updates to poll.
-
-        """
+        """Run the client."""
         try:
             asyncio.run(self.start_polling(timeout, limit))
         except KeyboardInterrupt:
             print("Bot stopped by user")
+        except ValueError:
+            print("Bot stopped by the code")
         finally:
-            self.handler_executor.shutdown(wait=True)
+            if not self._stopped:
+                try:
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():
+                        loop.create_task(self.stop())
+                    else:
+                        loop.run_until_complete(self.stop())
+                except RuntimeError:
+                    asyncio.run(self.stop())
 
     def set_state(self, user: Union[User, int, str], state: str):
         if isinstance(user, User):
@@ -2059,8 +2092,15 @@ class Client:
     @smart_method
     async def stop(self) -> None:
         """Stop the client."""
-        await self.stop_polling()
-        self.handler_executor.shutdown(wait=True)
+        if self._stopped:
+            return
+        self._stopped = True
+
+        if self.running:
+            await self.stop_polling()
+
+        if not self.handler_executor._shutdown:
+            self.handler_executor.shutdown(wait=True)
 
     @smart_method
     async def handle_webhook_update(self, update_data: Dict[str, Any]) -> None:
@@ -2115,8 +2155,9 @@ class Client:
         self.me = await self.get_me()
         print(f"Bot started: @{self.me.username if self.me.username else self.me.first_name}")
         
+    
     async def _cleanup(self):
         if self.running:
             await self.stop()
-        if hasattr(self, 'handler_executor'):
-            self.handler_executor.shutdown(wait=True)
+        elif not self._stopped and not self.handler_executor._shutdown:
+            self.handler_executor.shutdown(wait=False)

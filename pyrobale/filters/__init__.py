@@ -43,7 +43,7 @@ class Filter:
             return not self.state[0](event, client, *args)
         return self.state[0](event, client, *args)
 
-def equals(expected_text: str):
+def equals(expected_text: Union[str, List[str]]):
     """
     Check if the event text or caption or callbackQuery data is equal to the expected text.
     
@@ -55,12 +55,15 @@ def equals(expected_text: str):
     """
     async def check(event, *args):
         try:
-            return getattr(event, "text", None) == expected_text or getattr(event, "caption", None) == expected_text or getattr(event, "data", None) == expected_text
+            if isinstance(expected_text, str):
+                return getattr(event, "text", None) == expected_text or getattr(event, "caption", None) == expected_text or getattr(event, "data", None) == expected_text
+            else:
+                return getattr(event, "text", None) in expected_text or getattr(event, "caption", None) in expected_text or getattr(event, "data", None) in expected_text
         except:
             return False
     return Filter(check)
 
-def startswith(expected_text: str):
+def startswith(expected_text: Union[str, List[str]]):
     """
     Check if the event text or caption or callbackQuery data is started with to the expected text.
     
@@ -72,7 +75,15 @@ def startswith(expected_text: str):
     """
     async def check(event, *args):
         try:
-            return getattr(event, "text", "").startswith(expected_text) or getattr(event, "caption", "").startswith(expected_text) or getattr(event, "data", "").startswith(expected_text)
+            if isinstance(expected_text, str):
+                return getattr(event, "text", "").startswith(expected_text) or getattr(event, "caption", "").startswith(expected_text) or getattr(event, "data", "").startswith(expected_text)
+            else:
+                e_texts = [getattr(event, "text", "").startswith(expected_textt) or getattr(event, "caption", "").startswith(expected_textt) or getattr(event, "data", "").startswith(expected_textt) for expected_textt in expected_text]
+                for e in e_texts:
+                    if e:
+                        return True
+
+            return False
         except:
             return False
     return Filter(check)
