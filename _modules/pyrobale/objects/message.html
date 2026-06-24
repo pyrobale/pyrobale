@@ -590,6 +590,8 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Document&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="o">**</span><span class="n">document</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">Document</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">document</span>
 <div class="viewcode-block" id="Message.photo">
 <a class="viewcode-back" href="../../../api/pyrobale/objects/message/index.html#pyrobale.objects.message.Message.photo">[docs]</a>
         <span class="bp">self</span><span class="o">.</span><span class="n">photo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="s2">&quot;PhotoSize&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">photo</span></div>

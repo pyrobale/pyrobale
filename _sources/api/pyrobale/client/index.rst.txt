@@ -76,6 +76,11 @@ Package Contents
 
 
 
+   .. py:attribute:: dc_handlers
+      :value: []
+
+
+
    .. py:attribute:: handler_executor
 
 
@@ -1120,6 +1125,9 @@ Package Contents
    .. py:method:: on_ready()
 
 
+   .. py:method:: on_disconnect()
+
+
    .. py:method:: on_update(*filters, **kwargs)
 
       Decorator for handling photo updates.
@@ -1127,9 +1135,6 @@ Package Contents
 
 
    .. py:method:: on_tick(interval)
-
-      Decorator for repeating a function every n seconds
-
 
 
    .. py:method:: add_handler(update_type, callback, *filters, **kwargs)
@@ -1188,11 +1193,6 @@ Package Contents
    .. py:method:: run(timeout = 30, limit = 100)
 
       Run the client.
-
-      :param timeout: Time to wait for updates.
-      :type timeout: int
-      :param limit: Number of updates to poll.
-      :type limit: int
 
 
 
