@@ -1585,8 +1585,9 @@ class Client:
         if not update or not isinstance(update, dict):
             return
         update_id = update.get("update_id")
-        if update_id:
-            self.last_update_id = update_id + 1
+        if update_id is not None:
+            if update_id > self.last_update_id:
+                self.last_update_id = update_id
 
         if self.check_defined_message:
             try:
@@ -2020,7 +2021,6 @@ class Client:
                 )
 
                 for update in updates:
-                    self.last_update_id = update.get("update_id", self.last_update_id)
                     await self.process_update(update)
 
             except Exception as e:
